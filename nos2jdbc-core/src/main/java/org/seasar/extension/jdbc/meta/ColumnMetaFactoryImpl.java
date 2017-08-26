@@ -23,8 +23,8 @@ import org.seasar.extension.jdbc.ColumnMeta;
 import org.seasar.extension.jdbc.ColumnMetaFactory;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
-import org.seasar.framework.container.annotation.tiger.Binding;
-import org.seasar.framework.container.annotation.tiger.BindingType;
+//i import org.seasar.framework.container.annotation.tiger.Binding;
+//i import org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.StringUtil;
 
@@ -73,7 +73,7 @@ public class ColumnMetaFactoryImpl implements ColumnMetaFactory {
      * @param persistenceConvention
      *            永続化用の規約
      */
-    @Binding(bindingType = BindingType.MUST)
+//i    @Binding(bindingType = BindingType.MUST)
     public void setPersistenceConvention(
             PersistenceConvention persistenceConvention) {
         this.persistenceConvention = persistenceConvention;
