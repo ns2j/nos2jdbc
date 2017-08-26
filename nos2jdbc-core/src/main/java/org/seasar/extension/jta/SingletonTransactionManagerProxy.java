@@ -24,7 +24,7 @@ import javax.transaction.SystemException;
 import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+//i import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 
 /**
  * {@link SingletonS2ContainerFactory}を利用したトランザクションマネージャのプロキシです。
@@ -79,8 +79,9 @@ public class SingletonTransactionManagerProxy implements TransactionManager {
      * @return トランザクションマネージャ
      */
     protected TransactionManager getTransactionManager() {
-        return (TransactionManager) SingletonS2ContainerFactory.getContainer()
-                .getComponent(TransactionManager.class);
+//i        return (TransactionManager) SingletonS2ContainerFactory.getContainer()
+//i                .getComponent(TransactionManager.class);
+    	return null;
     }
 
 }
