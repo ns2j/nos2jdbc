@@ -20,8 +20,8 @@ import javax.persistence.Table;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.TableMeta;
 import org.seasar.extension.jdbc.TableMetaFactory;
-import org.seasar.framework.container.annotation.tiger.Binding;
-import org.seasar.framework.container.annotation.tiger.BindingType;
+//i import org.seasar.framework.container.annotation.tiger.Binding;
+//iimport org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.StringUtil;
 
@@ -75,7 +75,7 @@ public class TableMetaFactoryImpl implements TableMetaFactory {
      * @param persistenceConvention
      *            永続化用の規約
      */
-    @Binding(bindingType = BindingType.MUST)
+//i    @Binding(bindingType = BindingType.MUST)
     public void setPersistenceConvention(
             PersistenceConvention persistenceConvention) {
         this.persistenceConvention = persistenceConvention;

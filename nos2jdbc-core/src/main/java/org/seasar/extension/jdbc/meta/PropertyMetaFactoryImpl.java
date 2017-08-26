@@ -67,8 +67,8 @@ import org.seasar.extension.jdbc.id.IdentityIdGenerator;
 import org.seasar.extension.jdbc.id.SequenceIdGenerator;
 import org.seasar.extension.jdbc.id.TableIdGenerator;
 import org.seasar.extension.jdbc.types.ValueTypes;
-import org.seasar.framework.container.annotation.tiger.Binding;
-import org.seasar.framework.container.annotation.tiger.BindingType;
+//i import org.seasar.framework.container.annotation.tiger.Binding;
+//i import org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ModifierUtil;
@@ -817,7 +817,7 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      * @param columnMetaFactory
      *            カラムメタデータファクトリ
      */
-    @Binding(bindingType = BindingType.MUST)
+//i    @Binding(bindingType = BindingType.MUST)
     public void setColumnMetaFactory(ColumnMetaFactory columnMetaFactory) {
         this.columnMetaFactory = columnMetaFactory;
     }

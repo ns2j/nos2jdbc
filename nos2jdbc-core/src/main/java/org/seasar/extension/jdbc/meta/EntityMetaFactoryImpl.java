@@ -40,9 +40,9 @@ import org.seasar.extension.jdbc.exception.NonEntityRuntimeException;
 import org.seasar.extension.jdbc.exception.OneToOneFKNotFoundRuntimeException;
 import org.seasar.extension.jdbc.exception.ReferencedColumnNameNotFoundRuntimeException;
 import org.seasar.extension.jdbc.exception.UnsupportedInheritanceRuntimeException;
-import org.seasar.framework.container.annotation.tiger.Binding;
-import org.seasar.framework.container.annotation.tiger.BindingType;
-import org.seasar.framework.container.annotation.tiger.InitMethod;
+//i import org.seasar.framework.container.annotation.tiger.Binding;
+//i import org.seasar.framework.container.annotation.tiger.BindingType;
+//i import org.seasar.framework.container.annotation.tiger.InitMethod;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.ClassUtil;
@@ -399,7 +399,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * @param tableMetaFactory
      *            テーブルメタデータファクトリ
      */
-    @Binding(bindingType = BindingType.MUST)
+//i    @Binding(bindingType = BindingType.MUST)
     public void setTableMetaFactory(TableMetaFactory tableMetaFactory) {
         this.tableMetaFactory = tableMetaFactory;
     }
@@ -410,7 +410,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * @param propertyMetaFactory
      *            プロパティメタデータファクトリ
      */
-    @Binding(bindingType = BindingType.MUST)
+//i    @Binding(bindingType = BindingType.MUST)
     public void setPropertyMetaFactory(PropertyMetaFactory propertyMetaFactory) {
         this.propertyMetaFactory = propertyMetaFactory;
     }
@@ -421,7 +421,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * @param persistenceConvention
      *            永続化層の規約
      */
-    @Binding(bindingType = BindingType.MUST)
+//i    @Binding(bindingType = BindingType.MUST)
     public void setPersistenceConvention(
             PersistenceConvention persistenceConvention) {
         this.persistenceConvention = persistenceConvention;
@@ -430,7 +430,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
     /**
      * 初期化を行ないます。
      */
-    @InitMethod
+//i    @InitMethod
     public void initialize() {
         DisposableUtil.add(new Disposable() {
 
