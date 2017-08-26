@@ -15,20 +15,33 @@
  */
 package org.seasar.extension.jdbc.service;
 
-import org.seasar.extension.unit.S2TestCase;
+import org.seasar.extension.jdbc.dialect.StandardDialect;
+import org.seasar.extension.jdbc.manager.JdbcManagerImpl;
+import org.seasar.extension.jdbc.manager.JdbcManagerTestImpl;
+import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
+import org.seasar.extension.jdbc.meta.EntityMetaFactoryImpl;
+import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
+import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
+import org.seasar.extension.jta.TransactionManagerImpl;
+import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
+import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+import org.seasar.framework.mock.sql.MockDataSource;
+
+import junit.framework.TestCase;
 
 /**
  * @author higa
  * 
  */
-public class S2AbstractServiceTest extends S2TestCase {
+public class S2AbstractServiceTest extends TestCase {
 
     private EmpService empDao;
 
     @Override
     protected void setUp() {
-        include("s2jdbc.dicon");
-        register(EmpService.class);
+        JdbcManagerImpl manager = new JdbcManagerTestImpl();
+	empDao = new EmpService();
+	empDao.jdbcManager = manager;
     }
 
     /**
