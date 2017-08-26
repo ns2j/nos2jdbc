@@ -18,6 +18,8 @@ package org.seasar.extension.jdbc.id;
 import javax.persistence.TableGenerator;
 import javax.sql.DataSource;
 
+import javax.transaction.TransactionManager;
+
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SqlLogger;
@@ -27,16 +29,20 @@ import org.seasar.extension.jdbc.impl.BasicSelectHandler;
 import org.seasar.extension.jdbc.impl.BasicUpdateHandler;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.types.LongType;
+import org.seasar.extension.jta.UserTransactionImpl;
 import org.seasar.extension.tx.TransactionCallback;
 import org.seasar.extension.tx.TransactionManagerAdapter;
-import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.extension.tx.adapter.JTATransactionManagerAdapter;
+//i import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.util.StringUtil;
+
+import nos2jdbc.TransactionManagerRegistry;
 
 /**
  * @author koichik
  */
 public class TableIdGenerator extends AbstractPreAllocateIdGenerator {
-
+	
     /** デフォルトの採番テーブル名 */
     public static final String DEFAULT_TABLE = "ID_GENERATOR";
 
@@ -101,9 +107,13 @@ public class TableIdGenerator extends AbstractPreAllocateIdGenerator {
     protected long getNewInitialValue(final JdbcManagerImplementor jdbcManager,
             final SqlLogger sqlLogger) {
         try {
-            final TransactionManagerAdapter txAdapter = SingletonS2Container
-                    .getComponent(TransactionManagerAdapter.class);
-            final Object result = txAdapter
+//i            final TransactionManagerAdapter txAdapter = SingletonS2Container
+//i                    .getComponent(TransactionManagerAdapter.class);
+        	TransactionManager tm = TransactionManagerRegistry.get();
+        	final TransactionManagerAdapter txAdapter
+        	= new JTATransactionManagerAdapter(new UserTransactionImpl(tm), tm);
+//i
+        	final Object result = txAdapter
                     .requiresNew(new TransactionCallback() {
 
                         public Object execute(
@@ -271,5 +281,4 @@ public class TableIdGenerator extends AbstractPreAllocateIdGenerator {
         buf.append(table).append(" where ").append(pkColumnName).append(" = ?");
         return new String(buf);
     }
-
 }
