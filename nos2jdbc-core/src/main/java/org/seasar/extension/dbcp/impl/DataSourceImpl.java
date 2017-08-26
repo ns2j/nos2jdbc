@@ -19,6 +19,8 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -78,5 +80,20 @@ public class DataSourceImpl implements DataSource, Serializable {
 
     public PrintWriter getLogWriter() throws SQLException {
         return null;
+    }
+
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+	// TODO Auto-generated method stub
+	return false;
     }
 }

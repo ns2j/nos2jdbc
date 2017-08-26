@@ -18,8 +18,10 @@ package org.seasar.extension.dbcp.impl;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -108,4 +110,8 @@ public class DataSourceXADataSource implements XADataSource {
         return dataSource;
     }
 
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }
