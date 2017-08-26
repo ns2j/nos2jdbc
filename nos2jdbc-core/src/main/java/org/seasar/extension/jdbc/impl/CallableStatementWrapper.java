@@ -25,12 +25,15 @@ import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.NClob;
 import java.sql.ParameterMetaData;
 import java.sql.Ref;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.RowId;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -1232,5 +1235,276 @@ public class CallableStatementWrapper implements CallableStatement {
      */
     public ResultSet executeQuery(String sql) throws SQLException {
         return original.executeQuery(sql);
+    }
+
+    public void setRowId(int parameterIndex, RowId x) throws SQLException {
+	original.setRowId(parameterIndex, x);;
+    }
+
+    public void setNString(int parameterIndex, String value)
+	    throws SQLException {
+	original.setNString(parameterIndex, value);
+    }
+
+    public void setNCharacterStream(int parameterIndex, Reader value,
+	    long length) throws SQLException {
+	original.setNCharacterStream(parameterIndex, value, length);
+    }
+
+    public void setNClob(int parameterIndex, NClob value) throws SQLException {
+	original.setNClob(parameterIndex, value);
+    }
+
+    public void setClob(int parameterIndex, Reader reader, long length)
+	    throws SQLException {
+	original.setClob(parameterIndex, reader, length);
+    }
+
+    public void setBlob(int parameterIndex, InputStream inputStream,
+	    long length) throws SQLException {
+	original.setBlob(parameterIndex, inputStream, length);
+    }
+
+    public void setNClob(int parameterIndex, Reader reader, long length)
+	    throws SQLException {
+	original.setNClob(parameterIndex, reader, length);
+    }
+
+    public void setSQLXML(int parameterIndex, SQLXML xmlObject)
+	    throws SQLException {
+	original.setSQLXML(parameterIndex, xmlObject);
+    }
+
+    public void setAsciiStream(int parameterIndex, InputStream x, long length)
+	    throws SQLException {
+	original.setAsciiStream(parameterIndex, x, length);
+    }
+
+    public void setBinaryStream(int parameterIndex, InputStream x, long length)
+	    throws SQLException {
+	original.setBinaryStream(parameterIndex, x, length);
+    }
+
+    public void setCharacterStream(int parameterIndex, Reader reader,
+	    long length) throws SQLException {
+	original.setCharacterStream(parameterIndex, reader, length);
+    }
+
+    public void setAsciiStream(int parameterIndex, InputStream x)
+	    throws SQLException {
+	original.setAsciiStream(parameterIndex, x);
+    }
+
+    public void setBinaryStream(int parameterIndex, InputStream x)
+	    throws SQLException {
+	original.setBinaryStream(parameterIndex, x);
+    }
+
+    public void setCharacterStream(int parameterIndex, Reader reader)
+	    throws SQLException {
+	original.setCharacterStream(parameterIndex, reader);
+    }
+
+    public void setNCharacterStream(int parameterIndex, Reader value)
+	    throws SQLException {
+	original.setNCharacterStream(parameterIndex, value);
+    }
+
+    public void setClob(int parameterIndex, Reader reader) throws SQLException {
+	original.setClob(parameterIndex, reader);
+    }
+
+    public void setBlob(int parameterIndex, InputStream inputStream)
+	    throws SQLException {
+	original.setBlob(parameterIndex, inputStream);
+    }
+
+    public void setNClob(int parameterIndex, Reader reader)
+	    throws SQLException {
+	original.setNClob(parameterIndex, reader);
+    }
+
+    public boolean isClosed() throws SQLException {
+	return original.isClosed();
+    }
+
+    public void setPoolable(boolean poolable) throws SQLException {
+	original.setPoolable(poolable);
+    }
+
+    public boolean isPoolable() throws SQLException {
+	return original.isPoolable();
+    }
+
+    public void closeOnCompletion() throws SQLException {
+	original.closeOnCompletion();
+    }
+
+    public boolean isCloseOnCompletion() throws SQLException {
+	return original.isCloseOnCompletion();
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+	return original.unwrap(iface);
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+	return original.isWrapperFor(iface);
+    }
+
+    public RowId getRowId(int parameterIndex) throws SQLException {
+	return original.getRowId(parameterIndex);
+    }
+
+    public RowId getRowId(String parameterName) throws SQLException {
+	return original.getRowId(parameterName);
+    }
+
+    public void setRowId(String parameterName, RowId x) throws SQLException {
+	original.setRowId(parameterName, x);
+    }
+
+    public void setNString(String parameterName, String value)
+	    throws SQLException {
+	original.setNString(parameterName, value);
+    }
+
+    public void setNCharacterStream(String parameterName, Reader value,
+	    long length) throws SQLException {
+	original.setNCharacterStream(parameterName, value, length);
+    }
+
+    public void setNClob(String parameterName, NClob value)
+	    throws SQLException {
+	original.setNClob(parameterName, value);
+    }
+
+    public void setClob(String parameterName, Reader reader, long length)
+	    throws SQLException {
+	original.setClob(parameterName, reader, length);
+    }
+
+    public void setBlob(String parameterName, InputStream inputStream,
+	    long length) throws SQLException {
+	original.setBlob(parameterName, inputStream, length);
+    }
+
+    public void setNClob(String parameterName, Reader reader, long length)
+	    throws SQLException {
+	original.setNClob(parameterName, reader, length);
+    }
+
+    public NClob getNClob(int parameterIndex) throws SQLException {
+	return original.getNClob(parameterIndex);
+    }
+
+    public NClob getNClob(String parameterName) throws SQLException {
+	return original.getNClob(parameterName);
+    }
+
+    public void setSQLXML(String parameterName, SQLXML xmlObject)
+	    throws SQLException {
+	original.setSQLXML(parameterName, xmlObject);
+    }
+
+    public SQLXML getSQLXML(int parameterIndex) throws SQLException {
+	return original.getSQLXML(parameterIndex);
+    }
+
+    public SQLXML getSQLXML(String parameterName) throws SQLException {
+	return original.getSQLXML(parameterName);
+    }
+
+    public String getNString(int parameterIndex) throws SQLException {
+	return original.getNString(parameterIndex);
+    }
+
+    public String getNString(String parameterName) throws SQLException {
+	return original.getNString(parameterName);
+    }
+
+    public Reader getNCharacterStream(int parameterIndex) throws SQLException {
+	return original.getNCharacterStream(parameterIndex);
+    }
+
+    public Reader getNCharacterStream(String parameterName)
+	    throws SQLException {
+	return original.getNCharacterStream(parameterName);
+    }
+
+    public Reader getCharacterStream(int parameterIndex) throws SQLException {
+	return original.getCharacterStream(parameterIndex);
+    }
+
+    public Reader getCharacterStream(String parameterName) throws SQLException {
+	return original.getCharacterStream(parameterName);
+    }
+
+    public void setBlob(String parameterName, Blob x) throws SQLException {
+	original.setBlob(parameterName, x);
+    }
+
+    public void setClob(String parameterName, Clob x) throws SQLException {
+	original.setClob(parameterName, x);
+    }
+
+    public void setAsciiStream(String parameterName, InputStream x, long length)
+	    throws SQLException {
+	original.setAsciiStream(parameterName, x, length);
+    }
+
+    public void setBinaryStream(String parameterName, InputStream x,
+	    long length) throws SQLException {
+	original.setBinaryStream(parameterName, x, length);
+    }
+
+    public void setCharacterStream(String parameterName, Reader reader,
+	    long length) throws SQLException {
+	original.setCharacterStream(parameterName, reader, length);
+    }
+
+    public void setAsciiStream(String parameterName, InputStream x)
+	    throws SQLException {
+	original.setAsciiStream(parameterName, x);
+    }
+
+    public void setBinaryStream(String parameterName, InputStream x)
+	    throws SQLException {
+	original.setBinaryStream(parameterName, x);
+    }
+
+    public void setCharacterStream(String parameterName, Reader reader)
+	    throws SQLException {
+	original.setCharacterStream(parameterName, reader);
+    }
+
+    public void setNCharacterStream(String parameterName, Reader value)
+	    throws SQLException {
+	original.setNCharacterStream(parameterName, value);
+    }
+
+    public void setClob(String parameterName, Reader reader)
+	    throws SQLException {
+	original.setClob(parameterName, reader);
+    }
+
+    public void setBlob(String parameterName, InputStream inputStream)
+	    throws SQLException {
+	original.setBlob(parameterName, inputStream);
+    }
+
+    public void setNClob(String parameterName, Reader reader)
+	    throws SQLException {
+	original.setNClob(parameterName, reader);
+    }
+
+    public <T> T getObject(int parameterIndex, Class<T> type)
+	    throws SQLException {
+	return original.getObject(parameterIndex, type);
+    }
+
+    public <T> T getObject(String parameterName, Class<T> type)
+	    throws SQLException {
+	return original.getObject(parameterName, type);
     }
 }
