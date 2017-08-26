@@ -71,8 +71,8 @@ import org.seasar.extension.jdbc.query.SqlProcedureCallImpl;
 import org.seasar.extension.jdbc.query.SqlSelectImpl;
 import org.seasar.extension.jdbc.query.SqlUpdateImpl;
 import org.seasar.extension.jdbc.util.DataSourceUtil;
-import org.seasar.framework.container.annotation.tiger.Binding;
-import org.seasar.framework.container.annotation.tiger.BindingType;
+//i import org.seasar.framework.container.annotation.tiger.Binding;
+//i import org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.exception.EmptyRuntimeException;
 
@@ -603,7 +603,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
      * 
      * @param dataSourceFactory
      */
-    @Binding(bindingType = BindingType.MAY)
+//i    @Binding(bindingType = BindingType.MAY)
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
         this.dataSourceFactory = dataSourceFactory;
     }
