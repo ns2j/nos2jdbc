@@ -15,15 +15,24 @@
  */
 package org.seasar.extension.dbcp.impl;
 
+import java.sql.Array;
+import java.sql.Blob;
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.NClob;
 import java.sql.PreparedStatement;
+import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.sql.Struct;
 import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
 
 import javax.sql.ConnectionEvent;
 import javax.sql.ConnectionEventListener;
@@ -584,4 +593,176 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
                         .getSQLState(), e.getErrorCode(), e, sql);
     }
 
+    public void abort(Executor arg0) throws SQLException {
+	assertOpened();
+	try {
+	    physicalConnection_.abort(arg0);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public Clob createClob() throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.createClob();
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public Blob createBlob() throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.createBlob();
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public NClob createNClob() throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.createNClob();
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public SQLXML createSQLXML() throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.createSQLXML();
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public boolean isValid(int timeout) throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.isValid(timeout);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public void setClientInfo(String name, String value)
+	    throws SQLClientInfoException {
+	physicalConnection_.setClientInfo(name, value);
+    }
+
+    public void setClientInfo(Properties properties)
+	    throws SQLClientInfoException {
+	physicalConnection_.setClientInfo(properties);
+    }
+
+    public String getClientInfo(String name) throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.getClientInfo(name);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public Properties getClientInfo() throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.getClientInfo();
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public Array createArrayOf(String typeName, Object[] elements)
+	    throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.createArrayOf(typeName, elements);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public Struct createStruct(String typeName, Object[] attributes)
+	    throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.createStruct(typeName, attributes);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public void setSchema(String schema) throws SQLException {
+	assertOpened();
+	try {
+	    physicalConnection_.setSchema(schema);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public String getSchema() throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.getSchema();
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public void setNetworkTimeout(Executor executor, int milliseconds)
+	    throws SQLException {
+	assertOpened();
+	try {
+	    physicalConnection_.setNetworkTimeout(executor, milliseconds);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public int getNetworkTimeout() throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.getNetworkTimeout();
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.unwrap(iface);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+	assertOpened();
+	try {
+	    return physicalConnection_.isWrapperFor(iface);
+	} catch (final SQLException ex) {
+	    release();
+	    throw ex;
+	}
+    }
 }

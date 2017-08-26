@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.ConnectionEventListener;
+import javax.sql.StatementEventListener;
 import javax.sql.XAConnection;
 import javax.transaction.xa.XAResource;
 
@@ -74,6 +75,14 @@ public class XAConnectionImpl implements XAConnection {
 
     public synchronized void removeConnectionEventListener(
             final ConnectionEventListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void addStatementEventListener(StatementEventListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeStatementEventListener(StatementEventListener listener) {
         listeners.remove(listener);
     }
 }
