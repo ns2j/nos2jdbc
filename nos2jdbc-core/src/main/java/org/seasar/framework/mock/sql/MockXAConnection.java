@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.sql.ConnectionEventListener;
+import javax.sql.StatementEventListener;
 import javax.sql.XAConnection;
 import javax.transaction.xa.XAResource;
 
@@ -68,6 +69,16 @@ public class MockXAConnection implements XAConnection {
 
     public void removeConnectionEventListener(
             final ConnectionEventListener listener) {
+    }
+
+    public void addStatementEventListener(StatementEventListener listener) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    public void removeStatementEventListener(StatementEventListener listener) {
+	// TODO Auto-generated method stub
+	
     }
 
 }
