@@ -21,7 +21,7 @@ import ognl.ClassResolver;
 import ognl.Ognl;
 import ognl.OgnlException;
 
-import org.seasar.framework.container.S2Container;
+//i import org.seasar.framework.container.S2Container;
 import org.seasar.framework.exception.OgnlRuntimeException;
 
 /**
@@ -138,19 +138,19 @@ public class OgnlUtil {
     }
 
     static Map addClassResolverIfNecessary(Map ctx, Object root) {
-        if (root instanceof S2Container) {
-            S2Container container = (S2Container) root;
-            ClassLoader classLoader = container.getClassLoader();
-            if (classLoader != null) {
-                ClassResolverImpl classResolver = new ClassResolverImpl(
-                        classLoader);
-                if (ctx == null) {
-                    ctx = Ognl.createDefaultContext(root, classResolver);
-                } else {
-                    ctx = Ognl.addDefaultContext(root, classResolver, ctx);
-                }
-            }
-        }
+//i        if (root instanceof S2Container) {
+//i            S2Container container = (S2Container) root;
+//i            ClassLoader classLoader = container.getClassLoader();
+//i            if (classLoader != null) {
+//i                ClassResolverImpl classResolver = new ClassResolverImpl(
+//i                        classLoader);
+//i                if (ctx == null) {
+//i                    ctx = Ognl.createDefaultContext(root, classResolver);
+//i                } else {
+//i                    ctx = Ognl.addDefaultContext(root, classResolver, ctx);
+//i                }
+//i            }
+//i        }
         return ctx;
     }
 
