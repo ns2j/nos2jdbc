@@ -70,9 +70,10 @@ public class GenerateEntityTestTest {
      */
     @Test
     public void testCompositeId() throws Exception {
+//i	
         EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-                "s2jdbc.dicon", "jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), false, false);
+                "jdbcManager", "Test",
+                new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ccc.class);
         EntityTestModel model = entityTestModelFactory
                 .getEntityTestModel(entityMeta);
@@ -89,11 +90,13 @@ public class GenerateEntityTestTest {
      * 
      * @throws Exception
      */
+/*i    
     @Test
     public void testCompositeId_s2junit4() throws Exception {
+//i	
         EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-                "s2jdbc.dicon", "jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), false, true);
+                "jdbcManager", "Test",
+                new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ccc.class);
         EntityTestModel model = entityTestModelFactory
                 .getEntityTestModel(entityMeta);
@@ -105,16 +108,17 @@ public class GenerateEntityTestTest {
                 + "_CompositeId_s2junit4.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
-
+*/
     /**
      * 
      * @throws Exception
      */
     @Test
     public void testNoId() throws Exception {
-        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-                "s2jdbc.dicon", "jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), false, false);
+//i
+	EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
+                "jdbcManager", "Test",
+                new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ddd.class);
         EntityTestModel model = entityTestModelFactory
                 .getEntityTestModel(entityMeta);
@@ -123,7 +127,7 @@ public class GenerateEntityTestTest {
         generator.generate(context);
 
         String path = getClass().getName().replace(".", "/") + "_NoId.txt";
-        assertEquals(TextUtil.readUTF8(path), generator.getResult());
+             assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 
     /**
@@ -132,9 +136,10 @@ public class GenerateEntityTestTest {
      */
     @Test
     public void testLeftOuterJoin() throws Exception {
-        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-                "s2jdbc.dicon", "jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), false, false);
+//i
+	EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
+        	"jdbcManager", "Test",
+                new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         EntityTestModel model = entityTestModelFactory
                 .getEntityTestModel(entityMeta);
@@ -153,9 +158,10 @@ public class GenerateEntityTestTest {
      */
     @Test
     public void testLeftOuterJoin_useNamesClass() throws Exception {
-        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-                "s2jdbc.dicon", "jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), true, false);
+//i
+	EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
+        	"jdbcManager", "Test",
+                new NamesModelFactoryImpl("hoge.entity", "Names"), true, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         EntityTestModel model = entityTestModelFactory
                 .getEntityTestModel(entityMeta);

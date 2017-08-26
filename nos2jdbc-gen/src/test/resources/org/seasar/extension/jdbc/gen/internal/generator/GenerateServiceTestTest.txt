@@ -1,34 +1,29 @@
 package hoge.service;
 
 import javax.annotation.Generated;
-import org.seasar.extension.unit.S2TestCase;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 
 /**
  * {@link AaaService}のテストクラスです。
  * 
  */
-@Generated(value = {"S2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactoryImpl"}, date = "2009/04/01 13:12:11")
-public class AaaServiceTest extends S2TestCase {
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactoryImpl"}, date = "2009/04/01 13:12:11")
+public class AaaServiceTest {
 
     private AaaService aaaService;
-
-    /**
-     * 事前処理をします。
-     * 
-     * @throws Exception
-     */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        include("app.dicon");
-    }
 
     /**
      * {@link #aaaService}が利用可能であることをテストします。
      * 
      * @throws Exception
      */
+    @Test
     public void testAvailable() throws Exception {
         assertNotNull(aaaService);
     }
+    
+
 }

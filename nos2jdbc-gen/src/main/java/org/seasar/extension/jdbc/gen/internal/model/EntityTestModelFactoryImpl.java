@@ -32,9 +32,9 @@ import org.seasar.extension.jdbc.gen.model.EntityTestModel;
 import org.seasar.extension.jdbc.gen.model.EntityTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
-import org.seasar.extension.unit.S2TestCase;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.TestContext;
+//i import org.seasar.extension.unit.S2TestCase;
+//i import org.seasar.framework.unit.Seasar2;
+//i import org.seasar.framework.unit.TestContext;
 import org.seasar.framework.util.ClassUtil;
 
 /**
@@ -45,7 +45,7 @@ import org.seasar.framework.util.ClassUtil;
 public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
 
     /** 設定ファイルのパス */
-    protected String configPath;
+//i    protected String configPath;
 
     /** {@link JdbcManager}のコンポーネント名 */
     protected String jdbcManagerName;
@@ -54,7 +54,13 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
     protected String testClassNameSuffix;
 
     /** S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false} */
-    protected boolean useS2junit4;
+//i    protected boolean useS2junit4;
+//i
+    protected String rootPackageName;
+//i
+    protected String componentType = "none";
+//i
+    protected String springAppConfig = "";
 
     /** 名前モデルのファクトリ */
     protected NamesModelFactory namesModelFactory;
@@ -84,13 +90,13 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
      * @param useS2junit4
      *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
      */
-    public EntityTestModelFactoryImpl(String configPath,
-            String jdbcManagerName, String testClassNameSuffix,
+    public EntityTestModelFactoryImpl(String jdbcManagerName, String testClassNameSuffix,
             NamesModelFactory namesModelFactory, boolean useNamesClass,
-            boolean useS2junit4) {
-        if (configPath == null) {
-            throw new NullPointerException("configPath");
-        }
+            String rootPackageName,
+            String componentType, String springAppConfig) {
+//i        if (configPath == null) {
+//i            throw new NullPointerException("configPath");
+//i        }
         if (jdbcManagerName == null) {
             throw new NullPointerException("jdbcManagerName");
         }
@@ -100,17 +106,24 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
         if (namesModelFactory == null) {
             throw new NullPointerException("namesModelFactory");
         }
-        this.configPath = configPath;
+//i
+        if (rootPackageName == null) {
+            throw new NullPointerException("rootPackageName");
+        }
+//i        this.configPath = configPath;
         this.jdbcManagerName = jdbcManagerName;
         this.testClassNameSuffix = testClassNameSuffix;
         this.namesModelFactory = namesModelFactory;
         this.useNamesClass = useNamesClass;
-        this.useS2junit4 = useS2junit4;
+//i        this.useS2junit4 = useS2junit4;
+        this.rootPackageName = rootPackageName;
+        this.componentType = componentType;
+        this.springAppConfig = springAppConfig;
     }
 
     public EntityTestModel getEntityTestModel(EntityMeta entityMeta) {
         EntityTestModel entityTestModel = new EntityTestModel();
-        entityTestModel.setConfigPath(configPath);
+//i        entityTestModel.setConfigPath(configPath);
         entityTestModel.setJdbcManagerName(jdbcManagerName);
         String packageName = ClassUtil.splitPackageAndShortClassName(entityMeta
                 .getEntityClass().getName())[0];
@@ -118,7 +131,11 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
         entityTestModel.setShortClassName(entityMeta.getName()
                 + testClassNameSuffix);
         entityTestModel.setShortEntityClassName(entityMeta.getName());
-        entityTestModel.setUseS2junit4(useS2junit4);
+//i        entityTestModel.setUseS2junit4(useS2junit4);
+//i        
+        entityTestModel.setRootPackageName(rootPackageName);
+        entityTestModel.setComponentType(componentType);
+        entityTestModel.setSpringAppConfig(springAppConfig);
         doIdValue(entityTestModel, entityMeta);
         doAssociationName(entityTestModel, entityMeta);
         doNamesModel(entityTestModel, entityMeta);
@@ -260,6 +277,7 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
             EntityMeta entityMeta) {
         classModelSupport.addImportName(entityTestModel, JdbcManager.class);
         classModelSupport.addImportName(entityTestModel, Generated.class);
+/* i        
         if (useS2junit4) {
             classModelSupport.addImportName(entityTestModel, RunWith.class);
             classModelSupport.addImportName(entityTestModel, Seasar2.class);
@@ -267,6 +285,7 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
         } else {
             classModelSupport.addImportName(entityTestModel, S2TestCase.class);
         }
+*/        
         NamesModel namesModel = entityTestModel.getNamesModel();
         if (namesModel != null) {
             String namesClassName = ClassUtil

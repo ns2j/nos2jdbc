@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2015 the Seasar Foundation and the Others.
+ * Copyright 200v4-2015 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import org.seasar.extension.jdbc.gen.exception.CommandFailedRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.factory.Factory;
 import org.seasar.extension.jdbc.gen.internal.factory.FactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
-import org.seasar.extension.jdbc.gen.internal.util.SingletonS2ContainerFactorySupport;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.ConnectionUtil;
 import org.seasar.extension.jdbc.util.DataSourceUtil;
@@ -35,9 +34,9 @@ import org.seasar.extension.jdbc.util.DatabaseMetaDataUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.container.SingletonS2Container;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.log.Logger;
+
+import nos2jdbc.standalone.NoS2JdbcManager;
 
 /**
  * コマンドの抽象クラスです。
@@ -59,7 +58,7 @@ public abstract class AbstractCommand implements Command {
     protected String factoryClassName = FactoryImpl.class.getName();
 
     /** {@link SingletonS2ContainerFactory}のサポート */
-    protected SingletonS2ContainerFactorySupport containerFactorySupport;
+//i    protected SingletonS2ContainerFactorySupport containerFactorySupport;
 
     /** 内部的なJDBCマネージャ */
     protected JdbcManagerImplementor jdbcManager;
@@ -196,10 +195,11 @@ public abstract class AbstractCommand implements Command {
      */
     protected final void init() {
         factory = ReflectUtil.newInstance(Factory.class, factoryClassName);
-        containerFactorySupport = new SingletonS2ContainerFactorySupport(
-                configPath, env);
-        containerFactorySupport.init();
-        jdbcManager = SingletonS2Container.getComponent(jdbcManagerName);
+//i        containerFactorySupport = new SingletonS2ContainerFactorySupport(
+//i                configPath, env);
+//i        containerFactorySupport.init();
+//i        jdbcManager = SingletonS2Container.getComponent(jdbcManagerName);
+        jdbcManager = (JdbcManagerImplementor)NoS2JdbcManager.getJdbcManager();
         doInit();
     }
 
@@ -208,9 +208,9 @@ public abstract class AbstractCommand implements Command {
      */
     protected final void destroy() {
         doDestroy();
-        if (containerFactorySupport != null) {
-            containerFactorySupport.destory();
-        }
+//i        if (containerFactorySupport != null) {
+//i            containerFactorySupport.destory();
+//i        }
     }
 
     /**

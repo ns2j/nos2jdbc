@@ -27,7 +27,7 @@ import java.util.Properties;
 public class ProductInfo {
 
     /** プロダクト名 */
-    protected final String PRODUCT_NAME = "S2JDBC-Gen";
+    protected final String PRODUCT_NAME = "NOS2JDBC-Gen";
 
     /** 不明な値 */
     protected final String UNKNOWN = "unknown";

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>nos2jdbc</groupId>
+  <artifactId>nos2jdbc</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.0</version>
+  <!-- <name>nos2jdbc</name> -->
+  <!-- <url>http://maven.apache.org</url> -->
+  <dependencies>
+  </dependencies>
+  <modules>
+    <module>nos2jdbc-util</module>
+    <module>nos2jdbc-core</module>
+    <module>nos2jdbc-gen</module>
+  </modules>
+</project>

@@ -51,9 +51,12 @@ import org.seasar.extension.jdbc.gen.version.DdlVersionDirectory;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.DdlVersionIncrementer;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
-import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.extension.jta.UserTransactionImpl;
+//i import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
+
+import nos2jdbc.TransactionManagerRegistry;
 
 /**
  * DDLのSQLファイルを生成する{@link Command}の実装です。
@@ -1171,8 +1174,9 @@ public class GenerateDdlCommand extends AbstractCommand {
         genDdlListener = ReflectUtil.newInstance(GenDdlListener.class,
                 genDdlListenerClassName);
         if (transactional) {
-            userTransaction = SingletonS2Container
-                    .getComponent(UserTransaction.class);
+//i            userTransaction = SingletonS2Container
+//i                    .getComponent(UserTransaction.class);
+            userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
         valueTypeProvider = createValueTypeProvider();
         ddlVersionDirectoryTree = createDdlVersionDirectoryTree();

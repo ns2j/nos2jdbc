@@ -19,6 +19,18 @@ import static ${importName};
   </#list>
 </#if>
 
+<#if componentType == "cdi">
+import javax.enterprise.context.Dependent;
+import javax.transaction.Transactional;
+</#if>
+<#if componentType == "ejb">
+import javax.ejb.Stateless;
+</#if>
+<#if componentType == "spring">
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+</#if>
+
 /**
  * {@link ${shortEntityClassName}}のサービスクラスです。
  * 
@@ -27,6 +39,17 @@ import static ${importName};
 </#if>
  */
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime}")
+<#if componentType == "cdi">
+@Dependent
+@Transactional
+</#if>
+<#if componentType == "ejb">
+@Stateless
+</#if>
+<#if componentType == "spring">
+@Service
+@Transactional
+</#if>
 public class ${shortClassName} extends ${shortSuperclassName}<${shortEntityClassName}> {
 <#if jdbcManagerSetterNecessary>
 

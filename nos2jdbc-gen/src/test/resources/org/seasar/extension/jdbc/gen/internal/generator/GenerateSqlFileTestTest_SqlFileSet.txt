@@ -9,13 +9,16 @@ import javax.annotation.Generated;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.ConnectionUtil;
-import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.InputStreamReaderUtil;
 import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.ReaderUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StatementUtil;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * SQLファイルのテストクラスです。
@@ -25,28 +28,18 @@ import org.seasar.framework.util.StatementUtil;
  * </p>
  *
  */
-@Generated(value = {"S2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactoryImpl"}, date = "2009/04/01 13:12:11")
-public class SqlFileTest extends S2TestCase {
-
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactoryImpl"}, date = "2009/04/01 13:12:11")
+public class SqlFileTest {
     private JdbcManager jdbcManager;
 
-    /**
-     * 事前処理をします。
-     * 
-     * @throws Exception
-     */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        include("s2jdbc.dicon");
-    }
 
     /**
      * SQLファイルをテストします。
      * 
      * @throws Exception
      */
-    public void testSqlFile0Tx() throws Exception {
+    @Test
+    public void testSqlFile0() throws Exception {
         String path = "org/seasar/extension/jdbc/gen/internal/generator/aaa.sql";
         new SqlFile(path).execute();
     }
@@ -56,7 +49,8 @@ public class SqlFileTest extends S2TestCase {
      * 
      * @throws Exception
      */
-    public void testSqlFile1Tx() throws Exception {
+    @Test
+    public void testSqlFile1() throws Exception {
         String path = "org/seasar/extension/jdbc/gen/internal/generator/bbb.sql";
         new SqlFile(path).execute();
     }
@@ -155,4 +149,5 @@ public class SqlFileTest extends S2TestCase {
             }
         }
     }
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2015 the Seasar Foundation and the Others.
+ * Cvopyright 2004-2015 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
+import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModel;
+import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.EntityTestModel;
 import org.seasar.extension.jdbc.gen.model.EntityTestModelFactory;
@@ -71,6 +73,9 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     /** テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false} */
     protected boolean useS2junit4;
 
+    //i
+    protected String archiveTestUtilTemplateFileName = "java/archivetestutil.ftl";
+    
     /** テストクラスのテンプレート名 */
     protected String templateFileName = "java/entitytest.ftl";
 
@@ -97,10 +102,16 @@ public class GenerateEntityTestCommand extends AbstractCommand {
 
     /** 上書きをする場合{@code true}、しない場合{@code false} */
     protected boolean overwrite = false;
+  //i
+    protected String componentType = "none";
+//i
+    protected String springAppConfig = "";
 
     /** エンティティメタデータのリーダ */
     protected EntityMetaReader entityMetaReader;
-
+//i
+    protected ArchiveTestUtilModelFactory archiveTestUtilModelFactory;
+    
     /** テストのモデルのファクトリ */
     protected EntityTestModelFactory entityTestModelFactory;
 
@@ -414,6 +425,22 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     public void setUseNamesClass(boolean useNamesClass) {
         this.useNamesClass = useNamesClass;
     }
+//i
+    public String getComponentType() {
+        return componentType;
+    }
+  //i
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
+    }
+  //i    
+    public String getSpringAppConfig() {
+        return springAppConfig;
+    }
+//i
+    public void setSpringAppConfig(String springAppConfig) {
+        this.springAppConfig = springAppConfig;
+    }
 
     @Override
     protected void doValidate() {
@@ -429,12 +456,16 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     protected void doInit() {
         entityMetaReader = createEntityMetaReader();
         namesModelFactory = createNamesModelFactory();
+        archiveTestUtilModelFactory = createArchiveTestUtilModelFactory();
         entityTestModelFactory = createEntityTestModelFactory();
         generator = createGenerator();
     }
 
     @Override
     protected void doExecute() {
+	//i
+	if ("cdi".equals(componentType) || "ejb".equals(componentType))
+	    generateArchiveTestUtil();
         for (EntityMeta entityMeta : entityMetaReader.read()) {
             generateTest(entityMeta);
         }
@@ -442,6 +473,13 @@ public class GenerateEntityTestCommand extends AbstractCommand {
 
     @Override
     protected void doDestroy() {
+    }
+    //i
+    protected void generateArchiveTestUtil() {
+        ArchiveTestUtilModel model = archiveTestUtilModelFactory.getArchiveTestUtilModel();
+        GenerationContext context = createGenerationContext(model,
+                archiveTestUtilTemplateFileName);
+        generator.generate(context);
     }
 
     /**
@@ -479,16 +517,21 @@ public class GenerateEntityTestCommand extends AbstractCommand {
         return factory.createNamesModelFactory(this, ClassUtil.concatName(
                 rootPackageName, namesPackageName), namesClassNameSuffix);
     }
-
+    
+    //i
+    protected ArchiveTestUtilModelFactory createArchiveTestUtilModelFactory() {
+        return factory.createArchiveTestUtilModelFactory(this, rootPackageName);
+    }
+    
     /**
      * {@link EntityTestModelFactory}の実装を作成します。
      * 
      * @return {@link EntityTestModelFactory}の実装
      */
     protected EntityTestModelFactory createEntityTestModelFactory() {
-        return factory.createEntityTestModelFactory(this, configPath,
+        return factory.createEntityTestModelFactory(this,
                 jdbcManagerName, testClassNameSuffix, namesModelFactory,
-                useNamesClass, useS2junit4);
+                useNamesClass, rootPackageName, componentType, springAppConfig);
     }
 
     /**

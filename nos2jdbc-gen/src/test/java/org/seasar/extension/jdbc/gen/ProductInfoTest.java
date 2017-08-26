@@ -32,7 +32,8 @@ public class ProductInfoTest {
     @Test
     public void testGetInstance() throws Exception {
         ProductInfo info = ProductInfo.getInstance();
-        assertEquals("S2JDBC-Gen", info.getName());
+//i        
+        assertEquals("NOS2JDBC-Gen", info.getName());
         assertEquals("test-0.0.1", info.getVersion());
         assertEquals("test-org.seasar.container", info.getGroupId());
         assertEquals("test-s2jdbc-gen", info.getArtifactId());

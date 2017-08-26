@@ -38,7 +38,7 @@ public class EntityTestModel extends TestClassModel {
     protected String shortEntityClassName;
 
     /** 設定ファイルのパス */
-    protected String configPath;
+//i    protected String configPath;
 
     /** {@link JdbcManager}のコンポーネント名 */
     protected String jdbcManagerName;
@@ -70,9 +70,9 @@ public class EntityTestModel extends TestClassModel {
      * 
      * @return 設定ファイルのパス
      */
-    public String getConfigPath() {
-        return configPath;
-    }
+//i    public String getConfigPath() {
+//i        return configPath;
+//i    }
 
     /**
      * 設定ファイルのパスを設定します。
@@ -80,9 +80,9 @@ public class EntityTestModel extends TestClassModel {
      * @param configPath
      *            設定ファイルのパス
      */
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
-    }
+//i    public void setConfigPath(String configPath) {
+//i        this.configPath = configPath;
+//i    }
 
     /**
      * {@link JdbcManager}のコンポーネント名を返します。
@@ -159,5 +159,4 @@ public class EntityTestModel extends TestClassModel {
     public void setNamesModel(NamesModel namesModel) {
         this.namesModel = namesModel;
     }
-
 }

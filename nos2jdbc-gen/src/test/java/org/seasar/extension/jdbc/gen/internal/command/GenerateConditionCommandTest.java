@@ -21,7 +21,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.seasar.extension.jdbc.gen.internal.command.GenerateConditionCommand;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+//i import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +37,7 @@ public class GenerateConditionCommandTest {
      */
     @After
     public void tearDown() throws Exception {
-        SingletonS2ContainerFactory.destroy();
+//i        SingletonS2ContainerFactory.destroy();
     }
 
     /**

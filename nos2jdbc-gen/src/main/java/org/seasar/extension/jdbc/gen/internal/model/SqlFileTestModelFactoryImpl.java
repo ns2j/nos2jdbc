@@ -31,7 +31,7 @@ import org.seasar.extension.jdbc.gen.model.SqlFileTestModelFactory;
 public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
 
     /** 設定ファイルのパス */
-    protected String configPath;
+//i    protected String configPath;
 
     /** {@link JdbcManager}のコンポーネント名 */
     protected String jdbcManagerName;
@@ -43,7 +43,7 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
     protected String shortClassName;
 
     /** S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false} */
-    protected boolean useS2junit4;
+//i    protected boolean useS2junit4;
 
     /** SQLファイルのパスのリスト */
     protected List<String> sqlFilePathList;
@@ -53,7 +53,12 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
 
     /** 生成モデルのサポート */
     protected GeneratedModelSupport generatedModelSupport = new GeneratedModelSupport();
-
+//i
+    protected String rootPackageName;
+//i
+    protected String componentType = "none";
+//i
+    protected String springAppConfig = "";
     /**
      * インスタンスを構築します。
      * 
@@ -73,10 +78,11 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
      *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
      */
     public SqlFileTestModelFactoryImpl(File classpathDir, Set<File> sqlFileSet,
-            String configPath, String jdbcManagerName, String packageName,
-            String shortClassName, boolean useS2junit4) {
-        this(classpathDir, sqlFileSet, configPath, jdbcManagerName,
-                packageName, shortClassName, useS2junit4, new SqlFileSupport());
+            String jdbcManagerName, String packageName,
+            String shortClassName, String rootPackageName, String componentType, String springAppConfig) {
+        this(classpathDir, sqlFileSet, jdbcManagerName,
+                packageName, shortClassName, new SqlFileSupport(),
+                rootPackageName, componentType, springAppConfig);
     }
 
     /**
@@ -100,18 +106,19 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
      *            SQLファイルのサポート
      */
     protected SqlFileTestModelFactoryImpl(File classpathDir,
-            Set<File> sqlFileSet, String configPath, String jdbcManagerName,
-            String packageName, String shortClassName, boolean useS2junit4,
-            SqlFileSupport sqlFileSupport) {
+            Set<File> sqlFileSet, String jdbcManagerName,
+            String packageName, String shortClassName,
+            SqlFileSupport sqlFileSupport,
+            String rootPackageName, String componentType, String springAppConfig) {
         if (classpathDir == null) {
             throw new NullPointerException("classpathDir");
         }
         if (sqlFileSet == null) {
             throw new NullPointerException("sqlFileSet");
         }
-        if (configPath == null) {
-            throw new NullPointerException("configPath");
-        }
+//i        if (configPath == null) {
+//i            throw new NullPointerException("configPath");
+//i        }
         if (jdbcManagerName == null) {
             throw new NullPointerException("jdbcManagerName");
         }
@@ -121,13 +128,20 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
         if (sqlFileSupport == null) {
             throw new NullPointerException("sqlFileSupport");
         }
-        this.configPath = configPath;
+//i        
+        if (rootPackageName == null) {
+            throw new NullPointerException("rootPackageName");
+        }
+//i        this.configPath = configPath;
         this.jdbcManagerName = jdbcManagerName;
         this.packageName = packageName;
         this.shortClassName = shortClassName;
-        this.useS2junit4 = useS2junit4;
+//i        this.useS2junit4 = useS2junit4;
         this.sqlFileSupport = sqlFileSupport;
         this.sqlFilePathList = createSqlFilePathList(classpathDir, sqlFileSet);
+        this.rootPackageName = rootPackageName;
+        this.componentType = componentType;
+        this.springAppConfig = springAppConfig;
     }
 
     /**
@@ -146,14 +160,18 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
 
     public SqlFileTestModel getSqlFileTestModel() {
         SqlFileTestModel model = new SqlFileTestModel();
-        model.setConfigPath(configPath);
+//i        model.setConfigPath(configPath);
         model.setJdbcManagerName(jdbcManagerName);
         model.setPackageName(packageName);
         model.setShortClassName(shortClassName);
-        model.setUseS2junit4(useS2junit4);
+//i        model.setUseS2junit4(useS2junit4);
         for (String sqlFilePath : sqlFilePathList) {
             model.addSqlFilePath(sqlFilePath);
         }
+//i
+        model.setRootPackageName(rootPackageName);
+        model.setComponentType(componentType);
+        model.setSpringAppConfig(springAppConfig);
         doGeneratedInfo(model);
         return model;
     }

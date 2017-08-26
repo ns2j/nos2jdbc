@@ -32,9 +32,12 @@ import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
-import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.extension.jta.UserTransactionImpl;
+//i import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
+
+import nos2jdbc.TransactionManagerRegistry;
 
 /**
  * エンティティに対応するデータベースのデータをテーブルごとにダンプする{@link Command}の実装です。
@@ -396,8 +399,9 @@ public class DumpDataCommand extends AbstractCommand {
     protected void doInit() {
         dialect = getGenDialect(genDialectClassName);
         if (transactional) {
-            userTransaction = SingletonS2Container
-                    .getComponent(UserTransaction.class);
+//i            userTransaction = SingletonS2Container
+//i                    .getComponent(UserTransaction.class);
+            userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
         valueTypeProvider = createValueTypeProvider();
         entityMetaReader = createEntityMetaReader();
