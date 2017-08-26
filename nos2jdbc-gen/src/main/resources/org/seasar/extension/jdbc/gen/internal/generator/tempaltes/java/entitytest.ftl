@@ -12,6 +12,23 @@ package ${packageName};
 <#list importNameSet as importName>
 import ${importName};
 </#list>
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+<#if componentType == "cdi" || componentType == "ejb">
+import javax.inject.Inject;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+
+import ${rootPackageName}.ArchiveTestUtil;
+</#if>
+<#if componentType == "spring">
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+</#if>
 <#if staticImportNameSet?size gt 0>
 
   <#list staticImportNameSet as importName>
@@ -26,35 +43,22 @@ import static ${importName};
  * @author ${lib.author}
 </#if>
  */
-<#if useS2junit4>
-@RunWith(Seasar2.class)
+<#if componentType == "cdi" || componentType == "ejb">
+@RunWith(Arquillian.class)
+</#if>
+<#if componentType == "spring">
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {${springAppConfig}.class})
 </#if>
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime}")
-public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
-<#if useS2junit4>
-
-    private TestContext testContext;
+public class ${shortClassName} {
+<#if componentType == "cdi" || componentType == "ejb">
+    @Inject
 </#if>
-
+<#if componentType == "spring">
+    @Autowired
+</#if>
     private JdbcManager ${jdbcManagerName};
-
-    /**
-     * 事前処理をします。
-     * 
-     * @throws Exception
-     */
-<#if useS2junit4>
-    public void before() throws Exception {
-        testContext.setAutoIncluding(false);
-        testContext.include("${configPath}");
-    }
-<#else>
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        include("${configPath}");
-    }
-</#if>
 
 <#if idExpressionList?size == 0>
     /**
@@ -62,6 +66,7 @@ public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
      * 
      * @throws Exception
      */
+     @Test
     public void testFindAll() throws Exception {
         ${jdbcManagerName}.from(${shortEntityClassName}.class).getResultList();
     }
@@ -71,6 +76,7 @@ public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
      * 
      * @throws Exception
      */
+    @Test
     public void testFindById() throws Exception {
         ${jdbcManagerName}.from(${shortEntityClassName}.class).id(<#list idExpressionList as idExpression>${idExpression}<#if idExpression_has_next>, </#if></#list>).getSingleResult();
     }
@@ -82,6 +88,7 @@ public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_${namesAssociationModel.name}() throws Exception {
         ${jdbcManagerName}.from(${shortEntityClassName}.class).leftOuterJoin(${namesAssociationModel.name}()).id(<#list idExpressionList as idExpression>${idExpression}<#if idExpression_has_next>, </#if></#list>).getSingleResult();
     }
@@ -94,10 +101,18 @@ public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_${associationName}() throws Exception {
         ${jdbcManagerName}.from(${shortEntityClassName}.class).leftOuterJoin("${associationName}").id(<#list idExpressionList as idExpression>${idExpression}<#if idExpression_has_next>, </#if></#list>).getSingleResult();
     }
     </#list>
   </#if>
+</#if>
+
+<#if componentType == "cdi" || componentType == "ejb">
+    @Deployment
+    public static Archive<?> createTestArchive() {
+	return ArchiveTestUtil.createTestArchive();
+    }
 </#if>
 }

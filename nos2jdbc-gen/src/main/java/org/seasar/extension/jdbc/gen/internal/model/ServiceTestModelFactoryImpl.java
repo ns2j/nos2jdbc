@@ -17,13 +17,13 @@ package org.seasar.extension.jdbc.gen.internal.model;
 
 import javax.annotation.Generated;
 
-import org.junit.Assert;
-import org.junit.runner.RunWith;
+//i import org.junit.Assert;
+//i import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModel;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModelFactory;
-import org.seasar.extension.unit.S2TestCase;
-import org.seasar.framework.unit.Seasar2;
+//i import org.seasar.extension.unit.S2TestCase;
+//i import org.seasar.framework.unit.Seasar2;
 
 /**
  * {@link ServiceTestModelFactory}の実装クラスです。
@@ -31,9 +31,10 @@ import org.seasar.framework.unit.Seasar2;
  * @author taedium
  */
 public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
-
     /** パッケージ名、デフォルトパッケージの場合は{@code null} */
     protected String packageName;
+  //i
+    protected String rootPackageName;
 
     /** サービスクラス名のサフィックス */
     protected String serviceClassNameSuffix;
@@ -45,8 +46,12 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
     protected String configPath;
 
     /** S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false} */
-    protected boolean useS2junit4;
-
+//i    protected boolean useS2junit4;
+//i
+    protected String componentType = "none";
+//i
+    protected String springAppConfig = "";
+    
     /** クラスモデルのサポート */
     protected ClassModelSupport classModelSupport = new ClassModelSupport();
 
@@ -62,41 +67,55 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
      *            サービスクラス名のサフィックス
      * @param testClassNameSuffix
      *            テストクラス名のサフィックス
-     * @param configPath
-     *            設定ファイルのパス
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
+     * @param rootPackageName
+     *            ルートパッケージ名
+     * @param componentType
+     *            コンポーネントタイプ
+     * @param springAppConfig
+     *            SpringFrameworkのAppConfig
      */
-    public ServiceTestModelFactoryImpl(String configPath, String packageName,
+    public ServiceTestModelFactoryImpl(String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
-            boolean useS2junit4) {
-        if (configPath == null) {
-            throw new NullPointerException("configPath");
-        }
+            String rootPackageName, String componentType, String springAppConfig) {
+//i        if (configPath == null) {
+//i            throw new NullPointerException("configPath");
+//i        }
         if (serviceClassNameSuffix == null) {
             throw new NullPointerException("serviceClassNameSuffix");
         }
         if (testClassNameSuffix == null) {
             throw new NullPointerException("testClassNameSuffix");
         }
-        this.configPath = configPath;
+//i
+        if (rootPackageName == null) {
+            throw new NullPointerException("rootPackageName");
+        }
+//i        this.configPath = configPath;
         this.packageName = packageName;
         this.serviceClassNameSuffix = serviceClassNameSuffix;
         this.testClassNameSuffix = testClassNameSuffix;
-        this.useS2junit4 = useS2junit4;
+//i        this.useS2junit4 = useS2junit4;
+//i        
+        this.rootPackageName = rootPackageName;
+        this.componentType = componentType;
+        this.springAppConfig = springAppConfig;
     }
 
     public ServiceTestModel getServiceTestModel(EntityMeta entityMeta) {
         ServiceTestModel serviceTestModel = new ServiceTestModel();
-        serviceTestModel.setConfigPath(configPath);
+//i        serviceTestModel.setConfigPath(configPath);
         serviceTestModel.setPackageName(packageName);
+        //i
+        serviceTestModel.setRootPackageName(rootPackageName);
         String shortServiceClassName = entityMeta.getEntityClass()
                 .getSimpleName()
                 + serviceClassNameSuffix;
         serviceTestModel.setShortServiceClassName(shortServiceClassName);
         serviceTestModel.setShortClassName(shortServiceClassName
                 + testClassNameSuffix);
-        serviceTestModel.setUseS2junit4(useS2junit4);
+//i        serviceTestModel.setUseS2junit4(useS2junit4);
+        serviceTestModel.setComponentType(componentType);
+        serviceTestModel.setSpringAppConfig(springAppConfig);
         doImportName(serviceTestModel, entityMeta);
         doGeneratedInfo(serviceTestModel, entityMeta);
         return serviceTestModel;
@@ -113,14 +132,16 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
     protected void doImportName(ServiceTestModel serviceTestModel,
             EntityMeta entityMeta) {
         classModelSupport.addImportName(serviceTestModel, Generated.class);
+        /*i
         if (useS2junit4) {
             classModelSupport.addImportName(serviceTestModel, RunWith.class);
-            classModelSupport.addImportName(serviceTestModel, Seasar2.class);
+//i            classModelSupport.addImportName(serviceTestModel, Seasar2.class);
             classModelSupport.addStaticImportName(serviceTestModel,
                     Assert.class);
         } else {
-            classModelSupport.addImportName(serviceTestModel, S2TestCase.class);
+//i            classModelSupport.addImportName(serviceTestModel, S2TestCase.class);
         }
+        */
     }
 
     /**

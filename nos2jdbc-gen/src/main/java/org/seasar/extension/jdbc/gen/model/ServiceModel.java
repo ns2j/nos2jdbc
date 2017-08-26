@@ -34,6 +34,9 @@ public class ServiceModel extends ClassModel {
 
     /** {@link JdbcManager}のコンポーネントをsetterメソッドでDIする場合{@code true} */
     protected boolean jdbcManagerSetterNecessary;
+    
+    //i
+    protected String componentType;
 
     /** エンティティクラスの単純名 */
     protected String shortEntityClassName;
@@ -86,6 +89,15 @@ public class ServiceModel extends ClassModel {
      */
     public void setJdbcManagerSetterNecessary(boolean jdbcManagerSetterNecessary) {
         this.jdbcManagerSetterNecessary = jdbcManagerSetterNecessary;
+    }
+
+//i
+    public String getComponentType() {
+        return componentType;
+    }
+//i
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
     }
 
     /**

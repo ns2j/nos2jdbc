@@ -29,7 +29,7 @@ import org.seasar.extension.jdbc.JdbcManager;
 public class SqlFileTestModel extends TestClassModel {
 
     /** 設定ファイルのパス */
-    protected String configPath;
+//i    protected String configPath;
 
     /** {@link JdbcManager}のコンポーネント名 */
     protected String jdbcManagerName;
@@ -42,9 +42,9 @@ public class SqlFileTestModel extends TestClassModel {
      * 
      * @return 設定ファイルのパス
      */
-    public String getConfigPath() {
-        return configPath;
-    }
+//i    public String getConfigPath() {
+//i        return configPath;
+//i    }
 
     /**
      * 設定ファイルのパスを設定します。
@@ -52,9 +52,9 @@ public class SqlFileTestModel extends TestClassModel {
      * @param configPath
      *            設定ファイルのパス
      */
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
-    }
+//i    public void setConfigPath(String configPath) {
+//i        this.configPath = configPath;
+//i    }
 
     /**
      * {@link JdbcManager}のコンポーネント名を返します。
@@ -93,5 +93,4 @@ public class SqlFileTestModel extends TestClassModel {
     public void addSqlFilePath(String sqlFilePath) {
         sqlFilePathList.add(sqlFilePath);
     }
-
 }

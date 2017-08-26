@@ -152,7 +152,6 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
         final List<EntityMeta> entityMetaList = new ArrayList<EntityMeta>();
 
         ClassTraversal.forEach(classpathDir, new ClassHandler() {
-
             public void processClass(String packageName, String shortClassName) {
                 if (isTargetPackage(packageName)
                         && isTargetClass(shortClassName)) {

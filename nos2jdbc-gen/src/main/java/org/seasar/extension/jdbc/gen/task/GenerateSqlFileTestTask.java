@@ -202,5 +202,12 @@ public class GenerateSqlFileTestTask extends AbstractTask {
             command.getSqlFileSet().add(new File(baseDir, fileName));
         }
     }
-
+//i
+    public void setComponentType(String componentType) {
+        command.setComponentType(componentType);
+    }
+//i
+    public void setSpringAppConfig(String springAppConfig) {
+        command.setSpringAppConfig(springAppConfig);
+    }
 }

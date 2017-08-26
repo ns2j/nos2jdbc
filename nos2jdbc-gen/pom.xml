@@ -6,17 +6,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!-- The Basics -->
-  <artifactId>s2jdbc-gen</artifactId>
+  <groupId>nos2jdbc</groupId>
+  <artifactId>nos2jdbc-gen</artifactId>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
-  <parent>
-    <groupId>org.seasar.container</groupId>
-    <artifactId>s2-container-project</artifactId>
-    <version>2.4.49-SNAPSHOT</version>
-    <relativePath>../seasar2</relativePath>
-  </parent>
 
   <!-- More Project Information -->
-  <name>S2JDBC-Gen</name>
+  <name>NOS2JDBC-Gen</name>
   <url>http://s2container.seasar.org/</url>
 
   <!-- Build Settings -->
@@ -49,57 +45,45 @@
   <!-- Dependency Settings -->
   <dependencies>
     <dependency>
-      <groupId>org.seasar.container</groupId>
-      <artifactId>s2-tiger</artifactId>
-      <version>${parent.version}</version>
-      <type>jar</type>
+      <groupId>nos2jdbc</groupId>
+      <artifactId>nos2jdbc-core</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>javax.transaction-api</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
     </dependency>
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
-      <version>2.3.13</version>
-      <type>jar</type>
+      <version>2.3.23</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
-      <version>1.7.0</version>
-      <type>jar</type>
+      <version>1.10.1</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-annotation_1.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-ejb_3.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-interceptor_3.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jpa_3.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jta_1.1_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
+      <groupId>javax.ejb</groupId>
+      <artifactId>ejb-api</artifactId>
+      <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>junit-addons</groupId>
@@ -114,13 +98,14 @@
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
       <groupId>org.tmatesoft.svnkit</groupId>
       <artifactId>svnkit</artifactId>
       <version>1.3.2-1</version>
-      <type>jar</type>
       <optional>true</optional>
     </dependency>
+
     <dependency>
       <groupId>com.sun</groupId>
       <artifactId>tools</artifactId>

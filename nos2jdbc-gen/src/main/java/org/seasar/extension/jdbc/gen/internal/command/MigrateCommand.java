@@ -34,9 +34,12 @@ import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.Migrater;
 import org.seasar.extension.jdbc.gen.version.SchemaInfoTable;
-import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.extension.jta.UserTransactionImpl;
+//i import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
+
+import nos2jdbc.TransactionManagerRegistry;
 
 /**
  * データベースのスキーマとデータを移行する{@link Command}の実装クラスです。
@@ -539,8 +542,9 @@ public class MigrateCommand extends AbstractCommand {
         dialect = getGenDialect(genDialectClassName);
         valueTypeProvider = createValueTypeProvider();
         if (transactional) {
-            userTransaction = SingletonS2Container
-                    .getComponent(UserTransaction.class);
+//i            userTransaction = SingletonS2Container
+//i                    .getComponent(UserTransaction.class);
+            userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
         sqlFileExecutor = createSqlFileExecutor();
         schemaInfoTable = createSchemaInfoTable();

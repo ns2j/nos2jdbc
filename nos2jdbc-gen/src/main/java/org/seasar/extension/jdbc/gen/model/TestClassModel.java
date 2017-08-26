@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2015 the Seasar Foundation and the Others.
+v * Copyright 2004-2015 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,16 +23,22 @@ package org.seasar.extension.jdbc.gen.model;
 public class TestClassModel extends ClassModel {
 
     /** S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false} */
-    boolean useS2junit4;
+//i    boolean useS2junit4;
+  //i    
+    protected String rootPackageName;
+//i
+    protected String componentType = "none";
+//i
+    protected String springAppConfig = "";
 
     /**
      * S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}を返します。
      * 
      * @return S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
      */
-    public boolean isUseS2junit4() {
-        return useS2junit4;
-    }
+//i    public boolean isUseS2junit4() {
+//i        return useS2junit4;
+//i    }
 
     /**
      * S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}を設定します。
@@ -40,8 +46,31 @@ public class TestClassModel extends ClassModel {
      * @param useS2junit4
      *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
      */
-    public void setUseS2junit4(boolean useS2junit4) {
-        this.useS2junit4 = useS2junit4;
+//i    public void setUseS2junit4(boolean useS2junit4) {
+//i        this.useS2junit4 = useS2junit4;
+//i    }
+  //i
+    public String getRootPackageName() {
+        return rootPackageName;
     }
-
+//i
+    public void setRootPackageName(String rootPackageName) {
+        this.rootPackageName = rootPackageName;
+    }
+//i
+    public String getComponentType() {
+        return componentType;
+    }
+//i
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
+    }
+  //i
+    public String getSpringAppConfig() {
+        return springAppConfig;
+    }
+//i
+    public void setSpringAppConfig(String springAppConfig) {
+        this.springAppConfig = springAppConfig;
+    }
 }

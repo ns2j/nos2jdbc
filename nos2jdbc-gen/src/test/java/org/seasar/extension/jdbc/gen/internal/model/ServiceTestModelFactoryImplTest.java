@@ -36,8 +36,9 @@ public class ServiceTestModelFactoryImplTest {
      */
     @Before
     public void setUp() throws Exception {
-        factory = new ServiceTestModelFactoryImpl("app.dicon", "hoge",
-                "Service", "Test", false);
+//i	
+        factory = new ServiceTestModelFactoryImpl("hoge",
+                "Service", "Test", "rootpackagename","none", "");
     }
 
     /**
@@ -49,10 +50,12 @@ public class ServiceTestModelFactoryImplTest {
         EntityMeta entityMeta = new EntityMeta();
         entityMeta.setEntityClass(Foo.class);
         ServiceTestModel model = factory.getServiceTestModel(entityMeta);
-        assertEquals("app.dicon", model.getConfigPath());
+//i        assertEquals("app.dicon", model.getConfigPath());
         assertEquals("hoge", model.getPackageName());
         assertEquals("FooServiceTest", model.getShortClassName());
         assertEquals("FooService", model.getShortServiceClassName());
+//i
+        assertEquals("rootpackagename", model.getRootPackageName());
     }
 
 }

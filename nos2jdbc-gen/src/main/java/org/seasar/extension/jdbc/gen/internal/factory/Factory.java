@@ -40,7 +40,8 @@ import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
-import org.seasar.extension.jdbc.gen.model.AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityTestModelFactory;
@@ -388,7 +389,7 @@ public interface Factory {
     ServiceModelFactory createServiceModelFactory(Command command,
             String packageName, String serviceClassNameSuffix,
             NamesModelFactory namesModelFactory, boolean useNamesClass,
-            String jdbcManagerName);
+            String jdbcManagerName, String componentType);
 
     /**
      * インスタンスを構築します。
@@ -408,12 +409,12 @@ public interface Factory {
      * @return {@link ServiceTestModelFactory}の実装
      */
     ServiceTestModelFactory createServiceTestModelFactory(Command command,
-            String configPath, String packageName,
+            String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
-            boolean useS2junit4);
+            String rootPackageName, String componentType, String springAppConfig);
 
     /**
-     * {@link AbstServiceModelFactory}の実装を作成します。
+     * {@link NoS2AbstServiceModelFactory}の実装を作成します。
      * 
      * @param command
      *            呼び出し元のコマンド
@@ -421,10 +422,16 @@ public interface Factory {
      *            パッケージ名、デフォルトパッケージの場合は{@code null}
      * @param serviceClassNameSuffix
      *            サービスクラス名のサフィックス
-     * @return {@link AbstServiceModelFactory}の実装
+     * @param componentType
+     *            コンポーネントタイプ
+     * @return {@link NoS2AbstServiceModelFactory}の実装
      */
-    AbstServiceModelFactory createAbstServiceModelFactory(Command command,
-            String packageName, String serviceClassNameSuffix);
+    NoS2AbstServiceModelFactory createNoS2AbstServiceModelFactory(Command command,
+            String packageName, String serviceClassNameSuffix, String componentType);
+
+//i
+    ArchiveTestUtilModelFactory createArchiveTestUtilModelFactory(Command command,
+            String packageName);
 
     /**
      * {@link EntityTestModelFactory}の実装を作成します。
@@ -446,9 +453,9 @@ public interface Factory {
      * @return {@link EntityTestModelFactory}の実装
      */
     EntityTestModelFactory createEntityTestModelFactory(Command command,
-            String configPath, String jdbcManagerName,
+            String jdbcManagerName,
             String testClassNameSuffix, NamesModelFactory namesModelFactory,
-            boolean useNamesClass, boolean useS2junit4);
+            boolean useNamesClass, String rootPackageName, String componentType, String springAppConfig);
 
     /**
      * {@link NamesModelFactory}の実装を作成します。
@@ -579,22 +586,24 @@ public interface Factory {
      *            クラスパスのディレクトリ
      * @param sqlFileSet
      *            SQLファイルのセット
-     * @param configPath
-     *            設定ファイルのパス
      * @param jdbcManagerName
      *            {@link JdbcManager}のコンポーネント名
      * @param packageName
      *            パッケージ名、デフォルトパッケージの場合は{@code null}
      * @param shortClassName
      *            テストクラスの単純名
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
+     * @param rootPackageName
+     *            ルートパッケージ名
+     * @param componentType
+     *            コンポーネントタイプ
+     * @param springAppConfig
+     *            SpringFrameworkのAppConfig
      * @return {@link SqlFileTestModelFactory}の実装
      */
     SqlFileTestModelFactory createSqlFileTestModelFactory(Command command,
-            File classpathDir, Set<File> sqlFileSet, String configPath,
+            File classpathDir, Set<File> sqlFileSet,
             String jdbcManagerName, String packageName, String shortClassName,
-            boolean useS2junit4);
+            String rootPackageName, String componentType, String springAppConfig);
 
     /**
      * {@link SqlFileTestModelFactory}の実装を作成します。

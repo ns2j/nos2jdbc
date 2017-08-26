@@ -42,7 +42,8 @@ import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.DbTableMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.AbstServiceModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ArchiveTestUtilModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.CompositeUniqueConstraintModelFactoryImpl;
@@ -67,7 +68,8 @@ import org.seasar.extension.jdbc.gen.internal.version.MigraterImpl;
 import org.seasar.extension.jdbc.gen.internal.version.SchemaInfoTableImpl;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
-import org.seasar.extension.jdbc.gen.model.AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityTestModelFactory;
@@ -221,40 +223,48 @@ public class FactoryImpl implements Factory {
                 new CompositeUniqueConstraintModelFactoryImpl(), useAccessor,
                 useComment, showCatalogName, showSchemaName, showTableName);
     }
-
+//i
     public ServiceModelFactory createServiceModelFactory(Command command,
             String packageName, String serviceClassNameSuffix,
             NamesModelFactory namesModelFactory, boolean useNamesClass,
-            String jdbcManagerName) {
+            String jdbcManagerName, String componentType) {
 
         return new ServiceModelFactoryImpl(packageName, serviceClassNameSuffix,
-                namesModelFactory, useNamesClass, jdbcManagerName);
+                namesModelFactory, useNamesClass, jdbcManagerName, componentType);
     }
 
     public ServiceTestModelFactory createServiceTestModelFactory(
-            Command command, String configPath, String packageName,
+            Command command, String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
-            boolean useS2junit4) {
+            String rootPackageName, String componentType, String springAppConfig) {
 
-        return new ServiceTestModelFactoryImpl(configPath, packageName,
-                serviceClassNameSuffix, testClassNameSuffix, useS2junit4);
+        return new ServiceTestModelFactoryImpl(packageName,
+                serviceClassNameSuffix, testClassNameSuffix,
+                rootPackageName, componentType, springAppConfig);
     }
 
-    public AbstServiceModelFactory createAbstServiceModelFactory(
-            Command command, String packageName, String serviceClassNameSuffix) {
+    public NoS2AbstServiceModelFactory createNoS2AbstServiceModelFactory(
+            Command command, String packageName, String serviceClassNameSuffix,
+            String componentType) {
 
-        return new AbstServiceModelFactoryImpl(packageName,
-                serviceClassNameSuffix);
+        return new NoS2AbstServiceModelFactoryImpl(packageName,
+                serviceClassNameSuffix, componentType);
+    }
+//i
+    public ArchiveTestUtilModelFactory createArchiveTestUtilModelFactory(
+            Command command, String packageName) {
+        return new ArchiveTestUtilModelFactoryImpl(packageName);
     }
 
     public EntityTestModelFactory createEntityTestModelFactory(Command command,
-            String configPath, String jdbcManagerName,
+            String jdbcManagerName,
             String testClassNameSuffix, NamesModelFactory namesModelFactory,
-            boolean useNamesClass, boolean useS2junit4) {
+            boolean useNamesClass,
+            String rootPackageName, String componentType, String springAppConfig) {
 
-        return new EntityTestModelFactoryImpl(configPath, jdbcManagerName,
+        return new EntityTestModelFactoryImpl(jdbcManagerName,
                 testClassNameSuffix, namesModelFactory, useNamesClass,
-                useS2junit4);
+                rootPackageName, componentType, springAppConfig);
     }
 
     public NamesModelFactory createNamesModelFactory(Command command,
@@ -308,12 +318,13 @@ public class FactoryImpl implements Factory {
 
     public SqlFileTestModelFactory createSqlFileTestModelFactory(
             Command command, File classpathDir, Set<File> sqlFileSet,
-            String configPath, String jdbcManagerName, String packageName,
-            String shortClassName, boolean useS2junit4) {
+            String jdbcManagerName, String packageName,
+            String shortClassName,
+            String rootPackageName, String componentType, String springAppConfig) {
 
         return new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet,
-                configPath, jdbcManagerName, packageName, shortClassName,
-                useS2junit4);
+                jdbcManagerName, packageName, shortClassName,
+                rootPackageName, componentType, springAppConfig);
     }
 
     public SqlFileConstantsModelFactory createSqlFileConstantsModelFactory(
@@ -324,5 +335,4 @@ public class FactoryImpl implements Factory {
         return new SqlFileConstantsModelFactoryImpl(classpathDir, sqlFileSet,
                 sqlFileConstantNamingRule, packageName, shortClassName);
     }
-
 }

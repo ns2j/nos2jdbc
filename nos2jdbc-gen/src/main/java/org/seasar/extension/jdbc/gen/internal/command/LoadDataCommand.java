@@ -38,9 +38,12 @@ import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
-import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.extension.jta.UserTransactionImpl;
+//i import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
+
+import nos2jdbc.TransactionManagerRegistry;
 
 /**
  * ダンプファイルをロードする{@link Command}の実装クラスです。
@@ -455,8 +458,9 @@ public class LoadDataCommand extends AbstractCommand {
         dialect = getGenDialect(genDialectClassName);
         valueTypeProvider = createValueTypeProvider();
         if (transactional) {
-            userTransaction = SingletonS2Container
-                    .getComponent(UserTransaction.class);
+//i            userTransaction = SingletonS2Container
+//i                    .getComponent(UserTransaction.class);
+            userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
         entityMetaReader = createEntityMetaReader();
         databaseDescFactory = createDatabaseDescFactory();

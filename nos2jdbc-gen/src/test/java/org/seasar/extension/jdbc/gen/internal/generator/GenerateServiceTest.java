@@ -73,7 +73,7 @@ public class GenerateServiceTest {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
                 "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "jdbcManager");
+                        "hoge.entity", "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
         GenerationContext context = new GenerationContextImpl(model, new File(
                 "file"), "java/service.ftl", "UTF-8", false);
@@ -91,7 +91,7 @@ public class GenerateServiceTest {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ccc.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
                 "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "jdbcManager");
+                        "hoge.entity", "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
         GenerationContext context = new GenerationContextImpl(model, new File(
                 "file"), "java/service.ftl", "UTF-8", false);
@@ -110,7 +110,7 @@ public class GenerateServiceTest {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ddd.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
                 "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "jdbcManager");
+                        "hoge.entity", "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
         GenerationContext context = new GenerationContextImpl(model, new File(
                 "file"), "java/service.ftl", "UTF-8", false);
@@ -128,7 +128,7 @@ public class GenerateServiceTest {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
                 "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "myJdbcManager");
+                        "hoge.entity", "Names"), true, "myJdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
         GenerationContext context = new GenerationContextImpl(model, new File(
                 "file"), "java/service.ftl", "UTF-8", false);
@@ -147,7 +147,7 @@ public class GenerateServiceTest {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
                 "hoge.service", "Dao", new NamesModelFactoryImpl("hoge.entity",
-                        "Names"), true, "jdbcManager");
+                        "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
         GenerationContext context = new GenerationContextImpl(model, new File(
                 "file"), "java/service.ftl", "UTF-8", false);

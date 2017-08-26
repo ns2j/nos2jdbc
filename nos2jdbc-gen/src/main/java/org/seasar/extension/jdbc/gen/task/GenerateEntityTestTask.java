@@ -237,5 +237,13 @@ public class GenerateEntityTestTask extends AbstractTask {
     public void setUseNamesClass(boolean useNamesClass) {
         command.setUseNamesClass(useNamesClass);
     }
+//i
+    public void setComponentType(String componentType) {
+        command.setComponentType(componentType);
+    }
+//i
+    public void setSpringAppConfig(String springAppConfig) {
+	command.setSpringAppConfig(springAppConfig);
+    }
 
 }

@@ -26,8 +26,7 @@ public class ServiceTestModel extends TestClassModel {
     protected String shortServiceClassName;
 
     /** 設定ファイルのパス */
-    protected String configPath;
-
+//i    protected String configPath;
     /**
      * サービスクラスの単純名を返します。
      * 
@@ -52,9 +51,9 @@ public class ServiceTestModel extends TestClassModel {
      * 
      * @return 設定ファイルのパス
      */
-    public String getConfigPath() {
-        return configPath;
-    }
+//i    public String getConfigPath() {
+//i        return configPath;
+//i    }
 
     /**
      * 設定ファイルのパスを設定します。
@@ -62,8 +61,7 @@ public class ServiceTestModel extends TestClassModel {
      * @param configPath
      *            設定ファイルのパス
      */
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
-    }
-
+//i    public void setConfigPath(String configPath) {
+//i        this.configPath = configPath;
+//i    }
 }

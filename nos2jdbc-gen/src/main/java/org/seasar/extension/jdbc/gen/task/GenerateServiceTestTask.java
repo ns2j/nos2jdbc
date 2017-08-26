@@ -237,4 +237,12 @@ public class GenerateServiceTestTask extends AbstractTask {
     public void setUseS2junit4(boolean useS2junit4) {
         command.setUseS2junit4(useS2junit4);
     }
+  //i
+    public void setComponentType(String componentType) {
+        command.setComponentType(componentType);
+    }
+  //i
+    public void setSpringAppConfig(String springAppConfig) {
+	command.setSpringAppConfig(springAppConfig);
+    }
 }

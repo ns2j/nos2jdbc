@@ -255,7 +255,10 @@ public class GenerateServiceTask extends AbstractTask {
     public void setUseNamesClass(boolean useNamesClass) {
         command.setUseNamesClass(useNamesClass);
     }
-
+//i
+    public void setComponentType(String componentType) {
+        command.setComponentType(componentType);
+    }
     @Override
     protected Command getCommand() {
         return command;

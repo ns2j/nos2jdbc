@@ -43,9 +43,10 @@ public class EntityTestModelFactoryImplTest {
      */
     @Before
     public void setUp() throws Exception {
-        factory = new EntityTestModelFactoryImpl("s2jdbc.dicon", "jdbcManager",
+//i	
+        factory = new EntityTestModelFactoryImpl("jdbcManager",
                 "Test", new NamesModelFactoryImpl("hoge.entity", "Names"),
-                true, false);
+                true, "rootpackagename", "none", "");
     }
 
     /**
@@ -59,13 +60,15 @@ public class EntityTestModelFactoryImplTest {
         entityMeta.setEntityClass(getClass());
         EntityTestModel entityTestModel = factory
                 .getEntityTestModel(entityMeta);
-        assertEquals("s2jdbc.dicon", entityTestModel.getConfigPath());
+//i        assertEquals("s2jdbc.dicon", entityTestModel.getConfigPath());
         assertEquals("jdbcManager", entityTestModel.getJdbcManagerName());
         assertEquals("org.seasar.extension.jdbc.gen.internal.model",
                 entityTestModel.getPackageName());
         assertEquals("FooTest", entityTestModel.getShortClassName());
         assertEquals("Foo", entityTestModel.getShortEntityClassName());
-        assertEquals(3, entityTestModel.getImportNameSet().size());
+//i        assertEquals(3, entityTestModel.getImportNameSet().size());
+        assertEquals(2, entityTestModel.getImportNameSet().size());
+        assertEquals("rootpackagename", entityTestModel.getRootPackageName());
     }
 
     /**

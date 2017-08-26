@@ -2,34 +2,26 @@ package org.seasar.extension.jdbc.gen.internal.generator;
 
 import javax.annotation.Generated;
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.extension.unit.S2TestCase;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * {@link Ddd}のテストクラスです。
  * 
  */
-@Generated(value = {"S2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactoryImpl"}, date = "2009/04/01 13:12:11")
-public class DddTest extends S2TestCase {
-
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactoryImpl"}, date = "2009/04/01 13:12:11")
+public class DddTest {
     private JdbcManager jdbcManager;
-
-    /**
-     * 事前処理をします。
-     * 
-     * @throws Exception
-     */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        include("s2jdbc.dicon");
-    }
 
     /**
      * 全件取得をテストします。
      * 
      * @throws Exception
      */
+     @Test
     public void testFindAll() throws Exception {
         jdbcManager.from(Ddd.class).getResultList();
     }
+
 }

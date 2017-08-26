@@ -40,7 +40,8 @@ public class GeneratedModelSupportTest {
         support.fillGeneratedInfo(factory, model);
         List<String> infoList = model.getGeneratedInfoList();
         assertEquals(2, infoList.size());
-        assertEquals("S2JDBC-Gen test-0.0.1", infoList.get(0));
+//i        
+        assertEquals("NOS2JDBC-Gen test-0.0.1", infoList.get(0));
         assertEquals(Factory.class.getName(), infoList.get(1));
     }
 

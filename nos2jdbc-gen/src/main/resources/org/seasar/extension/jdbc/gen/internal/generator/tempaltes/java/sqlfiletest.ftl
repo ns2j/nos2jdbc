@@ -15,25 +15,33 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.annotation.Generated;
 
-<#if useS2junit4>
-import org.junit.runner.RunWith;
-</#if>
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.ConnectionUtil;
-<#if !useS2junit4>
-import org.seasar.extension.unit.S2TestCase;
-</#if>
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
-<#if useS2junit4>
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.TestContext;
-</#if>
 import org.seasar.framework.util.InputStreamReaderUtil;
 import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.ReaderUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StatementUtil;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+<#if componentType == "cdi" || componentType == "ejb">
+import javax.inject.Inject;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+
+import ${rootPackageName}.ArchiveTestUtil;
+</#if>
+<#if componentType == "spring">
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+</#if>
 
 /**
  * SQLファイルのテストクラスです。
@@ -46,35 +54,23 @@ import org.seasar.framework.util.StatementUtil;
  * @author ${lib.author}
 </#if>
  */
-<#if useS2junit4>
-@RunWith(Seasar2.class)
+<#if componentType == "cdi" || componentType == "ejb">
+@RunWith(Arquillian.class)
+</#if>
+<#if componentType == "spring">
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {${springAppConfig}.class})
 </#if>
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime}")
-public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
-<#if useS2junit4>
-
-    private TestContext testContext;
+public class ${shortClassName} {
+<#if componentType == "cdi" || componentType == "ejb">
+    @Inject
 </#if>
-
+<#if componentType == "spring">
+    @Autowired
+</#if>
     private JdbcManager ${jdbcManagerName};
 
-    /**
-     * 事前処理をします。
-     * 
-     * @throws Exception
-     */
-<#if useS2junit4>
-    public void before() throws Exception {
-        testContext.setAutoIncluding(false);
-        testContext.include("${configPath}");
-    }
-<#else>
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        include("${configPath}");
-    }
-</#if>
 <#if sqlFilePathList?size == 0>
 
     /**
@@ -83,6 +79,7 @@ public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
      * 
      * @throws Exception
      */
+    @Test
     public void test() throws Exception {
     }
 <#else>
@@ -93,7 +90,8 @@ public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
      * 
      * @throws Exception
      */
-    public void testSqlFile${path_index}<#if !useS2junit4>Tx</#if>() throws Exception {
+    @Test
+    public void testSqlFile${path_index}() throws Exception {
         String path = "${path}";
         new SqlFile(path).execute();
     }
@@ -194,4 +192,11 @@ public class ${shortClassName} <#if !useS2junit4>extends S2TestCase </#if>{
             }
         }
     }
+
+<#if componentType == "cdi" || componentType == "ejb">
+    @Deployment
+    public static Archive<?> createTestArchive() {
+	return ArchiveTestUtil.createTestArchive();
+    }
+</#if>
 }

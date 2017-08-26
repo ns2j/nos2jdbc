@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2015 the Seasar Foundation and the Others.
+v * Copyright 2004-2015 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
-import org.seasar.extension.jdbc.gen.model.AbstServiceModel;
-import org.seasar.extension.jdbc.gen.model.AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
+import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceModel;
@@ -78,7 +78,8 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected String serviceClassNameSuffix = "Service";
 
     /** 抽象サービスクラスのテンプレート名 */
-    protected String abstractServiceTemplateFileName = "java/abstract-service.ftl";
+    //i protected String abstractServiceTemplateFileName = "java/abstract-service.ftl";
+    protected String abstractServiceTemplateFileName = "java/nos2-abstract-service.ftl";
 
     /** サービスクラスのテンプレート名 */
     protected String serviceTemplateFileName = "java/service.ftl";
@@ -109,6 +110,9 @@ public class GenerateServiceCommand extends AbstractCommand {
 
     /** テンプレートファイルを格納したプライマリディレクトリ */
     protected File templateFilePrimaryDir = null;
+    
+//i
+    protected String componentType = "none";
 
     /** エンティティメタデータのリーダ */
     protected EntityMetaReader entityMetaReader;
@@ -117,7 +121,7 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected ServiceModelFactory serviceModelFactory;
 
     /** 抽象サービスモデルのファクトリ */
-    protected AbstServiceModelFactory abstServiceModelFactory;
+    protected NoS2AbstServiceModelFactory noS2AbstServiceModelFactory;
 
     /** 名前モデルのファクトリ */
     protected NamesModelFactory namesModelFactory;
@@ -475,6 +479,15 @@ public class GenerateServiceCommand extends AbstractCommand {
         this.useNamesClass = useNamesClass;
     }
 
+//i    
+    public String getComponentType() {
+        return componentType;
+    }
+//i
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
+    }
+
     @Override
     protected void doValidate() {
         if (classpathDir == null) {
@@ -487,7 +500,7 @@ public class GenerateServiceCommand extends AbstractCommand {
         entityMetaReader = createEntityMetaReader();
         namesModelFactory = createNamesModelFactory();
         serviceModelFactory = createServiceModelFactory();
-        abstServiceModelFactory = createAbstServiceModelFactory();
+        noS2AbstServiceModelFactory = createAbstServiceModelFactory();
         generator = createGenerator();
     }
 
@@ -507,7 +520,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * 抽象サービスクラスのJavaファイルを生成します。
      */
     protected void generateAbstractService() {
-        AbstServiceModel model = abstServiceModelFactory.getAbstServiceModel();
+        NoS2AbstServiceModel model = noS2AbstServiceModelFactory.getAbstServiceModel();
         GenerationContext context = createGenerationContext(model,
                 abstractServiceTemplateFileName, overwriteAbstractService);
         generator.generate(context);
@@ -565,18 +578,18 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected ServiceModelFactory createServiceModelFactory() {
         return factory.createServiceModelFactory(this, ClassUtil.concatName(
                 rootPackageName, servicePackageName), serviceClassNameSuffix,
-                namesModelFactory, useNamesClass, jdbcManagerName);
+                namesModelFactory, useNamesClass, jdbcManagerName, componentType);
     }
 
     /**
-     * {@link AbstServiceModelFactory}の実装を作成します。
+     * {@link NoS2AbstServiceModelFactory}の実装を作成します。
      * 
-     * @return {@link AbstServiceModelFactory}の実装
+     * @return {@link NoS2AbstServiceModelFactory}の実装
      */
-    protected AbstServiceModelFactory createAbstServiceModelFactory() {
-        return factory.createAbstServiceModelFactory(this, ClassUtil
+    protected NoS2AbstServiceModelFactory createAbstServiceModelFactory() {
+        return factory.createNoS2AbstServiceModelFactory(this, ClassUtil
                 .concatName(rootPackageName, servicePackageName),
-                serviceClassNameSuffix);
+                serviceClassNameSuffix, componentType);
     }
 
     /**
@@ -603,4 +616,5 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected Logger getLogger() {
         return logger;
     }
+
 }

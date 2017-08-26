@@ -9,7 +9,7 @@ import org.seasar.extension.jdbc.name.PropertyName;
  * {@link Bbb}のプロパティ名の集合です。
  * 
  */
-@Generated(value = {"S2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl"}, date = "2009/04/01 13:12:11")
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl"}, date = "2009/04/01 13:12:11")
 public class BbbNames {
 
     /**

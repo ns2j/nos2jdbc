@@ -47,7 +47,10 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
 
     /** {@link JdbcManager}のコンポーネント名 */
     protected String jdbcManagerName;
-
+    
+    //i
+    protected String componentType;
+    
     /** サービスクラス名のサフィックス */
     protected String serviceClassNameSuffix;
 
@@ -79,7 +82,7 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
      */
     public ServiceModelFactoryImpl(String packageName,
             String serviceClassNameSuffix, NamesModelFactory namesModelFactory,
-            boolean useNamesClass, String jdbcManagerName) {
+            boolean useNamesClass, String jdbcManagerName, String componentType) {
         if (jdbcManagerName == null) {
             throw new NullPointerException("jdbcManagerName");
         }
@@ -94,6 +97,7 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
         this.namesModelFactory = namesModelFactory;
         this.useNamesClass = useNamesClass;
         this.jdbcManagerName = jdbcManagerName;
+        this.componentType = componentType;
     }
 
     public ServiceModel getServiceModel(EntityMeta entityMeta) {
@@ -103,11 +107,13 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
                 + serviceClassNameSuffix);
         serviceModel.setShortEntityClassName(entityMeta.getEntityClass()
                 .getSimpleName());
-        serviceModel
-                .setShortSuperclassName("Abstract" + serviceClassNameSuffix);
+        serviceModel.setShortSuperclassName("NoS2Abstract" + serviceClassNameSuffix);
+//i                .setShortSuperclassName("Abstract" + serviceClassNameSuffix);
         serviceModel.setJdbcManagerName(jdbcManagerName);
         serviceModel.setJdbcManagerSetterNecessary(!DEFAULT_JDBC_MANAGER_NAME
                 .equals(jdbcManagerName));
+//i
+        serviceModel.setComponentType(componentType);
         for (PropertyMeta idPropertyMeta : entityMeta.getIdPropertyMetaList()) {
             serviceModel.addIdPropertyMeta(idPropertyMeta);
         }

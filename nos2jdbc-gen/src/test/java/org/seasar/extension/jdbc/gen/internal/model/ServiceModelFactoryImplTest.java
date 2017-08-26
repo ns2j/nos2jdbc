@@ -83,7 +83,7 @@ public class ServiceModelFactoryImplTest {
     public void testSingleId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "aaa.bbb", "Service", namesModelFactory, true, "jdbcManager");
+                "aaa.bbb", "Service", namesModelFactory, true, "jdbcManager", "cdi");
         ServiceModel serviceModel = serviceModelFactory
                 .getServiceModel(entityMeta);
         assertNotNull(serviceModel);
@@ -117,7 +117,7 @@ public class ServiceModelFactoryImplTest {
     public void testCompositeId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Bbb.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "aaa.bbb", "Service", namesModelFactory, true, "jdbcManager");
+                "aaa.bbb", "Service", namesModelFactory, true, "jdbcManager", "cdi");
         ServiceModel serviceModel = serviceModelFactory
                 .getServiceModel(entityMeta);
         assertNotNull(serviceModel);
@@ -151,7 +151,7 @@ public class ServiceModelFactoryImplTest {
     public void testJdbcManagerName() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Bbb.class);
         ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "aaa.bbb", "Service", namesModelFactory, true, "myJdbcManager");
+                "aaa.bbb", "Service", namesModelFactory, true, "myJdbcManager", "cdi");
         ServiceModel serviceModel = serviceModelFactory
                 .getServiceModel(entityMeta);
         assertNotNull(serviceModel);
