@@ -120,6 +120,8 @@ public interface Select<T, S extends Select<T, S>> extends Query<S> {
      *             {@link #disallowNoResult()}が呼び出された場合で、検索結果がなかった場合
      */
     List<T> getResultList() throws OrderByNotFoundRuntimeException;
+//i
+    List<T> getResultListWithoutInverseField() throws OrderByNotFoundRuntimeException;
 
     /**
      * 検索してベースオブジェクトを返します。
@@ -137,7 +139,8 @@ public interface Select<T, S extends Select<T, S>> extends Query<S> {
      *             {@link #disallowNoResult()}が呼び出された場合で、検索結果がなかった場合
      */
     T getSingleResult() throws SNonUniqueResultException;
-
+//i
+    T getSingleResultWithoutInverseField() throws SNonUniqueResultException;
     /**
      * 問い合わせ結果を一件ごとにコールバックに通知します。
      * <p>
