@@ -310,6 +310,13 @@ public class PostgreDialect extends StandardDialect {
             throw new UnsupportedOperationException("truncate");
         }
 
-    }
+	public void free() throws SQLException {
+            throw new UnsupportedOperationException("free");
+	}
 
+	public InputStream getBinaryStream(long pos, long length)
+		throws SQLException {
+            throw new UnsupportedOperationException("getBinaryStream");
+	}
+    }
 }
