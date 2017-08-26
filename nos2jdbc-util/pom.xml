@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project
   xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,35 +6,49 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!-- The Basics -->
-  <artifactId>s2-framework</artifactId>
+  <groupId>nos2jdbc</groupId>
+  <artifactId>nos2jdbc-util</artifactId>
   <packaging>jar</packaging>
-  <parent>
-    <groupId>org.seasar.container</groupId>
-    <artifactId>s2-container-project</artifactId>
-    <version>2.4.49-SNAPSHOT</version>
-  </parent>
+  <version>1.0.0</version>
 
   <!-- More Project Information -->
-  <name>Seasar2 Framework</name>
-  <url>http://s2container.seasar.org/</url>
+  <name>No S2 Container s2jdbc util pack</name>
+  <!--  <url>http://s2container.seasar.org/</url>  -->
 
   <!-- Build Settings -->
   <build>
+    <defaultGoal>validate</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>oracle/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
         <executions>
           <execution>
-            <id>test-jar</id>
+            <id>source-jar</id>
             <phase>package</phase>
             <goals>
-              <goal>test-jar</goal>
+              <goal>jar</goal>
             </goals>
-            <configuration>
-              <archive>
-                <addMavenDescriptor>false</addMavenDescriptor>
-              </archive>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -45,35 +58,28 @@
           <encoding>UTF-8</encoding>
           <docencoding>UTF-8</docencoding>
           <charset>UTF-8</charset>
-          <links>
-            <link>http://download.oracle.com/javaee/6/api/</link>
-          	<link>http://java.sun.com/javase/ja/6/docs/ja/api/</link>
-            <link>http://aopalliance.sourceforge.net/doc/</link>
-            <link>http://jakarta.apache.org/commons/logging/apidocs/</link>
-            <link>http://www.csg.is.titech.ac.jp/~chiba/javassist/html/</link>
-            <link>http://www.opensymphony.com/ognl/api/</link>
-            <link>http://www.junit.org/junit/javadoc/4.4/</link>
-            <link>http://www.junit.org/junit/javadoc/3.8.1/</link>
-            <link>http://s2container.seasar.org/2.4/s2-framework/ja/apidocs/</link>
-            <link>http://s2container.seasar.org/2.4/s2-extension/ja/apidocs/</link>
-            <link>http://s2container.seasar.org/2.4/s2-tiger/ja/apidocs/</link>
-          </links>
+          <failOnError>false</failOnError>
+          <detectLinks>true</detectLinks>
           <groups>
             <group>
-              <title>S2AOP</title>
-              <packages>org.seasar.framework.aop*</packages>
+              <title>NOS2JDBC</title>
+              <packages>nos2jdbc*</packages>
             </group>
             <group>
-              <title>BeanDesc</title>
+              <title>S2JDBC</title>
+              <packages>org.seasar.extension.jdbc*</packages>
+            </group>
+            <group>
+              <title>S2Tx</title>
+              <packages>org.seasar.extension.tx*</packages>
+            </group>
+            <group>
+              <title>S2BeanUtils</title>
               <packages>org.seasar.framework.beans*</packages>
             </group>
             <group>
-              <title>S2Container</title>
-              <packages>org.seasar.framework.container*</packages>
-            </group>
-            <group>
-              <title>S2Unit</title>
-              <packages>org.seasar.framework.unit*</packages>
+              <title>JPA</title>
+              <packages>org.seasar.framework.jpa*</packages>
             </group>
           </groups>
         </configuration>
@@ -92,65 +98,30 @@
   <!-- Dependency Settings -->
   <dependencies>
     <dependency>
-      <groupId>aopalliance</groupId>
-      <artifactId>aopalliance</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>jboss</groupId>
-      <artifactId>javassist</artifactId>
-      <version>3.4.ga</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>ognl</groupId>
       <artifactId>ognl</artifactId>
-      <version>2.6.9-patch-20090427</version>
-      <type>jar</type>
+      <version>3.1.14</version>
     </dependency>
+
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
-      <version>1.1</version>
-      <type>jar</type>
-      <exclusions>
-        <exclusion>
-          <artifactId>avalon-framework</artifactId>
-          <groupId>avalon-framework</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>logkit</artifactId>
-          <groupId>logkit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>log4j</artifactId>
-          <groupId>log4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
-        </exclusion>
-      </exclusions>
+      <version>1.2</version>
+      <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>javax.transaction-api</artifactId>
+      <version>1.2</version>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.2</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>junit-addons</groupId>
-      <artifactId>junit-addons</artifactId>
-      <version>1.4</version>
-      <type>jar</type>
+      <version>4.11</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit-addons</groupId>
-          <artifactId>junit-addons-runner</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 </project>
