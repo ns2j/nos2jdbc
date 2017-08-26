@@ -1,0 +1,1 @@
+select * from aaa where id = /*id*/1
