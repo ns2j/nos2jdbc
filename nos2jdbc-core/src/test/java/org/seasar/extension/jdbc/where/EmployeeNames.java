@@ -18,7 +18,7 @@ package org.seasar.extension.jdbc.where;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.seasar.extension.jdbc.impl.Employee;
+//i import org.seasar.extension.jdbc.impl.Employee;
 import org.seasar.extension.jdbc.name.PropertyName;
 import org.seasar.extension.jdbc.operation.Operations;
 import org.seasar.extension.jdbc.where.DepartmentNames._DepartmentNames;
