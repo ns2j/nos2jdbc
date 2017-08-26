@@ -24,13 +24,16 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.NClob;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.Ref;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.RowId;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -703,4 +706,218 @@ public class PreparedStatementWrapper implements PreparedStatement {
         return original.toString();
     }
 
+    public boolean isClosed() throws SQLException {
+        try {
+            return original.isClosed();
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setPoolable(boolean poolable) throws SQLException {
+        try {
+            original.setPoolable(poolable);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public boolean isPoolable() throws SQLException {
+        try {
+            return original.isPoolable();
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void closeOnCompletion() throws SQLException {
+        try {
+            original.closeOnCompletion();
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public boolean isCloseOnCompletion() throws SQLException {
+        try {
+            return original.isCloseOnCompletion();
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        try {
+            return original.unwrap(iface);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        try {
+            return original.isWrapperFor(iface);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setRowId(int parameterIndex, RowId x) throws SQLException {
+        try {
+            original.setRowId(parameterIndex, x);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setNString(int parameterIndex, String value)
+	    throws SQLException {
+        try {
+            original.setNString(parameterIndex, value);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setNCharacterStream(int parameterIndex, Reader value,
+	    long length) throws SQLException {
+        try {
+            original.setNCharacterStream(parameterIndex, value, length);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setNClob(int parameterIndex, NClob value) throws SQLException {
+        try {
+            original.setNClob(parameterIndex, value);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setClob(int parameterIndex, Reader reader, long length)
+	    throws SQLException {
+        try {
+            original.setClob(parameterIndex, reader, length);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setBlob(int parameterIndex, InputStream inputStream,
+	    long length) throws SQLException {
+        try {
+            original.setBlob(parameterIndex, inputStream, length);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setNClob(int parameterIndex, Reader reader, long length)
+	    throws SQLException {
+        try {
+            original.setNClob(parameterIndex, reader, length);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setSQLXML(int parameterIndex, SQLXML xmlObject)
+	    throws SQLException {
+        try {
+            original.setSQLXML(parameterIndex, xmlObject);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setAsciiStream(int parameterIndex, InputStream x, long length)
+	    throws SQLException {
+        try {
+            original.setAsciiStream(parameterIndex, x, length);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setBinaryStream(int parameterIndex, InputStream x, long length)
+	    throws SQLException {
+        try {
+            original.setBinaryStream(parameterIndex, x, length);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setCharacterStream(int parameterIndex, Reader reader,
+	    long length) throws SQLException {
+        try {
+            original.setCharacterStream(parameterIndex, reader, length);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setAsciiStream(int parameterIndex, InputStream x)
+	    throws SQLException {
+        try {
+            original.setAsciiStream(parameterIndex, x);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setBinaryStream(int parameterIndex, InputStream x)
+	    throws SQLException {
+        try {
+            original.setBinaryStream(parameterIndex, x);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setCharacterStream(int parameterIndex, Reader reader)
+	    throws SQLException {
+        try {
+            original.setCharacterStream(parameterIndex, reader);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setNCharacterStream(int parameterIndex, Reader value)
+	    throws SQLException {
+        try {
+            original.setNCharacterStream(parameterIndex, value);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setClob(int parameterIndex, Reader reader) throws SQLException {
+        try {
+            original.setClob(parameterIndex, reader);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setBlob(int parameterIndex, InputStream inputStream)
+	    throws SQLException {
+        try {
+            original.setBlob(parameterIndex, inputStream);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
+
+    public void setNClob(int parameterIndex, Reader reader)
+	    throws SQLException {
+        try {
+            original.setNClob(parameterIndex, reader);
+        } catch (final SQLException e) {
+            throw wrapException(e);
+        }
+    }
 }
