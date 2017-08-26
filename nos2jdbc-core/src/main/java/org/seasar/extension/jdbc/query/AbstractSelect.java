@@ -92,6 +92,9 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
      */
     protected boolean count;
 
+//i    
+    protected boolean shouldSetInverseField = true;
+
     /**
      * {@link AbstractSelect}を作成します。
      * 
@@ -166,7 +169,19 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
     }
 
     public List<T> getResultList() {
+    	shouldSetInverseField = true;
         prepare("getResultList");
+        logSql();
+        try {
+            return getResultListInternal();
+        } finally {
+            completed();
+        }
+    }
+//i
+    public List<T> getResultListWithoutInverseField() {
+    	shouldSetInverseField = false;
+        prepare("getResultListWithoutIverseField");
         logSql();
         try {
             return getResultListInternal();
@@ -176,7 +191,19 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
     }
 
     public T getSingleResult() throws SNonUniqueResultException {
+    	shouldSetInverseField = true;
         prepare("getSingleResult");
+        logSql();
+        try {
+            return getSingleResultInternal();
+        } finally {
+            completed();
+        }
+    }
+//i
+    public T getSingleResultWithoutInverseField() throws SNonUniqueResultException {
+    	shouldSetInverseField = false;
+        prepare("getSingleResultWithoutInverseField");
         logSql();
         try {
             return getSingleResultInternal();

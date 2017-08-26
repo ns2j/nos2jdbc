@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2015 the Seasar Foundation and the Others.
+ * Copyright 2004-2015 the Seasar Foundation and tvhe Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -723,9 +723,17 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
             }
             PropertyMapper[] propertyMappers = toPropertyMapperArray(propertyMapperList);
             int[] idIndices = toIdIndexArray(idIndexList);
-            AbstractRelationshipEntityMapper remapper = createRelationshipEntityMapper(
-                    relationshipClass, propertyMappers, idIndices,
-                    propertyMeta, inversePropertyMeta);
+            //i
+            AbstractRelationshipEntityMapper remapper;
+            if (shouldSetInverseField) {
+            	remapper = createRelationshipEntityMapper(
+            			relationshipClass, propertyMappers, idIndices,
+            			propertyMeta, inversePropertyMeta);
+            } else {
+            	remapper = createRelationshipEntityMapper(
+                        relationshipClass, propertyMappers, idIndices,
+                        propertyMeta, null);
+            }
             entityMapperMap.put(joinMeta.getName(), remapper);
             baseEntityMapper.addRelationshipEntityMapper(remapper);
         }
