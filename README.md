@@ -4,4 +4,6 @@ S2JDBCからSeasar2 Containerへの依存をとりのぞいたものです。
 Maven Projectです。  
 jsonでループしないように、getSingleResultWithoutInverseField()とgetResultListWithoutInverseField()を加えています。  
 [チュートリアルを用意しました。(nos2jdbc-tutorial)](https://github.com/ns2j/nos2jdbc-tutorial)   
-
+## Mavenのローカルリポジトリへインストール
+`mvn install`   
+として下さい。
