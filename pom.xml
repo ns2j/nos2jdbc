@@ -7,8 +7,8 @@
   <artifactId>nos2jdbc</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0</version>
-  <!-- <name>nos2jdbc</name> -->
-  <!-- <url>http://maven.apache.org</url> -->
+  <name>nos2jdbc</name> -->
+  <url>https://github.com/ns2j/nos2jdbc</url>
   <dependencies>
   </dependencies>
   <modules>

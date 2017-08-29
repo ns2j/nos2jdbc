@@ -9,8 +9,8 @@
   <version>1.0.0</version>
 
   <!-- More Project Information -->
-  <name>No S2 Container s2jdbc core</name>
-  <!-- <url>http://s2container.seasar.org/</url> -->
+  <name>nos2jdbc-core</name>
+  <url>https://github.com/ns2j/nos2jdbc</url>
 
   <!-- Build Settings -->
   <build>
