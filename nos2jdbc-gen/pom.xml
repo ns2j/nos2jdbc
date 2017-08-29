@@ -12,8 +12,8 @@
   <packaging>jar</packaging>
 
   <!-- More Project Information -->
-  <name>NOS2JDBC-Gen</name>
-  <url>http://s2container.seasar.org/</url>
+  <name>nos2jdbc-gen</name>
+  <url>https://github.com/ns2j/nos2jdbc</url>
 
   <!-- Build Settings -->
   <build>
