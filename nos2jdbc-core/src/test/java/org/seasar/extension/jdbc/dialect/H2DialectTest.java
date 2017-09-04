@@ -57,7 +57,8 @@ public class H2DialectTest extends TestCase {
                 new SQLRuntimeException(SQLException.class
                         .cast(new SQLException("foo", "XXX")
                                 .initCause(new SQLException("bar", "23000",
-                                        23001)))))));
+//                                        23001)))))));
+                                	23505)))))));
         assertFalse(dialect
                 .isUniqueConstraintViolation(new Exception(
                         new SQLRuntimeException(SQLException.class
