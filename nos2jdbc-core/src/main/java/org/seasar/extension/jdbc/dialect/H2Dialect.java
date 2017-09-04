@@ -28,7 +28,8 @@ public class H2Dialect extends StandardDialect {
     /**
      * 一意制約違反を表す例外コード
      */
-    protected static final int uniqueConstraintViolationCode = 23001;
+    //protected static final int uniqueConstraintViolationCode = 23001;
+    protected static final int uniqueConstraintViolationCode = 23505;
 
     @Override
     public String getName() {
