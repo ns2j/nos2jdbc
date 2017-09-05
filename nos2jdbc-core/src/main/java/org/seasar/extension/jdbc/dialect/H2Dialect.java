@@ -46,8 +46,10 @@ public class H2Dialect extends StandardDialect {
         StringBuilder buf = new StringBuilder(sql.length() + 20);
         buf.append(sql);
         if (offset > 0) {
-            buf.append(" limit ");
-            buf.append(limit);
+            if (limit >0) {
+        	buf.append(" limit ");
+        	buf.append(limit);
+            }
             buf.append(" offset ");
             buf.append(offset);
         } else {
