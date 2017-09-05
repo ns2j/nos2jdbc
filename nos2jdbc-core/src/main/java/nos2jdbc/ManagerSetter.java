@@ -10,10 +10,13 @@ import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.EntityMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
+import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 
+import static org.seasar.framework.util.StringUtil.*;
+
 public class ManagerSetter {
-    static public JdbcManager setToJdbcManagerImpl(JdbcManagerImpl jdbcManagerImpl, 
+    static synchronized public JdbcManager setToJdbcManagerImpl(JdbcManagerImpl jdbcManagerImpl, 
     		DataSource ds, DbmsDialect dialect, TransactionSynchronizationRegistry sr) {
         jdbcManagerImpl.setDataSource(ds);
         jdbcManagerImpl.setDialect(dialect);
@@ -32,6 +35,16 @@ public class ManagerSetter {
         emf.setPropertyMetaFactory(pmf);
         jdbcManagerImpl.setEntityMetaFactory(emf);
         jdbcManagerImpl.setPersistenceConvention(pc);
+
+        String enumTypeValueOldStr = ltrim(rtrim(System.getProperty("isEnumValueTypeOld"))); 
+        if (equalsIgnoreCase(enumTypeValueOldStr, "true")) {
+            try {
+        	ValueTypes.setEnumDefaultValueType(org.seasar.extension.jdbc.types.EnumType.class);
+            } catch (NoSuchMethodException nsme) {
+        	nsme.printStackTrace();
+            }
+        }
+        
         return jdbcManagerImpl;
     }
 }
