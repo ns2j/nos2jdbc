@@ -20,6 +20,7 @@ import java.sql.Types;
 
 import org.seasar.extension.jdbc.gen.internal.sqltype.BlobType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.ClobType;
+import org.seasar.extension.jdbc.gen.internal.sqltype.VarcharType;
 
 /**
  * MS SQL Server 2005の方言を扱うクラスです。
@@ -32,6 +33,8 @@ public class Mssql2005GenDialect extends MssqlGenDialect {
      * インスタンスを構築します。
      */
     public Mssql2005GenDialect() {
+        sqlTypeMap.put(Types.VARCHAR, new VarcharType("nvarchar($l)"));
+
         sqlTypeMap.put(Types.BLOB, new BlobType("varbinary(max)"));
         sqlTypeMap.put(Types.CLOB, new ClobType("varchar(max)"));
 
