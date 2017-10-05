@@ -11,7 +11,6 @@ public class ArchiveTestUtil {
     static String ROOT_PACKAGE_NAME = "${packageName}"; 
     static Archive<?> arch = null;
     static public synchronized Archive<?> createTestArchive() {
-	System.out.println("arch: " + arch);
 	if (arch != null) return arch;
 	arch = ShrinkWrap.create(WebArchive.class)
 		.addPackages(true, ROOT_PACKAGE_NAME)
