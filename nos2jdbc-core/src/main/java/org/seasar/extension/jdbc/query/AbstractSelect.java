@@ -202,7 +202,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
     }
 //i
     public T getSingleResultWithoutInverseField() throws SNonUniqueResultException {
-    	shouldSetInverseField = true;
+    	shouldSetInverseField = false;
         prepare("getSingleResultWithoutInverseField");
         logSql();
         try {
