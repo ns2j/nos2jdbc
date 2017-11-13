@@ -213,7 +213,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
     }
 
     public <RESULT> RESULT iterate(IterationCallback<T, RESULT> callback) {
-    	shouldSetInverseField = false;
+    	shouldSetInverseField = true;
         prepare("iterate");
         logSql();
         try {
