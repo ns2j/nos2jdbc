@@ -202,7 +202,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
     }
 //i
     public T getSingleResultWithoutInverseField() throws SNonUniqueResultException {
-    	shouldSetInverseField = false;
+    	shouldSetInverseField = true;
         prepare("getSingleResultWithoutInverseField");
         logSql();
         try {
@@ -213,6 +213,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
     }
 
     public <RESULT> RESULT iterate(IterationCallback<T, RESULT> callback) {
+    	shouldSetInverseField = false;
         prepare("iterate");
         logSql();
         try {
