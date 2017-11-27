@@ -222,6 +222,17 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
             completed();
         }
     }
+//i
+    public <RESULT> RESULT iterateWithoutInverseField(IterationCallback<T, RESULT> callback) {
+    	shouldSetInverseField = false;
+        prepare("iterateWithoutInverseField");
+        logSql();
+        try {
+            return iterateInternal(callback);
+        } finally {
+            completed();
+        }
+    }
 
     /**
      * SQLが返す結果セットの行数を返します。

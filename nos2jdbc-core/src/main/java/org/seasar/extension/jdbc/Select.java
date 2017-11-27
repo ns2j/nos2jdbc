@@ -215,5 +215,7 @@ public interface Select<T, S extends Select<T, S>> extends Query<S> {
      * @return コールバックが最後に返した結果
      */
     <RESULT> RESULT iterate(IterationCallback<T, RESULT> callback);
+//i    
+    <RESULT> RESULT iterateWithoutInverseField(IterationCallback<T, RESULT> callback);
 
 }
