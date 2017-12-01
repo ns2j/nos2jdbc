@@ -26,6 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import junit.framework.TestCase;
+import nos2jdbc.ManagerSetter;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ResultSetHandler;
@@ -68,11 +69,8 @@ public class SqlFileSelectImplTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         manager = new JdbcManagerImpl();
-        manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
-                new TransactionManagerImpl()));
-        manager.setDataSource(new MockDataSource());
-        manager.setDialect(new StandardDialect());
-        manager.setPersistenceConvention(new PersistenceConventionImpl());
+        ManagerSetter.setToJdbcManagerImpl(manager, new MockDataSource(), new StandardDialect(),
+        	new TransactionSynchronizationRegistryImpl(new TransactionManagerImpl()));
     }
 
     @Override

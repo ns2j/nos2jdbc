@@ -51,6 +51,8 @@ import org.seasar.framework.util.DisposableUtil;
 import org.seasar.framework.util.ModifierUtil;
 import org.seasar.framework.util.StringUtil;
 
+import nos2jdbc.annotation.NoFk;
+
 /**
  * @author higa
  * 
@@ -375,7 +377,8 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
             }
         }
         for (JoinColumnMeta jcm : jcmList) {
-            if (!entityMeta.hasColumnPropertyMeta(jcm.getName())) {
+            if (!propertyMeta.getField().isAnnotationPresent(NoFk.class) 
+        	    && !entityMeta.hasColumnPropertyMeta(jcm.getName())) {
                 if (propertyMeta.getRelationshipType() == RelationshipType.MANY_TO_ONE) {
                     throw new ManyToOneFKNotFoundRuntimeException(entityMeta
                             .getName(), propertyMeta.getName(), jcm.getName());

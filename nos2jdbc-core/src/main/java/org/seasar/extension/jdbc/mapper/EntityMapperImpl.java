@@ -40,7 +40,13 @@ public class EntityMapperImpl extends AbstractEntityMapper implements
      */
     public EntityMapperImpl(Class<?> entityClass,
             PropertyMapper[] propertyMappers, int[] idIndices) {
+        this(entityClass, propertyMappers, idIndices, false);
+    }
+
+    public EntityMapperImpl(Class<?> entityClass,
+            PropertyMapper[] propertyMappers, int[] idIndices, boolean shouldCreateNullEntity) {
         super(entityClass, propertyMappers, idIndices);
+        this.shouldCreateNullEntity = shouldCreateNullEntity;
     }
 
     public Object map(Object[] values, MappingContext mappingContext) {
