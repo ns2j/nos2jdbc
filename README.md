@@ -11,7 +11,7 @@ Maven Projectです。
 ### jsonのループ回避
  jsonでループしないように、getSingleResultWithoutInverseField()とgetResultListWithoutInverseField()を加えました。  
 ### sqlのselectをエンティティにマッピング
- SqlSelectにエンティティへマッピングできるようにしました。
+ SqlSelectでエンティティへマッピングできるようにしました。
 * エンティティは、nos2jdbc-genの管轄外のパッケージに置くか、@DisableGenアノテーションを付けて下さい。
 * カラム名は重複しないようにして下さい。   
 * mappedByを指定していない側のリレーションは@NoFkアノテーションを付けて下さい。
