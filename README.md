@@ -7,7 +7,7 @@ Maven Projectです。
 `mvn install`   
 として下さい。
 
-##追加した機能
+## 追加した機能
 ### jsonのループ回避
  jsonでループしないように、getSingleResultWithoutInverseField()とgetResultListWithoutInverseField()を加えました。  
 ### sqlのselectをエンティティにマッピング
