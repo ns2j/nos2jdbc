@@ -50,7 +50,8 @@ public abstract class AbstractEntityMapper {
      * 関連エンティティマッパーのリストです。
      */
     protected List<RelationshipEntityMapper> relationshipEntityMapperList = new ArrayList<RelationshipEntityMapper>();
-
+//i
+    protected boolean shouldCreateNullEntity;
     /**
      * {@link AbstractEntityMapper}を作成します。
      * 
@@ -107,7 +108,7 @@ public abstract class AbstractEntityMapper {
         Object entity = null;
         if (key != null) {
             entity = mappingContext.getCache(entityClass, key);
-        } else if (idIndices.length > 0) {
+        } else if (!shouldCreateNullEntity && idIndices.length > 0) {
             return null;
         }
         if (entity == null) {

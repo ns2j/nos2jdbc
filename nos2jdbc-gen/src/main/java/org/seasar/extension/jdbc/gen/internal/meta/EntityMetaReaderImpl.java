@@ -35,6 +35,8 @@ import org.seasar.framework.util.ClassTraversal.ClassHandler;
 
 import com.sun.javadoc.Doclet;
 
+import nos2jdbc.gen.annotation.DisableGen;
+
 /**
  * {@link EntityMetaReader}の実装クラスです。
  * 
@@ -158,7 +160,7 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
                     String className = ClassUtil.concatName(packageName,
                             shortClassName);
                     Class<?> clazz = ClassUtil.forName(className);
-                    if (clazz.isAnnotationPresent(Entity.class)) {
+                    if (clazz.isAnnotationPresent(Entity.class) && !clazz.isAnnotationPresent(DisableGen.class)) {
                         EntityMeta entityMeta = entityMetaFactory
                                 .getEntityMeta(clazz);
                         entityMetaList.add(entityMeta);

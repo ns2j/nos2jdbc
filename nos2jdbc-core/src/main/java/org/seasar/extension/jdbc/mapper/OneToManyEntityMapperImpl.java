@@ -47,7 +47,14 @@ public class OneToManyEntityMapperImpl extends AbstractRelationshipEntityMapper 
     public OneToManyEntityMapperImpl(Class<?> entityClass,
             PropertyMapper[] propertyMappers, int[] idIndices, Field field,
             Field inverseField) {
+        this(entityClass, propertyMappers, idIndices, field, inverseField, false);
+    }
+
+    public OneToManyEntityMapperImpl(Class<?> entityClass,
+            PropertyMapper[] propertyMappers, int[] idIndices, Field field,
+            Field inverseField, boolean shouldCreateNullEntity) {
         super(entityClass, propertyMappers, idIndices, field, inverseField);
+        this.shouldCreateNullEntity = shouldCreateNullEntity;
     }
 
     @SuppressWarnings("unchecked")

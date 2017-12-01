@@ -29,6 +29,7 @@ import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.dto.AaaDto;
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.handler.BeanIterationResultSetHandler;
+import org.seasar.extension.jdbc.handler.BeanListNonAutoResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanListResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanResultSetHandler;
 import org.seasar.extension.jdbc.handler.MapIterationResultSetHandler;
@@ -74,7 +75,7 @@ public class AbsSqlSelectTest extends TestCase {
     public void testCreateResultListResultSetHandler() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         ResultSetHandler handler = query.createResultListResultSetHandler();
-        assertEquals(BeanListResultSetHandler.class, handler.getClass());
+        assertEquals(BeanListNonAutoResultSetHandler.class, handler.getClass());
     }
 
     /**
@@ -109,7 +110,7 @@ public class AbsSqlSelectTest extends TestCase {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.limit = 10;
         ResultSetHandler handler = query.createResultListResultSetHandler();
-        assertEquals(BeanListResultSetHandler.class, handler.getClass());
+        assertEquals(BeanListNonAutoResultSetHandler.class, handler.getClass());
     }
 
     /**
@@ -121,7 +122,7 @@ public class AbsSqlSelectTest extends TestCase {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.limit = 10;
         ResultSetHandler handler = query.createResultListResultSetHandler();
-        assertEquals(BeanListResultSetHandler.class, handler.getClass());
+        assertEquals(BeanListNonAutoResultSetHandler.class, handler.getClass());
     }
 
     /**

@@ -17,13 +17,19 @@ package org.seasar.extension.jdbc.query;
 
 import java.util.Map;
 
+import javax.persistence.Entity;
+
 import org.seasar.extension.jdbc.DbmsDialect;
+import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.ResultSetHandler;
 import org.seasar.extension.jdbc.Select;
 import org.seasar.extension.jdbc.ValueType;
+import org.seasar.extension.jdbc.handler.BeanIterationNonAutoResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanIterationResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanListResultSetHandler;
+import org.seasar.extension.jdbc.handler.BeanNonAutoResultSetHandler;
+import org.seasar.extension.jdbc.handler.BeanListNonAutoResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanResultSetHandler;
 import org.seasar.extension.jdbc.handler.MapIterationResultSetHandler;
 import org.seasar.extension.jdbc.handler.MapListResultSetHandler;
@@ -77,6 +83,11 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
                     (Class<? extends Map>) baseClass, dialect,
                     persistenceConvention, executedSql, limit);
         }
+        if (baseClass.isAnnotationPresent(Entity.class)) {
+            EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();
+            return new BeanListNonAutoResultSetHandler(baseClass, entityMetaFactory,
+        	    dialect, executedSql, limit, shouldSetInverseField);
+        }
         return new BeanListResultSetHandler(baseClass, dialect,
                 persistenceConvention, executedSql, limit);
     }
@@ -95,6 +106,11 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         if (Map.class.isAssignableFrom(baseClass)) {
             return new MapResultSetHandler((Class<? extends Map>) baseClass,
                     dialect, persistenceConvention, executedSql);
+        }
+        if (baseClass.isAnnotationPresent(Entity.class)) {
+            EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();
+            return new BeanNonAutoResultSetHandler(baseClass, entityMetaFactory,
+        	    dialect, executedSql, shouldSetInverseField);
         }
         return new BeanResultSetHandler(baseClass, dialect,
                 persistenceConvention, executedSql);
@@ -118,6 +134,11 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
             return new MapIterationResultSetHandler(
                     (Class<? extends Map>) baseClass, dialect,
                     persistenceConvention, executedSql, limit, callback);
+        }
+        if (baseClass.isAnnotationPresent(Entity.class)) {
+            EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();
+            return new BeanIterationNonAutoResultSetHandler(baseClass, entityMetaFactory,
+        	    dialect, executedSql, limit, shouldSetInverseField, callback);
         }
         return new BeanIterationResultSetHandler(baseClass, dialect,
                 persistenceConvention, executedSql, limit, callback);
