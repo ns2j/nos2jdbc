@@ -50,7 +50,7 @@ import org.seasar.framework.util.tiger.GenericUtil;
  *            エンティティの型 
  */
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime}")
-public abstract class NoS2AbstractService<T> {
+public abstract class ${shortClassName}<T> {
 
     /**
      * JDBCマネージャです。
@@ -78,11 +78,11 @@ public abstract class NoS2AbstractService<T> {
      * 
      */
     @SuppressWarnings("unchecked")
-    public NoS2AbstractService() {
+    public ${shortClassName}() {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(getClass());
         for (Class<?> c = getClass(); c != Object.class; c = c.getSuperclass()) {
-            if (c.getSuperclass() == NoS2AbstractService.class) {
+            if (c.getSuperclass() == ${shortClassName}.class) {
                 Type type = c.getGenericSuperclass();
                 Type[] arrays = GenericUtil.getGenericParameter(type);
                 setEntityClass((Class<T>) GenericUtil.getActualClass(arrays[0],
@@ -98,7 +98,7 @@ public abstract class NoS2AbstractService<T> {
      * @param entityClass
      *            エンティティのクラス
      */
-    public NoS2AbstractService(Class<T> entityClass) {
+    public ${shortClassName}(Class<T> entityClass) {
         setEntityClass(entityClass);
     }
 <#if componentType="none">
