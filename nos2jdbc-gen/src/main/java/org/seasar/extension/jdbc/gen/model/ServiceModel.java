@@ -37,7 +37,9 @@ public class ServiceModel extends ClassModel {
     
     //i
     protected String componentType;
-
+//i
+    protected String serviceClassNameSuffix;
+    
     /** エンティティクラスの単純名 */
     protected String shortEntityClassName;
 
@@ -99,7 +101,15 @@ public class ServiceModel extends ClassModel {
     public void setComponentType(String componentType) {
         this.componentType = componentType;
     }
-
+//i
+    public String getServiceClassNameSuffix() {
+	return serviceClassNameSuffix;
+    }
+//i
+    public void setServiceClassNameSuffix(String serviceClassNameSuffix) {
+	this.serviceClassNameSuffix = serviceClassNameSuffix;
+    }
+    
     /**
      * エンティティクラスの単純名を返します。
      * 

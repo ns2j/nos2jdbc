@@ -42,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 <#if componentType == "cdi">
 @Dependent
 @Transactional
+@${serviceClassNameSuffix}Qualifier
 </#if>
 <#if componentType == "ejb">
 @Stateless

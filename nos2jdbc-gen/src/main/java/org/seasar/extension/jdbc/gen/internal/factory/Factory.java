@@ -41,6 +41,7 @@ import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
 import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
@@ -427,6 +428,9 @@ public interface Factory {
      * @return {@link NoS2AbstServiceModelFactory}の実装
      */
     NoS2AbstServiceModelFactory createNoS2AbstServiceModelFactory(Command command,
+            String packageName, String serviceClassNameSuffix, String componentType);
+//i
+    ServiceBaseQualifierModelFactory createServiceBaseQualifierModelFactory(Command command,
             String packageName, String serviceClassNameSuffix, String componentType);
 
 //i
