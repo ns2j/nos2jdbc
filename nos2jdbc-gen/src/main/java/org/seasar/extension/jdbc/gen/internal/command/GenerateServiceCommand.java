@@ -26,6 +26,8 @@ import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModel;
+import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceModel;
@@ -80,7 +82,10 @@ public class GenerateServiceCommand extends AbstractCommand {
     /** 抽象サービスクラスのテンプレート名 */
     //i protected String abstractServiceTemplateFileName = "java/abstract-service.ftl";
     protected String abstractServiceTemplateFileName = "java/nos2-abstract-service.ftl";
-
+//i
+    protected String serviceBaseQuailfierTemplateFileName = "java/service-base-qualifier.ftl";
+    
+    
     /** サービスクラスのテンプレート名 */
     protected String serviceTemplateFileName = "java/service.ftl";
 
@@ -120,8 +125,10 @@ public class GenerateServiceCommand extends AbstractCommand {
     /** サービスモデルのファクトリ */
     protected ServiceModelFactory serviceModelFactory;
 
-    /** 抽象サービスモデルのファクトリ */
+    /** 抽象サービスモデルのファクトリ *///i
     protected NoS2AbstServiceModelFactory noS2AbstServiceModelFactory;
+
+    protected ServiceBaseQualifierModelFactory serviceBaseQualifierModelFactory;
 
     /** 名前モデルのファクトリ */
     protected NamesModelFactory namesModelFactory;
@@ -501,12 +508,15 @@ public class GenerateServiceCommand extends AbstractCommand {
         namesModelFactory = createNamesModelFactory();
         serviceModelFactory = createServiceModelFactory();
         noS2AbstServiceModelFactory = createAbstServiceModelFactory();
+        serviceBaseQualifierModelFactory = createServiceBaseQualifierModelFactory();
         generator = createGenerator();
     }
 
     @Override
     protected void doExecute() {
         generateAbstractService();
+        if ("cdi".equals(componentType))
+            generateServiceBaseQualifier();
         for (EntityMeta entityMeta : entityMetaReader.read()) {
             generateService(entityMeta);
         }
@@ -523,6 +533,13 @@ public class GenerateServiceCommand extends AbstractCommand {
         NoS2AbstServiceModel model = noS2AbstServiceModelFactory.getAbstServiceModel();
         GenerationContext context = createGenerationContext(model,
                 abstractServiceTemplateFileName, overwriteAbstractService);
+        generator.generate(context);
+    }
+    
+    protected void generateServiceBaseQualifier() {
+        ServiceBaseQualifierModel model = serviceBaseQualifierModelFactory.getServiceBaseQualifierModel();
+        GenerationContext context = createGenerationContext(model,
+                serviceBaseQuailfierTemplateFileName, overwriteAbstractService);
         generator.generate(context);
     }
 
@@ -588,6 +605,12 @@ public class GenerateServiceCommand extends AbstractCommand {
      */
     protected NoS2AbstServiceModelFactory createAbstServiceModelFactory() {
         return factory.createNoS2AbstServiceModelFactory(this, ClassUtil
+                .concatName(rootPackageName, servicePackageName),
+                serviceClassNameSuffix, componentType);
+    }
+
+    protected ServiceBaseQualifierModelFactory createServiceBaseQualifierModelFactory() {
+        return factory.createServiceBaseQualifierModelFactory(this, ClassUtil
                 .concatName(rootPackageName, servicePackageName),
                 serviceClassNameSuffix, componentType);
     }

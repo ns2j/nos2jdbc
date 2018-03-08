@@ -109,6 +109,8 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
                 .getSimpleName());
         serviceModel.setShortSuperclassName("NoS2Abstract" + serviceClassNameSuffix);
 //i                .setShortSuperclassName("Abstract" + serviceClassNameSuffix);
+//i
+        serviceModel.setServiceClassNameSuffix(serviceClassNameSuffix);
         serviceModel.setJdbcManagerName(jdbcManagerName);
         serviceModel.setJdbcManagerSetterNecessary(!DEFAULT_JDBC_MANAGER_NAME
                 .equals(jdbcManagerName));

@@ -54,7 +54,7 @@ import static ${importName};
 public class ${shortClassName} {
 
 <#if componentType == "cdi" || componentType == "ejb">
-    @Inject
+    @Inject @${serviceClassNameSuffix}Qualifier
 </#if>
 <#if componentType == "spring">
     @Autowired

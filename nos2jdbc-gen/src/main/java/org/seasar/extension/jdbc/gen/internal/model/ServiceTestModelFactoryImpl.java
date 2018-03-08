@@ -114,6 +114,8 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
         serviceTestModel.setShortClassName(shortServiceClassName
                 + testClassNameSuffix);
 //i        serviceTestModel.setUseS2junit4(useS2junit4);
+        //i
+        serviceTestModel.setServiceClassNameSuffix(serviceClassNameSuffix);
         serviceTestModel.setComponentType(componentType);
         serviceTestModel.setSpringAppConfig(springAppConfig);
         doImportName(serviceTestModel, entityMeta);

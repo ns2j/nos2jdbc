@@ -24,6 +24,8 @@ public class ServiceTestModel extends TestClassModel {
 
     /** サービスクラスの単純名 */
     protected String shortServiceClassName;
+  //i
+    protected String serviceClassNameSuffix;
 
     /** 設定ファイルのパス */
 //i    protected String configPath;
@@ -44,6 +46,15 @@ public class ServiceTestModel extends TestClassModel {
      */
     public void setShortServiceClassName(String shortServiceClassName) {
         this.shortServiceClassName = shortServiceClassName;
+    }
+
+  //i
+    public String getServiceClassNameSuffix() {
+	return serviceClassNameSuffix;
+    }
+//i
+    public void setServiceClassNameSuffix(String serviceClassNameSuffix) {
+	this.serviceClassNameSuffix = serviceClassNameSuffix;
     }
 
     /**

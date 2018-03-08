@@ -43,6 +43,7 @@ import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.DbTableMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceBaseQualifierModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.ArchiveTestUtilModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactoryImpl;
@@ -69,6 +70,7 @@ import org.seasar.extension.jdbc.gen.internal.version.SchemaInfoTableImpl;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
 import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
@@ -242,12 +244,20 @@ public class FactoryImpl implements Factory {
                 serviceClassNameSuffix, testClassNameSuffix,
                 rootPackageName, componentType, springAppConfig);
     }
-
+//i
     public NoS2AbstServiceModelFactory createNoS2AbstServiceModelFactory(
             Command command, String packageName, String serviceClassNameSuffix,
             String componentType) {
 
         return new NoS2AbstServiceModelFactoryImpl(packageName,
+                serviceClassNameSuffix, componentType);
+    }
+//i
+    public ServiceBaseQualifierModelFactory createServiceBaseQualifierModelFactory(
+            Command command, String packageName, String serviceClassNameSuffix,
+            String componentType) {
+
+        return new ServiceBaseQualifierModelFactoryImpl(packageName,
                 serviceClassNameSuffix, componentType);
     }
 //i
