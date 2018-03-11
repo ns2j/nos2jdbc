@@ -65,11 +65,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ${shortClassName} {
 <#if componentType == "cdi" || componentType == "ejb">
     @Inject
+    private JdbcManagerImplementor ${jdbcManagerName};
 </#if>
 <#if componentType == "spring">
     @Autowired
-</#if>
     private JdbcManager ${jdbcManagerName};
+</#if>
+<#if componentType == "none">
+    private JdbcManager ${jdbcManagerName};
+</#if>
 
 <#if sqlFilePathList?size == 0>
 
