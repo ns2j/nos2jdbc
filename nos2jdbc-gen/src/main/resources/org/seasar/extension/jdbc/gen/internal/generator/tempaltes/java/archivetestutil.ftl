@@ -2,6 +2,7 @@
 package ${packageName};
 </#if>
 
+import java.io.File;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -14,6 +15,7 @@ public class ArchiveTestUtil {
 	if (arch != null) return arch;
 	arch = ShrinkWrap.create(WebArchive.class)
 		.addPackages(true, ROOT_PACKAGE_NAME)
+		.addAsResource(new File("src/main/resources"), "/")
 		.addAsLibraries(
 			Maven.resolver()
 			.loadPomFromFile("pom.xml")
