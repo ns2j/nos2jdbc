@@ -201,8 +201,8 @@ class MockResultSetTest {
         rowData.put("hoge", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());
-        assertEquals(rs.getDouble(1), 0, value.doubleValue());
-        assertEquals(rs.getDouble("hoge"), 0, value.doubleValue());
+        assertEquals(value.doubleValue(), rs.getDouble(1));
+        assertEquals(value.doubleValue(), rs.getDouble("hoge"));
     }
 
     /**
@@ -217,8 +217,8 @@ class MockResultSetTest {
         rowData.put("hoge", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());
-        assertEquals(rs.getFloat(1), 0, value.floatValue());
-        assertEquals(rs.getFloat("hoge"), 0, value.floatValue());
+        assertEquals(value.floatValue(), rs.getFloat(1));
+        assertEquals(value.floatValue(), rs.getFloat("hoge"));
     }
 
     /**
