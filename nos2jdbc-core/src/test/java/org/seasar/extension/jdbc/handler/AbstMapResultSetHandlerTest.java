@@ -21,7 +21,8 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.PropertyType;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
@@ -37,12 +38,13 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class AbstMapResultSetHandlerTest extends TestCase {
+class AbstMapResultSetHandlerTest {
 
     /**
      * 
      */
-    public void testMapClass() {
+    @Test
+    void testMapClass() {
         MyHandler handler = new MyHandler(Map.class);
         assertEquals(BeanMap.class, handler.mapClass);
     }
@@ -50,7 +52,8 @@ public class AbstMapResultSetHandlerTest extends TestCase {
     /**
      * 
      */
-    public void testMapClass_notAbstract() {
+    @Test
+    void testMapClass_notAbstract() {
         MyHandler handler = new MyHandler(HashMap.class);
         assertEquals(HashMap.class, handler.mapClass);
     }
@@ -59,7 +62,8 @@ public class AbstMapResultSetHandlerTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreatePropertyTypes() throws Exception {
+    @Test
+    void testCreatePropertyTypes() throws Exception {
         MyHandler handler = new MyHandler(Map.class);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -84,7 +88,8 @@ public class AbstMapResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testCreateRow() throws Exception {
+    @Test
+    void testCreateRow() throws Exception {
         MyHandler handler = new MyHandler(Map.class);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();

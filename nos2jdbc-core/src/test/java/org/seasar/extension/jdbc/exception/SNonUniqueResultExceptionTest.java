@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class SNonUniqueResultExceptionTest extends TestCase {
+class SNonUniqueResultExceptionTest {
 
     /**
      * @throws Exception
      */
-    public void testAll() throws Exception {
+    @Test
+    void testAll() throws Exception {
         String sql = "select * from aaa";
         SNonUniqueResultException e = new SNonUniqueResultException(sql);
         System.out.println(e);

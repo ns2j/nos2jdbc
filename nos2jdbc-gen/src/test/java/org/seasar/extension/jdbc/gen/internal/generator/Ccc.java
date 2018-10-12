@@ -26,7 +26,7 @@ import javax.persistence.Version;
  * 
  */
 @Entity
-public class Ccc {
+class Ccc {
 
     /** */
     @Id

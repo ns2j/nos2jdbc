@@ -15,25 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SequenceNextValFailedRuntimeExceptionTest {
+class SequenceNextValFailedRuntimeExceptionTest {
 
     /**
      * 
      */
     @Test
-    public void test() {
-        SequenceNextValFailedRuntimeException e = new SequenceNextValFailedRuntimeException(
-                "aaa");
+    void test() {
+        SequenceNextValFailedRuntimeException e = new SequenceNextValFailedRuntimeException("aaa");
         assertEquals("aaa", e.getSequenceName());
         System.out.println(e.getMessage());
     }
-
 }

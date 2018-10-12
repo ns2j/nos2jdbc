@@ -21,17 +21,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  */
-public class MethodUtilTigerTest extends TestCase {
+class MethodUtilTigerTest {
 
     /**
      * @throws Exception
      */
-    public void testIsBridgeMethod() throws Exception {
+    @Test
+    void testIsBridgeMethod() throws Exception {
         Method[] methods = Bar.class.getDeclaredMethods();
         assertEquals(2, methods.length);
         int bridge = 0;
@@ -46,7 +48,8 @@ public class MethodUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfCollectionFromParameterType()
+    @Test
+    void testGetElementTypeOfCollectionFromParameterType()
             throws Exception {
         assertEquals(Integer.class,
                 MethodUtil.getElementTypeOfCollectionFromParameterType(
@@ -65,7 +68,8 @@ public class MethodUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfCollectionFromReturnType() throws Exception {
+    @Test
+    void testGetElementTypeOfCollectionFromReturnType() throws Exception {
         assertEquals(String.class, MethodUtil
                 .getElementTypeOfCollectionFromReturnType(Baz.class.getMethod(
                         "hoge", new Class[] { Collection.class })));
@@ -74,7 +78,8 @@ public class MethodUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfListFromParameterType() throws Exception {
+    @Test
+    void testGetElementTypeOfListFromParameterType() throws Exception {
         assertEquals(Integer.class, MethodUtil
                 .getElementTypeOfListFromParameterType(Baz.class.getMethod(
                         "hoge", new Class[] { List.class }), 0));
@@ -89,7 +94,8 @@ public class MethodUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfListFromReturnType() throws Exception {
+    @Test
+    void testGetElementTypeOfListFromReturnType() throws Exception {
         assertEquals(String.class, MethodUtil
                 .getElementTypeOfListFromReturnType(Baz.class.getMethod("hoge",
                         new Class[] { List.class })));
@@ -98,7 +104,8 @@ public class MethodUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfSetFromParameterType() throws Exception {
+    @Test
+    void testGetElementTypeOfSetFromParameterType() throws Exception {
         assertEquals(Integer.class, MethodUtil
                 .getElementTypeOfSetFromParameterType(Baz.class.getMethod(
                         "hoge", new Class[] { Set.class }), 0));
@@ -113,7 +120,8 @@ public class MethodUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfSetFromReturnType() throws Exception {
+    @Test
+    void testGetElementTypeOfSetFromReturnType() throws Exception {
         assertEquals(String.class, MethodUtil
                 .getElementTypeOfSetFromReturnType(Baz.class.getMethod("hoge",
                         new Class[] { Set.class })));
@@ -137,7 +145,7 @@ public class MethodUtilTigerTest extends TestCase {
      */
     public class Bar extends Foo {
 
-        @Override
+        
         public Bar foo() {
             return null;
         }

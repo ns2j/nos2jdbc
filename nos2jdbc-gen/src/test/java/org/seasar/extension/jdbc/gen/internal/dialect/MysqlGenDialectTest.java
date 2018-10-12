@@ -16,17 +16,15 @@
 package org.seasar.extension.jdbc.gen.internal.dialect;
 
 import java.sql.Types;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class MysqlGenDialectTest {
+class MysqlGenDialectTest {
 
     private MysqlGenDialect dialect = new MysqlGenDialect();
 
@@ -35,7 +33,7 @@ public class MysqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_blob() throws Exception {
+    void testGetSqlType_blob() throws Exception {
         SqlType type = dialect.getSqlType(Types.BLOB);
         assertEquals("tinyblob", type.getDataType(255, 0, 0, false));
         assertEquals("blob", type.getDataType(256, 0, 0, false));
@@ -50,7 +48,7 @@ public class MysqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_clob() throws Exception {
+    void testGetSqlType_clob() throws Exception {
         SqlType type = dialect.getSqlType(Types.CLOB);
         assertEquals("tinytext", type.getDataType(255, 0, 0, false));
         assertEquals("text", type.getDataType(256, 0, 0, false));

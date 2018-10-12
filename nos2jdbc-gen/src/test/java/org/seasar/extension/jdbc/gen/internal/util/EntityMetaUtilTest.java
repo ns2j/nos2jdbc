@@ -15,23 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class EntityMetaUtilTest {
+class EntityMetaUtilTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testComment() throws Exception {
+    void testComment() throws Exception {
         EntityMeta entityMeta = new EntityMeta();
         assertNull(EntityMetaUtil.getComment(entityMeta));
         EntityMetaUtil.setComment(entityMeta, "aaa");

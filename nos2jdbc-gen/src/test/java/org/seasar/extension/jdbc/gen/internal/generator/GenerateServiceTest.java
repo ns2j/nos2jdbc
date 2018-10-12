@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
@@ -30,14 +29,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateServiceTest {
+class GenerateServiceTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
@@ -47,7 +45,7 @@ public class GenerateServiceTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConventionImpl pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -69,14 +67,11 @@ public class GenerateServiceTest {
      * @throws Exception
      */
     @Test
-    public void testSingleId() throws Exception {
+    void testSingleId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "jdbcManager", "none");
+        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("hoge.service", "Service", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/service.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/service.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + "_SingleId.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
@@ -87,17 +82,13 @@ public class GenerateServiceTest {
      * @throws Exception
      */
     @Test
-    public void testCompositeId() throws Exception {
+    void testCompositeId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ccc.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "jdbcManager", "none");
+        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("hoge.service", "Service", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/service.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/service.ftl", "UTF-8", false);
         generator.generate(context);
-        String path = getClass().getName().replace(".", "/")
-                + "_CompositeId.txt";
+        String path = getClass().getName().replace(".", "/") + "_CompositeId.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 
@@ -106,14 +97,11 @@ public class GenerateServiceTest {
      * @throws Exception
      */
     @Test
-    public void testNoId() throws Exception {
+    void testNoId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ddd.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "jdbcManager", "none");
+        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("hoge.service", "Service", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/service.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/service.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + "_NoId.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
@@ -124,17 +112,13 @@ public class GenerateServiceTest {
      * @throws Exception
      */
     @Test
-    public void testJdbcManagerName() throws Exception {
+    void testJdbcManagerName() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "hoge.service", "Service", new NamesModelFactoryImpl(
-                        "hoge.entity", "Names"), true, "myJdbcManager", "none");
+        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("hoge.service", "Service", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "myJdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/service.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/service.ftl", "UTF-8", false);
         generator.generate(context);
-        String path = getClass().getName().replace(".", "/")
-                + "_JdbcManagerName.txt";
+        String path = getClass().getName().replace(".", "/") + "_JdbcManagerName.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 
@@ -143,17 +127,13 @@ public class GenerateServiceTest {
      * @throws Exception
      */
     @Test
-    public void testServiceClassNameSuffix() throws Exception {
+    void testServiceClassNameSuffix() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl(
-                "hoge.service", "Dao", new NamesModelFactoryImpl("hoge.entity",
-                        "Names"), true, "jdbcManager", "none");
+        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("hoge.service", "Dao", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "jdbcManager", "none");
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/service.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/service.ftl", "UTF-8", false);
         generator.generate(context);
-        String path = getClass().getName().replace(".", "/")
-                + "_ServiceClassNameSuffix.txt";
+        String path = getClass().getName().replace(".", "/") + "_ServiceClassNameSuffix.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 }

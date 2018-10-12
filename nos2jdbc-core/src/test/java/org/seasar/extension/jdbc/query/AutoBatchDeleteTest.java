@@ -22,7 +22,8 @@ import java.util.List;
 
 import javax.persistence.OptimisticLockException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
@@ -45,14 +46,15 @@ import org.seasar.framework.mock.sql.MockPreparedStatement;
 /**
  * @author koichik
  */
-public class AutoBatchDeleteTest extends TestCase {
+class AutoBatchDeleteTest {
 
     private JdbcManagerImpl manager;
 
     private int addBatchCalled;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -76,8 +78,9 @@ public class AutoBatchDeleteTest extends TestCase {
         manager.setEntityMetaFactory(emFactory);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -86,7 +89,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -98,7 +102,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -110,7 +115,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -122,7 +128,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testIgnoreVersion() {
+    @Test
+    void testIgnoreVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -135,7 +142,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareWhereClause() {
+    @Test
+    void testPrepareWhereClause() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -147,7 +155,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareWhereClause_ignoreVersion() {
+    @Test
+    void testPrepareWhereClause_ignoreVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -160,7 +169,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql() {
+    @Test
+    void testPrepareSql() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -173,7 +183,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_ignoreVersion() {
+    @Test
+    void testPrepareSql_ignoreVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -186,7 +197,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams() {
+    @Test
+    void testPrepareParams() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -214,7 +226,8 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams_ignoreVersion() {
+    @Test
+    void testPrepareParams_ignoreVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
@@ -240,23 +253,24 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute() throws Exception {
+    @Test
+    void testExecute() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -282,23 +296,24 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute_includesVersion() throws Exception {
+    @Test
+    void testExecute_includesVersion() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -318,23 +333,24 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testOptimisticLock() throws Exception {
+    @Test
+    void testOptimisticLock() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 0, 1 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -355,23 +371,24 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testOptimisticLock_includesVersion() throws Exception {
+    @Test
+    void testOptimisticLock_includesVersion() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 0, 1 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -392,24 +409,25 @@ public class AutoBatchDeleteTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testOptimisticLock_suppressOptimisticLockException()
+    @Test
+    void testOptimisticLock_suppressOptimisticLockException()
             throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = new AutoBatchDeleteImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 0, 1 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }

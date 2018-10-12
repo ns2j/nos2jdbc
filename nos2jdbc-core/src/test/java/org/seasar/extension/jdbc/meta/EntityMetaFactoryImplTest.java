@@ -24,7 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JoinColumnMeta;
@@ -51,12 +52,13 @@ import org.seasar.framework.util.DisposableUtil;
  * @author higa
  * 
  */
-public class EntityMetaFactoryImplTest extends TestCase {
+class EntityMetaFactoryImplTest {
 
     private EntityMetaFactoryImpl factory;
 
-    @Override
-    protected void setUp() {
+    
+    @BeforeEach
+    void setUp() {
         PersistenceConventionImpl convention = new PersistenceConventionImpl();
         factory = new EntityMetaFactoryImpl();
         factory.setPersistenceConvention(convention);
@@ -73,15 +75,17 @@ public class EntityMetaFactoryImplTest extends TestCase {
         factory.initialize();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         DisposableUtil.dispose();
     }
 
     /**
      * @throws Exception
      */
-    public void testGetEntityMeta() throws Exception {
+    @Test
+    void testGetEntityMeta() throws Exception {
         EntityMeta entityMeta = factory.getEntityMeta(Aaa.class);
         assertSame(entityMeta, factory.getEntityMeta(Aaa.class));
     }
@@ -89,7 +93,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetEntityMeta_nonEntity() throws Exception {
+    @Test
+    void testGetEntityMeta_nonEntity() throws Exception {
         try {
             factory.getEntityMeta(getClass());
             fail();
@@ -102,7 +107,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_entityClass() throws Exception {
+    @Test
+    void testCreateEntityMeta_entityClass() throws Exception {
         EntityMeta entityMeta = factory.createEntityMeta(Aaa.class);
         assertEquals(Aaa.class, entityMeta.getEntityClass());
     }
@@ -110,7 +116,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_name() throws Exception {
+    @Test
+    void testCreateEntityMeta_name() throws Exception {
         EntityMeta entityMeta = factory.createEntityMeta(Aaa.class);
         assertEquals("Aaa", entityMeta.getName());
     }
@@ -118,7 +125,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_customizeName() throws Exception {
+    @Test
+    void testCreateEntityMeta_customizeName() throws Exception {
         EntityMeta entityMeta = factory.createEntityMeta(Hoge.class);
         assertEquals("Hoge2", entityMeta.getName());
     }
@@ -126,7 +134,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_tableMeta() throws Exception {
+    @Test
+    void testCreateEntityMeta_tableMeta() throws Exception {
         EntityMeta entityMeta = factory.createEntityMeta(Aaa.class);
         assertNotNull(entityMeta.getTableMeta());
     }
@@ -134,7 +143,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_propertyMeta() throws Exception {
+    @Test
+    void testCreateEntityMeta_propertyMeta() throws Exception {
         EntityMeta entityMeta = factory.createEntityMeta(Aaa.class);
         assertTrue(entityMeta.getPropertyMetaSize() > 0);
     }
@@ -142,7 +152,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_noEntity() throws Exception {
+    @Test
+    void testCreateEntityMeta_noEntity() throws Exception {
         try {
             factory.createEntityMeta(getClass());
             fail();
@@ -155,7 +166,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_inheritMappedSuperclass() throws Exception {
+    @Test
+    void testCreateEntityMeta_inheritMappedSuperclass() throws Exception {
         EntityMeta entityMeta = factory.createEntityMeta(Hhh.class);
         assertEquals(3, entityMeta.getPropertyMetaSize());
         assertEquals("name", entityMeta.getPropertyMeta(0).getName());
@@ -166,7 +178,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_inheritEntity() throws Exception {
+    @Test
+    void testCreateEntityMeta_inheritEntity() throws Exception {
         try {
             factory.createEntityMeta(Jjj.class);
             fail();
@@ -179,7 +192,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateEntityMeta_fieldDuplicated() throws Exception {
+    @Test
+    void testCreateEntityMeta_fieldDuplicated() throws Exception {
         try {
             factory.createEntityMeta(Kkk.class);
             fail();
@@ -192,7 +206,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCheckMappedBy_oneToOne_mappedByPropertyNotFound()
+    @Test
+    void testCheckMappedBy_oneToOne_mappedByPropertyNotFound()
             throws Exception {
         try {
             factory.getEntityMeta(OneToOnePropertyNotFound.class);
@@ -210,7 +225,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCheckMappedBy_oneToOne_mappedByNotIdentical()
+    @Test
+    void testCheckMappedBy_oneToOne_mappedByNotIdentical()
             throws Exception {
         try {
             factory.getEntityMeta(OneToOneNotIdentical.class);
@@ -230,7 +246,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCheckMappedBy_oneToMany_mappedByPropertyNotFound()
+    @Test
+    void testCheckMappedBy_oneToMany_mappedByPropertyNotFound()
             throws Exception {
         try {
             factory.getEntityMeta(OneToManyPropertyNotFound.class);
@@ -248,7 +265,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCheckMappedBy_oneToMany_mappedByNotIdentical()
+    @Test
+    void testCheckMappedBy_oneToMany_mappedByNotIdentical()
             throws Exception {
         try {
             factory.getEntityMeta(OneToManyNotIdentical.class);
@@ -268,7 +286,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testResolveJoinColumn() throws Exception {
+    @Test
+    void testResolveJoinColumn() throws Exception {
         EntityMeta entityMeta = factory.getEntityMeta(Aaa.class);
         PropertyMeta pm = entityMeta.getPropertyMeta("bbb");
         assertEquals(1, pm.getJoinColumnMetaList().size());
@@ -280,7 +299,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testResolveJoinColumn_joinColumnNotFound() throws Exception {
+    @Test
+    void testResolveJoinColumn_joinColumnNotFound() throws Exception {
         try {
             factory.getEntityMeta(Hoge.class);
             fail();
@@ -294,7 +314,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testResolveJoinColumn_joinColumnAutoConfiguration()
+    @Test
+    void testResolveJoinColumn_joinColumnAutoConfiguration()
             throws Exception {
         try {
             factory.getEntityMeta(Hoge3.class);
@@ -309,7 +330,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testResolveJoinColumn_manyToOneFKNotFound() throws Exception {
+    @Test
+    void testResolveJoinColumn_manyToOneFKNotFound() throws Exception {
         try {
             factory.getEntityMeta(Hoge4.class);
             fail();
@@ -324,7 +346,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testResolveJoinColumn_oneToOneFKNotFound() throws Exception {
+    @Test
+    void testResolveJoinColumn_oneToOneFKNotFound() throws Exception {
         try {
             factory.getEntityMeta(Hoge5.class);
             fail();
@@ -339,7 +362,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testResolveJoinColumn_referencedColumnNotFound()
+    @Test
+    void testResolveJoinColumn_referencedColumnNotFound()
             throws Exception {
         try {
             factory.getEntityMeta(Hoge6.class);
@@ -356,7 +380,8 @@ public class EntityMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testColumnMeta_relationship() throws Exception {
+    @Test
+    void testColumnMeta_relationship() throws Exception {
         EntityMeta entityMeta = factory.getEntityMeta(Aaa.class);
         assertFalse(entityMeta.hasColumnPropertyMeta("bbb"));
     }

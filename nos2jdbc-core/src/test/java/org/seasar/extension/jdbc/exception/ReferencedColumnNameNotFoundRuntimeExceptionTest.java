@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.ReferencedColumnNameNotFoundRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class ReferencedColumnNameNotFoundRuntimeExceptionTest extends TestCase {
+class ReferencedColumnNameNotFoundRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testGetAll() {
+	@Test
+    void testGetAll() {
 		ReferencedColumnNameNotFoundRuntimeException ex = new ReferencedColumnNameNotFoundRuntimeException(
 				"Hoge", "aaa", "Foo", "xxx");
 		System.out.println(ex.getMessage());

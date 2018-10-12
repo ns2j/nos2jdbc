@@ -23,7 +23,8 @@ import java.util.List;
 
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.types.ValueTypes;
@@ -33,7 +34,7 @@ import org.seasar.framework.exception.SQLRuntimeException;
  * @author higa
  * 
  */
-public class OracleDialectTest extends TestCase {
+class OracleDialectTest {
 
     private OracleDialect dialect = new OracleDialect();
 
@@ -67,7 +68,8 @@ public class OracleDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_limitOnly() throws Exception {
+    @Test
+    void testConvertLimitSql_limitOnly() throws Exception {
         String sql = "select * from emp order by id for update";
         String expected = "select * from ( select temp_.*, rownum rownumber_ from ( select * from emp order by id ) temp_ ) where rownumber_ <= 5 for update";
         assertEquals(expected, dialect.convertLimitSql(sql, 0, 5));
@@ -77,7 +79,8 @@ public class OracleDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_offsetLimit() throws Exception {
+    @Test
+    void testConvertLimitSql_offsetLimit() throws Exception {
         String sql = "select e.* from emp e order by id for update";
         String expected = "select * from ( select temp_.*, rownum rownumber_ from ( select e.* from emp e order by id ) temp_ ) where rownumber_ > 5 and rownumber_ <= 15 for update";
         assertEquals(expected, dialect.convertLimitSql(sql, 5, 10));
@@ -87,7 +90,8 @@ public class OracleDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_offsetOnly() throws Exception {
+    @Test
+    void testConvertLimitSql_offsetOnly() throws Exception {
         String sql = "select e.* from emp e order by id for update";
         String expected = "select * from ( select temp_.*, rownum rownumber_ from ( select e.* from emp e order by id ) temp_ ) where rownumber_ > 5 for update";
         assertEquals(expected, dialect.convertLimitSql(sql, 5, 0));
@@ -97,7 +101,8 @@ public class OracleDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetValueType() throws Exception {
+    @Test
+    void testGetValueType() throws Exception {
         assertEquals(ValueTypes.WAVE_DASH_STRING,
                 dialect.getValueType(String.class, false, null));
         assertEquals(ValueTypes.BOOLEAN_INTEGER,
@@ -134,7 +139,8 @@ public class OracleDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetValueType_propertyMeta() throws Exception {
+    @Test
+    void testGetValueType_propertyMeta() throws Exception {
         PropertyMeta pm = new PropertyMeta();
         pm.setField(getClass().getField("stringField"));
         pm.setValueType(ValueTypes.STRING);
@@ -204,14 +210,16 @@ public class OracleDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testNeedsParameterForResultSet() throws Exception {
+    @Test
+    void testNeedsParameterForResultSet() throws Exception {
         assertTrue(dialect.needsParameterForResultSet());
     }
 
     /**
      * @throws Exception
      */
-    public void testIsUniqueConstraintViolation() throws Exception {
+    @Test
+    void testIsUniqueConstraintViolation() throws Exception {
         assertTrue(dialect
                 .isUniqueConstraintViolation(new Exception(
                         new SQLRuntimeException(SQLException.class

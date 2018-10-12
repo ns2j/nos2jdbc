@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactoryImpl;
@@ -30,14 +29,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateEntityTestTest {
+class GenerateEntityTestTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
@@ -47,7 +45,7 @@ public class GenerateEntityTestTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConventionImpl pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -69,20 +67,14 @@ public class GenerateEntityTestTest {
      * @throws Exception
      */
     @Test
-    public void testCompositeId() throws Exception {
-//i	
-        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-                "jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
+    void testCompositeId() throws Exception {
+        //i	
+        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl("jdbcManager", "Test", new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ccc.class);
-        EntityTestModel model = entityTestModelFactory
-                .getEntityTestModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/entitytest.ftl", "UTF-8", false);
+        EntityTestModel model = entityTestModelFactory.getEntityTestModel(entityMeta);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/entitytest.ftl", "UTF-8", false);
         generator.generate(context);
-
-        String path = getClass().getName().replace(".", "/")
-                + "_CompositeId.txt";
+        String path = getClass().getName().replace(".", "/") + "_CompositeId.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 
@@ -90,9 +82,9 @@ public class GenerateEntityTestTest {
      * 
      * @throws Exception
      */
-/*i    
+    /*i    
     @Test
-    public void testCompositeId_s2junit4() throws Exception {
+    void testCompositeId_s2junit4() throws Exception {
 //i	
         EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
                 "jdbcManager", "Test",
@@ -114,41 +106,14 @@ public class GenerateEntityTestTest {
      * @throws Exception
      */
     @Test
-    public void testNoId() throws Exception {
-//i
-	EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-                "jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
+    void testNoId() throws Exception {
+        //i
+        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl("jdbcManager", "Test", new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ddd.class);
-        EntityTestModel model = entityTestModelFactory
-                .getEntityTestModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/entitytest.ftl", "UTF-8", false);
+        EntityTestModel model = entityTestModelFactory.getEntityTestModel(entityMeta);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/entitytest.ftl", "UTF-8", false);
         generator.generate(context);
-
         String path = getClass().getName().replace(".", "/") + "_NoId.txt";
-             assertEquals(TextUtil.readUTF8(path), generator.getResult());
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
-    @Test
-    public void testLeftOuterJoin() throws Exception {
-//i
-	EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-        	"jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
-        EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        EntityTestModel model = entityTestModelFactory
-                .getEntityTestModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/entitytest.ftl", "UTF-8", false);
-        generator.generate(context);
-
-        String path = getClass().getName().replace(".", "/")
-                + "_LeftOuterJoin.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 
@@ -157,21 +122,30 @@ public class GenerateEntityTestTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_useNamesClass() throws Exception {
-//i
-	EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl(
-        	"jdbcManager", "Test",
-                new NamesModelFactoryImpl("hoge.entity", "Names"), true, "rootpackagename", "none", "");
+    void testLeftOuterJoin() throws Exception {
+        //i
+        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl("jdbcManager", "Test", new NamesModelFactoryImpl("hoge.entity", "Names"), false, "rootpackagename", "none", "");
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        EntityTestModel model = entityTestModelFactory
-                .getEntityTestModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/entitytest.ftl", "UTF-8", false);
+        EntityTestModel model = entityTestModelFactory.getEntityTestModel(entityMeta);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/entitytest.ftl", "UTF-8", false);
         generator.generate(context);
-
-        String path = getClass().getName().replace(".", "/")
-                + "_LeftOuterJoin_useNamesClass.txt";
+        String path = getClass().getName().replace(".", "/") + "_LeftOuterJoin.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testLeftOuterJoin_useNamesClass() throws Exception {
+        //i
+        EntityTestModelFactoryImpl entityTestModelFactory = new EntityTestModelFactoryImpl("jdbcManager", "Test", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "rootpackagename", "none", "");
+        EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
+        EntityTestModel model = entityTestModelFactory.getEntityTestModel(entityMeta);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/entitytest.ftl", "UTF-8", false);
+        generator.generate(context);
+        String path = getClass().getName().replace(".", "/") + "_LeftOuterJoin_useNamesClass.txt";
+        assertEquals(TextUtil.readUTF8(path), generator.getResult());
+    }
 }

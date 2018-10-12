@@ -26,7 +26,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
@@ -51,7 +52,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-public class SqlFileUpdateImplTest extends TestCase {
+class SqlFileUpdateImplTest {
 
     private static final String PATH_SIMPLE = SqlFileUpdateImplTest.class
             .getName()
@@ -63,8 +64,9 @@ public class SqlFileUpdateImplTest extends TestCase {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -73,8 +75,9 @@ public class SqlFileUpdateImplTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         NodeCache.clear();
@@ -84,7 +87,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, "aaa.sql");
         assertSame(query, query.callerClass(getClass()));
         assertEquals(getClass(), query.callerClass);
@@ -93,7 +97,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, "aaa.sql");
         assertSame(query, query.callerMethodName("hoge"));
         assertEquals("hoge", query.callerMethodName);
@@ -102,7 +107,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, "aaa.sql");
         assertSame(query, query.queryTimeout(100));
         assertEquals(100, query.queryTimeout);
@@ -111,7 +117,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode() {
+    @Test
+    void testPrepareNode() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, PATH_SIMPLE);
         query.prepareCallerClassAndMethodName("execute");
         query.prepareNode();
@@ -121,7 +128,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode_resourceNotFound() {
+    @Test
+    void testPrepareNode_resourceNotFound() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, "xxx");
         query.prepareCallerClassAndMethodName("execute");
         try {
@@ -136,7 +144,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_simpleType() {
+    @Test
+    void testPrepareParameter_simpleType() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, PATH_SIMPLE,
                 "foo");
         query.prepareCallerClassAndMethodName("execute");
@@ -152,7 +161,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_simpleType_clob() {
+    @Test
+    void testPrepareParameter_simpleType_clob() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, PATH_SIMPLE,
                 lob("hoge"));
         query.prepareCallerClassAndMethodName("execute");
@@ -170,7 +180,8 @@ public class SqlFileUpdateImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType_date() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType_date() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, PATH_SIMPLE,
                 time(date));
@@ -189,7 +200,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_simpleType_bindNull() {
+    @Test
+    void testPrepareParameter_simpleType_bindNull() {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, PATH_SIMPLE,
                 null);
         query.prepareCallerClassAndMethodName("execute");
@@ -204,7 +216,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_dto() {
+    @Test
+    void testPrepareParameter_dto() {
         MyDto dto = new MyDto();
         dto.id = 1;
         dto.name = "foo";
@@ -224,7 +237,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_dto_clob() {
+    @Test
+    void testPrepareParameter_dto_clob() {
         MyDto2 dto = new MyDto2();
         dto.id = 1;
         dto.name = "hoge";
@@ -247,7 +261,8 @@ public class SqlFileUpdateImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testPrepareParameter_dto_date() throws Exception {
+    @Test
+    void testPrepareParameter_dto_date() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.id = 1;
         dto.name = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
@@ -270,7 +285,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_map() {
+    @Test
+    void testPrepareParameter_map() {
         Map<String, Object> map = CollectionsUtil.newHashMap();
         map.put("id", 1);
         map.put("name", "foo");
@@ -290,7 +306,8 @@ public class SqlFileUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_map_clob() {
+    @Test
+    void testPrepareParameter_map_clob() {
         Map<String, Object> map = CollectionsUtil.newHashMap();
         map.put("id", 1);
         map.put("name", Parameter.lob("hoge"));
@@ -313,7 +330,8 @@ public class SqlFileUpdateImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testPrepareParameter_map_date() throws Exception {
+    @Test
+    void testPrepareParameter_map_date() throws Exception {
         Map<String, Object> map = CollectionsUtil.newHashMap();
         map.put("id", 1);
         map.put("name", Parameter.time(new SimpleDateFormat("HH:mm:ss")
@@ -338,16 +356,17 @@ public class SqlFileUpdateImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testExecute() throws Exception {
+    @Test
+    void testExecute() throws Exception {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, PATH_SIMPLE,
                 "foo") {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -372,16 +391,17 @@ public class SqlFileUpdateImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testExecute_entityExists() throws Exception {
+    @Test
+    void testExecute_entityExists() throws Exception {
         SqlFileUpdateImpl query = new SqlFileUpdateImpl(manager, PATH_SIMPLE,
                 "foo") {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         throw new SQLException("hoge", "23");
                     }

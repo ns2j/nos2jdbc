@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.BothMappedByAndJoinColumnRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class BothMappedByAndJoinColumnRuntimeExceptionTest extends TestCase {
+class BothMappedByAndJoinColumnRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		BothMappedByAndJoinColumnRuntimeException ex = new BothMappedByAndJoinColumnRuntimeException(
 				"Hoge", "aaa");
 		assertEquals("Hoge", ex.getEntityName());

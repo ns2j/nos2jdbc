@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class ParamTypeTest extends TestCase {
+class ParamTypeTest {
 
     /**
      * 
      */
-    public void testGetSuffix() {
+    @Test
+    void testGetSuffix() {
         assertEquals("_OUT", ParamType.OUT.getSuffix());
     }
 

@@ -15,29 +15,33 @@
  */
 package org.seasar.extension.timer;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  *
  */
-public class TimeoutManagerTest extends TestCase {
+class TimeoutManagerTest {
 
     private int expiredCount;
 
-    protected void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         expiredCount = 0;
         TimeoutManager.getInstance().clear();
     }
 
-    protected void tearDown() throws Exception {
+    @AfterEach
+    void tearDown() throws Exception {
         TimeoutManager.getInstance().clear();
     }
 
     /**
      * @throws Exception
      */
-    public void testExpired() throws Exception {
+    @Test
+    void testExpired() throws Exception {
         TimeoutTask task = TimeoutManager.getInstance().addTimeoutTarget(
                 new TimeoutTarget() {
                     public void expired() {

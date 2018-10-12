@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.meta;
 
 import javax.persistence.Table;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.TableMeta;
@@ -28,12 +29,13 @@ import org.seasar.framework.convention.impl.PersistenceConventionImpl;
  * @author higa
  * 
  */
-public class TableMetaFactoryImplTest extends TestCase {
+class TableMetaFactoryImplTest {
 
 	private TableMetaFactoryImpl factory;
 
-	@Override
-	protected void setUp() {
+	
+	@BeforeEach
+    void setUp() {
 		factory = new TableMetaFactoryImpl();
 		factory.setPersistenceConvention(new PersistenceConventionImpl());
 	}
@@ -41,7 +43,8 @@ public class TableMetaFactoryImplTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testCreateTableMeta_noannotation() throws Exception {
+	@Test
+    void testCreateTableMeta_noannotation() throws Exception {
 		TableMeta tableMeta = factory.createTableMeta(MyEntity.class,
 				new EntityMeta("MyEntity"));
 		assertEquals("MY_ENTITY", tableMeta.getName());
@@ -51,7 +54,8 @@ public class TableMetaFactoryImplTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testCreateTableMeta_annotation() throws Exception {
+	@Test
+    void testCreateTableMeta_annotation() throws Exception {
 		TableMeta tableMeta = factory.createTableMeta(MyEntity2.class,
 				new EntityMeta("MyEntity2"));
 		assertEquals("aaa", tableMeta.getName());

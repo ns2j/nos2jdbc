@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ClassUnmatchRuntimeExceptionTest {
+class ClassUnmatchRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        ClassUnmatchRuntimeException e = new ClassUnmatchRuntimeException(
-                Integer.class, String.class);
+    void test() throws Exception {
+        ClassUnmatchRuntimeException e = new ClassUnmatchRuntimeException(Integer.class, String.class);
         assertEquals(Integer.class, e.getExpectedClass());
         assertEquals(String.class, e.getActualClass());
         System.out.println(e.getMessage());

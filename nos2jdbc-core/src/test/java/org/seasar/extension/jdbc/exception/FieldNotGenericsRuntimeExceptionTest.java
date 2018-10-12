@@ -19,13 +19,14 @@ import java.lang.reflect.Field;
 
 import org.seasar.extension.jdbc.exception.FieldNotGenericsRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class FieldNotGenericsRuntimeExceptionTest extends TestCase {
+class FieldNotGenericsRuntimeExceptionTest {
 
     String aaa;
 
@@ -33,7 +34,8 @@ public class FieldNotGenericsRuntimeExceptionTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetField() throws Exception {
+    @Test
+    void testGetField() throws Exception {
         Field field = getClass().getDeclaredField("aaa");
         FieldNotGenericsRuntimeException ex = new FieldNotGenericsRuntimeException(
                 field);

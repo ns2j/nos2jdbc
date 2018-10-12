@@ -16,25 +16,23 @@
 package org.seasar.extension.jdbc.gen.internal.version;
 
 import java.io.File;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDdlInfoVersionRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.NextVersionExceededRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DdlInfoFileImplTest {
+class DdlInfoFileImplTest {
 
     /**
      * 
      */
     @Test
-    public void testGetVersionNo() {
+    void testGetVersionNo() {
         String path = getClass().getName().replace('.', '/') + "_version.txt";
         File file = ResourceUtil.getResourceAsFile(path);
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(file);
@@ -46,9 +44,8 @@ public class DdlInfoFileImplTest {
      * 
      */
     @Test
-    public void testGetVersionNo_fileNotExistent() {
-        DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File(
-                "notExistent"));
+    void testGetVersionNo_fileNotExistent() {
+        DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("notExistent"));
         assertEquals(0, ddlInfoFile.getCurrentVersionNo());
     }
 
@@ -56,9 +53,8 @@ public class DdlInfoFileImplTest {
      * 
      */
     @Test
-    public void testGetVersionNo_illegalVersionNoFormat() {
-        String fileName = getClass().getName().replace('.', '/')
-                + "_illegalVersion.txt";
+    void testGetVersionNo_illegalVersionNoFormat() {
+        String fileName = getClass().getName().replace('.', '/') + "_illegalVersion.txt";
         File file = ResourceUtil.getResourceAsFile(fileName);
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(file);
         try {
@@ -73,9 +69,8 @@ public class DdlInfoFileImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetNextVersion_maxVersionNo() throws Exception {
-        String path = getClass().getName().replace('.', '/')
-                + "_maxVersion.txt";
+    void testGetNextVersion_maxVersionNo() throws Exception {
+        String path = getClass().getName().replace('.', '/') + "_maxVersion.txt";
         File file = ResourceUtil.getResourceAsFile(path);
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(file);
         try {
@@ -89,7 +84,7 @@ public class DdlInfoFileImplTest {
      * 
      */
     @Test
-    public void testConvertToInt() {
+    void testConvertToInt() {
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
         assertEquals(10, ddlInfoFile.convertToInt("10"));
     }
@@ -98,7 +93,7 @@ public class DdlInfoFileImplTest {
      * 
      */
     @Test
-    public void testConvertToInt_null() {
+    void testConvertToInt_null() {
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
         try {
             ddlInfoFile.convertToInt(null);
@@ -111,7 +106,7 @@ public class DdlInfoFileImplTest {
      * 
      */
     @Test
-    public void testConvertToInt_notNumber() {
+    void testConvertToInt_notNumber() {
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
         try {
             ddlInfoFile.convertToInt("aaa");
@@ -124,7 +119,7 @@ public class DdlInfoFileImplTest {
      * 
      */
     @Test
-    public void testConvertToInt_minus() {
+    void testConvertToInt_minus() {
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
         try {
             ddlInfoFile.convertToInt("-10");
@@ -137,7 +132,7 @@ public class DdlInfoFileImplTest {
      * 
      */
     @Test
-    public void testToInt_greaterThanInteger() {
+    void testToInt_greaterThanInteger() {
         DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
         long value = (long) Integer.MAX_VALUE + 1;
         try {

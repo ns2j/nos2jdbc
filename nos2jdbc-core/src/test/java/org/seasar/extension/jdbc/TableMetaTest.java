@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class TableMetaTest extends TestCase {
+class TableMetaTest {
 
     /**
      * 
      */
-    public void testGetFullName() {
+    @Test
+    void testGetFullName() {
         TableMeta tableMeta = new TableMeta();
         tableMeta.setName("HOGE");
         assertEquals("HOGE", tableMeta.getFullName());
@@ -35,7 +37,8 @@ public class TableMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetFullName_schema() {
+    @Test
+    void testGetFullName_schema() {
         TableMeta tableMeta = new TableMeta();
         tableMeta.setName("HOGE");
         tableMeta.setSchema("SCOTT");
@@ -45,7 +48,8 @@ public class TableMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetFullName_catalog() {
+    @Test
+    void testGetFullName_catalog() {
         TableMeta tableMeta = new TableMeta();
         tableMeta.setName("HOGE");
         tableMeta.setCatalog("CATALOG");
@@ -55,7 +59,8 @@ public class TableMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetFullName_catalog_schema() {
+    @Test
+    void testGetFullName_catalog_schema() {
         TableMeta tableMeta = new TableMeta();
         tableMeta.setName("HOGE");
         tableMeta.setCatalog("CATALOG");

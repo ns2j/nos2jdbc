@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.ManyToOneFKNotFoundRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class ManyToOneFKNotFoundRuntimeExceptionTest extends TestCase {
+class ManyToOneFKNotFoundRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testGetAll() {
+	@Test
+    void testGetAll() {
 		ManyToOneFKNotFoundRuntimeException ex = new ManyToOneFKNotFoundRuntimeException(
 				"Hoge", "aaa", "aaa_id");
 		System.out.println(ex.getMessage());

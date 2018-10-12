@@ -18,7 +18,8 @@ package org.seasar.extension.jdbc.handler;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
@@ -31,14 +32,15 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class MapListResultSetHandlerTest extends TestCase {
+class MapListResultSetHandlerTest {
 
     /**
      * @throws Exception
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa");
@@ -66,7 +68,8 @@ public class MapListResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandleWithLimit() throws Exception {
+    @Test
+    void testHandleWithLimit() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 1);

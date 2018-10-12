@@ -32,7 +32,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "aaa", "bbb",
         "ccc" }) })
-public class Aaa {
+class Aaa {
 
     /** */
     @Id

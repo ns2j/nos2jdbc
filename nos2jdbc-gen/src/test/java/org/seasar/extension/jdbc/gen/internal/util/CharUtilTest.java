@@ -15,22 +15,21 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class CharUtilTest {
+class CharUtilTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         assertTrue(CharUtil.isAscii('a'));
         assertFalse(CharUtil.isAscii('あ'));
     }

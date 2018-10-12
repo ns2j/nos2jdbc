@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.mapper;
 
 import java.lang.reflect.Field;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
@@ -31,13 +32,14 @@ import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
  * @author higa
  * 
  */
-public class OneToOneEntityMapperImplTest extends TestCase {
+class OneToOneEntityMapperImplTest {
 
 	/**
 	 * 
 	 * @throws Exception
 	 */
-	public void testMap() throws Exception {
+	@Test
+    void testMap() throws Exception {
 		Field field = Bbb.class.getDeclaredField("id");
 		PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
 		Field field2 = Bbb.class.getDeclaredField("name");
@@ -71,7 +73,8 @@ public class OneToOneEntityMapperImplTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
-	public void testMap_noInverse() throws Exception {
+	@Test
+    void testMap_noInverse() throws Exception {
 		Field field = Ccc.class.getDeclaredField("id");
 		PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
 		Field field2 = Ccc.class.getDeclaredField("name");
@@ -96,7 +99,8 @@ public class OneToOneEntityMapperImplTest extends TestCase {
 	 * 
 	 * @throws Exception
 	 */
-	public void testMap_entityNull() throws Exception {
+	@Test
+    void testMap_entityNull() throws Exception {
 		Field field = Bbb.class.getDeclaredField("id");
 		PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
 		Field field2 = Bbb.class.getDeclaredField("name");

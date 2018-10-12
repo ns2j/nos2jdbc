@@ -15,8 +15,8 @@
  */
 package org.seasar.extension.sql.parser;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.extension.sql.SqlTokenizer;
 import org.seasar.extension.sql.TokenNotClosedRuntimeException;
 
@@ -24,28 +24,30 @@ import org.seasar.extension.sql.TokenNotClosedRuntimeException;
  * @author higa
  * 
  */
-public class SqlTokenizerImplTest extends TestCase {
+class SqlTokenizerImplTest {
 
     /**
      * @throws Exception
      */
-    public void testNext() throws Exception {
+    @Test
+    void testNext() throws Exception {
         String sql = "SELECT * FROM emp";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("2", sql, tokenizer.getToken());
-        assertEquals("3", SqlTokenizer.EOF, tokenizer.next());
-        assertEquals("4", null, tokenizer.getToken());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "1");
+        assertEquals(sql, tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "3");
+        assertEquals(null, tokenizer.getToken(), "4");
     }
 
     /**
      * @throws Exception
      */
-    public void testCommentEndNotFound() throws Exception {
+    @Test
+    void testCommentEndNotFound() throws Exception {
         String sql = "SELECT * FROM emp/*hoge";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("2", "SELECT * FROM emp", tokenizer.getToken());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "1");
+        assertEquals("SELECT * FROM emp", tokenizer.getToken(), "2");
         try {
             tokenizer.next();
             fail("3");
@@ -57,173 +59,181 @@ public class SqlTokenizerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testBindVariable() throws Exception {
+    @Test
+    void testBindVariable() throws Exception {
         String sql = "SELECT * FROM emp WHERE job = /*job*/'CLER K' AND deptno = /*deptno*/20";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("2", "SELECT * FROM emp WHERE job = ", tokenizer
-                .getToken());
-        assertEquals("3", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("4", "job", tokenizer.getToken());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "1");
+        assertEquals("SELECT * FROM emp WHERE job = ", tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "3");
+        assertEquals("job", tokenizer.getToken(), "4");
         tokenizer.skipToken();
-        assertEquals("5", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("6", " AND deptno = ", tokenizer.getToken());
-        assertEquals("7", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("8", "deptno", tokenizer.getToken());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "5");
+        assertEquals(" AND deptno = ", tokenizer.getToken(), "6");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "7");
+        assertEquals("deptno", tokenizer.getToken(), "8");
         tokenizer.skipToken();
-        assertEquals("9", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "9");
     }
 
     /**
      * @throws Exception
      */
-    public void testParseBindVariable2() throws Exception {
+    @Test
+    void testParseBindVariable2() throws Exception {
         String sql = "SELECT * FROM emp WHERE job = /*job*/'CLERK'/**/";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("2", "SELECT * FROM emp WHERE job = ", tokenizer
-                .getToken());
-        assertEquals("3", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("4", "job", tokenizer.getToken());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "1");
+        assertEquals("SELECT * FROM emp WHERE job = ", tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "3");
+        assertEquals("job", tokenizer.getToken(), "4");
         tokenizer.skipToken();
-        assertEquals("5", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("6", "", tokenizer.getToken());
-        assertEquals("7", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "5");
+        assertEquals("", tokenizer.getToken(), "6");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "7");
     }
 
     /**
      * @throws Exception
      */
-    public void testParseBindVariable3() throws Exception {
+    @Test
+    void testParseBindVariable3() throws Exception {
         String sql = "/*job*/'CLERK',";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("2", "job", tokenizer.getToken());
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "1");
+        assertEquals("job", tokenizer.getToken(), "2");
         tokenizer.skipToken();
-        assertEquals("3", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("4", ",", tokenizer.getToken());
-        assertEquals("5", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "3");
+        assertEquals(",", tokenizer.getToken(), "4");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "5");
     }
 
     /**
      * @throws Exception
      */
-    public void testParseElse() throws Exception {
+    @Test
+    void testParseElse() throws Exception {
         String sql = "SELECT * FROM emp WHERE /*IF job != null*/job = /*job*/'CLERK'-- ELSE job is null/*END*/";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("2", "SELECT * FROM emp WHERE ", tokenizer.getToken());
-        assertEquals("3", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("4", "IF job != null", tokenizer.getToken());
-        assertEquals("5", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("6", "job = ", tokenizer.getToken());
-        assertEquals("7", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("8", "job", tokenizer.getToken());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "1");
+        assertEquals("SELECT * FROM emp WHERE ", tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "3");
+        assertEquals("IF job != null", tokenizer.getToken(), "4");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "5");
+        assertEquals("job = ", tokenizer.getToken(), "6");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "7");
+        assertEquals("job", tokenizer.getToken(), "8");
         tokenizer.skipToken();
-        assertEquals("9", SqlTokenizer.ELSE, tokenizer.next());
+        assertEquals(SqlTokenizer.ELSE, tokenizer.next(), "9");
         tokenizer.skipWhitespace();
-        assertEquals("10", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("11", "job is null", tokenizer.getToken());
-        assertEquals("12", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("13", "END", tokenizer.getToken());
-        assertEquals("14", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "10");
+        assertEquals("job is null", tokenizer.getToken(), "11");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "12");
+        assertEquals("END", tokenizer.getToken(), "13");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "14");
     }
 
     /**
      * @throws Exception
      */
-    public void testParseElse2() throws Exception {
+    @Test
+    void testParseElse2() throws Exception {
         String sql = "/*IF false*/aaa -- ELSE bbb = /*bbb*/123/*END*/";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("2", "IF false", tokenizer.getToken());
-        assertEquals("3", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("4", "aaa ", tokenizer.getToken());
-        assertEquals("5", SqlTokenizer.ELSE, tokenizer.next());
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "1");
+        assertEquals("IF false", tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "3");
+        assertEquals("aaa ", tokenizer.getToken(), "4");
+        assertEquals(SqlTokenizer.ELSE, tokenizer.next(), "5");
         tokenizer.skipWhitespace();
-        assertEquals("6", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("7", "bbb = ", tokenizer.getToken());
-        assertEquals("8", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("9", "bbb", tokenizer.getToken());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "6");
+        assertEquals("bbb = ", tokenizer.getToken(), "7");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "8");
+        assertEquals("bbb", tokenizer.getToken(), "9");
         tokenizer.skipToken();
-        assertEquals("10", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("11", "END", tokenizer.getToken());
-        assertEquals("12", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "10");
+        assertEquals("END", tokenizer.getToken(), "11");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "12");
     }
 
     /**
      * @throws Exception
      */
-    public void testAnd() throws Exception {
+    @Test
+    void testAnd() throws Exception {
         String sql = " AND bbb";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", " ", tokenizer.skipWhitespace());
-        assertEquals("2", "AND", tokenizer.skipToken());
-        assertEquals("3", " AND", tokenizer.getBefore());
-        assertEquals("3", " bbb", tokenizer.getAfter());
+        assertEquals(" ", tokenizer.skipWhitespace(), "1");
+        assertEquals("AND", tokenizer.skipToken(), "2");
+        assertEquals(" AND", tokenizer.getBefore(), "3");
+        assertEquals(" bbb", tokenizer.getAfter(), "3");
     }
 
     /**
      * @throws Exception
      */
-    public void testBindVariable2() throws Exception {
+    @Test
+    void testBindVariable2() throws Exception {
         String sql = "? abc ? def ?";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.BIND_VARIABLE, tokenizer.next());
-        assertEquals("2", "$1", tokenizer.getToken());
-        assertEquals("3", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("4", " abc ", tokenizer.getToken());
-        assertEquals("5", SqlTokenizer.BIND_VARIABLE, tokenizer.next());
-        assertEquals("6", "$2", tokenizer.getToken());
-        assertEquals("7", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("8", " def ", tokenizer.getToken());
-        assertEquals("9", SqlTokenizer.BIND_VARIABLE, tokenizer.next());
-        assertEquals("10", "$3", tokenizer.getToken());
-        assertEquals("11", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.BIND_VARIABLE, tokenizer.next(), "1");
+        assertEquals("$1", tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "3");
+        assertEquals(" abc ", tokenizer.getToken(), "4");
+        assertEquals(SqlTokenizer.BIND_VARIABLE, tokenizer.next(), "5");
+        assertEquals("$2", tokenizer.getToken(), "6");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "7");
+        assertEquals(" def ", tokenizer.getToken(), "8");
+        assertEquals(SqlTokenizer.BIND_VARIABLE, tokenizer.next(), "9");
+        assertEquals("$3", tokenizer.getToken(), "10");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "11");
     }
 
     /**
      * @throws Exception
      */
-    public void testBindVariable3() throws Exception {
+    @Test
+    void testBindVariable3() throws Exception {
         String sql = "abc ? def";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("2", "abc ", tokenizer.getToken());
-        assertEquals("3", SqlTokenizer.BIND_VARIABLE, tokenizer.next());
-        assertEquals("4", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("5", " def", tokenizer.getToken());
-        assertEquals("6", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "1");
+        assertEquals("abc ", tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.BIND_VARIABLE, tokenizer.next(), "3");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "4");
+        assertEquals(" def", tokenizer.getToken(), "5");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "6");
     }
 
     /**
      * @throws Exception
      */
-    public void testBindVariable4() throws Exception {
+    @Test
+    void testBindVariable4() throws Exception {
         String sql = "/*IF false*/aaa--ELSE bbb = /*bbb*/123/*END*/";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("2", "IF false", tokenizer.getToken());
-        assertEquals("3", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("4", "aaa", tokenizer.getToken());
-        assertEquals("5", SqlTokenizer.ELSE, tokenizer.next());
-        assertEquals("6", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("7", " bbb = ", tokenizer.getToken());
-        assertEquals("8", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("9", "bbb", tokenizer.getToken());
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "1");
+        assertEquals("IF false", tokenizer.getToken(), "2");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "3");
+        assertEquals("aaa", tokenizer.getToken(), "4");
+        assertEquals(SqlTokenizer.ELSE, tokenizer.next(), "5");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "6");
+        assertEquals(" bbb = ", tokenizer.getToken(), "7");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "8");
+        assertEquals("bbb", tokenizer.getToken(), "9");
     }
 
     /**
      * @throws Exception
      */
-    public void testSkipTokenForParent() throws Exception {
+    @Test
+    void testSkipTokenForParent() throws Exception {
         String sql = "INSERT INTO TABLE_NAME (ID) VALUES (/*id*/20)";
         SqlTokenizer tokenizer = new SqlTokenizerImpl(sql);
-        assertEquals("1", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("2", SqlTokenizer.COMMENT, tokenizer.next());
-        assertEquals("3", "20", tokenizer.skipToken());
-        assertEquals("4", SqlTokenizer.SQL, tokenizer.next());
-        assertEquals("5", ")", tokenizer.getToken());
-        assertEquals("6", SqlTokenizer.EOF, tokenizer.next());
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "1");
+        assertEquals(SqlTokenizer.COMMENT, tokenizer.next(), "2");
+        assertEquals("20", tokenizer.skipToken(), "3");
+        assertEquals(SqlTokenizer.SQL, tokenizer.next(), "4");
+        assertEquals(")", tokenizer.getToken(), "5");
+        assertEquals(SqlTokenizer.EOF, tokenizer.next(), "6");
     }
 }

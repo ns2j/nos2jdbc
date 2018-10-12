@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc;
 
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.exception.ColumnDuplicatedRuntimeException;
@@ -28,12 +29,13 @@ import org.seasar.extension.jdbc.exception.PropertyDuplicatedRuntimeException;
  * @author higa
  * 
  */
-public class EntityMetaTest extends TestCase {
+class EntityMetaTest {
 
     /**
      * 
      */
-    public void testGetIdPropertyMetaList() {
+    @Test
+    void testGetIdPropertyMetaList() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaa");
@@ -51,7 +53,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetVersionPropertyMetaList() {
+    @Test
+    void testGetVersionPropertyMetaList() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaa");
@@ -74,7 +77,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetMappedByPropertyMeta() {
+    @Test
+    void testGetMappedByPropertyMeta() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaa");
@@ -90,7 +94,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetColumnPropertyMeta() {
+    @Test
+    void testGetColumnPropertyMeta() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaaName");
@@ -104,7 +109,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetColumnPropertyMeta_index() {
+    @Test
+    void testGetColumnPropertyMeta_index() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaaName");
@@ -118,7 +124,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetColumnPropertyMeta_notFound() {
+    @Test
+    void testGetColumnPropertyMeta_notFound() {
         EntityMeta em = new EntityMeta();
         em.setName("Hoge");
         PropertyMeta pm = new PropertyMeta();
@@ -140,7 +147,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testHasColumnPropertyMeta() {
+    @Test
+    void testHasColumnPropertyMeta() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaaName");
@@ -154,7 +162,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testHasColumnPropertyMeta_caseInsensitive() {
+    @Test
+    void testHasColumnPropertyMeta_caseInsensitive() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaaName");
@@ -168,7 +177,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetColumnPropertyMetaSize() {
+    @Test
+    void testGetColumnPropertyMetaSize() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaaName");
@@ -182,7 +192,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testGetColumnPropertyMetaSize_notColumn() {
+    @Test
+    void testGetColumnPropertyMetaSize_notColumn() {
         EntityMeta em = new EntityMeta();
         PropertyMeta pm = new PropertyMeta();
         pm.setName("aaaName");
@@ -193,7 +204,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testAddPropertyMeta_columnDuplicated() {
+    @Test
+    void testAddPropertyMeta_columnDuplicated() {
         EntityMeta em = new EntityMeta();
         em.setName("Hoge");
         PropertyMeta pm = new PropertyMeta();
@@ -222,7 +234,8 @@ public class EntityMetaTest extends TestCase {
     /**
      * 
      */
-    public void testAddPropertyMeta_propertyDuplicated() {
+    @Test
+    void testAddPropertyMeta_propertyDuplicated() {
         EntityMeta em = new EntityMeta();
         em.setName("Hoge");
         PropertyMeta pm = new PropertyMeta();

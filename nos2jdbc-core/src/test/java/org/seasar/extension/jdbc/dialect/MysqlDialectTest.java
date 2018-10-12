@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.dialect;
 
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.framework.exception.SQLRuntimeException;
 
@@ -25,14 +26,15 @@ import org.seasar.framework.exception.SQLRuntimeException;
  * @author higa
  * 
  */
-public class MysqlDialectTest extends TestCase {
+class MysqlDialectTest {
 
     private MysqlDialect dialect = new MysqlDialect();
 
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_limitOnly() throws Exception {
+    @Test
+    void testConvertLimitSql_limitOnly() throws Exception {
         String sql = "select * from emp order by id";
         String expected = sql + " limit 5";
         assertEquals(expected, dialect.convertLimitSql(sql, 0, 5));
@@ -42,7 +44,8 @@ public class MysqlDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_offsetOnly() throws Exception {
+    @Test
+    void testConvertLimitSql_offsetOnly() throws Exception {
         String sql = "select * from emp order by id";
         try {
             dialect.convertLimitSql(sql, 5, 0);
@@ -54,7 +57,8 @@ public class MysqlDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_offsetLimit() throws Exception {
+    @Test
+    void testConvertLimitSql_offsetLimit() throws Exception {
         String sql = "select e.* from emp e order by id";
         String expected = sql + " limit 5, 10";
         assertEquals(expected, dialect.convertLimitSql(sql, 5, 10));
@@ -63,7 +67,8 @@ public class MysqlDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsUniqueConstraintViolation() throws Exception {
+    @Test
+    void testIsUniqueConstraintViolation() throws Exception {
         assertTrue(dialect.isUniqueConstraintViolation(new Exception(
                 new SQLRuntimeException(SQLException.class
                         .cast(new SQLException("foo", "XXX")

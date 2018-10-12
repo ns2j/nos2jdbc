@@ -16,14 +16,12 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import java.lang.reflect.Field;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.TableGenerator;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.TableMeta;
@@ -35,15 +33,14 @@ import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
 @TableGenerator(name = "generator2", catalog = "FFF", schema = "GGG", table = "HHH", pkColumnName = "III", valueColumnName = "JJJ")
-public class IdTableDescFactoryImplTest {
+class IdTableDescFactoryImplTest {
 
     private PropertyMetaFactoryImpl propertyMetaFactory;
 
@@ -69,7 +66,7 @@ public class IdTableDescFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -77,7 +74,6 @@ public class IdTableDescFactoryImplTest {
         propertyMetaFactory = new PropertyMetaFactoryImpl();
         propertyMetaFactory.setPersistenceConvention(pc);
         propertyMetaFactory.setColumnMetaFactory(cmf);
-
         GenDialect dialect = new StandardGenDialect();
         UniqueKeyDescFactoryImpl ukdf = new UniqueKeyDescFactoryImpl(dialect);
         idTableDescFactory = new IdTableDescFactoryImpl(dialect, ukdf);
@@ -88,7 +84,7 @@ public class IdTableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetTableDesc_tableId() throws Exception {
+    void testGetTableDesc_tableId() throws Exception {
         Field field = getClass().getDeclaredField("tableId");
         TableMeta tableMeta = new TableMeta();
         tableMeta.setCatalog("HOGE");
@@ -96,16 +92,12 @@ public class IdTableDescFactoryImplTest {
         tableMeta.setName("BAR");
         EntityMeta entityMeta = new EntityMeta();
         entityMeta.setTableMeta(tableMeta);
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        TableDesc tableDesc = idTableDescFactory.getTableDesc(entityMeta,
-                propertyMeta);
-
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        TableDesc tableDesc = idTableDescFactory.getTableDesc(entityMeta, propertyMeta);
         assertEquals("AAA", tableDesc.getCatalogName());
         assertEquals("BBB", tableDesc.getSchemaName());
         assertEquals("CCC", tableDesc.getName());
         assertNotNull(tableDesc.getPrimaryKeyDesc());
-
         assertEquals(2, tableDesc.getColumnDescList().size());
         ColumnDesc columnDesc = tableDesc.getColumnDescList().get(0);
         assertEquals("DDD", columnDesc.getName());
@@ -120,7 +112,7 @@ public class IdTableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetTableDesc_classAnnotatedTableId() throws Exception {
+    void testGetTableDesc_classAnnotatedTableId() throws Exception {
         Field field = getClass().getDeclaredField("classAnnotatedTableId");
         TableMeta tableMeta = new TableMeta();
         tableMeta.setCatalog("HOGE");
@@ -129,16 +121,12 @@ public class IdTableDescFactoryImplTest {
         EntityMeta entityMeta = new EntityMeta();
         entityMeta.setTableMeta(tableMeta);
         entityMeta.setEntityClass(getClass());
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        TableDesc tableDesc = idTableDescFactory.getTableDesc(entityMeta,
-                propertyMeta);
-
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        TableDesc tableDesc = idTableDescFactory.getTableDesc(entityMeta, propertyMeta);
         assertEquals("FFF", tableDesc.getCatalogName());
         assertEquals("GGG", tableDesc.getSchemaName());
         assertEquals("HHH", tableDesc.getName());
         assertNotNull(tableDesc.getPrimaryKeyDesc());
-
         assertEquals(2, tableDesc.getColumnDescList().size());
         ColumnDesc columnDesc = tableDesc.getColumnDescList().get(0);
         assertEquals("III", columnDesc.getName());
@@ -153,7 +141,7 @@ public class IdTableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetTableDesc_noGeneraterTableId() throws Exception {
+    void testGetTableDesc_noGeneraterTableId() throws Exception {
         Field field = getClass().getDeclaredField("noGeneraterTableId");
         TableMeta tableMeta = new TableMeta();
         tableMeta.setCatalog("HOGE");
@@ -161,10 +149,8 @@ public class IdTableDescFactoryImplTest {
         tableMeta.setName("BAR");
         EntityMeta entityMeta = new EntityMeta();
         entityMeta.setTableMeta(tableMeta);
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        TableDesc tableDesc = idTableDescFactory.getTableDesc(entityMeta,
-                propertyMeta);
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        TableDesc tableDesc = idTableDescFactory.getTableDesc(entityMeta, propertyMeta);
         assertEquals("HOGE", tableDesc.getCatalogName());
         assertEquals("FOO", tableDesc.getSchemaName());
         assertEquals("ID_GENERATOR", tableDesc.getName());

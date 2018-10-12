@@ -19,26 +19,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.exception.SqlFailedRuntimeException;
 import org.seasar.framework.mock.sql.MockDataSource;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SqlExecutionContextImplTest {
+class SqlExecutionContextImplTest {
 
     /**
      * 
      */
     @Test
-    public void testGetStatement() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(
-                new MockDataSource(), true, false);
+    void testGetStatement() {
+        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, false);
         context.begin();
         Statement statement = context.getStatement();
         assertNotNull(statement);
@@ -52,15 +49,12 @@ public class SqlExecutionContextImplTest {
      * 
      */
     @Test
-    public void testAddException() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(
-                new MockDataSource(), true, false);
-
+    void testAddException() {
+        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, false);
         Connection connection = context.connection;
         context.begin();
         assertEquals(0, context.getExceptionList().size());
-        context.addException(new SqlFailedRuntimeException(new SQLException(),
-                "aaa", 1, "bbb"));
+        context.addException(new SqlFailedRuntimeException(new SQLException(), "aaa", 1, "bbb"));
         context.end();
         assertNotSame(connection, context.connection);
         assertEquals(1, context.getExceptionList().size());
@@ -72,12 +66,10 @@ public class SqlExecutionContextImplTest {
      * 
      */
     @Test
-    public void testAddException_haltOnError() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(
-                new MockDataSource(), true, true);
+    void testAddException_haltOnError() {
+        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, true);
         context.begin();
-        SqlFailedRuntimeException exception = new SqlFailedRuntimeException(
-                new SQLException(), "aaa", 1, "bbb");
+        SqlFailedRuntimeException exception = new SqlFailedRuntimeException(new SQLException(), "aaa", 1, "bbb");
         try {
             context.addException(exception);
             fail();
@@ -91,9 +83,8 @@ public class SqlExecutionContextImplTest {
      * 
      */
     @Test
-    public void testBeginEndDestroy() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(
-                new MockDataSource(), true, false);
+    void testBeginEndDestroy() {
+        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, false);
         context.begin();
         assertNotNull(context.getStatement());
         assertNotNull(context.connection);
@@ -108,5 +99,4 @@ public class SqlExecutionContextImplTest {
         assertNull(context.statement);
         assertFalse(context.begun);
     }
-
 }

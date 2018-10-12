@@ -19,7 +19,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
@@ -38,7 +39,7 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class BeanIterationAutoResultSetHandlerTest extends TestCase {
+class BeanIterationAutoResultSetHandlerTest {
 
     int count;
 
@@ -48,7 +49,8 @@ public class BeanIterationAutoResultSetHandlerTest extends TestCase {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         EntityMapperImpl entityMapper = createEntityMapper();
@@ -90,7 +92,8 @@ public class BeanIterationAutoResultSetHandlerTest extends TestCase {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithLimit() throws Exception {
+    @Test
+    void testHandle_WithLimit() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         EntityMapperImpl entityMapper = createEntityMapper();
@@ -124,7 +127,8 @@ public class BeanIterationAutoResultSetHandlerTest extends TestCase {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithExit() throws Exception {
+    @Test
+    void testHandle_WithExit() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         EntityMapperImpl entityMapper = createEntityMapper();
@@ -161,7 +165,8 @@ public class BeanIterationAutoResultSetHandlerTest extends TestCase {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithToMany() throws Exception {
+    @Test
+    void testHandle_WithToMany() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         EntityMapperImpl entityMapper = createEntityMapper();

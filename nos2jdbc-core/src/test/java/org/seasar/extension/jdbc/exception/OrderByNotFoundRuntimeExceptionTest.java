@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class OrderByNotFoundRuntimeExceptionTest extends TestCase {
+class OrderByNotFoundRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         String sql = "select * from emp";
         OrderByNotFoundRuntimeException ex = new OrderByNotFoundRuntimeException(
                 sql);

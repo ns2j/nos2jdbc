@@ -15,20 +15,20 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author taedium
  * 
  */
-public class SequenceNotSupportedRuntimeExceptionTest {
+class SequenceNotSupportedRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         SequenceNotSupportedRuntimeException e = new SequenceNotSupportedRuntimeException();
         System.out.println(e.getMessage());
     }

@@ -15,24 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.internal.sqltype;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.framework.mock.sql.MockResultSet;
 import org.seasar.framework.util.ArrayMap;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SmallIntTypeTest {
+class SmallIntTypeTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testGetValue() throws Exception {
+    void testGetValue() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         rowData.put("hoge", 1);
@@ -47,7 +46,7 @@ public class SmallIntTypeTest {
      * @throws Exception
      */
     @Test
-    public void testGetValue_null() throws Exception {
+    void testGetValue_null() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         rowData.put("hoge", null);

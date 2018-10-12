@@ -17,18 +17,20 @@ package org.seasar.framework.message;
 
 import java.util.Properties;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author shot
  * @author higa
  */
-public class MessageResourceBundleImplTest extends TestCase {
+class MessageResourceBundleImplTest {
 
     /**
      * @throws Exception
      */
-    public void testAll() throws Exception {
+    @Test
+    void testAll() throws Exception {
         Properties parentProp = new Properties();
         parentProp.setProperty("b", "B");
         MessageResourceBundleImpl parent = new MessageResourceBundleImpl(parentProp);

@@ -15,25 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.TemplateRuntimeException;
-
 import freemarker.template.TemplateException;
 
 /**
  * @author taedium
  * 
  */
-public class TemplateRuntimeExceptionTest {
+class TemplateRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        TemplateRuntimeException e = new TemplateRuntimeException(
-                new TemplateException(null));
+    void test() throws Exception {
+        TemplateRuntimeException e = new TemplateRuntimeException(new TemplateException(null));
         System.out.println(e.getMessage());
     }
 }

@@ -17,18 +17,20 @@ package org.seasar.framework.util.tiger;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.framework.util.tiger.Maps.*;
 
 /**
  * @author koichik
  */
-public class MapsTest extends TestCase {
+class MapsTest {
 
     /**
      * @throws Exception
      */
-    public void test() throws Exception {
+    @Test
+    void test() throws Exception {
         Map<String, Integer> map = map("a", 1).$("b", 2).$("c", 3).$();
         assertEquals(3, map.size());
         assertEquals(new Integer(1), map.get("a"));

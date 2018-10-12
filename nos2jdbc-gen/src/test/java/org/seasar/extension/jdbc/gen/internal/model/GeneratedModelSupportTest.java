@@ -16,31 +16,29 @@
 package org.seasar.extension.jdbc.gen.internal.model;
 
 import java.util.List;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.model.GeneratedModel;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GeneratedModelSupportTest {
+class GeneratedModelSupportTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testFillGeneratedInfo() throws Exception {
+    void testFillGeneratedInfo() throws Exception {
         Factory factory = new Factory();
         Model model = new Model();
         GeneratedModelSupport support = new GeneratedModelSupport();
         support.fillGeneratedInfo(factory, model);
         List<String> infoList = model.getGeneratedInfoList();
         assertEquals(2, infoList.size());
-//i        
+        //i        
         assertEquals("NOS2JDBC-Gen test-0.0.1", infoList.get(0));
         assertEquals(Factory.class.getName(), infoList.get(1));
     }

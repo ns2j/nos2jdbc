@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class IllegalVersionRuntimeExceptionTest {
+class IllegalVersionRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test_long() throws Exception {
-        IllegalVersionRuntimeException e = new IllegalVersionRuntimeException(
-                "aaa", -1);
+    void test_long() throws Exception {
+        IllegalVersionRuntimeException e = new IllegalVersionRuntimeException("aaa", -1);
         System.out.println(e.getMessage());
         assertEquals("aaa", e.getVersion());
         assertEquals("-1", e.getIllegalValue());
@@ -43,9 +41,8 @@ public class IllegalVersionRuntimeExceptionTest {
      * @throws Exception
      */
     @Test
-    public void test_string() throws Exception {
-        IllegalVersionRuntimeException e = new IllegalVersionRuntimeException(
-                "aaa", "bbb");
+    void test_string() throws Exception {
+        IllegalVersionRuntimeException e = new IllegalVersionRuntimeException("aaa", "bbb");
         System.out.println(e.getMessage());
         assertEquals("aaa", e.getVersion());
         assertEquals("bbb", e.getIllegalValue());

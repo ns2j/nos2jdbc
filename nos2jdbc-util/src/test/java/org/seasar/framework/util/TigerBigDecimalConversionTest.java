@@ -18,18 +18,20 @@ package org.seasar.framework.util;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  * 
  */
-public class TigerBigDecimalConversionTest extends TestCase {
+class TigerBigDecimalConversionTest {
 
     /**
      * @throws Exception
      */
-    public void testBigDouble() throws Exception {
+    @Test
+    void testBigDouble() throws Exception {
         assertEquals("12500000", BigDecimalConversionUtil.toBigDecimal(
                 12500000D).toString());
     }
@@ -37,7 +39,8 @@ public class TigerBigDecimalConversionTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testToString() throws Exception {
+    @Test
+    void testToString() throws Exception {
         BigDecimal d = new BigDecimal(new BigInteger("125"), -1);
         assertEquals("1250", BigDecimalConversionUtil.toString(d));
     }

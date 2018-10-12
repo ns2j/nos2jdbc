@@ -18,59 +18,47 @@ package org.seasar.extension.jdbc.gen.internal.model;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
 import org.seasar.framework.util.ResourceUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SqlFileTestModelFactoryImplTest {
+class SqlFileTestModelFactoryImplTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         File classpathDir = ResourceUtil.getBuildDir(getClass());
         String basePath = getClass().getPackage().getName().replace(".", "/");
-
         Set<File> sqlFileSet = new HashSet<File>();
-        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath
-                + "/sub"), "ccc.sql"));
-        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath),
-                "bbb.sql"));
-        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath),
-                "bbb_oracle.sql"));
-        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath),
-                "aaa_oracle.sql"));
+        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath + "/sub"), "ccc.sql"));
+        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath), "bbb.sql"));
+        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath), "bbb_oracle.sql"));
+        sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath), "aaa_oracle.sql"));
+        SqlFileTestModelFactoryImpl factory = new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", new SqlFileSupport() {
 
-        SqlFileTestModelFactoryImpl factory = new SqlFileTestModelFactoryImpl(
-                classpathDir, sqlFileSet, "jdbcManager",
-                "hoge", "SqlFileTest", new SqlFileSupport() {
-
-                    @Override
-                    protected Set<String> getDbmsNameSet() {
-                        Set<String> set = new HashSet<String>();
-                        set.add("oracle");
-                        return set;
-                    }
-                }, "rootpackagename", "none", "");
-
+            @Override
+            protected Set<String> getDbmsNameSet() {
+                Set<String> set = new HashSet<String>();
+                set.add("oracle");
+                return set;
+            }
+        }, "rootpackagename", "none", "");
         SqlFileTestModel model = factory.getSqlFileTestModel();
-//i        assertEquals("s2jdbc.dicon", model.getConfigPath());
+        //i        assertEquals("s2jdbc.dicon", model.getConfigPath());
         assertEquals("jdbcManager", model.getJdbcManagerName());
         assertEquals("hoge", model.getPackageName());
         assertEquals("SqlFileTest", model.getShortClassName());
         assertEquals(3, model.getSqlFilePathList().size());
         assertEquals(basePath + "/aaa.sql", model.getSqlFilePathList().get(0));
         assertEquals(basePath + "/bbb.sql", model.getSqlFilePathList().get(1));
-        assertEquals(basePath + "/sub/ccc.sql", model.getSqlFilePathList().get(
-                2));
+        assertEquals(basePath + "/sub/ccc.sql", model.getSqlFilePathList().get(2));
     }
 }

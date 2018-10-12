@@ -15,25 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.internal.command;
 
-import org.junit.After;
-import org.junit.Test;
-//i import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateEntityCommandTest {
+class GenerateEntityCommandTest {
 
     /**
      * 
      * @throws Exception
      */
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-//i        SingletonS2ContainerFactory.destroy();
+    //i        SingletonS2ContainerFactory.destroy();
     }
 
     /**
@@ -41,7 +39,7 @@ public class GenerateEntityCommandTest {
      * @throws Exception
      */
     @Test
-    public void testValidate() throws Exception {
+    void testValidate() throws Exception {
         GenerateEntityCommand command = new GenerateEntityCommand();
         command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.validate();
@@ -52,7 +50,7 @@ public class GenerateEntityCommandTest {
      * @throws Exception
      */
     @Test
-    public void testInit() throws Exception {
+    void testInit() throws Exception {
         GenerateEntityCommand command = new GenerateEntityCommand();
         command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.init();

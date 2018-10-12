@@ -15,24 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ProductInfoTest {
+class ProductInfoTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testGetInstance() throws Exception {
+    void testGetInstance() throws Exception {
         ProductInfo info = ProductInfo.getInstance();
-//i        
+        //i        
         assertEquals("NOS2JDBC-Gen", info.getName());
         assertEquals("test-0.0.1", info.getVersion());
         assertEquals("test-org.seasar.container", info.getGroupId());
@@ -44,7 +43,7 @@ public class ProductInfoTest {
      * @throws Exception
      */
     @Test
-    public void testMain() throws Exception {
+    void testMain() throws Exception {
         ProductInfo.main(new String[] {});
     }
 }

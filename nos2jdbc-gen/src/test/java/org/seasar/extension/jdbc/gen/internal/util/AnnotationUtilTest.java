@@ -16,23 +16,21 @@
 package org.seasar.extension.jdbc.gen.internal.util;
 
 import javax.persistence.Column;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class AnnotationUtilTest {
+class AnnotationUtilTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testGetDefaultTable() throws Exception {
+    void testGetDefaultTable() throws Exception {
         assertNotNull(AnnotationUtil.getDefaultTable());
     }
 
@@ -41,7 +39,7 @@ public class AnnotationUtilTest {
      * @throws Exception
      */
     @Test
-    public void testGetDefaultColumn() throws Exception {
+    void testGetDefaultColumn() throws Exception {
         Column column = AnnotationUtil.getDefaultColumn();
         assertNotNull(column);
         assertEquals(255, column.length());
@@ -54,7 +52,7 @@ public class AnnotationUtilTest {
      * @throws Exception
      */
     @Test
-    public void testGetDefaultSequenceGenerator() throws Exception {
+    void testGetDefaultSequenceGenerator() throws Exception {
         assertNotNull(AnnotationUtil.getDefaultSequenceGenerator());
     }
 
@@ -63,7 +61,7 @@ public class AnnotationUtilTest {
      * @throws Exception
      */
     @Test
-    public void testGetDefaultTableGenerator() throws Exception {
+    void testGetDefaultTableGenerator() throws Exception {
         assertNotNull(AnnotationUtil.getDefaultTableGenerator());
     }
 
@@ -72,7 +70,7 @@ public class AnnotationUtilTest {
      * @throws Exception
      */
     @Test
-    public void testGetDefaultReferentialConstraint() throws Exception {
+    void testGetDefaultReferentialConstraint() throws Exception {
         assertNotNull(AnnotationUtil.getDefaultReferentialConstraint());
     }
 }

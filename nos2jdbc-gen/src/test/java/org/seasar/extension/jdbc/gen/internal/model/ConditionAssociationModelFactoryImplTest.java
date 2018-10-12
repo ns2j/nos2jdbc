@@ -15,21 +15,19 @@
  */
 package org.seasar.extension.jdbc.gen.internal.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.model.ConditionAssociationModel;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ConditionAssociationModelFactoryImplTest {
+class ConditionAssociationModelFactoryImplTest {
 
-    private ConditionAssociationModelFactoryImpl factory = new ConditionAssociationModelFactoryImpl(
-            "Condition");
+    private ConditionAssociationModelFactoryImpl factory = new ConditionAssociationModelFactoryImpl("Condition");
 
     @SuppressWarnings("unused")
     private String property;
@@ -39,15 +37,13 @@ public class ConditionAssociationModelFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetConditionMethodModel() throws Exception {
+    void testGetConditionMethodModel() throws Exception {
         PropertyMeta propertyMeta = new PropertyMeta();
         propertyMeta.setName("property");
         propertyMeta.setField(getClass().getDeclaredField("property"));
         propertyMeta.setRelationshipClass(String.class);
-        ConditionAssociationModel model = factory
-                .getConditionAssociationModel(propertyMeta);
+        ConditionAssociationModel model = factory.getConditionAssociationModel(propertyMeta);
         assertEquals("property", model.getName());
         assertEquals("StringCondition", model.getShortConditionClassName());
     }
-
 }

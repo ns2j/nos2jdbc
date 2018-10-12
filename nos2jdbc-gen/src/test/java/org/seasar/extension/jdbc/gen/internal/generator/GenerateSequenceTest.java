@@ -19,11 +19,9 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.SequenceDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
@@ -38,14 +36,13 @@ import org.seasar.framework.mock.sql.MockPreparedStatement;
 import org.seasar.framework.mock.sql.MockResultSet;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateSequenceTest {
+class GenerateSequenceTest {
 
     private GeneratorImplStub generator;
 
@@ -57,7 +54,7 @@ public class GenerateSequenceTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         generator = new GeneratorImplStub();
         dataSource = new MockDataSource() {
@@ -83,27 +80,20 @@ public class GenerateSequenceTest {
                 };
             }
         };
-
         SequenceDesc sequenceDesc = new SequenceDesc();
         sequenceDesc.setSequenceName("HOGE");
         sequenceDesc.setInitialValue(1);
         sequenceDesc.setAllocationSize(50);
         sequenceDesc.setDataType("integer");
-
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCanonicalName("aaa");
         tableDesc.addSequenceDesc(sequenceDesc);
-
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(
-                new HsqlGenDialect(), dataSource,
-                SqlIdentifierCaseType.ORIGINALCASE,
-                SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactoryImpl factory = new TableModelFactoryImpl(new HsqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {
                 return 200L;
             }
-
         };
         model = factory.getTableModel(tableDesc);
     }
@@ -113,9 +103,8 @@ public class GenerateSequenceTest {
      * @throws Exception
      */
     @Test
-    public void testCreate() throws Exception {
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "sql/create-sequence.ftl", "UTF-8", false);
+    void testCreate() throws Exception {
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/create-sequence.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + "_Create.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
@@ -126,9 +115,8 @@ public class GenerateSequenceTest {
      * @throws Exception
      */
     @Test
-    public void testDrop() throws Exception {
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "sql/drop-sequence.ftl", "UTF-8", false);
+    void testDrop() throws Exception {
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/drop-sequence.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + "_Drop.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());

@@ -16,34 +16,31 @@
 package org.seasar.extension.jdbc.gen.desc;
 
 import junitx.framework.Assert;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ColumnDescTest {
+class ColumnDescTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         ColumnDesc columnDesc = new ColumnDesc();
         columnDesc.setName("AAA");
         ColumnDesc columnDesc2 = new ColumnDesc();
         columnDesc2.setName("aaa");
         ColumnDesc columnDesc3 = new ColumnDesc();
         columnDesc3.setName("XXX");
-
         assertEquals(columnDesc, columnDesc2);
         assertEquals(columnDesc.hashCode(), columnDesc2.hashCode());
-        Assert.assertNotEquals(columnDesc, columnDesc3);
-        Assert.assertNotEquals(columnDesc.hashCode(), columnDesc3.hashCode());
+        assertNotEquals(columnDesc, columnDesc3);
+        assertNotEquals(columnDesc.hashCode(), columnDesc3.hashCode());
     }
 }

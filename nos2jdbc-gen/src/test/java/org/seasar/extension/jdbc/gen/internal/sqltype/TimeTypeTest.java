@@ -16,23 +16,21 @@
 package org.seasar.extension.jdbc.gen.internal.sqltype;
 
 import java.sql.Time;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class TimeTypeTest {
+class TimeTypeTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testToTime() throws Exception {
+    void testToTime() throws Exception {
         TimeType timeType = new TimeType();
         assertEquals(Time.valueOf("01:02:03"), timeType.toTime("01:02:03"));
         assertEquals(Time.valueOf("13:02:03"), timeType.toTime("13:02:03"));
@@ -43,7 +41,7 @@ public class TimeTypeTest {
      * @throws Exception
      */
     @Test
-    public void testToString() throws Exception {
+    void testToString() throws Exception {
         TimeType timeType = new TimeType();
         assertEquals("01:02:03", timeType.toString(Time.valueOf("01:02:03")));
         assertEquals("13:02:03", timeType.toString(Time.valueOf("13:02:03")));

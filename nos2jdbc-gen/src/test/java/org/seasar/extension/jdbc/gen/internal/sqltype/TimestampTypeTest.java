@@ -16,26 +16,23 @@
 package org.seasar.extension.jdbc.gen.internal.sqltype;
 
 import java.sql.Timestamp;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class TimestampTypeTest {
+class TimestampTypeTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testNanos() throws Exception {
+    void testNanos() throws Exception {
         TimestampType timestampType = new TimestampType();
-        Timestamp timestamp = timestampType
-                .toTimestamp("2008/01/01 12:11:10.123456");
+        Timestamp timestamp = timestampType.toTimestamp("2008/01/01 12:11:10.123456");
         assertEquals(123456000, timestamp.getNanos());
     }
 
@@ -44,10 +41,9 @@ public class TimestampTypeTest {
      * @throws Exception
      */
     @Test
-    public void testNanos_zero() throws Exception {
+    void testNanos_zero() throws Exception {
         TimestampType timestampType = new TimestampType();
-        Timestamp timestamp = timestampType
-                .toTimestamp("2008/01/01 12:11:10.000");
+        Timestamp timestamp = timestampType.toTimestamp("2008/01/01 12:11:10.000");
         assertEquals(0, timestamp.getNanos());
     }
 
@@ -56,12 +52,10 @@ public class TimestampTypeTest {
      * @throws Exception
      */
     @Test
-    public void testToTimestamp_hyphen() throws Exception {
+    void testToTimestamp_hyphen() throws Exception {
         TimestampType timestampType = new TimestampType();
-        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"),
-                timestampType.toTimestamp("2008-01-01 01:02:03"));
-        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"),
-                timestampType.toTimestamp("2008-01-01 01:02:03"));
+        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"), timestampType.toTimestamp("2008-01-01 01:02:03"));
+        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"), timestampType.toTimestamp("2008-01-01 01:02:03"));
     }
 
     /**
@@ -69,11 +63,9 @@ public class TimestampTypeTest {
      * @throws Exception
      */
     @Test
-    public void testToTimestamp_slash() throws Exception {
+    void testToTimestamp_slash() throws Exception {
         TimestampType timestampType = new TimestampType();
-        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"),
-                timestampType.toTimestamp("2008/01/01 01:02:03"));
-        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"),
-                timestampType.toTimestamp("2008/01/01 01:02:03"));
+        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"), timestampType.toTimestamp("2008/01/01 01:02:03"));
+        assertEquals(Timestamp.valueOf("2008-01-01 01:02:03"), timestampType.toTimestamp("2008/01/01 01:02:03"));
     }
 }

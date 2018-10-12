@@ -18,30 +18,25 @@ package org.seasar.extension.jdbc.gen.internal.argtype;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SetTypeTest {
+class SetTypeTest {
 
-    private SetType<String> stringSetType = new SetType<String>(
-            new StringType());
+    private SetType<String> stringSetType = new SetType<String>(new StringType());
 
-    private SetType<Integer> numberSetType = new SetType<Integer>(
-            new NumberType<Integer>(Integer.class));
+    private SetType<Integer> numberSetType = new SetType<Integer>(new NumberType<Integer>(Integer.class));
 
     /**
      * 
      */
     @Test
-    public void testToObject_stringValue() {
-        Collection<? extends String> collection = stringSetType
-                .toObject("['aaa','bbb']");
+    void testToObject_stringValue() {
+        Collection<? extends String> collection = stringSetType.toObject("['aaa','bbb']");
         assertEquals(2, collection.size());
         assertTrue(collection.contains("aaa"));
         assertTrue(collection.contains("bbb"));
@@ -51,9 +46,8 @@ public class SetTypeTest {
      * 
      */
     @Test
-    public void testToObject_integerValue() {
-        Collection<? extends Integer> collection = numberSetType
-                .toObject("[1,2]");
+    void testToObject_integerValue() {
+        Collection<? extends Integer> collection = numberSetType.toObject("[1,2]");
         assertEquals(2, collection.size());
         assertTrue(collection.contains(1));
         assertTrue(collection.contains(2));
@@ -63,7 +57,7 @@ public class SetTypeTest {
      * 
      */
     @Test
-    public void testToObject_empty() {
+    void testToObject_empty() {
         Collection<? extends String> collection = stringSetType.toObject("[]");
         assertTrue(collection.isEmpty());
     }
@@ -72,7 +66,7 @@ public class SetTypeTest {
      * 
      */
     @Test
-    public void testToText() {
+    void testToText() {
         Set<String> set = new LinkedHashSet<String>();
         set.add("aaa");
         set.add("bbb");
@@ -84,10 +78,9 @@ public class SetTypeTest {
      * 
      */
     @Test
-    public void testToText_empty() {
+    void testToText_empty() {
         Set<String> set = new LinkedHashSet<String>();
         String s = stringSetType.toText(set);
         assertEquals("[]", s);
     }
-
 }

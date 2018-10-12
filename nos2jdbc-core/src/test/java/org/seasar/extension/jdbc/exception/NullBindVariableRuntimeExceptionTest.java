@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.NullBindVariableRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class NullBindVariableRuntimeExceptionTest extends TestCase {
+class NullBindVariableRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		NullBindVariableRuntimeException ex = new NullBindVariableRuntimeException();
 		System.out.println(ex.getMessage());
 	}

@@ -23,7 +23,7 @@ import javax.persistence.Id;
  * 
  */
 @Entity
-public class Abc {
+class Abc {
 
     /** */
     @Id

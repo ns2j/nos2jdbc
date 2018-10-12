@@ -19,10 +19,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.sql.Types;
-
 import javax.persistence.TemporalType;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect.ColumnType;
@@ -32,14 +30,13 @@ import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.util.tiger.ReflectionUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class OracleGenDialectTest {
+class OracleGenDialectTest {
 
     private OracleGenDialect dialect = new OracleGenDialect();
 
@@ -51,7 +48,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_number() throws Exception {
+    void testGetColumnType_number() throws Exception {
         ColumnType type = dialect.getColumnType("NUMBER", Types.OTHER);
         assertEquals("number(10,5)", type.getColumnDefinition(0, 10, 5, null));
         assertEquals(Integer.class, type.getAttributeClass(0, 9, 0));
@@ -64,7 +61,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_varchar2() throws Exception {
+    void testGetColumnType_varchar2() throws Exception {
         ColumnType type = dialect.getColumnType("varchar2", Types.OTHER);
         assertEquals("varchar2(10)", type.getColumnDefinition(10, 0, 0, null));
         assertEquals(String.class, type.getAttributeClass(10, 0, 0));
@@ -75,7 +72,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_timestamp() throws Exception {
+    void testGetColumnType_timestamp() throws Exception {
         ColumnType type = dialect.getColumnType("timestamp(", Types.OTHER);
         assertEquals("timestamp(5)", type.getColumnDefinition(0, 0, 5, null));
         assertEquals(Timestamp.class, type.getAttributeClass(0, 0, 5));
@@ -86,7 +83,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_oracleDate() throws Exception {
+    void testGetColumnType_oracleDate() throws Exception {
         ColumnType type = dialect.getColumnType("date", Types.OTHER);
         assertEquals("date", type.getColumnDefinition(0, 0, 0, null));
         assertEquals(Timestamp.class, type.getAttributeClass(0, 0, 0));
@@ -98,7 +95,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_date() throws Exception {
+    void testGetColumnType_date() throws Exception {
         dialect.setUseOracleDate(false);
         ColumnType type = dialect.getColumnType("date", Types.OTHER);
         assertEquals("date", type.getColumnDefinition(0, 0, 0, null));
@@ -111,7 +108,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_binary() throws Exception {
+    void testGetSqlType_binary() throws Exception {
         SqlType type = dialect.getSqlType(Types.BINARY);
         assertEquals("raw(2000)", type.getDataType(2000, 0, 0, false));
     }
@@ -121,7 +118,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_varchar() throws Exception {
+    void testGetSqlType_varchar() throws Exception {
         SqlType type = dialect.getSqlType(Types.VARCHAR);
         assertEquals("varchar2(4000)", type.getDataType(4000, 0, 0, false));
     }
@@ -131,7 +128,7 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_bigint() throws Exception {
+    void testGetSqlType_bigint() throws Exception {
         SqlType type = dialect.getSqlType(Types.BIGINT);
         assertEquals("number(10,0)", type.getDataType(0, 10, 0, false));
     }
@@ -141,12 +138,10 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_oracleDate() throws Exception {
-        ValueTypeProvider valueTypeProvider = new ValueTypeProviderImpl(
-                new OracleDialect());
+    void testGetSqlType_oracleDate() throws Exception {
+        ValueTypeProvider valueTypeProvider = new ValueTypeProviderImpl(new OracleDialect());
         PropertyMeta propertyMeta = new PropertyMeta();
-        propertyMeta.setField(ReflectionUtil.getDeclaredField(getClass(),
-                "utilDate"));
+        propertyMeta.setField(ReflectionUtil.getDeclaredField(getClass(), "utilDate"));
         propertyMeta.setValueType(OracleDialect.ORACLE_DATE_TYPE);
         SqlType type = dialect.getSqlType(valueTypeProvider, propertyMeta);
         assertEquals("date", type.getDataType(0, 0, 0, false));
@@ -157,13 +152,11 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_date() throws Exception {
+    void testGetSqlType_date() throws Exception {
         dialect.setUseOracleDate(false);
-        ValueTypeProvider valueTypeProvider = new ValueTypeProviderImpl(
-                new OracleDialect());
+        ValueTypeProvider valueTypeProvider = new ValueTypeProviderImpl(new OracleDialect());
         PropertyMeta propertyMeta = new PropertyMeta();
-        propertyMeta.setField(ReflectionUtil.getDeclaredField(getClass(),
-                "utilDate"));
+        propertyMeta.setField(ReflectionUtil.getDeclaredField(getClass(), "utilDate"));
         propertyMeta.setValueType(ValueTypes.TIMESTAMP);
         SqlType type = dialect.getSqlType(valueTypeProvider, propertyMeta);
         assertEquals("timestamp", type.getDataType(0, 0, 0, false));
@@ -174,18 +167,16 @@ public class OracleGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testCreateSqlBlockContext() throws Exception {
+    void testCreateSqlBlockContext() throws Exception {
         SqlBlockContext context = dialect.createSqlBlockContext();
         context.addKeyword("create");
         context.addKeyword("or");
         context.addKeyword("replace");
         context.addKeyword("procedure");
         assertTrue(context.isInSqlBlock());
-
         context = dialect.createSqlBlockContext();
         context.addKeyword("drop");
         assertFalse(context.isInSqlBlock());
-
         context = dialect.createSqlBlockContext();
         context.addKeyword("begin");
         assertTrue(context.isInSqlBlock());

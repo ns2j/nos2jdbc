@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.mapper;
 
 import org.seasar.extension.jdbc.mapper.KeyItems;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class KeyItemsTest extends TestCase {
+class KeyItemsTest {
 
 	/**
 	 * @throws Exception
 	 */
-	public void testEquals() throws Exception {
+	@Test
+    void testEquals() throws Exception {
 		Object[] values = new Object[] { "1", "2" };
 		KeyItems items = new KeyItems(values);
 		assertEquals(items, items);
@@ -39,7 +41,8 @@ public class KeyItemsTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testHashCode() throws Exception {
+	@Test
+    void testHashCode() throws Exception {
 		Object[] values = new Object[] { "1", "2" };
 		KeyItems items = new KeyItems(values);
 		assertEquals("1".hashCode() + "2".hashCode(), items.hashCode());

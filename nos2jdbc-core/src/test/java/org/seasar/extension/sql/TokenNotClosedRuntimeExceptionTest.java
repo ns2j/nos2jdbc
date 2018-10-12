@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.sql;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 
  * @author higa
  */
-public class TokenNotClosedRuntimeExceptionTest extends TestCase {
+class TokenNotClosedRuntimeExceptionTest {
 
     /**
      * @throws Exception
      */
-    public void testGetMessage() throws Exception {
+    @Test
+    void testGetMessage() throws Exception {
         TokenNotClosedRuntimeException ex = new TokenNotClosedRuntimeException(
                 "aaa", "bbb");
         assertEquals("aaa", ex.getToken());

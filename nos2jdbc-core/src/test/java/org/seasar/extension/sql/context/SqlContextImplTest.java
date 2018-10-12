@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.sql.context;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author li0934
  * 
  */
-public class SqlContextImplTest extends TestCase {
+class SqlContextImplTest {
 
     /**
      * 
      */
-    public void testGetArg() {
+    @Test
+    void testGetArg() {
         SqlContextImpl ctx = new SqlContextImpl();
         ctx.addArg("?1", "111", String.class);
         assertEquals("111", ctx.getArg("hoge"));
@@ -35,7 +37,8 @@ public class SqlContextImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetArg_warning() {
+    @Test
+    void testGetArg_warning() {
         SqlContextImpl ctx = new SqlContextImpl();
         ctx.addArg("?1", "111", String.class);
         ctx.addArg("?2", "111", String.class);
@@ -45,7 +48,8 @@ public class SqlContextImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetArgType() {
+    @Test
+    void testGetArgType() {
         SqlContextImpl ctx = new SqlContextImpl();
         ctx.addArg("$?", "111", String.class);
         assertEquals(String.class, ctx.getArgType("hoge"));
@@ -54,7 +58,8 @@ public class SqlContextImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetArgType_warning() {
+    @Test
+    void testGetArgType_warning() {
         SqlContextImpl ctx = new SqlContextImpl();
         ctx.addArg("?1", "111", String.class);
         ctx.addArg("?2", "111", String.class);

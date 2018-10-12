@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.sql.context;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import ognl.Ognl;
 
 import org.seasar.extension.sql.SqlContext;
@@ -24,12 +25,13 @@ import org.seasar.extension.sql.SqlContext;
  * @author higa
  * 
  */
-public class SqlContextPropertyAccessorTest extends TestCase {
+class SqlContextPropertyAccessorTest {
 
     /**
      * @throws Exception
      */
-    public void testGetProperty() throws Exception {
+    @Test
+    void testGetProperty() throws Exception {
         SqlContext ctx = new SqlContextImpl();
         ctx.addArg("aaa", "111", String.class);
         assertEquals("111", Ognl.getValue("aaa", ctx));

@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.dialect;
 
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.exception.OrderByNotFoundRuntimeException;
 import org.seasar.framework.exception.SQLRuntimeException;
@@ -26,14 +27,15 @@ import org.seasar.framework.exception.SQLRuntimeException;
  * @author higa
  * 
  */
-public class Mssql2005DialectTest extends TestCase {
+class Mssql2005DialectTest {
 
     private Mssql2005Dialect dialect = new Mssql2005Dialect();
 
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_limitOnly() throws Exception {
+    @Test
+    void testConvertLimitSql_limitOnly() throws Exception {
         String sql = "select * from emp order by id";
         String expected = "select top 5 * from emp order by id";
         assertEquals(expected, dialect.convertLimitSql(sql, 0, 5));
@@ -43,7 +45,8 @@ public class Mssql2005DialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSqlByRowNumber_offsetLimit() throws Exception {
+    @Test
+    void testConvertLimitSqlByRowNumber_offsetLimit() throws Exception {
         String sql = "select * from emp order by id";
         String expected = "select * from ( select "
                 + "temp_.*, row_number() over(order by id) as rownumber_ from ( select * from emp ) as temp_ ) as temp2_"
@@ -54,7 +57,8 @@ public class Mssql2005DialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSqlByRowNumber_offsetOnly() throws Exception {
+    @Test
+    void testConvertLimitSqlByRowNumber_offsetOnly() throws Exception {
         String sql = "select * from emp order by id";
         String expected = "select * from ( select "
                 + "temp_.*, row_number() over(order by id) as rownumber_ from ( select * from emp ) as temp_ ) as temp2_"
@@ -65,7 +69,8 @@ public class Mssql2005DialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSql_offsetLimit_notFoundOrderBy()
+    @Test
+    void testConvertLimitSql_offsetLimit_notFoundOrderBy()
             throws Exception {
         String sql = "select * from emp";
         try {
@@ -79,7 +84,8 @@ public class Mssql2005DialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsUniqueConstraintViolation() throws Exception {
+    @Test
+    void testIsUniqueConstraintViolation() throws Exception {
         assertTrue(dialect.isUniqueConstraintViolation(new Exception(
                 new SQLRuntimeException(SQLException.class
                         .cast(new SQLException("foo", "XXX")

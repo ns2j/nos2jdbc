@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.entity.Aaa;
 
@@ -23,12 +24,13 @@ import org.seasar.extension.jdbc.entity.Aaa;
  * @author higa
  * 
  */
-public class MappedByPropertyNotFoundRuntimeExceptionTest extends TestCase {
+class MappedByPropertyNotFoundRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testGetMessage() {
+    @Test
+    void testGetMessage() {
         MappedByPropertyNotFoundRuntimeException ex = new MappedByPropertyNotFoundRuntimeException(
                 "Department", "employees", "department", Aaa.class);
         System.out.println(ex.getMessage());

@@ -19,7 +19,8 @@ import java.lang.reflect.Field;
 
 import javax.persistence.Column;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.ColumnMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
@@ -29,12 +30,13 @@ import org.seasar.framework.convention.impl.PersistenceConventionImpl;
  * @author higa
  * 
  */
-public class ColumnMetaFactoryImplTest extends TestCase {
+class ColumnMetaFactoryImplTest {
 
     private ColumnMetaFactoryImpl factory;
 
-    @Override
-    protected void setUp() {
+    
+    @BeforeEach
+    void setUp() {
         factory = new ColumnMetaFactoryImpl();
         factory.setPersistenceConvention(new PersistenceConventionImpl());
     }
@@ -42,7 +44,8 @@ public class ColumnMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateColumnMeta_annotation() throws Exception {
+    @Test
+    void testCreateColumnMeta_annotation() throws Exception {
         Field field = MyEntity.class.getDeclaredField("aaa");
         PropertyMeta propertyMeta = new PropertyMeta();
         propertyMeta.setName("aaa");
@@ -56,7 +59,8 @@ public class ColumnMetaFactoryImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateColumnMeta_noannotation() throws Exception {
+    @Test
+    void testCreateColumnMeta_noannotation() throws Exception {
         Field field = MyEntity.class.getDeclaredField("bbb");
         PropertyMeta propertyMeta = new PropertyMeta();
         propertyMeta.setName("bbb");

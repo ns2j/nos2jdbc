@@ -15,15 +15,14 @@
  */
 package org.seasar.extension.jdbc.gen.internal.argtype;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class StringTypeTest {
+class StringTypeTest {
 
     private StringType stringType = new StringType();
 
@@ -31,7 +30,7 @@ public class StringTypeTest {
      * 
      */
     @Test
-    public void testToObject() {
+    void testToObject() {
         assertEquals("aaa", stringType.toObject("'aaa'"));
     }
 
@@ -39,7 +38,7 @@ public class StringTypeTest {
      * 
      */
     @Test
-    public void testToObject_empty() {
+    void testToObject_empty() {
         assertEquals("", stringType.toObject("''"));
     }
 
@@ -47,7 +46,7 @@ public class StringTypeTest {
      * 
      */
     @Test
-    public void testToText() {
+    void testToText() {
         assertEquals("'aaa'", stringType.toText("aaa"));
     }
 
@@ -55,8 +54,7 @@ public class StringTypeTest {
      * 
      */
     @Test
-    public void testToText_empty() {
+    void testToText_empty() {
         assertEquals("''", stringType.toText(""));
     }
-
 }

@@ -19,18 +19,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.dialect.MssqlGenDialect;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SqlFileReaderTest {
+class SqlFileReaderTest {
 
     private SqlFileTokenizer tokenizer;
 
@@ -39,7 +37,7 @@ public class SqlFileReaderTest {
     /**
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         dialect = new MssqlGenDialect();
         tokenizer = new SqlFileTokenizer(';', "go");
@@ -50,9 +48,8 @@ public class SqlFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadSql_delimiter() throws Exception {
-        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8",
-                tokenizer, dialect) {
+    void testReadSql_delimiter() throws Exception {
+        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8", tokenizer, dialect) {
 
             @Override
             protected BufferedReader createBufferedReader() throws IOException {
@@ -77,9 +74,8 @@ public class SqlFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadSql_delimiterInLine() throws Exception {
-        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8",
-                tokenizer, dialect) {
+    void testReadSql_delimiterInLine() throws Exception {
+        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8", tokenizer, dialect) {
 
             @Override
             protected BufferedReader createBufferedReader() throws IOException {
@@ -100,9 +96,8 @@ public class SqlFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadSql_sqlBlock() throws Exception {
-        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8",
-                tokenizer, dialect) {
+    void testReadSql_sqlBlock() throws Exception {
+        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8", tokenizer, dialect) {
 
             @Override
             protected BufferedReader createBufferedReader() throws IOException {
@@ -122,9 +117,8 @@ public class SqlFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadSql_sqlBlock_createTrigger() throws Exception {
-        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8",
-                tokenizer, dialect) {
+    void testReadSql_sqlBlock_createTrigger() throws Exception {
+        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8", tokenizer, dialect) {
 
             @Override
             protected BufferedReader createBufferedReader() throws IOException {
@@ -144,9 +138,8 @@ public class SqlFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadSql_notSqlBlock() throws Exception {
-        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8",
-                tokenizer, dialect) {
+    void testReadSql_notSqlBlock() throws Exception {
+        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8", tokenizer, dialect) {
 
             @Override
             protected BufferedReader createBufferedReader() throws IOException {
@@ -166,9 +159,8 @@ public class SqlFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadSql_commentBlock() throws Exception {
-        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8",
-                tokenizer, dialect) {
+    void testReadSql_commentBlock() throws Exception {
+        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8", tokenizer, dialect) {
 
             @Override
             protected BufferedReader createBufferedReader() throws IOException {
@@ -189,9 +181,8 @@ public class SqlFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testReadSql_lineNumber() throws Exception {
-        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8",
-                tokenizer, dialect) {
+    void testReadSql_lineNumber() throws Exception {
+        SqlFileReader reader = new SqlFileReader(new File("dummy"), "UTF-8", tokenizer, dialect) {
 
             @Override
             protected BufferedReader createBufferedReader() throws IOException {
@@ -209,5 +200,4 @@ public class SqlFileReaderTest {
         assertNotNull(reader.readSql());
         assertEquals(4, reader.getLineNumber());
     }
-
 }

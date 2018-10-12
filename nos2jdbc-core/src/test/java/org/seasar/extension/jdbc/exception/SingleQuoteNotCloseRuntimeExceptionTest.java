@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class SingleQuoteNotCloseRuntimeExceptionTest extends TestCase {
+class SingleQuoteNotCloseRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         SingleQuoteNotCloseRuntimeException ex = new SingleQuoteNotCloseRuntimeException(
                 "\'aaa");
         System.out.println(ex.getMessage());

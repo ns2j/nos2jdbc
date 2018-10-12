@@ -20,7 +20,8 @@ import java.util.List;
 
 import javax.transaction.TransactionManager;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.entity.Aaa;
@@ -53,21 +54,23 @@ import org.seasar.extension.jta.TransactionImpl;
  * @author higa
  * 
  */
-public class JdbcManagerImplTest extends TestCase {
+class JdbcManagerImplTest {
 
     private JdbcManagerImpl manager;
 
     private TransactionManager transactionManager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
 	JdbcManagerTestImpl util = new JdbcManagerTestImpl();
 	transactionManager = util.getTransactionManager();
 	manager = util;
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         manager = null;
     }
 
@@ -75,7 +78,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSelectBySql() throws Exception {
+    @Test
+    void testSelectBySql() throws Exception {
         String sql = "select * from aaa";
         SqlSelectImpl<Aaa> select = (SqlSelectImpl<Aaa>) manager.selectBySql(
                 Aaa.class, sql);
@@ -89,7 +93,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSelectBySql_parameters() throws Exception {
+    @Test
+    void testSelectBySql_parameters() throws Exception {
         String sql = "select * from aaa where id = ?";
         SqlSelectImpl<Aaa> query = (SqlSelectImpl<Aaa>) manager.selectBySql(
                 Aaa.class, sql, 1);
@@ -106,7 +111,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testUpdateBySql() throws Exception {
+    @Test
+    void testUpdateBySql() throws Exception {
         String sql = "update aaa set name = ? where id = ?";
         SqlUpdateImpl query = (SqlUpdateImpl) manager.updateBySql(sql,
                 String.class, Integer.class);
@@ -119,7 +125,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testUpdateBatchBySql() throws Exception {
+    @Test
+    void testUpdateBatchBySql() throws Exception {
         String sql = "update aaa set name = ? where id = ?";
         SqlBatchUpdateImpl query = (SqlBatchUpdateImpl) manager
                 .updateBatchBySql(sql, String.class, Integer.class);
@@ -132,7 +139,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSelectBySqlFile() throws Exception {
+    @Test
+    void testSelectBySqlFile() throws Exception {
         String path = "select.sql";
         SqlFileSelectImpl<Aaa> query = (SqlFileSelectImpl<Aaa>) manager
                 .selectBySqlFile(Aaa.class, path);
@@ -146,7 +154,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testUpdateBySqlFile() throws Exception {
+    @Test
+    void testUpdateBySqlFile() throws Exception {
         String path = "update.sql";
         SqlFileUpdateImpl query = (SqlFileUpdateImpl) manager.updateBySqlFile(
                 path, 1);
@@ -159,7 +168,8 @@ public class JdbcManagerImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testUpdateBatchBySqlFile() throws Exception {
+    @Test
+    void testUpdateBatchBySqlFile() throws Exception {
         String path = "update.sql";
         SqlFileBatchUpdateImpl<String> query = (SqlFileBatchUpdateImpl<String>) manager
                 .updateBatchBySqlFile(path, "foo", "bar");
@@ -172,7 +182,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCall_procedure() throws Exception {
+    @Test
+    void testCall_procedure() throws Exception {
         manager.maxRows = 100;
         manager.fetchSize = 10;
         manager.queryTimeout = 5;
@@ -190,7 +201,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCallBySql_procedure() throws Exception {
+    @Test
+    void testCallBySql_procedure() throws Exception {
         manager.maxRows = 100;
         manager.fetchSize = 10;
         manager.queryTimeout = 5;
@@ -210,7 +222,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCallBySqlFile_procedure() throws Exception {
+    @Test
+    void testCallBySqlFile_procedure() throws Exception {
         manager.maxRows = 100;
         manager.fetchSize = 10;
         manager.queryTimeout = 5;
@@ -230,7 +243,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCall_function() throws Exception {
+    @Test
+    void testCall_function() throws Exception {
         manager.maxRows = 100;
         manager.fetchSize = 10;
         manager.queryTimeout = 5;
@@ -248,7 +262,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCallBySql_function() throws Exception {
+    @Test
+    void testCallBySql_function() throws Exception {
         manager.maxRows = 100;
         manager.fetchSize = 10;
         manager.queryTimeout = 5;
@@ -268,7 +283,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCallBySqlFile_function() throws Exception {
+    @Test
+    void testCallBySqlFile_function() throws Exception {
         manager.maxRows = 100;
         manager.fetchSize = 10;
         manager.queryTimeout = 5;
@@ -287,7 +303,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testFrom() throws Exception {
+    @Test
+    void testFrom() throws Exception {
         AutoSelectImpl<Aaa> query = (AutoSelectImpl<Aaa>) manager
                 .from(Aaa.class);
         assertNotNull(query);
@@ -298,7 +315,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testAutoInsert() throws Exception {
+    @Test
+    void testAutoInsert() throws Exception {
         Eee eee = new Eee();
         AutoInsertImpl<Eee> query = (AutoInsertImpl<Eee>) manager.insert(eee);
         assertNotNull(query);
@@ -309,7 +327,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testAutoBatchInsert_array() throws Exception {
+    @Test
+    void testAutoBatchInsert_array() throws Exception {
         Eee[] entities = new Eee[] { new Eee(1, "foo"), new Eee(2, "bar"),
                 new Eee(3, "baz") };
         AutoBatchInsertImpl<Eee> query = (AutoBatchInsertImpl<Eee>) manager
@@ -325,7 +344,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testAutoBatchInsert_list() throws Exception {
+    @Test
+    void testAutoBatchInsert_list() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchInsertImpl<Eee> query = (AutoBatchInsertImpl<Eee>) manager
@@ -339,7 +359,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testAutoUpdate() throws Exception {
+    @Test
+    void testAutoUpdate() throws Exception {
         Eee eee = new Eee();
         AutoUpdateImpl<Eee> query = (AutoUpdateImpl<Eee>) manager.update(eee);
         assertNotNull(query);
@@ -357,7 +378,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testAutoBatchUpdate_array() throws Exception {
+    @Test
+    void testAutoBatchUpdate_array() throws Exception {
         Eee[] entities = new Eee[] { new Eee(1, "foo"), new Eee(2, "bar"),
                 new Eee(3, "baz") };
         AutoBatchUpdateImpl<Eee> query = (AutoBatchUpdateImpl<Eee>) manager
@@ -380,7 +402,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testAutoBatchUpdate_list() throws Exception {
+    @Test
+    void testAutoBatchUpdate_list() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = (AutoBatchUpdateImpl<Eee>) manager
@@ -401,7 +424,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testAutoDelete() throws Exception {
+    @Test
+    void testAutoDelete() throws Exception {
         Eee eee = new Eee();
         AutoDeleteImpl<Eee> query = (AutoDeleteImpl<Eee>) manager.delete(eee);
         assertNotNull(query);
@@ -419,7 +443,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testAutoBatchDelete_array() throws Exception {
+    @Test
+    void testAutoBatchDelete_array() throws Exception {
         Eee[] entities = new Eee[] { new Eee(1, "foo"), new Eee(2, "bar"),
                 new Eee(3, "baz") };
         AutoBatchDeleteImpl<Eee> query = (AutoBatchDeleteImpl<Eee>) manager
@@ -442,7 +467,8 @@ public class JdbcManagerImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testAutoBatchDelete_list() throws Exception {
+    @Test
+    void testAutoBatchDelete_list() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchDeleteImpl<Eee> query = (AutoBatchDeleteImpl<Eee>) manager
@@ -463,7 +489,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetJdbcContext_tx() throws Exception {
+    @Test
+    void testGetJdbcContext_tx() throws Exception {
         transactionManager.begin();
         JdbcContext ctx = manager.getJdbcContext();
         assertNotNull(ctx);
@@ -483,7 +510,8 @@ public class JdbcManagerImplTest extends TestCase {
      */
 //i
     /*
-    public void testGetJdbcContext_tx_selectableDataSource() throws Exception {
+    @Test
+    void testGetJdbcContext_tx_selectableDataSource() throws Exception {
         DataSourceFactory dataSourceFactory = new MockDataSourceFactory();
         SelectableDataSourceProxy dataSource = new SelectableDataSourceProxy();
         dataSource.setDataSourceFactory(dataSourceFactory);
@@ -521,7 +549,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testBeforeCompletion() throws Exception {
+    @Test
+    void testBeforeCompletion() throws Exception {
         transactionManager.begin();
         JdbcContextImpl ctx = (JdbcContextImpl) manager.getJdbcContext();
         ctx.getStatement();
@@ -535,7 +564,8 @@ public class JdbcManagerImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetJdbcContext_notx() throws Exception {
+    @Test
+    void testGetJdbcContext_notx() throws Exception {
         JdbcContext ctx = manager.getJdbcContext();
         assertNotNull(ctx);
         assertFalse(ctx.isTransactional());
@@ -550,7 +580,7 @@ public class JdbcManagerImplTest extends TestCase {
     /*
     public static class MockDataSourceFactory extends DataSourceFactoryImpl {
 
-        @Override
+        
         public DataSource getDataSource(String name) {
             return new MockDataSource();
         }

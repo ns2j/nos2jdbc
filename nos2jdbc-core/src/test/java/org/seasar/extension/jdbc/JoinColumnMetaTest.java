@@ -17,17 +17,19 @@ package org.seasar.extension.jdbc;
 
 import org.seasar.extension.jdbc.JoinColumnMeta;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  */
-public class JoinColumnMetaTest extends TestCase {
+class JoinColumnMetaTest {
 
 	/**
 	 * 
 	 */
-	public void testJoinColumnMeta_emptyString() {
+	@Test
+    void testJoinColumnMeta_emptyString() {
 		JoinColumnMeta jcm = new JoinColumnMeta("", "");
 		assertNull(jcm.name);
 		assertNull(jcm.referencedColumnName);
@@ -36,7 +38,8 @@ public class JoinColumnMetaTest extends TestCase {
 	/**
 	 * 
 	 */
-	public void testJoinColumnMeta_notEmptyString() {
+	@Test
+    void testJoinColumnMeta_notEmptyString() {
 		JoinColumnMeta jcm = new JoinColumnMeta("aaa", "bbb");
 		assertEquals("aaa", jcm.name);
 		assertEquals("bbb", jcm.referencedColumnName);

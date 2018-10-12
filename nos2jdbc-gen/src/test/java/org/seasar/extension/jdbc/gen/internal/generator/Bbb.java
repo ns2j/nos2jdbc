@@ -27,7 +27,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-public class Bbb {
+class Bbb {
 
     /** */
     @Id

@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.sql;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 
  * @author higa
  */
-public class EndCommendNotFoundRuntimeExceptionTest extends TestCase {
+class EndCommendNotFoundRuntimeExceptionTest {
 
     /**
      * @throws Exception
      */
-    public void testGetMessage() throws Exception {
+    @Test
+    void testGetMessage() throws Exception {
         EndCommentNotFoundRuntimeException ex = new EndCommentNotFoundRuntimeException(
                 "hoge");
         System.out.println(ex.getMessage());

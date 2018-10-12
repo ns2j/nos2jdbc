@@ -19,19 +19,21 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.framework.util.ClassUtil;
 
 /**
  * @author higa
  */
-public class AnnotationUtilTest extends TestCase {
+class AnnotationUtilTest {
 
     /**
      * @throws Exception
      */
     @Hoge(bbb = "3")
+    @Test
     public void testGetProperties() throws Exception {
         Method m = ClassUtil.getMethod(getClass(), "testGetProperties", null);
         Annotation anno = m.getAnnotation(Hoge.class);

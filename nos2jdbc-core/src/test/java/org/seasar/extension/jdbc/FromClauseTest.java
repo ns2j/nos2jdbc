@@ -18,18 +18,20 @@ package org.seasar.extension.jdbc;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class FromClauseTest extends TestCase {
+class FromClauseTest {
 
     /**
      * 
      */
-    public void testAddSql() {
+    @Test
+    void testAddSql() {
         FromClause fromClause = new FromClause();
         fromClause.addSql("AAA", "_T1");
         assertEquals(" from AAA _T1", fromClause.toSql());
@@ -38,7 +40,8 @@ public class FromClauseTest extends TestCase {
     /**
      * 
      */
-    public void testAddSql_leftOuterJoin() {
+    @Test
+    void testAddSql_leftOuterJoin() {
         FromClause fromClause = new FromClause();
         fromClause.addSql("AAA", "_T1");
         List<JoinColumnMeta> joinColumnMetaList = new ArrayList<JoinColumnMeta>();
@@ -53,7 +56,8 @@ public class FromClauseTest extends TestCase {
     /**
      * 
      */
-    public void testAddSql_innerJoin() {
+    @Test
+    void testAddSql_innerJoin() {
         FromClause fromClause = new FromClause();
         fromClause.addSql("AAA", "_T1");
         List<JoinColumnMeta> joinColumnMetaList = new ArrayList<JoinColumnMeta>();
@@ -68,7 +72,8 @@ public class FromClauseTest extends TestCase {
     /**
      * 
      */
-    public void testAddSql_joinColumns() {
+    @Test
+    void testAddSql_joinColumns() {
         FromClause fromClause = new FromClause();
         fromClause.addSql("AAA", "_T1");
         List<JoinColumnMeta> joinColumnMetaList = new ArrayList<JoinColumnMeta>();

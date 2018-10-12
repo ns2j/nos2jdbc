@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.handler;
 
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.dto.AaaDto;
@@ -31,14 +32,15 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class BeanListResultSetHandlerTest extends TestCase {
+class BeanListResultSetHandlerTest {
 
     /**
      * @throws Exception
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         BeanListResultSetHandler handler = new BeanListResultSetHandler(
                 AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa");
@@ -66,7 +68,8 @@ public class BeanListResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandleWithLimit() throws Exception {
+    @Test
+    void testHandleWithLimit() throws Exception {
         BeanListResultSetHandler handler = new BeanListResultSetHandler(
                 AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 1);

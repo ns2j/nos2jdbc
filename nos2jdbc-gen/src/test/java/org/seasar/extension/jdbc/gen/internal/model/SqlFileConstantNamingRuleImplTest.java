@@ -15,28 +15,25 @@
  */
 package org.seasar.extension.jdbc.gen.internal.model;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SqlFileConstantNamingRuleImplTest {
+class SqlFileConstantNamingRuleImplTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         SqlFileConstantNamingRuleImpl namingRule = new SqlFileConstantNamingRuleImpl();
         assertEquals("AAA", namingRule.fromPathToConstantName("aaa"));
         assertEquals("AAA", namingRule.fromPathToConstantName("aaa.sql"));
-        assertEquals("AAA_BBB", namingRule
-                .fromPathToConstantName("aaa/bbb.sql"));
-        assertEquals("BBB_CCC", namingRule
-                .fromPathToConstantName("aaa/bbb/ccc.sql"));
+        assertEquals("AAA_BBB", namingRule.fromPathToConstantName("aaa/bbb.sql"));
+        assertEquals("BBB_CCC", namingRule.fromPathToConstantName("aaa/bbb/ccc.sql"));
     }
 }

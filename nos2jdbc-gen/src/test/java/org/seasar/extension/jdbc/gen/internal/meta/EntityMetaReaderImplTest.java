@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.meta;
 
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.EntityMetaFactoryImpl;
@@ -28,14 +27,13 @@ import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class EntityMetaReaderImplTest {
+class EntityMetaReaderImplTest {
 
     private java.io.File rootDir;
 
@@ -46,11 +44,10 @@ public class EntityMetaReaderImplTest {
     /**
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         rootDir = ResourceUtil.getBuildDir(getClass());
-        packageName = ClassUtil.splitPackageAndShortClassName(getClass()
-                .getName())[0];
+        packageName = ClassUtil.splitPackageAndShortClassName(getClass().getName())[0];
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
         cmf.setPersistenceConvention(pc);
@@ -70,10 +67,8 @@ public class EntityMetaReaderImplTest {
      * @throws Exception
      */
     @Test
-    public void testRead() throws Exception {
-        EntityMetaReaderImpl reader = new EntityMetaReaderImpl(rootDir,
-                packageName, entityMetaFactory, "A.*", "Ab.*", false, null,
-                null);
+    void testRead() throws Exception {
+        EntityMetaReaderImpl reader = new EntityMetaReaderImpl(rootDir, packageName, entityMetaFactory, "A.*", "Ab.*", false, null, null);
         List<EntityMeta> list = reader.read();
         assertEquals(1, list.size());
         assertEquals(Aaa.class, list.get(0).getEntityClass());

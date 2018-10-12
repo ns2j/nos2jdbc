@@ -16,34 +16,31 @@
 package org.seasar.extension.jdbc.gen.internal.version;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DdlVersionDirectoryImplTest {
+class DdlVersionDirectoryImplTest {
 
     private DdlVersionDirectoryImpl directory;
 
     /**
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() {
-        directory = new DdlVersionDirectoryImpl(new File("aaa"), 10, "0000",
-                null);
+        directory = new DdlVersionDirectoryImpl(new File("aaa"), 10, "0000", null);
     }
 
     /**
      * 
      */
     @Test
-    public void testAsFile() {
+    void testAsFile() {
         File file = directory.asFile();
         assertEquals("aaa", file.getParentFile().getName());
         assertEquals("0010", file.getName());
@@ -54,7 +51,7 @@ public class DdlVersionDirectoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testAsRelativePath() throws Exception {
+    void testAsRelativePath() throws Exception {
         String path = directory.getCreateDirectory().getRelativePath();
         assertEquals(new File(".", "create"), new File(path));
     }
@@ -63,7 +60,7 @@ public class DdlVersionDirectoryImplTest {
      * 
      */
     @Test
-    public void testGetCreateDirectory() {
+    void testGetCreateDirectory() {
         File dir = directory.getCreateDirectory().asFile();
         assertEquals("create", dir.getName());
     }
@@ -72,9 +69,8 @@ public class DdlVersionDirectoryImplTest {
      * 
      */
     @Test
-    public void testGetDropDirectory() {
+    void testGetDropDirectory() {
         File dir = directory.getDropDirectory().asFile();
         assertEquals("drop", dir.getName());
     }
-
 }

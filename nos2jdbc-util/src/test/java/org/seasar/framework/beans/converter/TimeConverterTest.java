@@ -15,18 +15,20 @@
  */
 package org.seasar.framework.beans.converter;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class TimeConverterTest extends TestCase {
+class TimeConverterTest {
 
     /**
      * @throws Exception
      */
-    public void testGetAsObjectAndGetAsString() throws Exception {
+    @Test
+    void testGetAsObjectAndGetAsString() throws Exception {
         TimeConverter converter = new TimeConverter("HH:mm:ss");
         java.sql.Time result = (java.sql.Time) converter
                 .getAsObject("12:34:56");
@@ -37,7 +39,8 @@ public class TimeConverterTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsTarget() throws Exception {
+    @Test
+    void testIsTarget() throws Exception {
         TimeConverter converter = new TimeConverter("yyyy/MM/dd");
         assertTrue(converter.isTarget(java.sql.Time.class));
         assertFalse(converter.isTarget(java.util.Date.class));

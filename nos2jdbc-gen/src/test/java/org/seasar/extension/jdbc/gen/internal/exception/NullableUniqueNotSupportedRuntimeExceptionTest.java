@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class NullableUniqueNotSupportedRuntimeExceptionTest {
+class NullableUniqueNotSupportedRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        NullableUniqueNotSupportedRuntimeException e = new NullableUniqueNotSupportedRuntimeException(
-                "aaa", "bbb");
+    void test() throws Exception {
+        NullableUniqueNotSupportedRuntimeException e = new NullableUniqueNotSupportedRuntimeException("aaa", "bbb");
         assertEquals("aaa", e.getEntityName());
         assertEquals("bbb", e.getPropertyName());
         System.out.println(e.getMessage());

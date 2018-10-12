@@ -18,18 +18,20 @@ package org.seasar.extension.jdbc;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.RelationshipType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class PropertyMetaTest extends TestCase {
+class PropertyMetaTest {
 
 	/**
 	 * 
 	 */
-	public void testIsRelationship() {
+	@Test
+    void testIsRelationship() {
 		PropertyMeta meta = new PropertyMeta();
 		assertFalse(meta.isRelationship());
 		meta.setRelationshipType(RelationshipType.ONE_TO_MANY);

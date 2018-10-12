@@ -15,15 +15,17 @@
  */
 package org.seasar.extension.jdbc.util;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  */
-public class LikeUtilTest extends TestCase {
+class LikeUtilTest {
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         LikeUtil.setWildcardPattern(null);
         LikeUtil.setWildcardReplacementPattern(null);
     }
@@ -31,7 +33,8 @@ public class LikeUtilTest extends TestCase {
     /**
      * 
      */
-    public void testContainsWildcard() {
+    @Test
+    void testContainsWildcard() {
         assertFalse(LikeUtil.containsWildcard("aaa"));
         assertFalse(LikeUtil.containsWildcard("$"));
         assertTrue(LikeUtil.containsWildcard("%"));
@@ -43,7 +46,8 @@ public class LikeUtilTest extends TestCase {
     /**
      * 
      */
-    public void testContainsWildcard_modifiedPattern() {
+    @Test
+    void testContainsWildcard_modifiedPattern() {
         LikeUtil.setWildcardPatternAsString("[%_]");
 
         assertFalse(LikeUtil.containsWildcard("aaa"));
@@ -57,7 +61,8 @@ public class LikeUtilTest extends TestCase {
     /**
      * 
      */
-    public void testEscapeWildcard() {
+    @Test
+    void testEscapeWildcard() {
         assertEquals("aaa", LikeUtil.escapeWildcard("aaa"));
         assertEquals("a$$a$%a$_a$％a$＿a", LikeUtil.escapeWildcard("a$a%a_a％a＿a"));
     }
@@ -65,7 +70,8 @@ public class LikeUtilTest extends TestCase {
     /**
      * 
      */
-    public void testEscapeWildcard_modifiedPaattern() {
+    @Test
+    void testEscapeWildcard_modifiedPaattern() {
         LikeUtil.setWildcardReplacementPatternAsString("[$%_]");
 
         assertEquals("aaa", LikeUtil.escapeWildcard("aaa"));

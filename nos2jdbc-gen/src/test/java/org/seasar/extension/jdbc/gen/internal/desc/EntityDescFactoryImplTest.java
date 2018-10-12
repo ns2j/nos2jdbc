@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import java.util.Arrays;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDesc;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
@@ -28,14 +27,13 @@ import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.extension.jdbc.gen.meta.DbUniqueKeyMeta;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class EntityDescFactoryImplTest {
+class EntityDescFactoryImplTest {
 
     private EntityDescFactoryImpl factory;
 
@@ -43,15 +41,13 @@ public class EntityDescFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention convention = new PersistenceConventionImpl();
         GenDialect dialect = new StandardGenDialect();
-        AttributeDescFactoryImpl attributeDescFactory = new AttributeDescFactoryImpl(
-                convention, dialect, "VERSION", null, null, null);
+        AttributeDescFactoryImpl attributeDescFactory = new AttributeDescFactoryImpl(convention, dialect, "VERSION", null, null, null);
         CompositeUniqueConstraintDescFactoryImpl uniqueConstraintDescFactory = new CompositeUniqueConstraintDescFactoryImpl();
-        factory = new EntityDescFactoryImpl(convention, attributeDescFactory,
-                uniqueConstraintDescFactory);
+        factory = new EntityDescFactoryImpl(convention, attributeDescFactory, uniqueConstraintDescFactory);
     }
 
     /**
@@ -59,7 +55,7 @@ public class EntityDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testName() throws Exception {
+    void testName() throws Exception {
         DbTableMeta dbTableMeta = new DbTableMeta();
         dbTableMeta.setName("HOGE");
         EntityDesc entityDesc = factory.getEntityDesc(dbTableMeta);
@@ -71,7 +67,7 @@ public class EntityDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testTable() throws Exception {
+    void testTable() throws Exception {
         DbTableMeta dbTableMeta = new DbTableMeta();
         dbTableMeta.setCatalogName("AAA");
         dbTableMeta.setSchemaName("BBB");
@@ -87,7 +83,7 @@ public class EntityDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetAttributeDescList() throws Exception {
+    void testGetAttributeDescList() throws Exception {
         DbColumnMeta columnMeta1 = new DbColumnMeta();
         columnMeta1.setName("BAR");
         columnMeta1.setTypeName("varchar");
@@ -107,7 +103,7 @@ public class EntityDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testHasCompositeId() throws Exception {
+    void testHasCompositeId() throws Exception {
         DbColumnMeta columnMeta1 = new DbColumnMeta();
         columnMeta1.setName("BAR");
         columnMeta1.setPrimaryKey(true);
@@ -130,7 +126,7 @@ public class EntityDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetCompositeUniqueConstraintDescList() throws Exception {
+    void testGetCompositeUniqueConstraintDescList() throws Exception {
         DbUniqueKeyMeta ukMeta1 = new DbUniqueKeyMeta();
         ukMeta1.addColumnName("AAA");
         ukMeta1.addColumnName("BBB");
@@ -145,15 +141,10 @@ public class EntityDescFactoryImplTest {
         tableMeta.addUniqueKeyMeta(ukMeta2);
         tableMeta.addUniqueKeyMeta(ukMeta3);
         EntityDesc entityDesc = factory.getEntityDesc(tableMeta);
-        assertEquals(2, entityDesc.getCompositeUniqueConstraintDescList()
-                .size());
-        CompositeUniqueConstraintDesc compositeUniqueConstraintDesc = entityDesc
-                .getCompositeUniqueConstraintDescList().get(0);
-        assertEquals(Arrays.asList("AAA", "BBB"), compositeUniqueConstraintDesc
-                .getColumnNameList());
-        compositeUniqueConstraintDesc = entityDesc
-                .getCompositeUniqueConstraintDescList().get(1);
-        assertEquals(Arrays.asList("CCC", "DDD"), compositeUniqueConstraintDesc
-                .getColumnNameList());
+        assertEquals(2, entityDesc.getCompositeUniqueConstraintDescList().size());
+        CompositeUniqueConstraintDesc compositeUniqueConstraintDesc = entityDesc.getCompositeUniqueConstraintDescList().get(0);
+        assertEquals(Arrays.asList("AAA", "BBB"), compositeUniqueConstraintDesc.getColumnNameList());
+        compositeUniqueConstraintDesc = entityDesc.getCompositeUniqueConstraintDescList().get(1);
+        assertEquals(Arrays.asList("CCC", "DDD"), compositeUniqueConstraintDesc.getColumnNameList());
     }
 }

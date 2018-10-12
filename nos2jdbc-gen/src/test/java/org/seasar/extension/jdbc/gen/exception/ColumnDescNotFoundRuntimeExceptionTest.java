@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ColumnDescNotFoundRuntimeExceptionTest {
+class ColumnDescNotFoundRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        ColumnDescNotFoundRuntimeException e = new ColumnDescNotFoundRuntimeException(
-                "aaa", "bbb");
+    void test() throws Exception {
+        ColumnDescNotFoundRuntimeException e = new ColumnDescNotFoundRuntimeException("aaa", "bbb");
         assertEquals("aaa", e.getColumnName());
         assertEquals("bbb", e.getFullTableName());
         System.out.println(e.getMessage());

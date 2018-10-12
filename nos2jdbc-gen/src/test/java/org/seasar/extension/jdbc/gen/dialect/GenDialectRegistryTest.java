@@ -15,23 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.dialect;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.dialect.MssqlDialect;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenDialectRegistryTest {
+class GenDialectRegistryTest {
 
     /** */
-    @After
+    @AfterEach
     public void tearDown() {
         GenDialectRegistry.dialectMap.remove(MyDialect.class.getName());
     }
@@ -40,7 +39,7 @@ public class GenDialectRegistryTest {
      * 
      */
     @Test
-    public void testGetGenDialect_oracle() {
+    void testGetGenDialect_oracle() {
         OracleDialect oracle = new OracleDialect();
         GenDialect genDialect = GenDialectRegistry.getGenDialect(oracle);
         assertNotNull(genDialect);
@@ -53,7 +52,7 @@ public class GenDialectRegistryTest {
      * 
      */
     @Test
-    public void testGetGenDialect_mssql() {
+    void testGetGenDialect_mssql() {
         MssqlDialect mssql = new MssqlDialect();
         GenDialect genDialect = GenDialectRegistry.getGenDialect(mssql);
         assertNotNull(genDialect);
@@ -66,11 +65,10 @@ public class GenDialectRegistryTest {
      * 
      */
     @Test
-    public void testRegister() {
+    void testRegister() {
         MyGenDialect myGenDialect = new MyGenDialect();
         GenDialectRegistry.register(MyDialect.class, myGenDialect);
-        assertSame(myGenDialect, GenDialectRegistry
-                .getGenDialect(MyDialect.class));
+        assertSame(myGenDialect, GenDialectRegistry.getGenDialect(MyDialect.class));
     }
 
     /** */
@@ -80,5 +78,4 @@ public class GenDialectRegistryTest {
     /** */
     public static class MyGenDialect extends StandardGenDialect {
     }
-
 }

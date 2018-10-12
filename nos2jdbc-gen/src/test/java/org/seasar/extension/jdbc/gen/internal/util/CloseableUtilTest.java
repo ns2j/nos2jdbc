@@ -15,21 +15,21 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.util.CloseableUtil;
 
 /**
  * @author taedium
  * 
  */
-public class CloseableUtilTest {
+class CloseableUtilTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testClose() throws Exception {
+    void testClose() throws Exception {
         CloseableUtil.close(null);
     }
 }

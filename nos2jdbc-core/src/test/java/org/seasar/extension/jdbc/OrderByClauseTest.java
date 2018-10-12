@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class OrderByClauseTest extends TestCase {
+class OrderByClauseTest {
 
     /**
      * 
      */
-    public void testAddSql() {
+    @Test
+    void testAddSql() {
         OrderByClause clause = new OrderByClause();
         clause.addSql("T1_.ID desc");
         assertEquals(" order by T1_.ID desc", clause.toSql());
@@ -35,7 +37,8 @@ public class OrderByClauseTest extends TestCase {
     /**
      * 
      */
-    public void testGetLength() {
+    @Test
+    void testGetLength() {
         OrderByClause clause = new OrderByClause();
         assertEquals(0, clause.getLength());
         String sql = "T1_.ID desc";

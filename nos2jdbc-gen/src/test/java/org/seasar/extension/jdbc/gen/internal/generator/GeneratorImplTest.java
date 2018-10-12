@@ -16,20 +16,18 @@
 package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GeneratorImplTest {
+class GeneratorImplTest {
 
     private GeneratorImplStub generator;
 
@@ -37,11 +35,10 @@ public class GeneratorImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         String packageName = ClassUtil.getPackageName(getClass());
-        File dir = ResourceUtil
-                .getResourceAsFile(packageName.replace('.', '/'));
+        File dir = ResourceUtil.getResourceAsFile(packageName.replace('.', '/'));
         generator = new GeneratorImplStub("UTF-8", dir);
     }
 
@@ -50,10 +47,8 @@ public class GeneratorImplTest {
      * @throws Exception
      */
     @Test
-    public void testGenerate() throws Exception {
-        GenerationContext context = new GenerationContextImpl(new MyModel(
-                "hoge"), new File("file"), getClass().getSimpleName()
-                + "_Generate.ftl", "UTF-8", false);
+    void testGenerate() throws Exception {
+        GenerationContext context = new GenerationContextImpl(new MyModel("hoge"), new File("file"), getClass().getSimpleName() + "_Generate.ftl", "UTF-8", false);
         generator.generate(context);
         assertEquals("hoge", generator.getResult());
     }
@@ -63,12 +58,10 @@ public class GeneratorImplTest {
      * @throws Exception
      */
     @Test
-    public void testInclude() throws Exception {
+    void testInclude() throws Exception {
         Foo foo = new Foo("foo");
         Hoge hoge = new Hoge("hoge", foo);
-        GenerationContext context = new GenerationContextImpl(hoge, new File(
-                "file"), getClass().getSimpleName() + "_Include.ftl", "UTF-8",
-                false);
+        GenerationContext context = new GenerationContextImpl(hoge, new File("file"), getClass().getSimpleName() + "_Include.ftl", "UTF-8", false);
         generator.generate(context);
         assertEquals("hoge foo hoge", generator.getResult());
     }
@@ -132,7 +125,6 @@ public class GeneratorImplTest {
         public Foo getFoo() {
             return foo;
         }
-
     }
 
     /**
@@ -159,5 +151,4 @@ public class GeneratorImplTest {
             return name;
         }
     }
-
 }

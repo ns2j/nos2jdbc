@@ -18,7 +18,6 @@ package org.seasar.extension.jdbc.gen.internal.model;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
-
 import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +25,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.model.ConditionModel;
 import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
@@ -43,14 +41,13 @@ import org.seasar.extension.jdbc.where.condition.NullableCondition;
 import org.seasar.extension.jdbc.where.condition.NullableStringCondition;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ConditionModelFactoryImplTest {
+class ConditionModelFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
@@ -60,7 +57,7 @@ public class ConditionModelFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -75,10 +72,8 @@ public class ConditionModelFactoryImplTest {
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
         ConditionAttributeModelFactoryImpl attrFactory = new ConditionAttributeModelFactoryImpl();
-        ConditionAssociationModelFactoryImpl assoFactory = new ConditionAssociationModelFactoryImpl(
-                "Condition");
-        conditionModelfactory = new ConditionModelFactoryImpl(attrFactory,
-                assoFactory, "aaa.bbb", "Condition");
+        ConditionAssociationModelFactoryImpl assoFactory = new ConditionAssociationModelFactoryImpl("Condition");
+        conditionModelfactory = new ConditionModelFactoryImpl(attrFactory, assoFactory, "aaa.bbb", "Condition");
     }
 
     /**
@@ -86,32 +81,24 @@ public class ConditionModelFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetConditionModel() throws Exception {
+    void testGetConditionModel() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ConditionModel model = conditionModelfactory
-                .getConditionModel(entityMeta);
+        ConditionModel model = conditionModelfactory.getConditionModel(entityMeta);
         assertEquals("aaa.bbb", model.getPackageName());
-        assertEquals("ConditionModelFactoryImplTest$AaaCondition", model
-                .getShortClassName());
+        assertEquals("ConditionModelFactoryImplTest$AaaCondition", model.getShortClassName());
         assertEquals(6, model.getConditionAttributeModelList().size());
         assertEquals(1, model.getConditionAssociationModelList().size());
-
         Set<String> set = model.getImportNameSet();
         assertEquals(8, set.size());
         Iterator<String> iterator = set.iterator();
         assertEquals(Date.class.getCanonicalName(), iterator.next());
         assertEquals(Generated.class.getCanonicalName(), iterator.next());
         assertEquals(ComplexWhere.class.getCanonicalName(), iterator.next());
-        assertEquals(AbstractEntityCondition.class.getCanonicalName(), iterator
-                .next());
-        assertEquals(NotNullableCondition.class.getCanonicalName(), iterator
-                .next());
-        assertEquals(NotNullableStringCondition.class.getCanonicalName(),
-                iterator.next());
-        assertEquals(NullableCondition.class.getCanonicalName(), iterator
-                .next());
-        assertEquals(NullableStringCondition.class.getCanonicalName(), iterator
-                .next());
+        assertEquals(AbstractEntityCondition.class.getCanonicalName(), iterator.next());
+        assertEquals(NotNullableCondition.class.getCanonicalName(), iterator.next());
+        assertEquals(NotNullableStringCondition.class.getCanonicalName(), iterator.next());
+        assertEquals(NullableCondition.class.getCanonicalName(), iterator.next());
+        assertEquals(NullableStringCondition.class.getCanonicalName(), iterator.next());
     }
 
     /** */

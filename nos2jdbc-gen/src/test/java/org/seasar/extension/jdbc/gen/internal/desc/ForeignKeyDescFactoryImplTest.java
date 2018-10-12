@@ -16,7 +16,6 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,9 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.annotation.ReferentialConstraint;
 import org.seasar.extension.jdbc.gen.desc.ForeignKeyDesc;
@@ -39,14 +37,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ForeignKeyDescFactoryImplTest {
+class ForeignKeyDescFactoryImplTest {
 
     private PropertyMetaFactoryImpl propertyMetaFactory;
 
@@ -58,7 +55,7 @@ public class ForeignKeyDescFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -73,8 +70,7 @@ public class ForeignKeyDescFactoryImplTest {
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
         GenDialect dialect = new StandardGenDialect();
-        foreignKeyDescFactory = new ForeignKeyDescFactoryImpl(dialect,
-                entityMetaFactory, true);
+        foreignKeyDescFactory = new ForeignKeyDescFactoryImpl(dialect, entityMetaFactory, true);
     }
 
     /**
@@ -82,11 +78,9 @@ public class ForeignKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testSingleForeignKey() throws Exception {
+    void testSingleForeignKey() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory
-                .getForeignKeyDesc(entityMeta, entityMeta
-                        .getPropertyMeta("bbb"));
+        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory.getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("bbb"));
         assertNotNull(foreignKeyDesc);
         assertEquals(1, foreignKeyDesc.getColumnNameList().size());
         assertEquals("BBB_ID", foreignKeyDesc.getColumnNameList().get(0));
@@ -102,11 +96,9 @@ public class ForeignKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testCompositeForeignKey() throws Exception {
+    void testCompositeForeignKey() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory
-                .getForeignKeyDesc(entityMeta, entityMeta
-                        .getPropertyMeta("ccc"));
+        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory.getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("ccc"));
         assertNotNull(foreignKeyDesc);
         assertEquals(2, foreignKeyDesc.getColumnNameList().size());
         assertEquals("CCC_ID1", foreignKeyDesc.getColumnNameList().get(0));
@@ -124,13 +116,10 @@ public class ForeignKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testReferentialConstraint_true() throws Exception {
+    void testReferentialConstraint_true() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Eee.class);
-        foreignKeyDescFactory = new ForeignKeyDescFactoryImpl(
-                new StandardGenDialect(), entityMetaFactory, false);
-        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory
-                .getForeignKeyDesc(entityMeta, entityMeta
-                        .getPropertyMeta("bbb"));
+        foreignKeyDescFactory = new ForeignKeyDescFactoryImpl(new StandardGenDialect(), entityMetaFactory, false);
+        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory.getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("bbb"));
         assertNotNull(foreignKeyDesc);
     }
 
@@ -139,11 +128,9 @@ public class ForeignKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testReferentialConstraint_false() throws Exception {
+    void testReferentialConstraint_false() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ddd.class);
-        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory
-                .getForeignKeyDesc(entityMeta, entityMeta
-                        .getPropertyMeta("bbb"));
+        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory.getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("bbb"));
         assertNull(foreignKeyDesc);
     }
 
@@ -152,10 +139,9 @@ public class ForeignKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testNoForeignKey() throws Exception {
+    void testNoForeignKey() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory
-                .getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("id"));
+        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory.getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("id"));
         assertNull(foreignKeyDesc);
     }
 
@@ -164,11 +150,9 @@ public class ForeignKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testInverseRelationship() throws Exception {
+    void testInverseRelationship() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Bbb.class);
-        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory
-                .getForeignKeyDesc(entityMeta, entityMeta
-                        .getPropertyMeta("aaas"));
+        ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory.getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("aaas"));
         assertNull(foreignKeyDesc);
     }
 
@@ -196,9 +180,7 @@ public class ForeignKeyDescFactoryImplTest {
 
         /** */
         @OneToOne
-        @JoinColumns( {
-                @JoinColumn(name = "CCC_ID1", referencedColumnName = "ID1"),
-                @JoinColumn(name = "CCC_ID2", referencedColumnName = "ID2") })
+        @JoinColumns({ @JoinColumn(name = "CCC_ID1", referencedColumnName = "ID1"), @JoinColumn(name = "CCC_ID2", referencedColumnName = "ID2") })
         public Ccc ccc;
     }
 
@@ -265,5 +247,4 @@ public class ForeignKeyDescFactoryImplTest {
         @ManyToOne
         public Bbb bbb;
     }
-
 }

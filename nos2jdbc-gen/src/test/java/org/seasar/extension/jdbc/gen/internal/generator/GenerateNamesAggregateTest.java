@@ -17,22 +17,20 @@ package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
 import java.util.Arrays;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.NamesAggregateModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModel;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateNamesAggregateTest {
+class GenerateNamesAggregateTest {
 
     private NamesAggregateModelFactoryImpl namesAggregateModelFactory;
 
@@ -42,10 +40,9 @@ public class GenerateNamesAggregateTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        namesAggregateModelFactory = new NamesAggregateModelFactoryImpl(
-                "hoge.entity", "Names");
+        namesAggregateModelFactory = new NamesAggregateModelFactoryImpl("hoge.entity", "Names");
         generator = new GeneratorImplStub();
     }
 
@@ -54,28 +51,21 @@ public class GenerateNamesAggregateTest {
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         NamesModel namesModel = new NamesModel();
         namesModel.setEntityClassName("entity.Employee");
         namesModel.setShortEntityClassName("Employee");
         namesModel.setShortClassName("EmployeeNames");
         namesModel.setShortInnerClassName("_EmployeeNames");
-
         NamesModel namesModel2 = new NamesModel();
         namesModel2.setEntityClassName("entity.Department");
         namesModel2.setShortEntityClassName("Department");
         namesModel2.setShortClassName("DepartmentNames");
         namesModel2.setShortInnerClassName("_Department");
-
-        NamesAggregateModel namesAggregateModel = namesAggregateModelFactory
-                .getNamesAggregateModel(Arrays.asList(namesModel, namesModel2));
-
-        GenerationContext context = new GenerationContextImpl(
-                namesAggregateModel, new File("file"),
-                "java/names-aggregate.ftl", "UTF-8", false);
+        NamesAggregateModel namesAggregateModel = namesAggregateModelFactory.getNamesAggregateModel(Arrays.asList(namesModel, namesModel2));
+        GenerationContext context = new GenerationContextImpl(namesAggregateModel, new File("file"), "java/names-aggregate.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + ".txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
-
 }

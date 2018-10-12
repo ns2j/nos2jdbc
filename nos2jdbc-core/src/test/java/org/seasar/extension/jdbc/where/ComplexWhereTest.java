@@ -15,17 +15,19 @@
  */
 package org.seasar.extension.jdbc.where;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  */
-public class ComplexWhereTest extends TestCase {
+class ComplexWhereTest {
 
     /**
      * 
      */
-    public void testIsNotNull_false() {
+    @Test
+    void testIsNotNull_false() {
         ComplexWhere w = new ComplexWhere();
         assertSame(w, w.isNotNull("name", false));
         assertEquals("", w.getCriteria());
@@ -34,7 +36,8 @@ public class ComplexWhereTest extends TestCase {
     /**
      * 
      */
-    public void testOr2() {
+    @Test
+    void testOr2() {
         ComplexWhere w = new ComplexWhere();
         w.eq("a", 1).eq("b", 2).or().eq("c", 3).eq("d", 4);
         assertEquals("(a = ? and b = ?) or (c = ? and d = ?)", w.getCriteria());
@@ -45,7 +48,8 @@ public class ComplexWhereTest extends TestCase {
     /**
      * 
      */
-    public void testOr3() {
+    @Test
+    void testOr3() {
         ComplexWhere w = new ComplexWhere();
         w.eq("a", 1).eq("b", 2).or().eq("c", 3).eq("d", 4).or().eq("e", 5).eq(
                 "f", 6);
@@ -59,7 +63,8 @@ public class ComplexWhereTest extends TestCase {
     /**
      * 
      */
-    public void testOrEnds() {
+    @Test
+    void testOrEnds() {
         ComplexWhere w = new ComplexWhere();
         w.eq("a", 1).eq("b", 2).or().eq("c", 3).eq("d", 4).or();
         assertEquals("(a = ? and b = ?) or (c = ? and d = ?)", w.getCriteria());
@@ -70,7 +75,8 @@ public class ComplexWhereTest extends TestCase {
     /**
      * 
      */
-    public void testOrEmptyTerm() {
+    @Test
+    void testOrEmptyTerm() {
         ComplexWhere w = new ComplexWhere();
         w.eq("a", null).eq("b", null).or().eq("c", 3).eq("d", 4);
         assertEquals("c = ? and d = ?", w.getCriteria());
@@ -81,7 +87,8 @@ public class ComplexWhereTest extends TestCase {
     /**
      * 
      */
-    public void testAnd() {
+    @Test
+    void testAnd() {
         ComplexWhere w = new ComplexWhere();
         w.eq("a", 1).eq("b", 2).and(
                 new ComplexWhere().eq("c", 3).or().eq("d", 4)).eq("e", 5).eq(
@@ -96,7 +103,8 @@ public class ComplexWhereTest extends TestCase {
     /**
      * 
      */
-    public void testAnd2() {
+    @Test
+    void testAnd2() {
         ComplexWhere w = new ComplexWhere();
         w.eq("a", null).eq("b", null).and(
                 new ComplexWhere().eq("c", 3).or().eq("d", 4)).eq("e", 5).eq(

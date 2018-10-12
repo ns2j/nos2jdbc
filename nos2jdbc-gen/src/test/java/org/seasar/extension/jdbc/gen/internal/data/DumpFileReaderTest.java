@@ -17,19 +17,17 @@ package org.seasar.extension.jdbc.gen.internal.data;
 
 import java.io.File;
 import java.util.Arrays;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpColumnSizeRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpValueRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DumpFileReaderTest {
+class DumpFileReaderTest {
 
     private DumpFileTokenizer tokenizer = new DumpFileTokenizer(',');
 
@@ -38,7 +36,7 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         String path = getClass().getName().replace('.', '/') + ".csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
@@ -59,9 +57,8 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testQuotedCRLF() throws Exception {
-        String path = getClass().getName().replace('.', '/')
-                + "_quotedCRLF.csv";
+    void testQuotedCRLF() throws Exception {
+        String path = getClass().getName().replace('.', '/') + "_quotedCRLF.csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
         assertEquals(Arrays.asList("ID", "NAME", "AGE"), reader.readLine());
@@ -81,7 +78,7 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testEndWithCR() throws Exception {
+    void testEndWithCR() throws Exception {
         String path = getClass().getName().replace('.', '/') + "_endWithCR.csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
@@ -102,7 +99,7 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testEndWithLF() throws Exception {
+    void testEndWithLF() throws Exception {
         String path = getClass().getName().replace('.', '/') + "_endWithLF.csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
@@ -123,9 +120,8 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testEndWithCRLF() throws Exception {
-        String path = getClass().getName().replace('.', '/')
-                + "_endWithCRLF.csv";
+    void testEndWithCRLF() throws Exception {
+        String path = getClass().getName().replace('.', '/') + "_endWithCRLF.csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
         assertEquals(Arrays.asList("ID", "NAME", "AGE"), reader.readLine());
@@ -145,9 +141,8 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testHeaderOnly() throws Exception {
-        String path = getClass().getName().replace('.', '/')
-                + "_headerOnly.csv";
+    void testHeaderOnly() throws Exception {
+        String path = getClass().getName().replace('.', '/') + "_headerOnly.csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
         assertEquals(Arrays.asList("ID", "NAME", "AGE"), reader.readLine());
@@ -161,9 +156,8 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testIllegalColumnSize() throws Exception {
-        String path = getClass().getName().replace('.', '/')
-                + "_illegalColumnSize.csv";
+    void testIllegalColumnSize() throws Exception {
+        String path = getClass().getName().replace('.', '/') + "_illegalColumnSize.csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
         assertEquals(Arrays.asList("ID", "NAME", "AGE"), reader.readLine());
@@ -180,9 +174,8 @@ public class DumpFileReaderTest {
      * @throws Exception
      */
     @Test
-    public void testIllegalValue() throws Exception {
-        String path = getClass().getName().replace('.', '/')
-                + "_illegalValue.csv";
+    void testIllegalValue() throws Exception {
+        String path = getClass().getName().replace('.', '/') + "_illegalValue.csv";
         File file = ResourceUtil.getResourceAsFile(path);
         DumpFileReader reader = new DumpFileReader(file, "UTF-8", tokenizer);
         assertEquals(Arrays.asList("ID", "NAME", "AGE"), reader.readLine());
@@ -193,5 +186,4 @@ public class DumpFileReaderTest {
         } catch (IllegalDumpValueRuntimeException expected) {
         }
     }
-
 }

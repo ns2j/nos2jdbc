@@ -15,20 +15,20 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author taedium
  * 
  */
-public class IdentityNotSupportedRuntimeExceptionTest {
+class IdentityNotSupportedRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         IdentityNotSupportedRuntimeException e = new IdentityNotSupportedRuntimeException();
         System.out.println(e.getMessage());
     }

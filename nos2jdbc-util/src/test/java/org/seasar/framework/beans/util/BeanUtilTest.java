@@ -18,18 +18,20 @@ package org.seasar.framework.beans.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class BeanUtilTest extends TestCase {
+class BeanUtilTest {
 
     /**
      * @throws Exception
      */
-    public void testCopyProperties() throws Exception {
+    @Test
+    void testCopyProperties() throws Exception {
         MyClass src = new MyClass();
         src.setAaa("111");
         src.setCcc("333");
@@ -48,7 +50,8 @@ public class BeanUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCopyPropertiesWithoutNull() throws Exception {
+    @Test
+    void testCopyPropertiesWithoutNull() throws Exception {
         MyClass src = new MyClass();
         src.setAaa("111");
         src.setCcc("333");
@@ -67,7 +70,8 @@ public class BeanUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCopyToMap() throws Exception {
+    @Test
+    void testCopyToMap() throws Exception {
         HogeDto hoge = new HogeDto();
         hoge.setA("A");
         hoge.setB(true);
@@ -83,7 +87,8 @@ public class BeanUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCopyToBean() throws Exception {
+    @Test
+    void testCopyToBean() throws Exception {
         Map map = new HashMap();
         map.put("a", "A");
         map.put("b", new Boolean(true));
@@ -99,7 +104,8 @@ public class BeanUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateProperties() throws Exception {
+    @Test
+    void testCreateProperties() throws Exception {
         HogeDto2 hoge = new HogeDto2();
         hoge.aaa = "1";
         hoge.search_bbb = "2";
@@ -115,7 +121,8 @@ public class BeanUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateProperties_nonPrefix() throws Exception {
+    @Test
+    void testCreateProperties_nonPrefix() throws Exception {
         HogeDto2 hoge = new HogeDto2();
         hoge.aaa = "1";
         hoge.search_bbb = "2";

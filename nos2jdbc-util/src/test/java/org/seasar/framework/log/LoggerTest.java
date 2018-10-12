@@ -15,70 +15,78 @@
  */
 package org.seasar.framework.log;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  *
  */
-public class LoggerTest extends TestCase {
+class LoggerTest {
 
     private Logger _logger = Logger.getLogger(getClass());
 
     /**
      * @throws Exception
      */
-    public void testGetLogger() throws Exception {
-        assertSame("1", Logger.getLogger(getClass()), Logger
-                .getLogger(getClass()));
+    @Test
+    void testGetLogger() throws Exception {
+        assertSame(Logger.getLogger(getClass()), Logger.getLogger(getClass()), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testDebug() throws Exception {
+    @Test
+    void testDebug() throws Exception {
         _logger.debug("debug");
     }
 
     /**
      * @throws Exception
      */
-    public void testInfo() throws Exception {
+    @Test
+    void testInfo() throws Exception {
         _logger.info("info");
     }
 
     /**
      * @throws Exception
      */
-    public void testWarn() throws Exception {
+    @Test
+    void testWarn() throws Exception {
         _logger.warn("warn");
     }
 
     /**
      * @throws Exception
      */
-    public void testError() throws Exception {
+    @Test
+    void testError() throws Exception {
         _logger.error("error");
     }
 
     /**
      * @throws Exception
      */
-    public void testFatal() throws Exception {
+    @Test
+    void testFatal() throws Exception {
         _logger.fatal("fatal");
     }
 
     /**
      * @throws Exception
      */
-    public void testLog() throws Exception {
+    @Test
+    void testLog() throws Exception {
         _logger.log("ISSR0001", null);
     }
 
     /**
      * @throws Exception
      */
-    public void testPerformance() throws Exception {
+    @Test
+    void testPerformance() throws Exception {
         final int num = 100;
         long start = System.currentTimeMillis();
         for (int i = 0; i < num; i++) {

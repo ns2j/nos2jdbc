@@ -15,22 +15,21 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpValueRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DumpUtilTest {
+class DumpUtilTest {
 
     /**
      * 
      */
     @Test
-    public void testEncode() {
+    void testEncode() {
         assertEquals("\"aa\na\"", DumpUtil.encode("aa\na"));
         assertEquals("\"aa\"\"a\"", DumpUtil.encode("aa\"a"));
         assertEquals("\"aaa\"", DumpUtil.encode("aaa"));
@@ -42,7 +41,7 @@ public class DumpUtilTest {
      * 
      */
     @Test
-    public void testDecode() {
+    void testDecode() {
         assertEquals("aa\na", DumpUtil.decode("\"aa\na\""));
         assertEquals("aa\"a", DumpUtil.decode("\"aa\"\"a\""));
         assertEquals("", DumpUtil.decode("\"\""));
@@ -54,7 +53,7 @@ public class DumpUtilTest {
      * 
      */
     @Test
-    public void testDecode_illegalValue() {
+    void testDecode_illegalValue() {
         try {
             DumpUtil.decode("\"aaa");
         } catch (IllegalDumpValueRuntimeException expected) {
@@ -72,5 +71,4 @@ public class DumpUtilTest {
         } catch (IllegalDumpValueRuntimeException expected) {
         }
     }
-
 }

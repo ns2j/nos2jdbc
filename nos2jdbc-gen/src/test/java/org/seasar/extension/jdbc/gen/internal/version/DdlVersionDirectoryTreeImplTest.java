@@ -16,34 +16,31 @@
 package org.seasar.extension.jdbc.gen.internal.version;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DdlVersionDirectoryTreeImplTest {
+class DdlVersionDirectoryTreeImplTest {
 
     private DdlVersionDirectoryTreeImpl tree;
 
     /**
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() {
-        tree = new DdlVersionDirectoryTreeImpl(new File("aaa"),
-                new File("bbb"), "0000", null);
+        tree = new DdlVersionDirectoryTreeImpl(new File("aaa"), new File("bbb"), "0000", null);
     }
 
     /**
      * 
      */
     @Test
-    public void testGetCurrentVersionDir() {
+    void testGetCurrentVersionDir() {
         File dir = tree.getCurrentVersionDirectory().asFile();
         assertEquals("aaa", dir.getParentFile().getName());
         assertEquals("0000", dir.getName());
@@ -53,7 +50,7 @@ public class DdlVersionDirectoryTreeImplTest {
      * 
      */
     @Test
-    public void testGetNextVersionDir() {
+    void testGetNextVersionDir() {
         File dir = tree.getNextVersionDirectory().asFile();
         assertEquals("aaa", dir.getParentFile().getName());
         assertEquals("0001", dir.getName());
@@ -63,7 +60,7 @@ public class DdlVersionDirectoryTreeImplTest {
      * 
      */
     @Test
-    public void testGetVersionDir() {
+    void testGetVersionDir() {
         File dir = tree.getVersionDirectory(10).asFile();
         assertEquals("aaa", dir.getParentFile().getName());
         assertEquals("0010", dir.getName());
@@ -73,8 +70,7 @@ public class DdlVersionDirectoryTreeImplTest {
      * 
      */
     @Test
-    public void testGetDdlVersion() {
+    void testGetDdlVersion() {
         assertNotNull(tree.getDdlInfoFile());
     }
-
 }

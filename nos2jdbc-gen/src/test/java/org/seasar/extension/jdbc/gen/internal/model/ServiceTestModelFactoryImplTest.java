@@ -15,18 +15,17 @@
  */
 package org.seasar.extension.jdbc.gen.internal.model;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModel;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ServiceTestModelFactoryImplTest {
+class ServiceTestModelFactoryImplTest {
 
     private ServiceTestModelFactoryImpl factory;
 
@@ -34,11 +33,10 @@ public class ServiceTestModelFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-//i	
-        factory = new ServiceTestModelFactoryImpl("hoge",
-                "Service", "Test", "rootpackagename","none", "");
+        //i	
+        factory = new ServiceTestModelFactoryImpl("hoge", "Service", "Test", "rootpackagename", "none", "");
     }
 
     /**
@@ -46,16 +44,15 @@ public class ServiceTestModelFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetServiceTestModel() throws Exception {
+    void testGetServiceTestModel() throws Exception {
         EntityMeta entityMeta = new EntityMeta();
         entityMeta.setEntityClass(Foo.class);
         ServiceTestModel model = factory.getServiceTestModel(entityMeta);
-//i        assertEquals("app.dicon", model.getConfigPath());
+        //i        assertEquals("app.dicon", model.getConfigPath());
         assertEquals("hoge", model.getPackageName());
         assertEquals("FooServiceTest", model.getShortClassName());
         assertEquals("FooService", model.getShortServiceClassName());
-//i
+        //i
         assertEquals("rootpackagename", model.getRootPackageName());
     }
-
 }

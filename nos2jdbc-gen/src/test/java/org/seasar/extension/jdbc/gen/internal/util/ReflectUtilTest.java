@@ -15,23 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.ClassUnmatchRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ReflectUtilTest {
+class ReflectUtilTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testNewInstance() throws Exception {
+    void testNewInstance() throws Exception {
         String baseName = getClass().getName();
         Aaa aaa = ReflectUtil.newInstance(Aaa.class, baseName + "$Bbb");
         assertNotNull(aaa);
@@ -42,7 +41,7 @@ public class ReflectUtilTest {
      * @throws Exception
      */
     @Test
-    public void testNewInstance_classUnmatch() throws Exception {
+    void testNewInstance_classUnmatch() throws Exception {
         String baseName = getClass().getName();
         try {
             ReflectUtil.newInstance(Aaa.class, baseName + "$Ccc");

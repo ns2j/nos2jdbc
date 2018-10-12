@@ -15,21 +15,20 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.After;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DefaultExcludesFilenameFilterTest {
+class DefaultExcludesFilenameFilterTest {
 
     /**
      * 
      */
-    @After
+    @AfterEach
     public void tearDown() {
         DefaultExcludesFilenameFilter.resetFilterPattern();
     }
@@ -38,7 +37,7 @@ public class DefaultExcludesFilenameFilterTest {
      * 
      */
     @Test
-    public void testAccept() {
+    void testAccept() {
         DefaultExcludesFilenameFilter filter = new DefaultExcludesFilenameFilter();
         assertTrue(filter.accept(null, "aaa"));
         assertFalse(filter.accept(null, "aaa~"));
@@ -58,11 +57,10 @@ public class DefaultExcludesFilenameFilterTest {
      * 
      */
     @Test
-    public void testSetFilterRegex() {
+    void testSetFilterRegex() {
         DefaultExcludesFilenameFilter.setFilterRegex("test");
         DefaultExcludesFilenameFilter filter = new DefaultExcludesFilenameFilter();
         assertTrue(filter.accept(null, "aaa"));
         assertFalse(filter.accept(null, "test"));
     }
-
 }

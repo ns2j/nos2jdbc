@@ -16,45 +16,38 @@
 package org.seasar.extension.jdbc.gen.desc;
 
 import junitx.framework.Assert;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ForeignKeyDescTest {
+class ForeignKeyDescTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         ForeignKeyDesc foreignKeyDesc = new ForeignKeyDesc();
         foreignKeyDesc.addColumnName("AAA");
         foreignKeyDesc.setReferencedCatalogName("BBB");
         foreignKeyDesc.setReferencedSchemaName("CCC");
         foreignKeyDesc.setReferencedTableName("DDD");
         foreignKeyDesc.addReferencedColumnName("EEE");
-
         ForeignKeyDesc foreignKeyDesc2 = new ForeignKeyDesc();
         foreignKeyDesc2.addColumnName("aaa");
         foreignKeyDesc2.setReferencedCatalogName("bbb");
         foreignKeyDesc2.setReferencedSchemaName("ccc");
         foreignKeyDesc2.setReferencedTableName("ddd");
         foreignKeyDesc2.addReferencedColumnName("eee");
-
         ForeignKeyDesc foreignKeyDesc3 = new ForeignKeyDesc();
         foreignKeyDesc3.addColumnName("XXX");
-
         assertEquals(foreignKeyDesc, foreignKeyDesc2);
         assertEquals(foreignKeyDesc.hashCode(), foreignKeyDesc2.hashCode());
-        Assert.assertNotEquals(foreignKeyDesc, foreignKeyDesc3);
-        Assert.assertNotEquals(foreignKeyDesc.hashCode(), foreignKeyDesc3
-                .hashCode());
+        assertNotEquals(foreignKeyDesc, foreignKeyDesc3);
+        assertNotEquals(foreignKeyDesc.hashCode(), foreignKeyDesc3.hashCode());
     }
-
 }

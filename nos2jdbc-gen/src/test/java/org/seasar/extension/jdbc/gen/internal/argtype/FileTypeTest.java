@@ -16,16 +16,14 @@
 package org.seasar.extension.jdbc.gen.internal.argtype;
 
 import java.io.File;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class FileTypeTest {
+class FileTypeTest {
 
     private FileType fileType = new FileType();
 
@@ -33,7 +31,7 @@ public class FileTypeTest {
      * 
      */
     @Test
-    public void testToObject() {
+    void testToObject() {
         assertEquals(new File("hoge"), fileType.toObject("'hoge'"));
     }
 
@@ -42,9 +40,7 @@ public class FileTypeTest {
      * @throws Exception
      */
     @Test
-    public void testToText() throws Exception {
-        assertEquals("'" + new File("hoge").getCanonicalPath() + "'", fileType
-                .toText(new File("hoge")));
+    void testToText() throws Exception {
+        assertEquals("'" + new File("hoge").getCanonicalPath() + "'", fileType.toText(new File("hoge")));
     }
-
 }

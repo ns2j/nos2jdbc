@@ -15,25 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class RequiredPropertyNullRuntimeExceptionTest {
+class RequiredPropertyNullRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        RequiredPropertyNullRuntimeException e = new RequiredPropertyNullRuntimeException(
-                "hoge");
+    void test() throws Exception {
+        RequiredPropertyNullRuntimeException e = new RequiredPropertyNullRuntimeException("hoge");
         System.out.println(e.getMessage());
         assertEquals("hoge", e.getPropertyName());
     }

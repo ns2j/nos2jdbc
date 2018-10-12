@@ -21,22 +21,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
-
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.framework.util.ArrayMap;
 
 /**
  * @author higa
  * 
  */
-public class MockResultSetTest extends TestCase {
+class MockResultSetTest {
 
     /**
      * Test method for
      * {@link org.seasar.framework.mock.sql.MockResultSet#addRowData(org.seasar.framework.util.ArrayMap)}.
      */
-    public void testAddAndGetRowData() {
+    @Test
+    void testAddAndGetRowData() {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         rowData.put("id", new Integer(1));
@@ -48,7 +48,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetColumnData() throws Exception {
+    @Test
+    void testGetColumnData() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Integer value = new Integer(1);
@@ -63,7 +64,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testNext() throws Exception {
+    @Test
+    void testNext() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Integer value = new Integer(1);
@@ -81,7 +83,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrevious() throws Exception {
+    @Test
+    void testPrevious() throws Exception {
         MockResultSet rs = new MockResultSet();
         try {
             rs.previous();
@@ -106,7 +109,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetBigDecimal() throws Exception {
+    @Test
+    void testGetBigDecimal() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         BigDecimal value = new BigDecimal(1);
@@ -125,7 +129,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetBoolean() throws Exception {
+    @Test
+    void testGetBoolean() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Boolean value = Boolean.TRUE;
@@ -140,7 +145,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetByte() throws Exception {
+    @Test
+    void testGetByte() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Byte value = new Byte((byte) 1);
@@ -155,7 +161,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetBytes() throws Exception {
+    @Test
+    void testGetBytes() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         byte[] value = new byte[0];
@@ -170,7 +177,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetDate() throws Exception {
+    @Test
+    void testGetDate() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Date value = new Date(0);
@@ -185,37 +193,40 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetDouble() throws Exception {
+    @Test
+    void testGetDouble() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Double value = new Double(0);
         rowData.put("hoge", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());
-        assertEquals(value.doubleValue(), rs.getDouble(1), 0);
-        assertEquals(value.doubleValue(), rs.getDouble("hoge"), 0);
+        assertEquals(rs.getDouble(1), 0, value.doubleValue());
+        assertEquals(rs.getDouble("hoge"), 0, value.doubleValue());
     }
 
     /**
      * @throws Exception
      * 
      */
-    public void testGetFloat() throws Exception {
+    @Test
+    void testGetFloat() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Float value = new Float(0);
         rowData.put("hoge", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());
-        assertEquals(value.floatValue(), rs.getFloat(1), 0);
-        assertEquals(value.floatValue(), rs.getFloat("hoge"), 0);
+        assertEquals(rs.getFloat(1), 0, value.floatValue());
+        assertEquals(rs.getFloat("hoge"), 0, value.floatValue());
     }
 
     /**
      * @throws Exception
      * 
      */
-    public void testGetInt() throws Exception {
+    @Test
+    void testGetInt() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Integer value = new Integer(0);
@@ -230,7 +241,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetLong() throws Exception {
+    @Test
+    void testGetLong() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Long value = new Long(0);
@@ -245,7 +257,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetObject() throws Exception {
+    @Test
+    void testGetObject() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Object value = new Object();
@@ -260,7 +273,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetShort() throws Exception {
+    @Test
+    void testGetShort() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Short value = new Short((short) 0);
@@ -275,7 +289,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetString() throws Exception {
+    @Test
+    void testGetString() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         String value = "aaa";
@@ -290,7 +305,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetTime() throws Exception {
+    @Test
+    void testGetTime() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Time value = new Time(0);
@@ -305,7 +321,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetTimestamp() throws Exception {
+    @Test
+    void testGetTimestamp() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Timestamp value = new Timestamp(0);
@@ -320,7 +337,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testIsAfterLast() throws Exception {
+    @Test
+    void testIsAfterLast() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Timestamp value = new Timestamp(0);
@@ -336,7 +354,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testIsBeforeFirst() throws Exception {
+    @Test
+    void testIsBeforeFirst() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Timestamp value = new Timestamp(0);
@@ -351,7 +370,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testIsFirst() throws Exception {
+    @Test
+    void testIsFirst() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Timestamp value = new Timestamp(0);
@@ -366,7 +386,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testIsLast() throws Exception {
+    @Test
+    void testIsLast() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
         Timestamp value = new Timestamp(0);
@@ -381,7 +402,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testLast() throws Exception {
+    @Test
+    void testLast() throws Exception {
         MockResultSet rs = new MockResultSet();
         rs.setType(ResultSet.TYPE_SCROLL_INSENSITIVE);
         ArrayMap rowData = new ArrayMap();
@@ -396,7 +418,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testFirst() throws Exception {
+    @Test
+    void testFirst() throws Exception {
         MockResultSet rs = new MockResultSet();
         rs.setType(ResultSet.TYPE_SCROLL_INSENSITIVE);
         ArrayMap rowData = new ArrayMap();
@@ -411,7 +434,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testAbsolute() throws Exception {
+    @Test
+    void testAbsolute() throws Exception {
         MockResultSet rs = new MockResultSet();
         rs.setType(ResultSet.TYPE_SCROLL_INSENSITIVE);
         ArrayMap rowData = new ArrayMap();
@@ -433,7 +457,8 @@ public class MockResultSetTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testRelative() throws Exception {
+    @Test
+    void testRelative() throws Exception {
         MockResultSet rs = new MockResultSet();
         rs.setType(ResultSet.TYPE_SCROLL_INSENSITIVE);
         ArrayMap rowData = new ArrayMap();

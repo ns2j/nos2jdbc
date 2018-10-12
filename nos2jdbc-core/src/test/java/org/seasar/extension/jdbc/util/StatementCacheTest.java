@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.util;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.util.StatementCache;
 import org.seasar.framework.mock.sql.MockConnection;
@@ -25,13 +26,14 @@ import org.seasar.framework.mock.sql.MockStatement;
  * @author higa
  * 
  */
-public class StatementCacheTest extends TestCase {
+class StatementCacheTest {
 
 	/**
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public void testRemoveEldestEntryEntry() throws Exception {
+	@Test
+    void testRemoveEldestEntryEntry() throws Exception {
 		StatementCache cache = new StatementCache(1);
 		MockConnection con = new MockConnection();
 		MockStatement stmt1 = con.createMockStatement();
@@ -46,7 +48,8 @@ public class StatementCacheTest extends TestCase {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public void testDestroy() throws Exception {
+	@Test
+    void testDestroy() throws Exception {
 		StatementCache cache = new StatementCache(1);
 		MockConnection con = new MockConnection();
 		MockStatement stmt1 = con.createMockStatement();

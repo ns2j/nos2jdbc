@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.where;
 
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.ConditionType;
 
@@ -26,12 +27,13 @@ import static org.seasar.extension.jdbc.where.EmployeeNames.*;
 /**
  * @author koichik
  */
-public class CompositeWhereTest extends TestCase {
+class CompositeWhereTest {
 
     /**
      * 
      */
-    public void testArray() {
+    @Test
+    void testArray() {
         CompositeWhere w = new CompositeWhere("and", new SingleValueOperator(
                 ConditionType.EQ, name(), "111"), new SingleValueOperator(
                 ConditionType.EQ, id(), null), new SimpleWhere().eq("ccc",
@@ -52,7 +54,8 @@ public class CompositeWhereTest extends TestCase {
     /**
      * 
      */
-    public void testCollection() {
+    @Test
+    void testCollection() {
         CompositeWhere w = new CompositeWhere("and", Arrays.asList(
                 new SingleValueOperator(ConditionType.EQ, name(), "111"),
                 new SingleValueOperator(ConditionType.EQ, id(), null),
@@ -73,7 +76,8 @@ public class CompositeWhereTest extends TestCase {
     /**
      * 
      */
-    public void testEmpty() {
+    @Test
+    void testEmpty() {
         CompositeWhere w = new CompositeWhere("and");
         assertEquals("", w.getCriteria());
     }
@@ -81,7 +85,8 @@ public class CompositeWhereTest extends TestCase {
     /**
      * 
      */
-    public void testEmpty2() {
+    @Test
+    void testEmpty2() {
         CompositeWhere w = new CompositeWhere("and", new SingleValueOperator(
                 ConditionType.EQ, "aaa", null));
         assertEquals("", w.getCriteria());

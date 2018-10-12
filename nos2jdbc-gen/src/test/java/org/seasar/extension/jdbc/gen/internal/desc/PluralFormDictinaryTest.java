@@ -16,23 +16,21 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import java.util.LinkedHashMap;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class PluralFormDictinaryTest {
+class PluralFormDictinaryTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testLookup() throws Exception {
+    void testLookup() throws Exception {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("^person$", "people");
         map.put("(.*)$", "$1s");
@@ -46,7 +44,7 @@ public class PluralFormDictinaryTest {
      * @throws Exception
      */
     @Test
-    public void testLookup_notFound() throws Exception {
+    void testLookup_notFound() throws Exception {
         PluralFormDictinary dictinary = new PluralFormDictinary();
         assertNull(dictinary.lookup("employee"));
     }

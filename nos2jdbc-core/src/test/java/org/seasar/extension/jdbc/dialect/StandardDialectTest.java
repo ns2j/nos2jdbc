@@ -23,7 +23,8 @@ import java.util.List;
 
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.FromClause;
 import org.seasar.extension.jdbc.JoinColumnMeta;
@@ -37,7 +38,7 @@ import org.seasar.framework.exception.SQLRuntimeException;
  * @author higa
  * 
  */
-public class StandardDialectTest extends TestCase {
+class StandardDialectTest {
 
     private StandardDialect dialect = new StandardDialect();
 
@@ -47,7 +48,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSqlByRowNumber_offsetLimit() throws Exception {
+    @Test
+    void testConvertLimitSqlByRowNumber_offsetLimit() throws Exception {
         String sql = "select * from emp order by id";
         String expected = "select * from ( select "
                 + "temp_.*, row_number() over(order by id) as rownumber_ from ( select * from emp ) as temp_ ) as temp2_"
@@ -58,7 +60,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSqlByRowNumber_offsetLimit_tableAlias()
+    @Test
+    void testConvertLimitSqlByRowNumber_offsetLimit_tableAlias()
             throws Exception {
         String sql = "select * from emp T1_ order by T1_.id";
         String expected = "select * from ( select "
@@ -70,7 +73,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertLimitSqlByRowNumber_offsetOnly() throws Exception {
+    @Test
+    void testConvertLimitSqlByRowNumber_offsetOnly() throws Exception {
         String sql = "select * from emp order by id";
         String expected = "select * from ( select "
                 + "temp_.*, row_number() over(order by id) as rownumber_ from ( select * from emp ) as temp_ ) as temp2_"
@@ -81,7 +85,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertOrderBy() throws Exception {
+    @Test
+    void testConvertOrderBy() throws Exception {
         assertEquals("order by id", dialect.convertOrderBy("order by id"));
         assertEquals("order by temp_.id", dialect
                 .convertOrderBy("order by T1_.id"));
@@ -90,7 +95,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * 
      */
-    public void testSetupJoin() {
+    @Test
+    void testSetupJoin() {
         StandardDialect dialect = new StandardDialect();
         FromClause fromClause = new FromClause();
         fromClause.addSql("AAA", "_T1");
@@ -107,7 +113,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * 
      */
-    public void testSetupJoin_WithCondition() {
+    @Test
+    void testSetupJoin_WithCondition() {
         StandardDialect dialect = new StandardDialect();
         FromClause fromClause = new FromClause();
         fromClause.addSql("AAA", "_T1");
@@ -124,7 +131,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * 
      */
-    public void testIsUniqueConstraintViolation() {
+    @Test
+    void testIsUniqueConstraintViolation() {
         StandardDialect dialect = new StandardDialect();
         assertTrue(dialect
                 .isUniqueConstraintViolation(new Exception(
@@ -145,7 +153,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * 
      */
-    public void testGetSQLState() {
+    @Test
+    void testGetSQLState() {
         StandardDialect dialect = new StandardDialect();
         assertEquals("10", dialect.getSQLState(new Exception(
                 new SQLRuntimeException(SQLException.class
@@ -166,7 +175,8 @@ public class StandardDialectTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testGetValueType() throws Exception {
+    @Test
+    void testGetValueType() throws Exception {
         assertEquals(ValueTypes.STRING, dialect.getValueType(String.class,
                 false, null));
         assertEquals(ValueTypes.INTEGER, dialect.getValueType(Integer.class,
@@ -183,7 +193,8 @@ public class StandardDialectTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testGetValueType_lob() throws Exception {
+    @Test
+    void testGetValueType_lob() throws Exception {
         assertEquals(ValueTypes.CLOB, dialect.getValueType(String.class, true,
                 null));
     }
@@ -192,7 +203,8 @@ public class StandardDialectTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testGetValueType_temporalType() throws Exception {
+    @Test
+    void testGetValueType_temporalType() throws Exception {
         assertEquals(ValueTypes.DATE_SQLDATE, dialect.getValueType(Date.class,
                 false, TemporalType.DATE));
         assertEquals(ValueTypes.DATE_TIME, dialect.getValueType(Date.class,
@@ -210,7 +222,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetValueType_propertyMeta() throws Exception {
+    @Test
+    void testGetValueType_propertyMeta() throws Exception {
         PropertyMeta pm = new PropertyMeta();
         pm.setField(getClass().getField("stringField"));
         pm.setValueType(ValueTypes.CLOB);
@@ -220,7 +233,8 @@ public class StandardDialectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertGetCountSql() throws Exception {
+    @Test
+    void testConvertGetCountSql() throws Exception {
         String sql = "select * from emp";
         String expected = "select count(*) from ( select * from emp ) COUNT_";
         assertEquals(expected, dialect.convertGetCountSql(sql));

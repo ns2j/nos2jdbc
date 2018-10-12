@@ -18,9 +18,8 @@ package org.seasar.extension.jdbc.gen.internal.generator;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRuleImpl;
 import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactoryImpl;
@@ -29,14 +28,13 @@ import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModelFactory;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateSqlFileConstantsTest {
+class GenerateSqlFileConstantsTest {
 
     private SqlFileConstantsModelFactory factory;
 
@@ -46,16 +44,14 @@ public class GenerateSqlFileConstantsTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         File classpathDir = ResourceUtil.getBuildDir(getClass());
         String basePath = getClass().getPackage().getName().replace(".", "/");
         Set<File> sqlFileSet = new HashSet<File>();
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/aaa.sql"));
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/bbb.sql"));
-        factory = new SqlFileConstantsModelFactoryImpl(classpathDir,
-                sqlFileSet, new SqlFileConstantNamingRuleImpl(), "hoge",
-                "SqlFileTest");
+        factory = new SqlFileConstantsModelFactoryImpl(classpathDir, sqlFileSet, new SqlFileConstantNamingRuleImpl(), "hoge", "SqlFileTest");
         generator = new GeneratorImplStub();
     }
 
@@ -64,26 +60,21 @@ public class GenerateSqlFileConstantsTest {
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         NamesModel namesModel = new NamesModel();
         namesModel.setEntityClassName("entity.Employee");
         namesModel.setShortEntityClassName("Employee");
         namesModel.setShortClassName("EmployeeNames");
         namesModel.setShortInnerClassName("_EmployeeNames");
-
         NamesModel namesModel2 = new NamesModel();
         namesModel2.setEntityClassName("entity.Department");
         namesModel2.setShortEntityClassName("Department");
         namesModel2.setShortClassName("DepartmentNames");
         namesModel2.setShortInnerClassName("_Department");
-
         SqlFileConstantsModel model = factory.getSqlFileConstantsModel();
-
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/sqlfileconstants.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/sqlfileconstants.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + ".txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
-
 }

@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class TableNotFoundRuntimeExceptionTest {
+class TableNotFoundRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        TableNotFoundRuntimeException e = new TableNotFoundRuntimeException(
-                "aaa", "bbb", "ccc", "ddd");
+    void test() throws Exception {
+        TableNotFoundRuntimeException e = new TableNotFoundRuntimeException("aaa", "bbb", "ccc", "ddd");
         assertEquals("aaa", e.getDialectClassName());
         assertEquals("bbb", e.getSchemaName());
         assertEquals("ccc", e.getTableNamePattern());

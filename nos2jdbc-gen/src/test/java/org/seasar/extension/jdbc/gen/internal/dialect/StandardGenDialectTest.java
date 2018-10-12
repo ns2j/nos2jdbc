@@ -16,19 +16,17 @@
 package org.seasar.extension.jdbc.gen.internal.dialect;
 
 import java.sql.Types;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.exception.UnsupportedSqlTypeRuntimeException;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class StandardGenDialectTest {
+class StandardGenDialectTest {
 
     private StandardGenDialect dialect = new StandardGenDialect();
 
@@ -37,7 +35,7 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_char() throws Exception {
+    void testGetSqlType_char() throws Exception {
         SqlType type = dialect.getSqlType(Types.CHAR);
         assertEquals("char(1)", type.getDataType(10, 0, 0, false));
     }
@@ -47,7 +45,7 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_varchar() throws Exception {
+    void testGetSqlType_varchar() throws Exception {
         SqlType type = dialect.getSqlType(Types.VARCHAR);
         assertEquals("varchar(10)", type.getDataType(10, 0, 0, false));
     }
@@ -57,7 +55,7 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_unsupported() throws Exception {
+    void testGetSqlType_unsupported() throws Exception {
         try {
             dialect.getSqlType(Types.OTHER);
             fail();
@@ -70,7 +68,7 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_unknown() throws Exception {
+    void testGetColumnType_unknown() throws Exception {
         assertNull(dialect.getColumnType("hoge", Types.OTHER));
     }
 
@@ -79,11 +77,9 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_unknown_bySqlType() throws Exception {
-        GenDialect.ColumnType columnType = dialect.getColumnType("hoge",
-                Types.VARCHAR);
-        assertEquals("varchar(10)", columnType.getColumnDefinition(10, 0, 0,
-                null));
+    void testGetColumnType_unknown_bySqlType() throws Exception {
+        GenDialect.ColumnType columnType = dialect.getColumnType("hoge", Types.VARCHAR);
+        assertEquals("varchar(10)", columnType.getColumnDefinition(10, 0, 0, null));
     }
 
     /**
@@ -91,9 +87,8 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_defaultValue() throws Exception {
-        GenDialect.ColumnType columnType = dialect.getColumnType("integer",
-                Types.OTHER);
+    void testGetColumnType_defaultValue() throws Exception {
+        GenDialect.ColumnType columnType = dialect.getColumnType("integer", Types.OTHER);
         String definition = columnType.getColumnDefinition(10, 0, 0, "5");
         assertEquals("integer default 5", definition);
     }
@@ -103,9 +98,8 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetAttributeClass_date() throws Exception {
-        GenDialect.ColumnType columnType = dialect.getColumnType("date",
-                Types.OTHER);
+    void testGetAttributeClass_date() throws Exception {
+        GenDialect.ColumnType columnType = dialect.getColumnType("date", Types.OTHER);
         assertEquals(java.sql.Date.class, columnType.getAttributeClass(0, 0, 0));
     }
 
@@ -114,9 +108,8 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetAttributeClass_time() throws Exception {
-        GenDialect.ColumnType columnType = dialect.getColumnType("time",
-                Types.OTHER);
+    void testGetAttributeClass_time() throws Exception {
+        GenDialect.ColumnType columnType = dialect.getColumnType("time", Types.OTHER);
         assertEquals(java.sql.Time.class, columnType.getAttributeClass(0, 0, 0));
     }
 
@@ -125,11 +118,9 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetAttributeClass_timestamp() throws Exception {
-        GenDialect.ColumnType columnType = dialect.getColumnType("timestamp",
-                Types.OTHER);
-        assertEquals(java.sql.Timestamp.class, columnType.getAttributeClass(0,
-                0, 0));
+    void testGetAttributeClass_timestamp() throws Exception {
+        GenDialect.ColumnType columnType = dialect.getColumnType("timestamp", Types.OTHER);
+        assertEquals(java.sql.Timestamp.class, columnType.getAttributeClass(0, 0, 0));
     }
 
     /**
@@ -137,7 +128,7 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testQuote() throws Exception {
+    void testQuote() throws Exception {
         assertEquals("\"aaa\"", dialect.quote("aaa"));
     }
 
@@ -146,8 +137,7 @@ public class StandardGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testUnquote() throws Exception {
+    void testUnquote() throws Exception {
         assertEquals("aaa", dialect.unquote("\"aaa\""));
     }
-
 }

@@ -18,13 +18,14 @@ package org.seasar.framework.message;
 import java.util.List;
 import java.util.Locale;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author shot
  * @author higa
  */
-public class MessageResourceBundleFactoryTest extends TestCase {
+class MessageResourceBundleFactoryTest {
 
     private static final String BASE_NAME = "SSRMessages";
 
@@ -37,7 +38,8 @@ public class MessageResourceBundleFactoryTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testLoadFacade() throws Exception {
+    @Test
+    void testLoadFacade() throws Exception {
         MessageResourceBundleFacade facade = MessageResourceBundleFactory
                 .loadFacade(PATH);
         assertNotNull(facade);
@@ -47,7 +49,8 @@ public class MessageResourceBundleFactoryTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetNullableBundle() throws Exception {
+    @Test
+    void testGetNullableBundle() throws Exception {
         MessageResourceBundle bundle = MessageResourceBundleFactory
                 .getNullableBundle(BASE_NAME, Locale.JAPANESE);
         assertNotNull(bundle);
@@ -64,7 +67,8 @@ public class MessageResourceBundleFactoryTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetNullabelBundle2() throws Exception {
+    @Test
+    void testGetNullabelBundle2() throws Exception {
         String baseName = "org.seasar.framework.message.strings";
         MessageResourceBundle bundle = MessageResourceBundleFactory
                 .getNullableBundle(baseName, Locale.JAPANESE);
@@ -109,7 +113,8 @@ public class MessageResourceBundleFactoryTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCalcurateBundleNames() throws Exception {
+    @Test
+    void testCalcurateBundleNames() throws Exception {
         // 言語のみ
         String[] bundleNames = MessageResourceBundleFactory
                 .calcurateBundleNames(BASE_NAME, Locale.JAPANESE);

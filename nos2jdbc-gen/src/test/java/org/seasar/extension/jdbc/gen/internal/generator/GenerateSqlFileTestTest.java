@@ -19,22 +19,20 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateSqlFileTestTest {
+class GenerateSqlFileTestTest {
 
     private GeneratorImplStub generator;
 
@@ -42,7 +40,7 @@ public class GenerateSqlFileTestTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         generator = new GeneratorImplStub();
     }
@@ -52,23 +50,17 @@ public class GenerateSqlFileTestTest {
      * @throws Exception
      */
     @Test
-    public void testSqlFileSet() throws Exception {
+    void testSqlFileSet() throws Exception {
         File classpathDir = ResourceUtil.getBuildDir(getClass());
         String basePath = getClass().getPackage().getName().replace(".", "/");
         Set<File> sqlFileSet = new HashSet<File>();
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/aaa.sql"));
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/bbb.sql"));
-        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(
-                classpathDir, sqlFileSet, "jdbcManager",
-                "hoge", "SqlFileTest", "rootpackagename", "none", "");
+        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none", "");
         SqlFileTestModel model = sqlFileTestModelFactory.getSqlFileTestModel();
-
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/sqlfiletest.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/sqlfiletest.ftl", "UTF-8", false);
         generator.generate(context);
-
-        String path = getClass().getName().replace(".", "/")
-                + "_SqlFileSet.txt";
+        String path = getClass().getName().replace(".", "/") + "_SqlFileSet.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
 
@@ -76,9 +68,9 @@ public class GenerateSqlFileTestTest {
      * 
      * @throws Exception
      */
-/*i    
+    /*i    
     @Test
-    public void testSqlFileSet_s2junit4() throws Exception {
+    void testSqlFileSet_s2junit4() throws Exception {
         File classpathDir = ResourceUtil.getBuildDir(getClass());
         String basePath = getClass().getPackage().getName().replace(".", "/");
         Set<File> sqlFileSet = new HashSet<File>();
@@ -103,19 +95,13 @@ public class GenerateSqlFileTestTest {
      * @throws Exception
      */
     @Test
-    public void testNoSqlFile() throws Exception {
+    void testNoSqlFile() throws Exception {
         File classpathDir = ResourceUtil.getBuildDir(getClass());
-        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(
-                classpathDir, Collections.<File> emptySet(),
-                "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none", "");
+        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, Collections.<File>emptySet(), "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none", "");
         SqlFileTestModel model = sqlFileTestModelFactory.getSqlFileTestModel();
-
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/sqlfiletest.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/sqlfiletest.ftl", "UTF-8", false);
         generator.generate(context);
-
         String path = getClass().getName().replace(".", "/") + "_NoSqlFile.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
-
 }

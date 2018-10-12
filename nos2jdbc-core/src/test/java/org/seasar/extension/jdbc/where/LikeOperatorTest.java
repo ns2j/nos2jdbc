@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.where;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.ConditionType;
 
@@ -24,12 +25,13 @@ import static org.seasar.extension.jdbc.where.EmployeeNames.*;
 /**
  * @author koichik
  */
-public class LikeOperatorTest extends TestCase {
+class LikeOperatorTest {
 
     /**
      * 
      */
-    public void testLike() {
+    @Test
+    void testLike() {
         ComposableWhere w = new LikeOperator(ConditionType.LIKE, name(), "1%1");
         assertEquals("name like ?", w.getCriteria());
 
@@ -45,7 +47,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testLike_Null() {
+    @Test
+    void testLike_Null() {
         ComposableWhere w = new LikeOperator(ConditionType.LIKE, name(), null);
         assertEquals("", w.getCriteria());
 
@@ -59,7 +62,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testLike_ExcludeWhitespace() {
+    @Test
+    void testLike_ExcludeWhitespace() {
         ComposableWhere w = new LikeOperator(ConditionType.LIKE, name(), "   ")
                 .excludesWhitespace();
         assertEquals("", w.getCriteria());
@@ -74,7 +78,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testLikeEscape() {
+    @Test
+    void testLikeEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.LIKE_ESCAPE,
                 department().name(), "1%1", "$");
         assertEquals("department.name like ? escape ?", w.getCriteria());
@@ -93,7 +98,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotLike() {
+    @Test
+    void testNotLike() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_LIKE, name(),
                 "1%1");
         assertEquals("name not like ?", w.getCriteria());
@@ -110,7 +116,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotLike_Null() {
+    @Test
+    void testNotLike_Null() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_LIKE, name(),
                 null);
         assertEquals("", w.getCriteria());
@@ -125,7 +132,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotLike_ExcludeWhitespace() {
+    @Test
+    void testNotLike_ExcludeWhitespace() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_LIKE, name(),
                 "   ").excludesWhitespace();
         assertEquals("", w.getCriteria());
@@ -140,7 +148,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotLikeEscape() {
+    @Test
+    void testNotLikeEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_LIKE_ESCAPE,
                 department().name(), "1%1", "$");
         assertEquals("department.name not like ? escape ?", w.getCriteria());
@@ -159,7 +168,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testStarts() {
+    @Test
+    void testStarts() {
         ComposableWhere w = new LikeOperator(ConditionType.STARTS, name(),
                 "111");
         assertEquals("name like ?", w.getCriteria());
@@ -176,7 +186,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testStartsEscape() {
+    @Test
+    void testStartsEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.STARTS, name(),
                 "$%_");
         assertEquals("name like ? escape '$'", w.getCriteria());
@@ -193,7 +204,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotStarts() {
+    @Test
+    void testNotStarts() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_STARTS, name(),
                 "111");
         assertEquals("name not like ?", w.getCriteria());
@@ -210,7 +222,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotStartsEscape() {
+    @Test
+    void testNotStartsEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_STARTS, name(),
                 "$%_");
         assertEquals("name not like ? escape '$'", w.getCriteria());
@@ -227,7 +240,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testEnds() {
+    @Test
+    void testEnds() {
         ComposableWhere w = new LikeOperator(ConditionType.ENDS, name(), "111");
         assertEquals("name like ?", w.getCriteria());
 
@@ -243,7 +257,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testEndsEscape() {
+    @Test
+    void testEndsEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.ENDS, name(), "$%_");
         assertEquals("name like ? escape '$'", w.getCriteria());
 
@@ -259,7 +274,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotEnds() {
+    @Test
+    void testNotEnds() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_ENDS, name(),
                 "111");
         assertEquals("name not like ?", w.getCriteria());
@@ -276,7 +292,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotEndsEscape() {
+    @Test
+    void testNotEndsEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_ENDS, name(),
                 "$%_");
         assertEquals("name not like ? escape '$'", w.getCriteria());
@@ -293,7 +310,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testContains() {
+    @Test
+    void testContains() {
         ComposableWhere w = new LikeOperator(ConditionType.CONTAINS, name(),
                 "111");
         assertEquals("name like ?", w.getCriteria());
@@ -310,7 +328,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testContainsEscape() {
+    @Test
+    void testContainsEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.CONTAINS, name(),
                 "$%_");
         assertEquals("name like ? escape '$'", w.getCriteria());
@@ -327,7 +346,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotContains() {
+    @Test
+    void testNotContains() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_CONTAINS,
                 name(), "111");
         assertEquals("name not like ?", w.getCriteria());
@@ -344,7 +364,8 @@ public class LikeOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNotContainsEscape() {
+    @Test
+    void testNotContainsEscape() {
         ComposableWhere w = new LikeOperator(ConditionType.NOT_CONTAINS,
                 name(), "$%_");
         assertEquals("name not like ? escape '$'", w.getCriteria());

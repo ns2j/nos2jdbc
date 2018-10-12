@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.mapper;
 
 import java.lang.reflect.Field;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
@@ -28,19 +29,21 @@ import org.seasar.extension.jdbc.entity.Aaa;
  * @author higa
  * 
  */
-public class AbstEntityMapperTest extends TestCase {
+class AbstEntityMapperTest {
 
     private boolean called = false;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         called = false;
     }
 
     /**
      * 
      */
-    public void testGetKey() {
+    @Test
+    void testGetKey() {
         MyMapper mapper = new MyMapper(null, null, new int[] { 0 });
         assertEquals(1, mapper.getKey(new Object[] { 1, "abc" }));
     }
@@ -48,7 +51,8 @@ public class AbstEntityMapperTest extends TestCase {
     /**
      * 
      */
-    public void testGetKey_multikey() {
+    @Test
+    void testGetKey_multikey() {
         MyMapper mapper = new MyMapper(null, null, new int[] { 0, 1 });
         Object key = mapper.getKey(new Object[] { 1, 2 });
         assertNotNull(key);
@@ -63,7 +67,8 @@ public class AbstEntityMapperTest extends TestCase {
     /**
      * 
      */
-    public void testGetKey_nokey() {
+    @Test
+    void testGetKey_nokey() {
         MyMapper mapper = new MyMapper(null, null, new int[0]);
         assertNull(mapper.getKey(new Object[] { 1, "abc" }));
     }
@@ -72,7 +77,8 @@ public class AbstEntityMapperTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetEntity() throws Exception {
+    @Test
+    void testGetEntity() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
         PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
@@ -93,7 +99,8 @@ public class AbstEntityMapperTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetEntity_idIndicesGtZero_nullkey() throws Exception {
+    @Test
+    void testGetEntity_idIndicesGtZero_nullkey() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
         PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
@@ -111,7 +118,8 @@ public class AbstEntityMapperTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetEntity_idIndicesZero() throws Exception {
+    @Test
+    void testGetEntity_idIndicesZero() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
         PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
@@ -132,7 +140,8 @@ public class AbstEntityMapperTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateEntity() throws Exception {
+    @Test
+    void testCreateEntity() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
         PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
@@ -149,7 +158,8 @@ public class AbstEntityMapperTest extends TestCase {
     /**
      * 
      */
-    public void testMapRelationships() {
+    @Test
+    void testMapRelationships() {
         MyMapper mapper = new MyMapper(null, null, new int[] { 0 });
         mapper.addRelationshipEntityMapper(new MyRelationshipMapper());
         mapper.mapRelationships(new Aaa(), null, null);
@@ -159,7 +169,8 @@ public class AbstEntityMapperTest extends TestCase {
     /**
      * 
      */
-    public void testMapRelationships_entityNull() {
+    @Test
+    void testMapRelationships_entityNull() {
         MyMapper mapper = new MyMapper(null, null, new int[] { 0 });
         mapper.addRelationshipEntityMapper(new MyRelationshipMapper());
         mapper.mapRelationships(null, null, null);

@@ -28,7 +28,7 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = { "aaa", "bbb", "ccc" }),
         @UniqueConstraint(columnNames = { "ddd", "eee", "fff" }) })
-public class Bbb {
+class Bbb {
 
     /** */
     @Id

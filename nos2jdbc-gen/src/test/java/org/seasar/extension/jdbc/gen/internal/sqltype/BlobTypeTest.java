@@ -17,25 +17,23 @@ package org.seasar.extension.jdbc.gen.internal.sqltype;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.framework.mock.sql.MockConnection;
 
 /**
  * @author taedium
  * 
  */
-public class BlobTypeTest {
+class BlobTypeTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testBindValue_empty() throws Exception {
+    void testBindValue_empty() throws Exception {
         Connection conn = new MockConnection();
-        PreparedStatement ps = conn
-                .prepareStatement("select * from a where b = ?");
+        PreparedStatement ps = conn.prepareStatement("select * from a where b = ?");
         BlobType blobType = new BlobType();
         blobType.bindValue(ps, 1, "");
     }

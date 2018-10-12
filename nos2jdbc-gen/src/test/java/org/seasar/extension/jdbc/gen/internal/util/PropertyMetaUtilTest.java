@@ -15,23 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMeta;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class PropertyMetaUtilTest {
+class PropertyMetaUtilTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testComment() throws Exception {
+    void testComment() throws Exception {
         PropertyMeta propertyMeta = new PropertyMeta();
         assertNull(PropertyMetaUtil.getComment(propertyMeta));
         PropertyMetaUtil.setComment(propertyMeta, "aaa");

@@ -16,21 +16,19 @@
 package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateNoS2AbstractServiceTest {
+class GenerateNoS2AbstractServiceTest {
 
     private NoS2AbstServiceModelFactoryImpl abstServiceModelFactory;
 
@@ -40,10 +38,9 @@ public class GenerateNoS2AbstractServiceTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        abstServiceModelFactory = new NoS2AbstServiceModelFactoryImpl(
-                "hoge.service", "Service", "none");
+        abstServiceModelFactory = new NoS2AbstServiceModelFactoryImpl("hoge.service", "Service", "none");
         generator = new GeneratorImplStub();
     }
 
@@ -52,10 +49,9 @@ public class GenerateNoS2AbstractServiceTest {
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         NoS2AbstServiceModel model = abstServiceModelFactory.getAbstServiceModel();
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/nos2-abstract-service.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/nos2-abstract-service.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + ".txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());

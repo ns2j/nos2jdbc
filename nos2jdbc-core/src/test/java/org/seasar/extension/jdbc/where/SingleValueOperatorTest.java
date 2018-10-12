@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.where;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.ConditionType;
 
@@ -24,12 +25,13 @@ import static org.seasar.extension.jdbc.where.EmployeeNames.*;
 /**
  * @author koichik
  */
-public class SingleValueOperatorTest extends TestCase {
+class SingleValueOperatorTest {
 
     /**
      * 
      */
-    public void test() {
+    @Test
+    void test() {
         ComposableWhere w = new SingleValueOperator(ConditionType.EQ, name(),
                 "111");
         assertEquals("name = ?", w.getCriteria());
@@ -46,7 +48,8 @@ public class SingleValueOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNull() {
+    @Test
+    void testNull() {
         ComposableWhere w = new SingleValueOperator(ConditionType.EQ, id(),
                 null);
         assertEquals("", w.getCriteria());
@@ -61,7 +64,8 @@ public class SingleValueOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testExcludeWhitespace() {
+    @Test
+    void testExcludeWhitespace() {
         ComposableWhere w = new SingleValueOperator(ConditionType.EQ, name(),
                 "   ").excludesWhitespace();
         assertEquals("", w.getCriteria());

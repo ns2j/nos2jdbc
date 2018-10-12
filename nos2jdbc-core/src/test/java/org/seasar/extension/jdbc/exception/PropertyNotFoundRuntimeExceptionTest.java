@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class PropertyNotFoundRuntimeExceptionTest extends TestCase {
+class PropertyNotFoundRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         PropertyNotFoundRuntimeException ex = new PropertyNotFoundRuntimeException(
                 "hoge", "aaa");
         System.out.println(ex.getMessage());

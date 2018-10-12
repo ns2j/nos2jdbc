@@ -18,7 +18,8 @@ package org.seasar.extension.jdbc;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.exception.NonArrayInConditionRuntimeException;
 import org.seasar.extension.jdbc.exception.NonBooleanIsNullConditionRuntimeException;
@@ -27,19 +28,21 @@ import org.seasar.extension.jdbc.exception.NonBooleanIsNullConditionRuntimeExcep
  * @author higa
  * 
  */
-public class ConditionTypeTest extends TestCase {
+class ConditionTypeTest {
 
     /**
      * 
      */
-    public void testGetSuffix() {
+    @Test
+    void testGetSuffix() {
         assertEquals("_EQ", ConditionType.EQ.getSuffix());
     }
 
     /**
      * 
      */
-    public void testHasSuffix() {
+    @Test
+    void testHasSuffix() {
         assertTrue(ConditionType.EQ.hasSuffix("aaa_EQ"));
         assertFalse(ConditionType.EQ.hasSuffix("aaa_NE"));
     }
@@ -47,21 +50,24 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testRemoveSuffix() {
+    @Test
+    void testRemoveSuffix() {
         assertEquals("aaa", ConditionType.EQ.removeSuffix("aaa_EQ"));
     }
 
     /**
      * 
      */
-    public void testRemoveSuffix_notSuffix() {
+    @Test
+    void testRemoveSuffix_notSuffix() {
         assertEquals("aaa", ConditionType.EQ.removeSuffix("aaa"));
     }
 
     /**
      * 
      */
-    public void testGetConditionType() {
+    @Test
+    void testGetConditionType() {
         assertEquals(ConditionType.EQ, ConditionType.getConditionType("aaa_EQ"));
         assertEquals(ConditionType.NE, ConditionType.getConditionType("aaa_NE"));
         assertEquals(ConditionType.LT, ConditionType.getConditionType("aaa_LT"));
@@ -88,7 +94,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testMakeCondition() {
+    @Test
+    void testMakeCondition() {
         assertEquals("T1_.ID = ?", ConditionType.EQ.makeCondition("T1_", "ID",
                 "="));
         assertEquals("ID = ?", ConditionType.EQ.makeCondition(null, "ID", "="));
@@ -97,7 +104,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testEQ_getCondition() {
+    @Test
+    void testEQ_getCondition() {
         assertEquals("T1_.ID = ?", ConditionType.EQ
                 .getCondition("T1_", "ID", 1));
     }
@@ -105,14 +113,16 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testEQ_getCondition_name() {
+    @Test
+    void testEQ_getCondition_name() {
         assertEquals("id = ?", ConditionType.EQ.getCondition("id", 1));
     }
 
     /**
      * 
      */
-    public void testEQ_addValue() {
+    @Test
+    void testEQ_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.EQ.addValue(paramList, 1));
         assertEquals(1, paramList.size());
@@ -122,7 +132,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testEQ_isTarget() {
+    @Test
+    void testEQ_isTarget() {
         assertTrue(ConditionType.EQ.isTarget(1));
         assertFalse(ConditionType.EQ.isTarget(null));
     }
@@ -130,7 +141,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNE_getCondition() {
+    @Test
+    void testNE_getCondition() {
         assertEquals("T1_.ID <> ?", ConditionType.NE.getCondition("T1_", "ID",
                 1));
     }
@@ -138,14 +150,16 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNE_getCondition_name() {
+    @Test
+    void testNE_getCondition_name() {
         assertEquals("id <> ?", ConditionType.NE.getCondition("id", 1));
     }
 
     /**
      * 
      */
-    public void testNE_addValue() {
+    @Test
+    void testNE_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.NE.addValue(paramList, 1));
         assertEquals(1, paramList.size());
@@ -155,7 +169,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNE_isTarget() {
+    @Test
+    void testNE_isTarget() {
         assertTrue(ConditionType.NE.isTarget(1));
         assertFalse(ConditionType.NE.isTarget(null));
     }
@@ -163,7 +178,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLT_getCondition() {
+    @Test
+    void testLT_getCondition() {
         assertEquals("T1_.ID < ?", ConditionType.LT
                 .getCondition("T1_", "ID", 1));
     }
@@ -171,14 +187,16 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLT_getCondition_name() {
+    @Test
+    void testLT_getCondition_name() {
         assertEquals("id < ?", ConditionType.LT.getCondition("id", 1));
     }
 
     /**
      * 
      */
-    public void testLT_addValue() {
+    @Test
+    void testLT_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.LT.addValue(paramList, 1));
         assertEquals(1, paramList.size());
@@ -188,7 +206,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLT_isTarget() {
+    @Test
+    void testLT_isTarget() {
         assertTrue(ConditionType.LT.isTarget(1));
         assertFalse(ConditionType.LT.isTarget(null));
     }
@@ -196,7 +215,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLE_getCondition() {
+    @Test
+    void testLE_getCondition() {
         assertEquals("T1_.ID <= ?", ConditionType.LE.getCondition("T1_", "ID",
                 1));
     }
@@ -204,14 +224,16 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLE_getCondition_name() {
+    @Test
+    void testLE_getCondition_name() {
         assertEquals("id <= ?", ConditionType.LE.getCondition("id", 1));
     }
 
     /**
      * 
      */
-    public void testLE_addValue() {
+    @Test
+    void testLE_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.LE.addValue(paramList, 1));
         assertEquals(1, paramList.size());
@@ -221,7 +243,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLE_isTarget() {
+    @Test
+    void testLE_isTarget() {
         assertTrue(ConditionType.LE.isTarget(1));
         assertFalse(ConditionType.LE.isTarget(null));
     }
@@ -229,7 +252,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testGT_getCondition() {
+    @Test
+    void testGT_getCondition() {
         assertEquals("T1_.ID > ?", ConditionType.GT
                 .getCondition("T1_", "ID", 1));
     }
@@ -237,14 +261,16 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testGT_getCondition_name() {
+    @Test
+    void testGT_getCondition_name() {
         assertEquals("id > ?", ConditionType.GT.getCondition("id", 1));
     }
 
     /**
      * 
      */
-    public void testGT_addValue() {
+    @Test
+    void testGT_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.GT.addValue(paramList, 1));
         assertEquals(1, paramList.size());
@@ -254,7 +280,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testGT_isTarget() {
+    @Test
+    void testGT_isTarget() {
         assertTrue(ConditionType.GT.isTarget(1));
         assertFalse(ConditionType.GT.isTarget(null));
     }
@@ -262,7 +289,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testGetInConditionInternal() {
+    @Test
+    void testGetInConditionInternal() {
         assertEquals("T1_.ID in (?, ?)", ConditionType.IN.getCondition("T1_",
                 "ID", new Object[] { 1, 2 }));
     }
@@ -270,7 +298,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIN_getCondition() {
+    @Test
+    void testIN_getCondition() {
         assertEquals("T1_.ID in (?, ?)", ConditionType.IN.getCondition("T1_",
                 "ID", new Object[] { 1, 2 }));
     }
@@ -278,7 +307,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIN_getCondition_name() {
+    @Test
+    void testIN_getCondition_name() {
         assertEquals("id in (?, ?)", ConditionType.IN.getCondition("id",
                 new Object[] { 1, 2 }));
     }
@@ -286,7 +316,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIN_addValue() {
+    @Test
+    void testIN_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(2, ConditionType.IN.addValue(paramList, new Object[] { 1,
                 2 }));
@@ -298,7 +329,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIN_isTarget() {
+    @Test
+    void testIN_isTarget() {
         assertTrue(ConditionType.IN.isTarget(new Object[] { 1 }));
         assertFalse(ConditionType.IN.isTarget(null));
         assertFalse(ConditionType.IN.isTarget(new Object[0]));
@@ -309,7 +341,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIN_isTarget_notArray() {
+    @Test
+    void testIN_isTarget_notArray() {
         try {
             ConditionType.IN.isTarget("hoge");
             fail();
@@ -323,7 +356,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNOT_IN_getCondition() {
+    @Test
+    void testNOT_IN_getCondition() {
         assertEquals("T1_.ID not in (?, ?)", ConditionType.NOT_IN.getCondition(
                 "T1_", "ID", new Object[] { 1, 2 }));
     }
@@ -331,7 +365,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNOT_IN_getCondition_name() {
+    @Test
+    void testNOT_IN_getCondition_name() {
         assertEquals("id not in (?, ?)", ConditionType.NOT_IN.getCondition(
                 "id", new Object[] { 1, 2 }));
     }
@@ -339,7 +374,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNOT_IN_addValue() {
+    @Test
+    void testNOT_IN_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(2, ConditionType.NOT_IN.addValue(paramList, new Object[] {
                 1, 2 }));
@@ -351,7 +387,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNOT_IN_isTarget() {
+    @Test
+    void testNOT_IN_isTarget() {
         assertTrue(ConditionType.NOT_IN.isTarget(new Object[] { 1 }));
         assertFalse(ConditionType.NOT_IN.isTarget(null));
         assertFalse(ConditionType.NOT_IN.isTarget(new Object[0]));
@@ -362,7 +399,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testNOT_IN_isTarget_notArray() {
+    @Test
+    void testNOT_IN_isTarget_notArray() {
         try {
             ConditionType.NOT_IN.isTarget("hoge");
             fail();
@@ -376,7 +414,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLIKE_getCondition() {
+    @Test
+    void testLIKE_getCondition() {
         assertEquals("T1_.ID like ?", ConditionType.LIKE.getCondition("T1_",
                 "ID", "hoge"));
     }
@@ -384,14 +423,16 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLIKE_getCondition_name() {
+    @Test
+    void testLIKE_getCondition_name() {
         assertEquals("id like ?", ConditionType.LIKE.getCondition("id", "hoge"));
     }
 
     /**
      * 
      */
-    public void testLIKE_addValue() {
+    @Test
+    void testLIKE_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.LIKE.addValue(paramList, "hoge"));
         assertEquals(1, paramList.size());
@@ -401,7 +442,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLIKE_isTarget() {
+    @Test
+    void testLIKE_isTarget() {
         assertTrue(ConditionType.LIKE.isTarget("hoge"));
         assertFalse(ConditionType.LIKE.isTarget(null));
     }
@@ -409,7 +451,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLIKE_ESCAPE_getCondition() {
+    @Test
+    void testLIKE_ESCAPE_getCondition() {
         assertEquals("T1_.ID like ? escape ?", ConditionType.LIKE_ESCAPE
                 .getCondition("T1_", "ID", "hoge"));
     }
@@ -417,7 +460,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLIKE_ESCAPE_getCondition_name() {
+    @Test
+    void testLIKE_ESCAPE_getCondition_name() {
         assertEquals("id like ? escape ?", ConditionType.LIKE_ESCAPE
                 .getCondition("id", "hoge"));
     }
@@ -425,7 +469,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLIKE_ESCAPE_addValue() {
+    @Test
+    void testLIKE_ESCAPE_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(2, ConditionType.LIKE_ESCAPE.addValue(paramList,
                 new Object[] { "hoge", '$' }));
@@ -437,7 +482,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testLIKE_ESCAPE_isTarget() {
+    @Test
+    void testLIKE_ESCAPE_isTarget() {
         assertTrue(ConditionType.LIKE_ESCAPE.isTarget("hoge"));
         assertFalse(ConditionType.LIKE_ESCAPE.isTarget(null));
     }
@@ -445,7 +491,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_getCondition() {
+    @Test
+    void testSTARTS_getCondition() {
         assertEquals("T1_.ID like ?", ConditionType.STARTS.getCondition("T1_",
                 "ID", "hoge"));
     }
@@ -453,7 +500,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_getCondition_name() {
+    @Test
+    void testSTARTS_getCondition_name() {
         assertEquals("id like ?", ConditionType.STARTS.getCondition("id",
                 "hoge"));
     }
@@ -461,7 +509,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_addValue() {
+    @Test
+    void testSTARTS_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.STARTS.addValue(paramList, "hoge"));
         assertEquals(1, paramList.size());
@@ -471,7 +520,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_isTarget() {
+    @Test
+    void testSTARTS_isTarget() {
         assertTrue(ConditionType.STARTS.isTarget("hoge"));
         assertFalse(ConditionType.STARTS.isTarget(null));
     }
@@ -479,7 +529,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_ESCAPE_getCondition() {
+    @Test
+    void testSTARTS_ESCAPE_getCondition() {
         assertEquals("T1_.ID like ? escape '$'", ConditionType.STARTS_ESCAPE
                 .getCondition("T1_", "ID", "hoge"));
     }
@@ -487,7 +538,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_ESCAPE_getCondition_name() {
+    @Test
+    void testSTARTS_ESCAPE_getCondition_name() {
         assertEquals("id like ? escape '$'", ConditionType.STARTS_ESCAPE
                 .getCondition("id", "hoge"));
     }
@@ -495,7 +547,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_ESCAPE_addValue() {
+    @Test
+    void testSTARTS_ESCAPE_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.STARTS_ESCAPE.addValue(paramList, "hoge"));
         assertEquals(1, paramList.size());
@@ -505,7 +558,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testSTARTS_ESCAPE_isTarget() {
+    @Test
+    void testSTARTS_ESCAPE_isTarget() {
         assertTrue(ConditionType.STARTS_ESCAPE.isTarget("hoge"));
         assertFalse(ConditionType.STARTS_ESCAPE.isTarget(null));
     }
@@ -513,7 +567,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testENDS_getCondition() {
+    @Test
+    void testENDS_getCondition() {
         assertEquals("T1_.ID like ?", ConditionType.ENDS.getCondition("T1_",
                 "ID", "hoge"));
     }
@@ -521,14 +576,16 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testENDS_getCondition_name() {
+    @Test
+    void testENDS_getCondition_name() {
         assertEquals("id like ?", ConditionType.ENDS.getCondition("id", "hoge"));
     }
 
     /**
      * 
      */
-    public void testENDS_addValue() {
+    @Test
+    void testENDS_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.ENDS.addValue(paramList, "hoge"));
         assertEquals(1, paramList.size());
@@ -538,7 +595,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testENDS_isTarget() {
+    @Test
+    void testENDS_isTarget() {
         assertTrue(ConditionType.ENDS.isTarget("hoge"));
         assertFalse(ConditionType.ENDS.isTarget(null));
     }
@@ -546,7 +604,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testENDS_ESCAPE_getCondition() {
+    @Test
+    void testENDS_ESCAPE_getCondition() {
         assertEquals("T1_.ID like ? escape '$'", ConditionType.ENDS_ESCAPE
                 .getCondition("T1_", "ID", "hoge"));
     }
@@ -554,7 +613,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testENDS_ESCAPE_getCondition_name() {
+    @Test
+    void testENDS_ESCAPE_getCondition_name() {
         assertEquals("id like ? escape '$'", ConditionType.ENDS_ESCAPE
                 .getCondition("id", "hoge"));
     }
@@ -562,7 +622,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testENDS_ESCAPE_addValue() {
+    @Test
+    void testENDS_ESCAPE_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.ENDS_ESCAPE.addValue(paramList, "hoge"));
         assertEquals(1, paramList.size());
@@ -572,7 +633,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testENDS_ESCAPE_isTarget() {
+    @Test
+    void testENDS_ESCAPE_isTarget() {
         assertTrue(ConditionType.ENDS_ESCAPE.isTarget("hoge"));
         assertFalse(ConditionType.ENDS_ESCAPE.isTarget(null));
     }
@@ -580,7 +642,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_getCondition() {
+    @Test
+    void testCONTAINS_getCondition() {
         assertEquals("T1_.ID like ?", ConditionType.CONTAINS.getCondition(
                 "T1_", "ID", "hoge"));
     }
@@ -588,7 +651,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_getCondition_name() {
+    @Test
+    void testCONTAINS_getCondition_name() {
         assertEquals("id like ?", ConditionType.CONTAINS.getCondition("id",
                 "hoge"));
     }
@@ -596,7 +660,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_addValue() {
+    @Test
+    void testCONTAINS_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.CONTAINS.addValue(paramList, "hoge"));
         assertEquals(1, paramList.size());
@@ -606,7 +671,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_isTarget() {
+    @Test
+    void testCONTAINS_isTarget() {
         assertTrue(ConditionType.CONTAINS.isTarget("hoge"));
         assertFalse(ConditionType.CONTAINS.isTarget(null));
     }
@@ -614,7 +680,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_ESCAPE_getCondition() {
+    @Test
+    void testCONTAINS_ESCAPE_getCondition() {
         assertEquals("T1_.ID like ? escape '$'", ConditionType.CONTAINS_ESCAPE
                 .getCondition("T1_", "ID", "hoge"));
     }
@@ -622,7 +689,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_ESCAPE_getCondition_name() {
+    @Test
+    void testCONTAINS_ESCAPE_getCondition_name() {
         assertEquals("id like ? escape '$'", ConditionType.CONTAINS_ESCAPE
                 .getCondition("id", "hoge"));
     }
@@ -630,7 +698,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_ESCAPE_addValue() {
+    @Test
+    void testCONTAINS_ESCAPE_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(1, ConditionType.CONTAINS_ESCAPE.addValue(paramList,
                 "hoge"));
@@ -641,7 +710,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testCONTAINS_ESCAPE_isTarget() {
+    @Test
+    void testCONTAINS_ESCAPE_isTarget() {
         assertTrue(ConditionType.CONTAINS_ESCAPE.isTarget("hoge"));
         assertFalse(ConditionType.CONTAINS_ESCAPE.isTarget(null));
     }
@@ -649,7 +719,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NULL_getCondition() {
+    @Test
+    void testIS_NULL_getCondition() {
         assertEquals("T1_.ID is null", ConditionType.IS_NULL.getCondition(
                 "T1_", "ID", true));
     }
@@ -657,7 +728,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NULL_getCondition_name() {
+    @Test
+    void testIS_NULL_getCondition_name() {
         assertEquals("id is null", ConditionType.IS_NULL.getCondition("id",
                 true));
     }
@@ -665,7 +737,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NULL_addValue() {
+    @Test
+    void testIS_NULL_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(0, ConditionType.IS_NULL.addValue(paramList, true));
         assertEquals(0, paramList.size());
@@ -674,7 +747,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NULL_isTarget() {
+    @Test
+    void testIS_NULL_isTarget() {
         assertTrue(ConditionType.IS_NULL.isTarget(true));
         assertFalse(ConditionType.IS_NULL.isTarget(null));
         assertFalse(ConditionType.IS_NULL.isTarget(false));
@@ -683,7 +757,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NULL_isTarget_notArray() {
+    @Test
+    void testIS_NULL_isTarget_notArray() {
         try {
             ConditionType.IS_NULL.isTarget("hoge");
             fail();
@@ -697,7 +772,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NOT_NULL_getCondition() {
+    @Test
+    void testIS_NOT_NULL_getCondition() {
         assertEquals("T1_.ID is not null", ConditionType.IS_NOT_NULL
                 .getCondition("T1_", "ID", true));
     }
@@ -705,7 +781,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NOT_NULL_getCondition_name() {
+    @Test
+    void testIS_NOT_NULL_getCondition_name() {
         assertEquals("id is not null", ConditionType.IS_NOT_NULL.getCondition(
                 "id", true));
     }
@@ -713,7 +790,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NOT_NULL_addValue() {
+    @Test
+    void testIS_NOT_NULL_addValue() {
         List<Object> paramList = new ArrayList<Object>();
         assertEquals(0, ConditionType.IS_NOT_NULL.addValue(paramList, true));
         assertEquals(0, paramList.size());
@@ -722,7 +800,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NOT_NULL_isTarget() {
+    @Test
+    void testIS_NOT_NULL_isTarget() {
         assertTrue(ConditionType.IS_NOT_NULL.isTarget(true));
         assertFalse(ConditionType.IS_NOT_NULL.isTarget(null));
         assertFalse(ConditionType.IS_NOT_NULL.isTarget(false));
@@ -731,7 +810,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testIS_NOT_NULL_isTarget_notArray() {
+    @Test
+    void testIS_NOT_NULL_isTarget_notArray() {
         try {
             ConditionType.IS_NOT_NULL.isTarget("hoge");
             fail();
@@ -745,7 +825,8 @@ public class ConditionTypeTest extends TestCase {
     /**
      * 
      */
-    public void testAddCondition() {
+    @Test
+    void testAddCondition() {
         List<Object> valueList = new ArrayList<Object>();
         WhereClause whereClause = new WhereClause();
         ConditionType.EQ.addCondition("id", 1, whereClause, valueList);

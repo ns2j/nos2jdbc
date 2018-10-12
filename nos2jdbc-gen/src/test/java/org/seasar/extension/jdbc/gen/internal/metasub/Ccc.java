@@ -22,6 +22,6 @@ import javax.persistence.Entity;
  * 
  */
 @Entity
-public class Ccc {
+class Ccc {
 
 }

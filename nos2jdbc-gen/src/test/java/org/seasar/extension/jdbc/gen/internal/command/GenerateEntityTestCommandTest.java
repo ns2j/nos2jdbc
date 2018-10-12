@@ -16,27 +16,24 @@
 package org.seasar.extension.jdbc.gen.internal.command;
 
 import java.io.File;
-
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-//i import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateEntityTestCommandTest {
+class GenerateEntityTestCommandTest {
 
     /**
      * 
      * @throws Exception
      */
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-//i        SingletonS2ContainerFactory.destroy();
+    //i        SingletonS2ContainerFactory.destroy();
     }
 
     /**
@@ -44,7 +41,7 @@ public class GenerateEntityTestCommandTest {
      * @throws Exception
      */
     @Test
-    public void testValidate() throws Exception {
+    void testValidate() throws Exception {
         GenerateEntityTestCommand command = new GenerateEntityTestCommand();
         command.setConfigPath("s2jdbc-gen-core-test.dicon");
         try {
@@ -59,7 +56,7 @@ public class GenerateEntityTestCommandTest {
      * @throws Exception
      */
     @Test
-    public void testInit() throws Exception {
+    void testInit() throws Exception {
         GenerateEntityTestCommand command = new GenerateEntityTestCommand();
         command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.setClasspathDir(new File("dir"));

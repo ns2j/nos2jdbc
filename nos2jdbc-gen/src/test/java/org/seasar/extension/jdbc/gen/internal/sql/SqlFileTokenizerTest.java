@@ -15,18 +15,17 @@
  */
 package org.seasar.extension.jdbc.gen.internal.sql;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.sql.SqlFileTokenizer;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.gen.internal.sql.SqlFileTokenizer.TokenType.*;
 
 /**
  * @author taedium
  * 
  */
-public class SqlFileTokenizerTest {
+class SqlFileTokenizerTest {
 
     private SqlFileTokenizer tokenizer;
 
@@ -34,7 +33,7 @@ public class SqlFileTokenizerTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         tokenizer = new SqlFileTokenizer(';', "/");
     }
@@ -43,7 +42,7 @@ public class SqlFileTokenizerTest {
      * 
      */
     @Test
-    public void testGetToken_endOfLine() {
+    void testGetToken_endOfLine() {
         tokenizer.addLine("aaa");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -57,13 +56,12 @@ public class SqlFileTokenizerTest {
      * 
      */
     @Test
-    public void testGetToken_endOfFile() {
+    void testGetToken_endOfFile() {
         tokenizer.addLine("aaa");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
         assertEquals(END_OF_LINE, tokenizer.nextToken());
         assertEquals("", tokenizer.getToken());
-
         tokenizer.addLine(null);
         assertEquals(END_OF_FILE, tokenizer.nextToken());
         assertNull(tokenizer.getToken());
@@ -75,7 +73,7 @@ public class SqlFileTokenizerTest {
      * 
      */
     @Test
-    public void testGetToken_lineComment() {
+    void testGetToken_lineComment() {
         tokenizer.addLine("aaa -- bbb /* ; ");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -90,7 +88,7 @@ public class SqlFileTokenizerTest {
      * 
      */
     @Test
-    public void testGetToken_blockCommentInTwoLines() {
+    void testGetToken_blockCommentInTwoLines() {
         tokenizer.addLine("aaa/*b");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -100,7 +98,6 @@ public class SqlFileTokenizerTest {
         assertEquals("b", tokenizer.getToken());
         assertEquals(END_OF_LINE, tokenizer.nextToken());
         assertEquals("", tokenizer.getToken());
-
         tokenizer.addLine("bb*/ccc");
         assertEquals(BLOCK_COMMENT, tokenizer.nextToken());
         assertEquals("bb", tokenizer.getToken());
@@ -115,7 +112,7 @@ public class SqlFileTokenizerTest {
      * 
      */
     @Test
-    public void testGetToken_blockCommentsInOneLine() {
+    void testGetToken_blockCommentsInOneLine() {
         tokenizer.addLine("aaa/*bbb*/ccc/*ddd*/");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -141,7 +138,7 @@ public class SqlFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testGetToken_statementDelimiter() throws Exception {
+    void testGetToken_statementDelimiter() throws Exception {
         tokenizer.addLine("select * from aaa; ");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("select", tokenizer.getToken());
@@ -165,7 +162,7 @@ public class SqlFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testGetToken_blockDelimiter() throws Exception {
+    void testGetToken_blockDelimiter() throws Exception {
         tokenizer.addLine("aaa go");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -175,7 +172,6 @@ public class SqlFileTokenizerTest {
         assertEquals("go", tokenizer.getToken());
         assertEquals(END_OF_LINE, tokenizer.nextToken());
         assertEquals("", tokenizer.getToken());
-
         tokenizer.addLine("/ ");
         assertEquals(BLOCK_DELIMITER, tokenizer.nextToken());
         assertEquals("/ ", tokenizer.getToken());
@@ -187,7 +183,7 @@ public class SqlFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testGetToken_wordAndOther() throws Exception {
+    void testGetToken_wordAndOther() throws Exception {
         tokenizer.addLine("select,");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("select", tokenizer.getToken());
@@ -195,7 +191,6 @@ public class SqlFileTokenizerTest {
         assertEquals(",", tokenizer.getToken());
         assertEquals(END_OF_LINE, tokenizer.nextToken());
         assertEquals("", tokenizer.getToken());
-
         tokenizer.addLine("bbb");
         assertEquals(WORD, tokenizer.nextToken());
         assertEquals("bbb", tokenizer.getToken());
@@ -207,7 +202,7 @@ public class SqlFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testGetToken_quote() throws Exception {
+    void testGetToken_quote() throws Exception {
         tokenizer.addLine("'aaa'");
         assertEquals(QUOTE, tokenizer.nextToken());
         assertEquals("'aaa'", tokenizer.getToken());
@@ -219,11 +214,10 @@ public class SqlFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testGetToken_quoteNotClosed() throws Exception {
+    void testGetToken_quoteNotClosed() throws Exception {
         tokenizer.addLine("'aaa");
         assertEquals(QUOTE, tokenizer.nextToken());
         assertEquals("'aaa", tokenizer.getToken());
         assertEquals(END_OF_LINE, tokenizer.nextToken());
     }
-
 }

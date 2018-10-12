@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.JoinColumnAutoConfigurationRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class JoinColumnAutoConfigurationRuntimeExceptionTest extends TestCase {
+class JoinColumnAutoConfigurationRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		JoinColumnAutoConfigurationRuntimeException ex = new JoinColumnAutoConfigurationRuntimeException(
 				"Hoge", "aaa", "Foo");
 		System.out.println(ex.getMessage());

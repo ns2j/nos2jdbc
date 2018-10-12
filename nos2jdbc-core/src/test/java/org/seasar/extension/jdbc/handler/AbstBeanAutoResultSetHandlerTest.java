@@ -19,7 +19,8 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.EntityMapper;
 import org.seasar.extension.jdbc.MappingContext;
@@ -38,13 +39,14 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class AbstBeanAutoResultSetHandlerTest extends TestCase {
+class AbstBeanAutoResultSetHandlerTest {
 
     /**
      * @throws Exception
      * 
      */
-    public void testCreateEntity() throws Exception {
+    @Test
+    void testCreateEntity() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         Field field1 = Aaa.class.getDeclaredField("id");

@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.JoinDuplicatedRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class JoinDuplicatedRuntimeExceptionTest extends TestCase {
+class JoinDuplicatedRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		JoinDuplicatedRuntimeException ex = new JoinDuplicatedRuntimeException(
 				"Aaa", "hoge");
 		System.out.println(ex.getMessage());
