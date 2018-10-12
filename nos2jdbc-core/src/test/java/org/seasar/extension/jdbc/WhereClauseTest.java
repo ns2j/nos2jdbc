@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class WhereClauseTest extends TestCase {
+class WhereClauseTest {
 
     /**
      * 
      */
-    public void testAddAndSql() {
+    @Test
+    void testAddAndSql() {
         WhereClause whereClause = new WhereClause();
         assertEquals(30, whereClause.addAndSql("T1_.BBB_ID = _T2.BBB_ID"));
         assertEquals(" where T1_.BBB_ID = _T2.BBB_ID", whereClause.toSql());
@@ -38,7 +40,8 @@ public class WhereClauseTest extends TestCase {
     /**
      * 
      */
-    public void testAddSql() {
+    @Test
+    void testAddSql() {
         WhereClause whereClause = new WhereClause();
         whereClause.addAndSql("T1_.BBB_ID = _T2.BBB_ID");
         assertEquals(" where T1_.BBB_ID = _T2.BBB_ID", whereClause.toSql());
@@ -58,7 +61,8 @@ public class WhereClauseTest extends TestCase {
     /**
      * 
      */
-    public void testRemoveSql() {
+    @Test
+    void testRemoveSql() {
         WhereClause whereClause = new WhereClause();
         int length = whereClause.addAndSql("(");
         assertEquals(" where (", whereClause.toSql());

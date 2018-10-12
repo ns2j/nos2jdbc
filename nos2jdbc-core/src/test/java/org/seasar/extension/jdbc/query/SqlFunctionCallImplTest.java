@@ -25,7 +25,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -50,12 +51,13 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
 /**
  * @author koichik
  */
-public class SqlFunctionCallImplTest extends TestCase {
+class SqlFunctionCallImplTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -63,8 +65,9 @@ public class SqlFunctionCallImplTest extends TestCase {
         manager.setDialect(new StandardDialect());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -73,7 +76,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareReturnParameter_simpleType() throws Exception {
         SqlFunctionCallImpl<Integer> query = new SqlFunctionCallImpl<Integer>(
                 manager, Integer.class, "{? = call hoge()}");
         query.prepareReturnParameter();
@@ -87,7 +91,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_simpleList() throws Exception {
+    @Test
+    void testPrepareReturnParameter_simpleList() throws Exception {
         SqlFunctionCallImpl<Integer> query = new SqlFunctionCallImpl<Integer>(
                 manager, Integer.class, "{? = call hoge()}");
         query.resultList = true;
@@ -102,7 +107,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_dtoList() throws Exception {
+    @Test
+    void testPrepareReturnParameter_dtoList() throws Exception {
         SqlFunctionCallImpl<MyDto3> query = new SqlFunctionCallImpl<MyDto3>(
                 manager, MyDto3.class, "{? = call hoge()}");
         query.resultList = true;
@@ -117,7 +123,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType() throws Exception {
         SqlFunctionCallImpl<String> query = new SqlFunctionCallImpl<String>(
                 manager, String.class, "{? = call hoge(?)}", 1);
         query.prepareReturnParameter();
@@ -135,7 +142,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType_clob() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType_clob() throws Exception {
         SqlFunctionCallImpl<String> query = new SqlFunctionCallImpl<String>(
                 manager, String.class, "{? = call hoge(?)}", lob("hoge"));
         query.prepareReturnParameter();
@@ -153,7 +161,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType_date() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType_date() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         SqlFunctionCallImpl<String> query = new SqlFunctionCallImpl<String>(
                 manager, String.class, "{? = call hoge(?)}", time(date));
@@ -172,7 +181,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto() throws Exception {
+    @Test
+    void testPrepareParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.arg1 = "aaa";
         dto.arg2 = "bbb";
@@ -211,7 +221,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_resultSet() throws Exception {
+    @Test
+    void testPrepareParameter_resultSet() throws Exception {
         MyDto2 dto = new MyDto2();
         SqlFunctionCallImpl<Integer> query = new SqlFunctionCallImpl<Integer>(
                 manager, Integer.class, "{? = call hoge(?)}", dto);
@@ -233,7 +244,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto_clob() throws Exception {
+    @Test
+    void testPrepareParameter_dto_clob() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.largeName = "aaa";
         SqlFunctionCallImpl<Integer> query = new SqlFunctionCallImpl<Integer>(
@@ -255,7 +267,8 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto_date() throws Exception {
+    @Test
+    void testPrepareParameter_dto_date() throws Exception {
         MyDto4 dto = new MyDto4();
         dto.date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         SqlFunctionCallImpl<Integer> query = new SqlFunctionCallImpl<Integer>(
@@ -278,19 +291,20 @@ public class SqlFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCall() throws Exception {
+    @Test
+    void testCall() throws Exception {
         MyDto dto = new MyDto();
         dto.arg1 = "aaa";
         dto.arg2 = "bbb";
         SqlFunctionCallImpl<String> query = new SqlFunctionCallImpl<String>(
                 manager, String.class, "{? = call hoge(?, ?, ?)}", dto) {
 
-            @Override
+            
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-                    @Override
+                    
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

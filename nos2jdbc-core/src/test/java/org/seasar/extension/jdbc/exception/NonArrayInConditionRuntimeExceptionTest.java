@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class NonArrayInConditionRuntimeExceptionTest extends TestCase {
+class NonArrayInConditionRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         NonArrayInConditionRuntimeException ex = new NonArrayInConditionRuntimeException(
                 "in", String.class);
         System.out.println(ex.getMessage());

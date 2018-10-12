@@ -31,7 +31,7 @@ import freemarker.template.TemplateModelException;
  * @author taedium
  * 
  */
-public class GeneratorImplStub extends GeneratorImpl {
+class GeneratorImplStub extends GeneratorImpl {
 
     private Writer writer = new StringWriter();
 

@@ -15,18 +15,20 @@
  */
 package org.seasar.framework.beans.converter;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class TimestampConverterTest extends TestCase {
+class TimestampConverterTest {
 
     /**
      * @throws Exception
      */
-    public void testGetAsObjectAndGetAsString() throws Exception {
+    @Test
+    void testGetAsObjectAndGetAsString() throws Exception {
         TimestampConverter converter = new TimestampConverter(
                 "yyyy/MM/dd HH:mm:ss");
         java.sql.Timestamp result = (java.sql.Timestamp) converter
@@ -38,7 +40,8 @@ public class TimestampConverterTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsTarget() throws Exception {
+    @Test
+    void testIsTarget() throws Exception {
         TimestampConverter converter = new TimestampConverter("yyyy/MM/dd");
         assertTrue(converter.isTarget(java.sql.Timestamp.class));
         assertFalse(converter.isTarget(java.util.Date.class));

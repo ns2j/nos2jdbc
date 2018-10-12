@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.MappedByMandatoryRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class MappedByMandatoryRuntimeExceptionTest extends TestCase {
+class MappedByMandatoryRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		MappedByMandatoryRuntimeException ex = new MappedByMandatoryRuntimeException(
 				"Department", "employees");
 		System.out.println(ex.getMessage());

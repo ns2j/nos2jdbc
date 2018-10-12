@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.OneToManyNotListRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class OneToManyNotListRuntimeExceptionTest extends TestCase {
+class OneToManyNotListRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		OneToManyNotListRuntimeException ex = new OneToManyNotListRuntimeException(
 				"Hoge", "aaa");
 		System.out.println(ex.getMessage());

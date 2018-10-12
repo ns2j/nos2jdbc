@@ -16,35 +16,31 @@
 package org.seasar.extension.jdbc.gen.desc;
 
 import junitx.framework.Assert;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.SequenceDesc;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SequenceDescTest {
+class SequenceDescTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         SequenceDesc sequenceDesc = new SequenceDesc();
         sequenceDesc.setSequenceName("AAA");
         SequenceDesc sequenceDesc2 = new SequenceDesc();
         sequenceDesc2.setSequenceName("aaa");
         SequenceDesc sequenceDesc3 = new SequenceDesc();
         sequenceDesc3.setSequenceName("XXX");
-
         assertEquals(sequenceDesc, sequenceDesc2);
         assertEquals(sequenceDesc.hashCode(), sequenceDesc2.hashCode());
-        Assert.assertNotEquals(sequenceDesc, sequenceDesc3);
-        Assert.assertNotEquals(sequenceDesc.hashCode(), sequenceDesc3
-                .hashCode());
+        assertNotEquals(sequenceDesc, sequenceDesc3);
+        assertNotEquals(sequenceDesc.hashCode(), sequenceDesc3.hashCode());
     }
 }

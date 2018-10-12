@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class CommandFailedRuntimeExceptionTest {
+class CommandFailedRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        CommandFailedRuntimeException e = new CommandFailedRuntimeException(
-                new Exception(), "aaa");
+    void test() throws Exception {
+        CommandFailedRuntimeException e = new CommandFailedRuntimeException(new Exception(), "aaa");
         assertEquals("aaa", e.getCommandClassName());
         System.out.println(e.getMessage());
     }

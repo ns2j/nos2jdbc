@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class IllegalDumpValueRuntimeExceptionTest {
+class IllegalDumpValueRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        IllegalDumpValueRuntimeException e = new IllegalDumpValueRuntimeException(
-                "aaa");
+    void test() throws Exception {
+        IllegalDumpValueRuntimeException e = new IllegalDumpValueRuntimeException("aaa");
         assertEquals("aaa", e.getValue());
         System.out.println(e.getMessage());
     }

@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class UnsupportedInheritanceRuntimeExceptionTest extends TestCase {
+class UnsupportedInheritanceRuntimeExceptionTest {
 
     /**
      * @throws Exception
      */
-    public void testAll() throws Exception {
+    @Test
+    void testAll() throws Exception {
         UnsupportedInheritanceRuntimeException e = new UnsupportedInheritanceRuntimeException(
                 getClass());
         System.out.println(e);

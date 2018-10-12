@@ -23,7 +23,8 @@ import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.OptimisticLockException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
@@ -46,7 +47,7 @@ import org.seasar.framework.mock.sql.MockPreparedStatement;
 /**
  * @author koichik
  */
-public class AbsAutoBatchUpdateTest extends TestCase {
+class AbsAutoBatchUpdateTest {
 
     private JdbcManagerImpl manager;
 
@@ -54,8 +55,9 @@ public class AbsAutoBatchUpdateTest extends TestCase {
 
     private int executed;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -79,8 +81,9 @@ public class AbsAutoBatchUpdateTest extends TestCase {
         manager.setEntityMetaFactory(emFactory);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -89,7 +92,8 @@ public class AbsAutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testEntityExistsException() {
+    @Test
+    void testEntityExistsException() {
         List<Eee> entities = Arrays.asList(new Eee(), new Eee(), new Eee());
         MyBatchUpdate<Eee> query = new MyBatchUpdate<Eee>(manager, entities);
         try {
@@ -103,7 +107,8 @@ public class AbsAutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testBatchSize1() {
+    @Test
+    void testBatchSize1() {
         List<Eee> entities = Arrays.asList(new Eee(), new Eee(), new Eee());
         MyBatchUpdate<Eee> query = new MyBatchUpdate<Eee>(manager, entities)
                 .batchSize(2);
@@ -111,12 +116,12 @@ public class AbsAutoBatchUpdateTest extends TestCase {
 
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
-            @Override
+            
             public void addBatch() throws SQLException {
                 ++added;
             }
 
-            @Override
+            
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return executed == 1 ? new int[] { 1, 2 } : new int[] { 3 };
@@ -134,7 +139,8 @@ public class AbsAutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testBatchSize2() {
+    @Test
+    void testBatchSize2() {
         List<Eee> entities = Arrays.asList(new Eee(), new Eee(), new Eee(),
                 new Eee());
         MyBatchUpdate<Eee> query = new MyBatchUpdate<Eee>(manager, entities)
@@ -143,12 +149,12 @@ public class AbsAutoBatchUpdateTest extends TestCase {
 
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
-            @Override
+            
             public void addBatch() throws SQLException {
                 ++added;
             }
 
-            @Override
+            
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return executed == 1 ? new int[] { 1, 2 } : new int[] { 3, 4 };
@@ -167,19 +173,20 @@ public class AbsAutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testNoBatchSize() {
+    @Test
+    void testNoBatchSize() {
         List<Eee> entities = Arrays.asList(new Eee(), new Eee(), new Eee());
         MyBatchUpdate<Eee> query = new MyBatchUpdate<Eee>(manager, entities);
         assertEquals(0, query.batchSize);
 
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
-            @Override
+            
             public void addBatch() throws SQLException {
                 ++added;
             }
 
-            @Override
+            
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return new int[] { 1, 2, 3 };
@@ -197,7 +204,8 @@ public class AbsAutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testBatch_OptimisticException() {
+    @Test
+    void testBatch_OptimisticException() {
         List<Eee> entities = Arrays.asList(new Eee(), new Eee(), new Eee());
         MyBatchUpdate<Eee> query = new MyBatchUpdate<Eee>(manager, entities)
                 .batchSize(2);
@@ -207,12 +215,12 @@ public class AbsAutoBatchUpdateTest extends TestCase {
         try {
             query.executeBatch(new MockPreparedStatement(null, null) {
 
-                @Override
+                
                 public void addBatch() throws SQLException {
                     ++added;
                 }
 
-                @Override
+                
                 public int[] executeBatch() throws SQLException {
                     ++executed;
                     return executed == 1 ? new int[] { 1, 0 } : new int[] { 1 };
@@ -227,7 +235,8 @@ public class AbsAutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testBatchOracle() {
+    @Test
+    void testBatchOracle() {
         manager.setDialect(new OracleDialect());
         List<Eee> entities = Arrays.asList(new Eee(), new Eee(), new Eee());
         MyBatchUpdate<Eee> query = new MyBatchUpdate<Eee>(manager, entities)
@@ -237,12 +246,12 @@ public class AbsAutoBatchUpdateTest extends TestCase {
 
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
-            @Override
+            
             public void addBatch() throws SQLException {
                 ++added;
             }
 
-            @Override
+            
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return executed == 1 ? new int[] { Statement.SUCCESS_NO_INFO,
@@ -250,7 +259,7 @@ public class AbsAutoBatchUpdateTest extends TestCase {
                         : new int[] { Statement.SUCCESS_NO_INFO };
             }
 
-            @Override
+            
             public int getUpdateCount() throws SQLException {
                 return executed == 1 ? 2 : 1;
             }
@@ -267,7 +276,8 @@ public class AbsAutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testBatchOracle_OptimisicLockException() {
+    @Test
+    void testBatchOracle_OptimisicLockException() {
         manager.setDialect(new OracleDialect());
         List<Eee> entities = Arrays.asList(new Eee(), new Eee(), new Eee());
         MyBatchUpdate<Eee> query = new MyBatchUpdate<Eee>(manager, entities)
@@ -278,12 +288,12 @@ public class AbsAutoBatchUpdateTest extends TestCase {
         try {
             query.executeBatch(new MockPreparedStatement(null, null) {
 
-                @Override
+                
                 public void addBatch() throws SQLException {
                     ++added;
                 }
 
-                @Override
+                
                 public int[] executeBatch() throws SQLException {
                     ++executed;
                     return executed == 1 ? new int[] {
@@ -292,7 +302,7 @@ public class AbsAutoBatchUpdateTest extends TestCase {
                             : new int[] { Statement.SUCCESS_NO_INFO };
                 }
 
-                @Override
+                
                 public int getUpdateCount() throws SQLException {
                     return executed == 1 ? 1 : 1;
                 }
@@ -317,30 +327,30 @@ public class AbsAutoBatchUpdateTest extends TestCase {
             super(jdbcManager, entities);
         }
 
-        @Override
+        
         protected int[] executeInternal() {
             throw new SQLRuntimeException(new SQLException("hoge", "23"));
         }
 
-        @Override
+        
         protected boolean isOptimisticLock() {
             return optimisticLock;
         }
 
-        @Override
+        
         protected void prepareParams(T entity) {
         }
 
-        @Override
+        
         protected String toSql() {
             return null;
         }
 
-        @Override
+        
         protected void prepare(String methodName) {
         }
 
-        @Override
+        
         protected void logSql() {
         }
 

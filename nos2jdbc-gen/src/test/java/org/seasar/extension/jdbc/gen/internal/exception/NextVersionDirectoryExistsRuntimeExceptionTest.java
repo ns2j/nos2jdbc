@@ -15,26 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class NextVersionDirectoryExistsRuntimeExceptionTest {
+class NextVersionDirectoryExistsRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        NextVersionDirectoryExistsRuntimeException e = new NextVersionDirectoryExistsRuntimeException(
-                "aaa");
+    void test() throws Exception {
+        NextVersionDirectoryExistsRuntimeException e = new NextVersionDirectoryExistsRuntimeException("aaa");
         assertEquals("aaa", e.getVersionDirPath());
         System.out.println(e.getMessage());
     }
-
 }

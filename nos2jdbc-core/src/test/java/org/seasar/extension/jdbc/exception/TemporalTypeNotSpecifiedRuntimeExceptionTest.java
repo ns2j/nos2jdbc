@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class TemporalTypeNotSpecifiedRuntimeExceptionTest extends TestCase {
+class TemporalTypeNotSpecifiedRuntimeExceptionTest {
 
     /**
      * @throws Exception
      */
-    public void testAll() throws Exception {
+    @Test
+    void testAll() throws Exception {
         TemporalTypeNotSpecifiedRuntimeException e = new TemporalTypeNotSpecifiedRuntimeException(
                 "hoge", "foo");
         System.out.println(e);

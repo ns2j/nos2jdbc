@@ -25,7 +25,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -50,12 +51,13 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
 /**
  * @author higa
  */
-public class SqlProcedureCallImplTest extends TestCase {
+class SqlProcedureCallImplTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -63,8 +65,9 @@ public class SqlProcedureCallImplTest extends TestCase {
         manager.setDialect(new StandardDialect());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -73,7 +76,8 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType() throws Exception {
         SqlProcedureCallImpl query = new SqlProcedureCallImpl(manager,
                 "{call hoge(?)}", 1);
         query.prepareParameter();
@@ -86,7 +90,8 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType_clob() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType_clob() throws Exception {
         SqlProcedureCallImpl query = new SqlProcedureCallImpl(manager,
                 "{call hoge(?)}", lob("hoge"));
         query.prepareParameter();
@@ -99,7 +104,8 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType_date() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType_date() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         SqlProcedureCallImpl query = new SqlProcedureCallImpl(manager,
                 "{call hoge(?)}", time(date));
@@ -113,7 +119,8 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto() throws Exception {
+    @Test
+    void testPrepareParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.arg2 = "aaa";
         dto.arg3 = "bbb";
@@ -145,7 +152,8 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_resultSet() throws Exception {
+    @Test
+    void testPrepareParameter_resultSet() throws Exception {
         MyDto2 dto = new MyDto2();
         dto.arg2 = "aaa";
         SqlProcedureCallImpl query = new SqlProcedureCallImpl(manager,
@@ -175,7 +183,8 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto_clob() throws Exception {
+    @Test
+    void testPrepareParameter_dto_clob() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.largeName = "aaa";
         SqlProcedureCallImpl query = new SqlProcedureCallImpl(manager,
@@ -190,7 +199,8 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto_date() throws Exception {
+    @Test
+    void testPrepareParameter_dto_date() throws Exception {
         MyDto4 dto = new MyDto4();
         dto.date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         SqlProcedureCallImpl query = new SqlProcedureCallImpl(manager,
@@ -206,19 +216,20 @@ public class SqlProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCall() throws Exception {
+    @Test
+    void testCall() throws Exception {
         MyDto dto = new MyDto();
         dto.arg2 = "aaa";
         dto.arg3 = "bbb";
         SqlProcedureCallImpl query = new SqlProcedureCallImpl(manager,
                 "{call hoge(?, ?, ?)}", dto) {
 
-            @Override
+            
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-                    @Override
+                    
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

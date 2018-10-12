@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
-
 import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,63 +31,50 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
 import org.seasar.extension.jdbc.gen.model.EntityModel;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class EntityModelFactoryImplTest {
+class EntityModelFactoryImplTest {
 
-    private EntityModelFactoryImpl factory = new EntityModelFactoryImpl(
-            "aaa.bbb", Superclass.class, new AttributeModelFactoryImpl(true,
-                    true, true, new PersistenceConventionImpl()),
-            new AssociationModelFactoryImpl(true),
-            new CompositeUniqueConstraintModelFactoryImpl(), false, false,
-            true, true, true);
+    private EntityModelFactoryImpl factory = new EntityModelFactoryImpl("aaa.bbb", Superclass.class, new AttributeModelFactoryImpl(true, true, true, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(true), new CompositeUniqueConstraintModelFactoryImpl(), false, false, true, true, true);
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testGetEntityModel() throws Exception {
+    void testGetEntityModel() throws Exception {
         AttributeDesc id = new AttributeDesc();
         id.setName("id");
         id.setId(true);
         id.setGenerationType(GenerationType.AUTO);
         id.setAttributeClass(int.class);
-
         AttributeDesc name = new AttributeDesc();
         name.setName("name");
         name.setAttributeClass(String.class);
-
         AttributeDesc lob = new AttributeDesc();
         lob.setName("lob");
         lob.setLob(true);
         lob.setAttributeClass(byte[].class);
-
         AttributeDesc date = new AttributeDesc();
         date.setName("date");
         date.setAttributeClass(java.sql.Date.class);
-
         AttributeDesc temp = new AttributeDesc();
         temp.setName("temp");
         temp.setTransient(true);
         temp.setAttributeClass(String.class);
-
         AttributeDesc version = new AttributeDesc();
         version.setName("version");
         version.setVersion(true);
         version.setAttributeClass(Integer.class);
-
         EntityDesc entityDesc = new EntityDesc();
         entityDesc.setCatalogName("AAA");
         entityDesc.setSchemaName("BBB");
@@ -100,14 +86,12 @@ public class EntityModelFactoryImplTest {
         entityDesc.addAttributeDesc(date);
         entityDesc.addAttributeDesc(temp);
         entityDesc.addAttributeDesc(version);
-
         EntityModel model = factory.getEntityModel(entityDesc);
         assertEquals("aaa.bbb", model.getPackageName());
         assertEquals("Foo", model.getShortClassName());
         assertEquals("AAA", model.getCatalogName());
         assertEquals("BBB", model.getSchemaName());
         assertEquals("FOO", model.getTableName());
-
         Set<String> set = model.getImportNameSet();
         assertEquals(15, set.size());
         Iterator<String> iterator = set.iterator();
@@ -131,5 +115,4 @@ public class EntityModelFactoryImplTest {
     /** */
     public static class Superclass {
     }
-
 }

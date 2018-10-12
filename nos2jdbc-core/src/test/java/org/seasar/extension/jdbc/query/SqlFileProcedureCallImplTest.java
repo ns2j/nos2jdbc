@@ -21,7 +21,8 @@ import java.util.List;
 
 import javax.persistence.Lob;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -45,7 +46,7 @@ import org.seasar.framework.mock.sql.MockDataSource;
 /**
  * @author taedium
  */
-public class SqlFileProcedureCallImplTest extends TestCase {
+class SqlFileProcedureCallImplTest {
 
     private static final String PATH = SqlFileProcedureCallImplTest.class
             .getName()
@@ -53,8 +54,9 @@ public class SqlFileProcedureCallImplTest extends TestCase {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -63,8 +65,9 @@ public class SqlFileProcedureCallImplTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -73,7 +76,8 @@ public class SqlFileProcedureCallImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode() {
+    @Test
+    void testPrepareNode() {
         SqlFileProcedureCallImpl query = new SqlFileProcedureCallImpl(manager,
                 PATH, 1);
         query.prepareCallerClassAndMethodName("execute");
@@ -84,7 +88,8 @@ public class SqlFileProcedureCallImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode_resourceNotFound() {
+    @Test
+    void testPrepareNode_resourceNotFound() {
         SqlFileProcedureCallImpl query = new SqlFileProcedureCallImpl(manager,
                 "xxx", 1);
         query.prepareCallerClassAndMethodName("execute");
@@ -100,7 +105,8 @@ public class SqlFileProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType() throws Exception {
         SqlFileProcedureCallImpl query = new SqlFileProcedureCallImpl(manager,
                 "xxx", 1);
         query.prepareParameter();
@@ -114,7 +120,8 @@ public class SqlFileProcedureCallImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareParameter_dto() throws Exception {
+    @Test
+    void testPrepareParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.arg2 = "aaa";
         dto.arg3 = "bbb";
@@ -146,7 +153,8 @@ public class SqlFileProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_resultSet() throws Exception {
+    @Test
+    void testPrepareParameter_resultSet() throws Exception {
         MyDto2 dto = new MyDto2();
         SqlFileProcedureCallImpl query = new SqlFileProcedureCallImpl(manager,
                 "xxx", dto);
@@ -161,7 +169,8 @@ public class SqlFileProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_clob() throws Exception {
+    @Test
+    void testPrepareParameter_clob() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.largeName = "aaa";
         SqlFileProcedureCallImpl query = new SqlFileProcedureCallImpl(manager,
@@ -176,19 +185,20 @@ public class SqlFileProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCall() throws Exception {
+    @Test
+    void testCall() throws Exception {
         MyDto dto = new MyDto();
         dto.arg2 = "aaa";
         dto.arg3 = "bbb";
         SqlFileProcedureCallImpl query = new SqlFileProcedureCallImpl(manager,
                 PATH, dto) {
 
-            @Override
+            
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-                    @Override
+                    
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

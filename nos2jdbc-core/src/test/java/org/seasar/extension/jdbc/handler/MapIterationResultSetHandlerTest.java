@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
@@ -34,7 +35,7 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class MapIterationResultSetHandlerTest extends TestCase {
+class MapIterationResultSetHandlerTest {
 
     int count;
 
@@ -45,7 +46,8 @@ public class MapIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
@@ -84,7 +86,8 @@ public class MapIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithLimit() throws Exception {
+    @Test
+    void testHandle_WithLimit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 2,
@@ -115,7 +118,8 @@ public class MapIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithExit() throws Exception {
+    @Test
+    void testHandle_WithExit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,

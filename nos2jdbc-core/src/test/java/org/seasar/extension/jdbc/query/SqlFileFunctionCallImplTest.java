@@ -21,7 +21,8 @@ import java.util.List;
 
 import javax.persistence.Lob;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -45,7 +46,7 @@ import org.seasar.framework.mock.sql.MockDataSource;
 /**
  * @author koichik
  */
-public class SqlFileFunctionCallImplTest extends TestCase {
+class SqlFileFunctionCallImplTest {
 
     private static final String PATH = SqlFileFunctionCallImplTest.class
             .getName()
@@ -53,8 +54,9 @@ public class SqlFileFunctionCallImplTest extends TestCase {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -63,8 +65,9 @@ public class SqlFileFunctionCallImplTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -73,7 +76,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode() {
+    @Test
+    void testPrepareNode() {
         SqlFileFunctionCallImpl<String> query = new SqlFileFunctionCallImpl<String>(
                 manager, String.class, PATH);
         query.prepareCallerClassAndMethodName("execute");
@@ -84,7 +88,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode_resourceNotFound() {
+    @Test
+    void testPrepareNode_resourceNotFound() {
         SqlFileFunctionCallImpl<String> query = new SqlFileFunctionCallImpl<String>(
                 manager, String.class, "xxx");
         query.prepareCallerClassAndMethodName("execute");
@@ -101,7 +106,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareReturnParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareReturnParameter_simpleType() throws Exception {
         SqlFileFunctionCallImpl<Integer> query = new SqlFileFunctionCallImpl<Integer>(
                 manager, Integer.class, "xxx");
         query.prepareReturnParameter();
@@ -115,7 +121,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_simpleList() throws Exception {
+    @Test
+    void testPrepareReturnParameter_simpleList() throws Exception {
         SqlFileFunctionCallImpl<Integer> query = new SqlFileFunctionCallImpl<Integer>(
                 manager, Integer.class, "xxx");
         query.resultList = true;
@@ -130,7 +137,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_dtoList() throws Exception {
+    @Test
+    void testPrepareReturnParameter_dtoList() throws Exception {
         SqlFileFunctionCallImpl<MyDto3> query = new SqlFileFunctionCallImpl<MyDto3>(
                 manager, MyDto3.class, "xxx");
         query.resultList = true;
@@ -145,7 +153,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType() throws Exception {
         SqlFileFunctionCallImpl<String> query = new SqlFileFunctionCallImpl<String>(
                 manager, String.class, "xxx", 1);
         query.prepareReturnParameter();
@@ -163,7 +172,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto() throws Exception {
+    @Test
+    void testPrepareParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.arg1 = "aaa";
         dto.arg2 = "bbb";
@@ -202,7 +212,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_resultSet() throws Exception {
+    @Test
+    void testPrepareParameter_resultSet() throws Exception {
         MyDto2 dto = new MyDto2();
         SqlFileFunctionCallImpl<Integer> query = new SqlFileFunctionCallImpl<Integer>(
                 manager, Integer.class, "xxx", dto);
@@ -224,7 +235,8 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_clob() throws Exception {
+    @Test
+    void testPrepareParameter_clob() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.largeName = "aaa";
         SqlFileFunctionCallImpl<Integer> query = new SqlFileFunctionCallImpl<Integer>(
@@ -246,19 +258,20 @@ public class SqlFileFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCall() throws Exception {
+    @Test
+    void testCall() throws Exception {
         MyDto dto = new MyDto();
         dto.arg1 = "aaa";
         dto.arg2 = "bbb";
         SqlFileFunctionCallImpl<String> query = new SqlFileFunctionCallImpl<String>(
                 manager, String.class, PATH, dto) {
 
-            @Override
+            
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-                    @Override
+                    
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

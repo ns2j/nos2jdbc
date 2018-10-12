@@ -18,9 +18,8 @@ package org.seasar.extension.jdbc.gen.internal.desc;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDesc;
 import org.seasar.extension.jdbc.gen.internal.dialect.HsqlGenDialect;
@@ -30,14 +29,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class PrimaryKeyDescFactoryImplTest {
+class PrimaryKeyDescFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
@@ -47,7 +45,7 @@ public class PrimaryKeyDescFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -61,8 +59,7 @@ public class PrimaryKeyDescFactoryImplTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(pmf);
         entityMetaFactory.setTableMetaFactory(tmf);
-        primaryKeyDescFactory = new PrimaryKeyDescFactoryImpl(
-                new HsqlGenDialect());
+        primaryKeyDescFactory = new PrimaryKeyDescFactoryImpl(new HsqlGenDialect());
     }
 
     /**
@@ -70,10 +67,9 @@ public class PrimaryKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testId() throws Exception {
+    void testId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory
-                .getPrimaryKeyDesc(entityMeta);
+        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory.getPrimaryKeyDesc(entityMeta);
         assertNotNull(primaryKeyDesc);
         assertEquals(1, primaryKeyDesc.getColumnNameList().size());
         assertEquals("ID", primaryKeyDesc.getColumnNameList().get(0));
@@ -84,10 +80,9 @@ public class PrimaryKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testCompositeId() throws Exception {
+    void testCompositeId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Fff.class);
-        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory
-                .getPrimaryKeyDesc(entityMeta);
+        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory.getPrimaryKeyDesc(entityMeta);
         assertNotNull(primaryKeyDesc);
         assertEquals(2, primaryKeyDesc.getColumnNameList().size());
         assertEquals("ID1", primaryKeyDesc.getColumnNameList().get(0));
@@ -99,10 +94,9 @@ public class PrimaryKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testCompositeId_multiClass() throws Exception {
+    void testCompositeId_multiClass() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Jjj.class);
-        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory
-                .getPrimaryKeyDesc(entityMeta);
+        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory.getPrimaryKeyDesc(entityMeta);
         assertNotNull(primaryKeyDesc);
         assertEquals(3, primaryKeyDesc.getColumnNameList().size());
         assertEquals("ID1", primaryKeyDesc.getColumnNameList().get(0));
@@ -115,10 +109,9 @@ public class PrimaryKeyDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testNoId() throws Exception {
+    void testNoId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ggg.class);
-        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory
-                .getPrimaryKeyDesc(entityMeta);
+        PrimaryKeyDesc primaryKeyDesc = primaryKeyDescFactory.getPrimaryKeyDesc(entityMeta);
         assertNull(primaryKeyDesc);
     }
 
@@ -142,7 +135,6 @@ public class PrimaryKeyDescFactoryImplTest {
         /** */
         @Id
         public Integer id2;
-
     }
 
     /** */
@@ -179,5 +171,4 @@ public class PrimaryKeyDescFactoryImplTest {
         @Id
         public Integer id3;
     }
-
 }

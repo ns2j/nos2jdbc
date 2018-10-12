@@ -15,18 +15,20 @@
  */
 package org.seasar.framework.beans;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  *
  */
-public class IllegalDiiguRuntimeExceptionTest extends TestCase {
+class IllegalDiiguRuntimeExceptionTest {
 
     /**
      * @throws Exception
      */
-    public void test() throws Exception {
+    @Test
+    void test() throws Exception {
         IllegalDiiguRuntimeException ex = new IllegalDiiguRuntimeException();
         System.out.println(ex.getMessage());
     }

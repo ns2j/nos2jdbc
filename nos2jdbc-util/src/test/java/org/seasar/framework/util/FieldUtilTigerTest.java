@@ -20,17 +20,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  */
-public class FieldUtilTigerTest extends TestCase {
+class FieldUtilTigerTest {
 
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfCollectionFromFieldType() throws Exception {
+    @Test
+    void testGetElementTypeOfCollectionFromFieldType() throws Exception {
         assertEquals(String.class, FieldUtil
                 .getElementTypeOfCollectionFromFieldType(Baz.class
                         .getField("collectionOfString")));
@@ -42,7 +44,8 @@ public class FieldUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfListFromFieldType() throws Exception {
+    @Test
+    void testGetElementTypeOfListFromFieldType() throws Exception {
         assertEquals(String.class, FieldUtil
                 .getElementTypeOfListFromFieldType(Baz.class
                         .getField("listOfString")));
@@ -54,7 +57,8 @@ public class FieldUtilTigerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfSetFromFieldType() throws Exception {
+    @Test
+    void testGetElementTypeOfSetFromFieldType() throws Exception {
         assertEquals(String.class, FieldUtil
                 .getElementTypeOfSetFromFieldType(Baz.class
                         .getField("setOfString")));

@@ -23,7 +23,8 @@ import java.util.Date;
 
 import javax.persistence.EntityExistsException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
@@ -45,14 +46,15 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author higa
  * 
  */
-public class SqlUpdateImplTest extends TestCase {
+class SqlUpdateImplTest {
 
     private JdbcManagerImpl manager;
 
     private boolean preparedBindVariables = false;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -61,8 +63,9 @@ public class SqlUpdateImplTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -71,7 +74,8 @@ public class SqlUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         SqlUpdateImpl query = new SqlUpdateImpl(manager,
                 "update aaa set name = ? where id = ?", String.class,
                 Integer.class);
@@ -82,7 +86,8 @@ public class SqlUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         SqlUpdateImpl query = new SqlUpdateImpl(manager,
                 "update aaa set name = ? where id = ?", String.class,
                 Integer.class);
@@ -93,7 +98,8 @@ public class SqlUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         SqlUpdateImpl query = new SqlUpdateImpl(manager,
                 "update aaa set name = ? where id = ?", String.class,
                 Integer.class);
@@ -104,7 +110,8 @@ public class SqlUpdateImplTest extends TestCase {
     /**
      * 
      */
-    public void testParams() {
+    @Test
+    void testParams() {
         SqlUpdateImpl query = new SqlUpdateImpl(manager,
                 "update aaa set name = ? where id = ?", String.class,
                 Integer.class);
@@ -118,12 +125,13 @@ public class SqlUpdateImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testParams_lob() throws Exception {
+    @Test
+    void testParams_lob() throws Exception {
         String sql = "update aaa set bbb = ? where ccc = ? and ddd = ?";
         SqlUpdateImpl query = new SqlUpdateImpl(manager, sql, String.class,
                 String.class, byte[].class) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 return new MockPreparedStatement(null, null);
@@ -142,12 +150,13 @@ public class SqlUpdateImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testParams_temporalType() throws Exception {
+    @Test
+    void testParams_temporalType() throws Exception {
         String sql = "update aaa set bbb = ? where ccc = ? and ddd = ?";
         SqlUpdateImpl query = new SqlUpdateImpl(manager, sql, Calendar.class,
                 Date.class, Date.class) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 return new MockPreparedStatement(null, null);
@@ -166,12 +175,13 @@ public class SqlUpdateImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetPreparedStatement() throws Exception {
+    @Test
+    void testGetPreparedStatement() throws Exception {
         SqlUpdateImpl query = new SqlUpdateImpl(manager,
                 "update aaa set name = ? where id = ?", String.class,
                 Integer.class) {
 
-            @Override
+            
             protected void prepareInParams(PreparedStatement ps) {
                 super.prepareInParams(ps);
                 preparedBindVariables = true;
@@ -190,17 +200,18 @@ public class SqlUpdateImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testExecute() throws Exception {
+    @Test
+    void testExecute() throws Exception {
         String sql = "update aaa set name = ? where id = ?";
         SqlUpdateImpl query = new SqlUpdateImpl(manager, sql, String.class,
                 Integer.class) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -225,16 +236,17 @@ public class SqlUpdateImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testExecute_entityExists() throws Exception {
+    @Test
+    void testExecute_entityExists() throws Exception {
         String sql = "insert into aaa (name) values (?)";
         SqlUpdateImpl query = new SqlUpdateImpl(manager, sql, String.class) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         throw new SQLException("hoge", "23");
                     }
@@ -255,7 +267,8 @@ public class SqlUpdateImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testExecute_illegalParamSize() throws Exception {
+    @Test
+    void testExecute_illegalParamSize() throws Exception {
         String sql = "update aaa set name = ? where id = ?";
         SqlUpdateImpl query = new SqlUpdateImpl(manager, sql, String.class,
                 Integer.class);

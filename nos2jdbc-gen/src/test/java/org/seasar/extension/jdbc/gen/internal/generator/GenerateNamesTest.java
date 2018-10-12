@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
@@ -29,14 +28,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateNamesTest {
+class GenerateNamesTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
@@ -48,7 +46,7 @@ public class GenerateNamesTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConventionImpl pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -71,14 +69,12 @@ public class GenerateNamesTest {
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Bbb.class);
         NamesModel model = namesModelFactory.getNamesModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/names.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/names.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + ".txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
-
 }

@@ -15,63 +15,70 @@
  */
 package org.seasar.framework.message;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  *
  */
-public class MessageFormatterTest extends TestCase {
+class MessageFormatterTest {
 
     /**
      * @throws Exception
      */
-    public void testGetMessage() throws Exception {
+    @Test
+    void testGetMessage() throws Exception {
         String s = MessageFormatter.getMessage("ESSR0304", null);
         System.out.println(s);
-        assertNotNull("1", s);
+        assertNotNull(s, "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testGetMessageIllegalSystem() throws Exception {
+    @Test
+    void testGetMessageIllegalSystem() throws Exception {
         String s = MessageFormatter.getMessage("EXXX0304", null);
         System.out.println(s);
-        assertNotNull("1", s);
+        assertNotNull(s, "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testGetMessageIllegalMessageCode() throws Exception {
+    @Test
+    void testGetMessageIllegalMessageCode() throws Exception {
         String s = MessageFormatter.getMessage("ESSRxxxx", null);
         System.out.println(s);
-        assertNotNull("1", s);
+        assertNotNull(s, "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testGetMessageIllegalMessageCode2() throws Exception {
+    @Test
+    void testGetMessageIllegalMessageCode2() throws Exception {
         String s = MessageFormatter.getMessage(null, null);
         System.out.println(s);
-        assertNotNull("1", s);
+        assertNotNull(s, "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testGetMessageIllegalArgs() throws Exception {
+    @Test
+    void testGetMessageIllegalArgs() throws Exception {
         String s = MessageFormatter.getMessage("ESSR0007", null);
         System.out.println(s);
-        assertNotNull("1", s);
+        assertNotNull(s, "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testGetMessageLongForm() throws Exception {
+    @Test
+    void testGetMessageLongForm() throws Exception {
         String s = MessageFormatter.getMessage("ES2Framework0001", null);
         System.out.println(s);
         assertNotNull(s);

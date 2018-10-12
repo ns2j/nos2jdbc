@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.query;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
@@ -47,12 +48,13 @@ import org.seasar.framework.mock.sql.MockDataSource;
  * @author higa
  * 
  */
-public class AbsSqlSelectTest extends TestCase {
+class AbsSqlSelectTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -61,8 +63,9 @@ public class AbsSqlSelectTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -72,7 +75,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler() throws Exception {
+    @Test
+    void testCreateResultListResultSetHandler() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         ResultSetHandler handler = query.createResultListResultSetHandler();
         assertEquals(BeanListNonAutoResultSetHandler.class, handler.getClass());
@@ -82,7 +86,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_simpleType()
+    @Test
+    void testCreateResultListResultSetHandler_simpleType()
             throws Exception {
         MySelect<Integer> query = new MySelect<Integer>(manager, Integer.class);
         ResultSetHandler handler = query.createResultListResultSetHandler();
@@ -94,7 +99,8 @@ public class AbsSqlSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testCreateResultListResultSetHandler_map() throws Exception {
+    @Test
+    void testCreateResultListResultSetHandler_map() throws Exception {
         MySelect<Map> query = new MySelect<Map>(manager, Map.class);
         ResultSetHandler handler = query.createResultListResultSetHandler();
         assertEquals(MapListResultSetHandler.class, handler.getClass());
@@ -104,7 +110,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_limit_supportLimit()
+    @Test
+    void testCreateResultListResultSetHandler_limit_supportLimit()
             throws Exception {
         manager.setDialect(new PostgreDialect());
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
@@ -117,7 +124,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_limit_notSupportLimit()
+    @Test
+    void testCreateResultListResultSetHandler_limit_notSupportLimit()
             throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.limit = 10;
@@ -129,7 +137,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_simpleType_limit_supportLimit()
+    @Test
+    void testCreateResultListResultSetHandler_simpleType_limit_supportLimit()
             throws Exception {
         manager.setDialect(new PostgreDialect());
         MySelect<Integer> query = new MySelect<Integer>(manager, Integer.class);
@@ -142,7 +151,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_simpleType_limit_notSupportLimit()
+    @Test
+    void testCreateResultListResultSetHandler_simpleType_limit_notSupportLimit()
             throws Exception {
         MySelect<Integer> query = new MySelect<Integer>(manager, Integer.class);
         query.limit = 10;
@@ -155,7 +165,8 @@ public class AbsSqlSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testCreateResultListResultSetHandler_map_limit_supportLimit()
+    @Test
+    void testCreateResultListResultSetHandler_map_limit_supportLimit()
             throws Exception {
         manager.setDialect(new PostgreDialect());
         MySelect<Map> query = new MySelect<Map>(manager, Map.class);
@@ -169,7 +180,8 @@ public class AbsSqlSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testCreateResultListResultSetHandler_map_limit_notSupportLimit()
+    @Test
+    void testCreateResultListResultSetHandler_map_limit_notSupportLimit()
             throws Exception {
         MySelect<Map> query = new MySelect<Map>(manager, Map.class);
         query.limit = 10;
@@ -181,7 +193,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateSingleResultResultSetHandler() throws Exception {
+    @Test
+    void testCreateSingleResultResultSetHandler() throws Exception {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class);
         ResultSetHandler handler = query.createSingleResultResultSetHandler();
         assertEquals(BeanResultSetHandler.class, handler.getClass());
@@ -191,7 +204,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateSingleResultResultSetHandler_simpleType()
+    @Test
+    void testCreateSingleResultResultSetHandler_simpleType()
             throws Exception {
         MySelect<Integer> query = new MySelect<Integer>(manager, Integer.class);
         ResultSetHandler handler = query.createSingleResultResultSetHandler();
@@ -201,7 +215,8 @@ public class AbsSqlSelectTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCreateIterateResultSetHandler() throws Exception {
+    @Test
+    void testCreateIterateResultSetHandler() throws Exception {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class);
         IterationCallback<AaaDto, Object> callback = new IterationCallback<AaaDto, Object>() {
 
@@ -218,7 +233,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public void testCreateIterateResultSetHandler_map() throws Exception {
+    @Test
+    void testCreateIterateResultSetHandler_map() throws Exception {
         MySelect<Map> query = new MySelect<Map>(manager, Map.class);
         IterationCallback<Map, Object> callback = new IterationCallback<Map, Object>() {
 
@@ -235,7 +251,8 @@ public class AbsSqlSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateIterateResultSetHandler_simpleType() throws Exception {
+    @Test
+    void testCreateIterateResultSetHandler_simpleType() throws Exception {
         MySelect<Integer> query = new MySelect<Integer>(manager, Integer.class);
         IterationCallback<Integer, Object> callback = new IterationCallback<Integer, Object>() {
 
@@ -258,7 +275,7 @@ public class AbsSqlSelectTest extends TestCase {
             super(jdbcManager, baseClass);
         }
 
-        @Override
+        
         protected void prepare(String methodName) {
         }
 

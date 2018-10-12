@@ -25,7 +25,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import nos2jdbc.ManagerSetter;
 
 import org.seasar.extension.jdbc.JdbcContext;
@@ -59,22 +60,24 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author higa
  * 
  */
-public class SqlFileSelectImplTest extends TestCase {
+class SqlFileSelectImplTest {
 
     private static final String PATH = SqlFileSelectImplTest.class.getName()
             + "_select";
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         ManagerSetter.setToJdbcManagerImpl(manager, new MockDataSource(), new StandardDialect(),
         	new TransactionSynchronizationRegistryImpl(new TransactionManagerImpl()));
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         NodeCache.clear();
@@ -84,7 +87,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "aaa.sql");
         assertSame(query, query.callerClass(getClass()));
@@ -94,7 +98,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "aaa.sql");
         assertSame(query, query.callerMethodName("hoge"));
@@ -104,7 +109,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testMaxRows() {
+    @Test
+    void testMaxRows() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "aaa.sql");
         assertSame(query, query.maxRows(100));
@@ -114,7 +120,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testFetchSize() {
+    @Test
+    void testFetchSize() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "aaa.sql");
         assertSame(query, query.fetchSize(100));
@@ -124,7 +131,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "aaa.sql");
         assertSame(query, query.queryTimeout(100));
@@ -134,7 +142,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLimit() {
+    @Test
+    void testLimit() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "aaa.sql");
         assertSame(query, query.limit(100));
@@ -144,7 +153,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testOffset() {
+    @Test
+    void testOffset() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "aaa.sql");
         assertSame(query, query.offset(100));
@@ -154,7 +164,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode() {
+    @Test
+    void testPrepareNode() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, PATH);
         query.prepareCallerClassAndMethodName("getResultList");
@@ -165,7 +176,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareNode_resourceNotFound() {
+    @Test
+    void testPrepareNode_resourceNotFound() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, "xxx");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -181,7 +193,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_simpleType() {
+    @Test
+    void testPrepareParameter_simpleType() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, PATH, 1);
         query.prepareCallerClassAndMethodName("getResultList");
@@ -197,7 +210,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_simpleType_clob() {
+    @Test
+    void testPrepareParameter_simpleType_clob() {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, PATH, lob("hoge"));
         query.prepareCallerClassAndMethodName("getResultList");
@@ -215,7 +229,8 @@ public class SqlFileSelectImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType_date() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType_date() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, PATH, time(date));
@@ -234,7 +249,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_dto() {
+    @Test
+    void testPrepareParameter_dto() {
         MyDto dto = new MyDto();
         dto.id = 1;
         dto.offset = 5;
@@ -256,7 +272,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_dto_clob() {
+    @Test
+    void testPrepareParameter_dto_clob() {
         MyDto2 dto = new MyDto2();
         dto.largeName = "hoge";
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
@@ -276,7 +293,8 @@ public class SqlFileSelectImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testPrepareParameter_dto_date() throws Exception {
+    @Test
+    void testPrepareParameter_dto_date() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
@@ -296,7 +314,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_map() {
+    @Test
+    void testPrepareParameter_map() {
         Map<String, Object> map = CollectionsUtil.newHashMap();
         map.put("id", 1);
         map.put("offset", 5);
@@ -318,7 +337,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParameter_map_clob() {
+    @Test
+    void testPrepareParameter_map_clob() {
         Map<String, Object> map = CollectionsUtil.newHashMap();
         map.put("largeName", Parameter.lob("hoge"));
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
@@ -338,7 +358,8 @@ public class SqlFileSelectImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testPrepareParameter_map_date() throws Exception {
+    @Test
+    void testPrepareParameter_map_date() throws Exception {
         Map<String, Object> map = CollectionsUtil.newHashMap();
         map.put("date", Parameter.time(new SimpleDateFormat("HH:mm:ss")
                 .parse("12:11:10")));
@@ -359,7 +380,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_dto() {
+    @Test
+    void testPrepareSql_dto() {
         MyDto dto = new MyDto();
         dto.id = 1;
         dto.offset = 5;
@@ -378,7 +400,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_map() {
+    @Test
+    void testPrepareSql_map() {
         Map<String, Object> map = CollectionsUtil.newHashMap();
         map.put("id", 1);
         map.put("offset", 5);
@@ -397,7 +420,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_getCount() {
+    @Test
+    void testPrepareSql_getCount() {
         MyDto dto = new MyDto();
         dto.id = 1;
         dto.offset = 5;
@@ -418,7 +442,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetResultList() {
+    @Test
+    void testGetResultList() {
         MyDto dto = new MyDto();
         dto.id = 1;
         dto.offset = 5;
@@ -427,7 +452,7 @@ public class SqlFileSelectImplTest extends TestCase {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, PATH, dto) {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -474,7 +499,8 @@ public class SqlFileSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult() {
+    @Test
+    void testGetSingleResult() {
         MyDto dto = new MyDto();
         dto.id = 1;
         dto.offset = 5;
@@ -483,7 +509,7 @@ public class SqlFileSelectImplTest extends TestCase {
         SqlFileSelectImpl<Aaa> query = new SqlFileSelectImpl<Aaa>(manager,
                 Aaa.class, PATH, dto) {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {

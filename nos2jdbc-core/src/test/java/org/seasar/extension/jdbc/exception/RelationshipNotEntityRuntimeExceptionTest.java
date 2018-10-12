@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.RelationshipNotEntityRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class RelationshipNotEntityRuntimeExceptionTest extends TestCase {
+class RelationshipNotEntityRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		RelationshipNotEntityRuntimeException ex = new RelationshipNotEntityRuntimeException(
 				"Hoge", "aaa", String.class);
 		System.out.println(ex.getMessage());

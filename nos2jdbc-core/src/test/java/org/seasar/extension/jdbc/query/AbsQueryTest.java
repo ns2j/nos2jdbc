@@ -20,7 +20,8 @@ import java.util.Date;
 
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.SqlLog;
 import org.seasar.extension.jdbc.SqlLogRegistry;
@@ -45,7 +46,7 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class AbsQueryTest extends TestCase {
+class AbsQueryTest {
 
     private JdbcManagerImpl manager;
 
@@ -53,16 +54,18 @@ public class AbsQueryTest extends TestCase {
 
     private int parameterIndex;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setDataSource(new MockDataSource());
         manager.setDialect(new StandardDialect());
         manager.setPersistenceConvention(new PersistenceConventionImpl());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
     }
@@ -70,7 +73,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testLogSql() {
+    @Test
+    void testLogSql() {
         String sql = "select * from aaa where id = ?";
         String completeSql = "select * from aaa where id = 1";
         MyQuery query = new MyQuery(manager);
@@ -91,7 +95,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testLogSql_withArgs() {
+    @Test
+    void testLogSql_withArgs() {
         String sql = "select * from aaa where id = ?";
         String completeSql = "select * from aaa where id = 1";
         MyQuery query = new MyQuery(manager);
@@ -110,7 +115,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCallerClassAndMethodName() {
+    @Test
+    void testPrepareCallerClassAndMethodName() {
         MyQuery query = new MyQuery(manager);
         query.prepareCallerClassAndMethodName("hoge");
         assertEquals(MyQuery.class, query.callerClass);
@@ -121,7 +127,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCallerClass_preSetup() {
+    @Test
+    void testPrepareCallerClass_preSetup() {
         MyQuery query = new MyQuery(manager);
         query.callerClass = getClass();
         query.callerMethodName = "foo";
@@ -133,7 +140,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam() {
+    @Test
+    void testAddParam() {
         MyQuery query = new MyQuery(manager);
         Param param = query.addParam(1);
         assertEquals(1, param.value);
@@ -144,7 +152,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam_temporal() {
+    @Test
+    void testAddParam_temporal() {
         MyQuery query = new MyQuery(manager);
         Param param = query.addParam(Parameter.date(new Date(1)));
         assertEquals(new Date(1), param.value);
@@ -155,7 +164,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam_clob() {
+    @Test
+    void testAddParam_clob() {
         MyQuery query = new MyQuery(manager);
         Param param = query.addParam(Parameter.lob("aaa"));
         assertEquals("aaa", param.value);
@@ -166,7 +176,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam_blob() {
+    @Test
+    void testAddParam_blob() {
         MyQuery query = new MyQuery(manager);
         Param param = query.addParam(Parameter.lob(new byte[10]));
         assertEquals(10, ((byte[]) param.value).length);
@@ -177,7 +188,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam_blob_serializable() {
+    @Test
+    void testAddParam_blob_serializable() {
         MyQuery query = new MyQuery(manager);
         MyDto myDto = new MyDto();
         Param param = query.addParam(Parameter.lob(myDto));
@@ -189,7 +201,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam_serializable() {
+    @Test
+    void testAddParam_serializable() {
         MyQuery query = new MyQuery(manager);
         MyDto myDto = new MyDto();
         Param param = query.addParam(myDto);
@@ -201,7 +214,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam_null() {
+    @Test
+    void testAddParam_null() {
         MyQuery query = new MyQuery(manager);
         try {
             query.addParam(null);
@@ -214,7 +228,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testAddParam_valueType() {
+    @Test
+    void testAddParam_valueType() {
         MyQuery query = new MyQuery(manager);
         Param param = query.addParam(1, Integer.class, ValueTypes.INTEGER);
         assertEquals(1, query.getParamSize());
@@ -227,7 +242,8 @@ public class AbsQueryTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareInParams() throws Exception {
+    @Test
+    void testPrepareInParams() throws Exception {
         MyQuery query = new MyQuery(manager);
         Param param = new Param();
         param.value = "aaa";
@@ -236,7 +252,7 @@ public class AbsQueryTest extends TestCase {
         query.paramList.add(param);
         MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-            @Override
+            
             public void setString(int index, String x) throws SQLException {
                 bindVariable = x;
                 parameterIndex = index;
@@ -252,7 +268,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testResetParams() {
+    @Test
+    void testResetParams() {
         MyQuery query = new MyQuery(manager);
         query.addParam(1);
         query.resetParams();
@@ -262,7 +279,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testGetParamSize() {
+    @Test
+    void testGetParamSize() {
         MyQuery query = new MyQuery(manager);
         query.addParam(1);
         assertEquals(1, query.getParamSize());
@@ -271,7 +289,8 @@ public class AbsQueryTest extends TestCase {
     /**
      * 
      */
-    public void testGetParam() {
+    @Test
+    void testGetParam() {
         MyQuery query = new MyQuery(manager);
         Param param = query.addParam(1);
         assertSame(param, query.getParam(0));
@@ -281,7 +300,8 @@ public class AbsQueryTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testHandleResultSet() throws Exception {
+    @Test
+    void testHandleResultSet() throws Exception {
         MyQuery query = new MyQuery(manager);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -307,7 +327,8 @@ public class AbsQueryTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetValueType() throws Exception {
+    @Test
+    void testGetValueType() throws Exception {
         MyQuery query = new MyQuery(manager);
         assertEquals(ValueTypes.CLOB, query.getValueType(String.class, true,
                 null));
@@ -328,7 +349,7 @@ public class AbsQueryTest extends TestCase {
             super(jdbcManager);
         }
 
-        @Override
+        
         protected void prepare(String methodName) {
         }
     }

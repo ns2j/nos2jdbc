@@ -16,24 +16,22 @@
 package org.seasar.extension.jdbc.gen.exception;
 
 import java.sql.SQLException;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.exception.SqlFailedRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SqlFailedExceptionTest {
+class SqlFailedExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         SQLException cause = new SQLException();
         SqlFailedRuntimeException e = new SqlFailedRuntimeException(cause, "aaa", 1, "bbb");
         assertSame(cause, e.getCause());

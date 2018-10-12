@@ -16,33 +16,30 @@
 package org.seasar.extension.jdbc.gen.desc;
 
 import junitx.framework.Assert;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class TableDescTest {
+class TableDescTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCanonicalName("aaa.bbb.ccc");
         TableDesc tableDesc2 = new TableDesc();
         tableDesc2.setCanonicalName("aaa.bbb.ccc");
         TableDesc tableDesc3 = new TableDesc();
         tableDesc3.setCanonicalName("aaa.bbb.ddd");
-
         assertEquals(tableDesc, tableDesc2);
         assertEquals(tableDesc.hashCode(), tableDesc2.hashCode());
-        Assert.assertNotEquals(tableDesc, tableDesc3);
-        Assert.assertNotEquals(tableDesc.hashCode(), tableDesc3.hashCode());
+        assertNotEquals(tableDesc, tableDesc3);
+        assertNotEquals(tableDesc.hashCode(), tableDesc3.hashCode());
     }
 }

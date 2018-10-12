@@ -16,35 +16,31 @@
 package org.seasar.extension.jdbc.gen.desc;
 
 import junitx.framework.Assert;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDesc;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class PrimaryKeyDescTest {
+class PrimaryKeyDescTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         PrimaryKeyDesc primaryKeyDesc = new PrimaryKeyDesc();
         primaryKeyDesc.addColumnName("AAA");
         PrimaryKeyDesc primaryKeyDesc2 = new PrimaryKeyDesc();
         primaryKeyDesc2.addColumnName("aaa");
         PrimaryKeyDesc primaryKeyDesc3 = new PrimaryKeyDesc();
         primaryKeyDesc3.addColumnName("XXX");
-
         assertEquals(primaryKeyDesc, primaryKeyDesc2);
         assertEquals(primaryKeyDesc.hashCode(), primaryKeyDesc2.hashCode());
-        Assert.assertNotEquals(primaryKeyDesc, primaryKeyDesc3);
-        Assert.assertNotEquals(primaryKeyDesc.hashCode(), primaryKeyDesc3
-                .hashCode());
+        assertNotEquals(primaryKeyDesc, primaryKeyDesc3);
+        assertNotEquals(primaryKeyDesc.hashCode(), primaryKeyDesc3.hashCode());
     }
 }

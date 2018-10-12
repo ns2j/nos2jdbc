@@ -16,26 +16,23 @@
 package org.seasar.extension.jdbc.gen.internal.exception;
 
 import java.io.File;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.EntityClassNotFoundRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class EntityClassNotFoundRuntimeExceptionTest {
+class EntityClassNotFoundRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        EntityClassNotFoundRuntimeException e = new EntityClassNotFoundRuntimeException(
-                new File("dir"), "aaa", "bbb", "ccc");
+    void test() throws Exception {
+        EntityClassNotFoundRuntimeException e = new EntityClassNotFoundRuntimeException(new File("dir"), "aaa", "bbb", "ccc");
         assertNotNull(e.getClasspathDir());
         assertEquals("aaa", e.getPackageName());
         assertEquals("bbb", e.getShortClassNamePattern());

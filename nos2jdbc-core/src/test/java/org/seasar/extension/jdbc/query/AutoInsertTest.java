@@ -18,7 +18,8 @@ package org.seasar.extension.jdbc.query;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.PropertyMeta;
@@ -52,12 +53,13 @@ import org.seasar.framework.mock.sql.MockPreparedStatement;
 /**
  * @author koichik
  */
-public class AutoInsertTest extends TestCase {
+class AutoInsertTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -81,8 +83,9 @@ public class AutoInsertTest extends TestCase {
         manager.setEntityMetaFactory(emFactory);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -91,7 +94,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, new Eee());
         assertSame(query, query.callerClass(getClass()));
         assertEquals(getClass(), query.callerClass);
@@ -100,7 +104,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, new Eee());
         assertSame(query, query.callerMethodName("hoge"));
         assertEquals("hoge", query.callerMethodName);
@@ -109,7 +114,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, new Eee());
         assertSame(query, query.queryTimeout(100));
         assertEquals(100, query.queryTimeout);
@@ -118,7 +124,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testExcludesNull() {
+    @Test
+    void testExcludesNull() {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, new Eee());
         assertFalse(query.excludesNull);
         assertSame(query, query.excludesNull());
@@ -128,7 +135,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testIncludes() {
+    @Test
+    void testIncludes() {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, new Eee());
         assertTrue(query.excludesProperties.isEmpty());
 
@@ -148,7 +156,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testExcludes() {
+    @Test
+    void testExcludes() {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, new Eee());
         assertTrue(query.excludesProperties.isEmpty());
 
@@ -168,7 +177,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget() {
+    @Test
+    void testPrepareTarget() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -186,7 +196,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_identity() {
+    @Test
+    void testPrepareTarget_identity() {
         manager.setDialect(new Db2Dialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -201,7 +212,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_identityInto() {
+    @Test
+    void testPrepareTarget_identityInto() {
         manager.setDialect(new HsqlDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -217,7 +229,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_identityNotSupported() {
+    @Test
+    void testPrepareTarget_identityNotSupported() {
         manager.setDialect(new OracleDialect());
         Identity entity = new Identity();
         AutoInsertImpl<Identity> query = new AutoInsertImpl<Identity>(manager,
@@ -233,7 +246,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_sequence() {
+    @Test
+    void testPrepareTarget_sequence() {
         manager.setDialect(new OracleDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -249,7 +263,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_sequenceNotSupported() {
+    @Test
+    void testPrepareTarget_sequenceNotSupported() {
         manager.setDialect(new MssqlDialect());
         Sequence entity = new Sequence();
         AutoInsertImpl<Sequence> query = new AutoInsertImpl<Sequence>(manager,
@@ -265,7 +280,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_table() {
+    @Test
+    void testPrepareTarget_table() {
         manager.setDialect(new StandardDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -281,7 +297,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_excludesNull() {
+    @Test
+    void testPrepareTarget_excludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -298,7 +315,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_includes() {
+    @Test
+    void testPrepareTarget_includes() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -314,7 +332,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_excludes() {
+    @Test
+    void testPrepareTarget_excludes() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -332,7 +351,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_includesAndExcludes() {
+    @Test
+    void testPrepareTarget_includesAndExcludes() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -348,7 +368,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_includesAndExcludesNull() {
+    @Test
+    void testPrepareTarget_includesAndExcludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -364,7 +385,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareIntoClause() {
+    @Test
+    void testPrepareIntoClause() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -378,7 +400,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareIntoClause_identity() {
+    @Test
+    void testPrepareIntoClause_identity() {
         manager.setDialect(new Db2Dialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -391,7 +414,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareIntoClause_identityInto() {
+    @Test
+    void testPrepareIntoClause_identityInto() {
         manager.setDialect(new HsqlDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -404,14 +428,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareIntoClause_sequence() {
+    @Test
+    void testPrepareIntoClause_sequence() {
         manager.setDialect(new OracleDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -424,14 +449,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareIntoClause_table() {
+    @Test
+    void testPrepareIntoClause_table() {
         manager.setDialect(new StandardDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -444,7 +470,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareValuesClause() {
+    @Test
+    void testPrepareValuesClause() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -457,7 +484,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareValuesClause_identity() {
+    @Test
+    void testPrepareValuesClause_identity() {
         manager.setDialect(new Db2Dialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -470,7 +498,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareValuesClause_identityInto() {
+    @Test
+    void testPrepareValuesClause_identityInto() {
         manager.setDialect(new HsqlDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -483,14 +512,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareValuesClause_sequence() {
+    @Test
+    void testPrepareValuesClause_sequence() {
         manager.setDialect(new OracleDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -503,14 +533,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareValuesClause_table() {
+    @Test
+    void testPrepareValuesClause_table() {
         manager.setDialect(new StandardDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -523,7 +554,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams() {
+    @Test
+    void testPrepareParams() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -542,7 +574,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams_identity() {
+    @Test
+    void testPrepareParams_identity() {
         manager.setDialect(new Db2Dialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -557,7 +590,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams_identityInto() {
+    @Test
+    void testPrepareParams_identityInto() {
         manager.setDialect(new HsqlDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -573,14 +607,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams_sequence() {
+    @Test
+    void testPrepareParams_sequence() {
         manager.setDialect(new OracleDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -596,14 +631,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams_table() {
+    @Test
+    void testPrepareParams_table() {
         manager.setDialect(new StandardDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -619,7 +655,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParams_excludesNull() throws Exception {
+    @Test
+    void testPrepareParams_excludesNull() throws Exception {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -636,7 +673,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql() {
+    @Test
+    void testPrepareSql() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -651,7 +689,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_identity() {
+    @Test
+    void testPrepareSql_identity() {
         manager.setDialect(new Db2Dialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -665,7 +704,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_identityInto() {
+    @Test
+    void testPrepareSql_identityInto() {
         manager.setDialect(new HsqlDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
@@ -679,14 +719,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_sequence() {
+    @Test
+    void testPrepareSql_sequence() {
         manager.setDialect(new OracleDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -700,14 +741,15 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_table() {
+    @Test
+    void testPrepareSql_table() {
         manager.setDialect(new StandardDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -721,7 +763,8 @@ public class AutoInsertTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_excludesNull() {
+    @Test
+    void testPrepareSql_excludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -736,20 +779,21 @@ public class AutoInsertTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute() throws Exception {
+    @Test
+    void testExecute() throws Exception {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee) {
 
-            @Override
+            
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -774,20 +818,21 @@ public class AutoInsertTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute_identity() throws Exception {
+    @Test
+    void testExecute_identity() throws Exception {
         manager.setDialect(new Db2Dialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertTrue(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -795,7 +840,7 @@ public class AutoInsertTest extends TestCase {
                 return ps;
             }
 
-            @Override
+            
             protected void postExecute(PreparedStatement ps) {
             }
 
@@ -809,20 +854,21 @@ public class AutoInsertTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute_identityInto() throws Exception {
+    @Test
+    void testExecute_identityInto() throws Exception {
         manager.setDialect(new HsqlDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -830,7 +876,7 @@ public class AutoInsertTest extends TestCase {
                 return ps;
             }
 
-            @Override
+            
             protected void postExecute(PreparedStatement ps) {
             }
 
@@ -845,20 +891,21 @@ public class AutoInsertTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute_sequence() throws Exception {
+    @Test
+    void testExecute_sequence() throws Exception {
         manager.setDialect(new OracleDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -866,7 +913,7 @@ public class AutoInsertTest extends TestCase {
                 return ps;
             }
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 100L;
             }
@@ -882,20 +929,21 @@ public class AutoInsertTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute_table() throws Exception {
+    @Test
+    void testExecute_table() throws Exception {
         manager.setDialect(new StandardDialect());
         Fff fff = new Fff();
         fff.name = "hoge";
         fff.version = 1L;
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
-            @Override
+            
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -903,7 +951,7 @@ public class AutoInsertTest extends TestCase {
                 return ps;
             }
 
-            @Override
+            
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 100L;
             }
@@ -919,20 +967,21 @@ public class AutoInsertTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute_excludesNull() throws Exception {
+    @Test
+    void testExecute_excludesNull() throws Exception {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee) {
 
-            @Override
+            
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }

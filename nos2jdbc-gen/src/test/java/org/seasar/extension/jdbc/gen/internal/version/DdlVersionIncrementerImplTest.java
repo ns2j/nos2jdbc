@@ -17,23 +17,21 @@ package org.seasar.extension.jdbc.gen.internal.version;
 
 import java.io.File;
 import java.util.Collections;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
 import org.seasar.extension.jdbc.gen.internal.event.GenDdlListenerImpl;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectory;
 import org.seasar.extension.jdbc.gen.version.DdlVersionIncrementer;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.util.ResourceUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DdlVersionIncrementerImplTest {
+class DdlVersionIncrementerImplTest {
 
     private DdlVersionIncrementerImpl incrementer;
 
@@ -42,31 +40,24 @@ public class DdlVersionIncrementerImplTest {
     /**
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() {
-        String path = getClass().getPackage().getName().replace('.', '/')
-                + "/migrate";
+        String path = getClass().getPackage().getName().replace('.', '/') + "/migrate";
         baseDir = ResourceUtil.getResourceAsFile(path);
         File versionFile = new File(baseDir, "ddl-version.txt");
-        DdlVersionDirectoryTreeImpl directory = new DdlVersionDirectoryTreeImpl(
-                baseDir, versionFile, "v000", null);
-        incrementer = new DdlVersionIncrementerImpl(directory,
-                new GenDdlListenerImpl(), new StandardGenDialect(),
-                new MockDataSource(), Collections.<String> emptyList(),
-                Collections.<String> emptyList()) {
+        DdlVersionDirectoryTreeImpl directory = new DdlVersionDirectoryTreeImpl(baseDir, versionFile, "v000", null);
+        incrementer = new DdlVersionIncrementerImpl(directory, new GenDdlListenerImpl(), new StandardGenDialect(), new MockDataSource(), Collections.<String>emptyList(), Collections.<String>emptyList()) {
 
             @Override
             protected void makeDirectory(DdlVersionDirectory versionDir) {
             }
 
             @Override
-            protected void copyDirectory(DdlVersionDirectory current,
-                    DdlVersionDirectory next) {
+            protected void copyDirectory(DdlVersionDirectory current, DdlVersionDirectory next) {
             }
 
             @Override
-            protected void copyDropDirectory(DdlVersionDirectory current,
-                    DdlVersionDirectory next) {
+            protected void copyDropDirectory(DdlVersionDirectory current, DdlVersionDirectory next) {
             }
 
             @Override
@@ -80,21 +71,16 @@ public class DdlVersionIncrementerImplTest {
      * @throws Exception
      */
     @Test
-    public void testIncrement() throws Exception {
+    void testIncrement() throws Exception {
         final Object[] values = new Object[3];
+        incrementer.increment("changeLog", new DdlVersionIncrementer.Callback() {
 
-        incrementer.increment("changeLog",
-                new DdlVersionIncrementer.Callback() {
-
-                    public void execute(DdlVersionDirectory versionDirectory) {
-                        values[0] = versionDirectory.getCreateDirectory()
-                                .asFile();
-                        values[1] = versionDirectory.getDropDirectory()
-                                .asFile();
-                        values[2] = versionDirectory.getVersionNo();
-                    }
-                });
-
+            public void execute(DdlVersionDirectory versionDirectory) {
+                values[0] = versionDirectory.getCreateDirectory().asFile();
+                values[1] = versionDirectory.getDropDirectory().asFile();
+                values[2] = versionDirectory.getVersionNo();
+            }
+        });
         File v012 = new File(baseDir, "v012");
         assertEquals(new File(v012, "create"), values[0]);
         assertEquals(new File(v012, "drop"), values[1]);

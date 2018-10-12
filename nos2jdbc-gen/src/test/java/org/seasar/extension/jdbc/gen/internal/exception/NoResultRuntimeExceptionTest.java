@@ -15,23 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.NoResultRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class NoResultRuntimeExceptionTest {
+class NoResultRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         NoResultRuntimeException e = new NoResultRuntimeException("aaa");
         assertEquals("aaa", e.getTableName());
         System.out.println(e.getMessage());

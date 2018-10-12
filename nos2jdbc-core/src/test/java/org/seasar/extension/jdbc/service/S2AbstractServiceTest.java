@@ -27,18 +27,20 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class S2AbstractServiceTest extends TestCase {
+class S2AbstractServiceTest {
 
     private EmpService empDao;
 
-    @Override
-    protected void setUp() {
+    
+    @BeforeEach
+    void setUp() {
         JdbcManagerImpl manager = new JdbcManagerTestImpl();
 	empDao = new EmpService();
 	empDao.jdbcManager = manager;
@@ -47,14 +49,16 @@ public class S2AbstractServiceTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSelect() throws Exception {
+    @Test
+    void testSelect() throws Exception {
         assertNotNull(empDao.select());
     }
 
     /**
      * @throws Exception
      */
-    public void testSqlFilePathPrefix() throws Exception {
+    @Test
+    void testSqlFilePathPrefix() throws Exception {
         assertEquals("META-INF/sql/org/seasar/extension/jdbc/entity/Emp/",
                 empDao.sqlFilePathPrefix);
     }

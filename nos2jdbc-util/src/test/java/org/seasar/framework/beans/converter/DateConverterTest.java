@@ -18,18 +18,20 @@ package org.seasar.framework.beans.converter;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class DateConverterTest extends TestCase {
+class DateConverterTest {
 
     /**
      * @throws Exception
      */
-    public void testGetAsObjectAndGetAsString() throws Exception {
+    @Test
+    void testGetAsObjectAndGetAsString() throws Exception {
         DateConverter converter = new DateConverter("yyyy/MM/dd");
         Date result = (Date) converter.getAsObject("2008/01/16");
         System.out.println(result);
@@ -39,7 +41,8 @@ public class DateConverterTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsTarget() throws Exception {
+    @Test
+    void testIsTarget() throws Exception {
         DateConverter converter = new DateConverter("yyyy/MM/dd");
         assertTrue(converter.isTarget(Date.class));
         assertFalse(converter.isTarget(Timestamp.class));

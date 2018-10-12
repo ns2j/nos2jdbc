@@ -22,7 +22,7 @@ import javax.persistence.MappedSuperclass;
  * 
  */
 @MappedSuperclass
-public class Eee {
+class Eee {
 
     /** */
     public String name;

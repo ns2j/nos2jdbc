@@ -31,7 +31,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.IterationCallback;
@@ -97,12 +98,13 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author higa
  * 
  */
-public class AutoSelectImplTest extends TestCase {
+class AutoSelectImplTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -126,8 +128,9 @@ public class AutoSelectImplTest extends TestCase {
         manager.setEntityMetaFactory(emFactory);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         DisposableUtil.dispose();
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
@@ -137,7 +140,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.callerClass(getClass()));
         assertEquals(getClass(), query.callerClass);
@@ -146,7 +150,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.callerMethodName("hoge"));
         assertEquals("hoge", query.callerMethodName);
@@ -155,7 +160,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testMaxRows() {
+    @Test
+    void testMaxRows() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.maxRows(100));
         assertEquals(100, query.maxRows);
@@ -164,7 +170,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testFetchSize() {
+    @Test
+    void testFetchSize() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.fetchSize(100));
         assertEquals(100, query.fetchSize);
@@ -173,7 +180,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.queryTimeout(100));
         assertEquals(100, query.queryTimeout);
@@ -182,7 +190,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLimit() {
+    @Test
+    void testLimit() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.limit(100));
         assertEquals(100, query.limit);
@@ -191,7 +200,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testOffset() {
+    @Test
+    void testOffset() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.offset(100));
         assertEquals(100, query.offset);
@@ -200,7 +210,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIncludes() {
+    @Test
+    void testIncludes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("name", "bbb");
         assertEquals(2, query.includesProperties.size());
@@ -211,7 +222,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testExcludes() {
+    @Test
+    void testExcludes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.excludes("name", "bbb");
         assertEquals(2, query.excludesProperties.size());
@@ -222,7 +234,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIsTargetProperty_includes() {
+    @Test
+    void testIsTargetProperty_includes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("name");
         query.includes("lazyName"); // eager()を指定しなくても対象
@@ -238,7 +251,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIsTargetProperty_includes_eager() {
+    @Test
+    void testIsTargetProperty_includes_eager() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("name");
         query.eager("lazyName"); // includes()に含まれていないので対象外
@@ -254,7 +268,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIsTargetProperty_excludes() {
+    @Test
+    void testIsTargetProperty_excludes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.excludes("name");
         query.eager("lazyName"); // 対象
@@ -270,7 +285,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIsTargetProperty_join() {
+    @Test
+    void testIsTargetProperty_join() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         query.leftOuterJoin("bbb.ccc");
@@ -305,7 +321,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin() {
+    @Test
+    void testInnerJoin() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.innerJoin("bbb");
         assertEquals(1, query.getJoinMetaSize());
@@ -318,7 +335,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin_condition() {
+    @Test
+    void testInnerJoin_condition() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.innerJoin("bbb", "bbb.id < 100");
         assertEquals(1, query.getJoinMetaSize());
@@ -332,7 +350,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin_where() {
+    @Test
+    void testInnerJoin_where() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.innerJoin("bbb", new SimpleWhere().isNull("bbb.ccc", true));
         assertEquals(1, query.getJoinMetaSize());
@@ -346,7 +365,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin_wheres() {
+    @Test
+    void testInnerJoin_wheres() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.innerJoin("bbb", new SimpleWhere().isNull("bbb.ccc", true),
                 new SimpleWhere().eq("bbb.id", 100));
@@ -361,7 +381,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin_fetch() {
+    @Test
+    void testInnerJoin_fetch() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.innerJoin("bbb", false);
         assertEquals(1, query.getJoinMetaSize());
@@ -374,7 +395,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin_fetch_condition() {
+    @Test
+    void testInnerJoin_fetch_condition() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.innerJoin("bbb", false, "bbb.id < 100");
         assertEquals(1, query.getJoinMetaSize());
@@ -388,7 +410,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin_fetch_where() {
+    @Test
+    void testInnerJoin_fetch_where() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query
                 .innerJoin("bbb", false, new SimpleWhere().isNull("bbb.ccc",
@@ -404,7 +427,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testInnerJoin_fetch_wheres() {
+    @Test
+    void testInnerJoin_fetch_wheres() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query
                 .innerJoin("bbb", false, new SimpleWhere().isNull("bbb.ccc",
@@ -420,7 +444,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin() {
+    @Test
+    void testLeftOuterJoin() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         assertEquals(1, query.getJoinMetaSize());
@@ -433,7 +458,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin_condition() {
+    @Test
+    void testLeftOuterJoin_condition() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", "bbb.id < 100");
         assertEquals(1, query.getJoinMetaSize());
@@ -447,7 +473,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin_where() {
+    @Test
+    void testLeftOuterJoin_where() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", new SimpleWhere().isNull("bbb.ccc", true));
         assertEquals(1, query.getJoinMetaSize());
@@ -461,7 +488,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin_wheres() {
+    @Test
+    void testLeftOuterJoin_wheres() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", new SimpleWhere().isNull("bbb.ccc", true), new SimpleWhere().eq("bbb.id", 100));
         assertEquals(1, query.getJoinMetaSize());
@@ -475,7 +503,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin_fetch() {
+    @Test
+    void testLeftOuterJoin_fetch() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", false);
         assertEquals(1, query.getJoinMetaSize());
@@ -488,7 +517,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin_fetch_condition() {
+    @Test
+    void testLeftOuterJoin_fetch_condition() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", false, new SimpleWhere().isNull("bbb.ccc",
                 true));
@@ -503,7 +533,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin_fetch_where() {
+    @Test
+    void testLeftOuterJoin_fetch_where() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", false, new SimpleWhere().isNull("bbb.ccc",
                 true));
@@ -518,7 +549,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLeftOuterJoin_fetch_wheres() {
+    @Test
+    void testLeftOuterJoin_fetch_wheres() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", false, new SimpleWhere().isNull("bbb.ccc",
                 true), new SimpleWhere().eq("bbb.id", 100));
@@ -533,7 +565,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType() {
+    @Test
+    void testJoin_joinType() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER);
         assertEquals(1, query.getJoinMetaSize());
@@ -546,7 +579,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType_condition() {
+    @Test
+    void testJoin_joinType_condition() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER, "bbb.id < 100");
         assertEquals(1, query.getJoinMetaSize());
@@ -560,7 +594,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType_where() {
+    @Test
+    void testJoin_joinType_where() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER, new SimpleWhere().isNull("bbb.ccc",
                 true));
@@ -575,7 +610,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType_wheres() {
+    @Test
+    void testJoin_joinType_wheres() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER, new SimpleWhere().isNull("bbb.ccc",
                 true), new SimpleWhere().eq("bbb.id", 100));
@@ -590,7 +626,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType_fetch() {
+    @Test
+    void testJoin_joinType_fetch() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER, false);
         assertEquals(1, query.getJoinMetaSize());
@@ -603,7 +640,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType_fetch_condition() {
+    @Test
+    void testJoin_joinType_fetch_condition() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER, false, "bbb.id < 100");
         assertEquals(1, query.getJoinMetaSize());
@@ -617,7 +655,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType_fetch_where() {
+    @Test
+    void testJoin_joinType_fetch_where() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER, false, new SimpleWhere().isNull(
                 "bbb.ccc", true));
@@ -632,7 +671,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testJoin_joinType_fetch_wheres() {
+    @Test
+    void testJoin_joinType_fetch_wheres() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER, false, new SimpleWhere().isNull(
                 "bbb.ccc", true), new SimpleWhere().eq("bbb.id", 100));
@@ -647,7 +687,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCreateTableAlias() {
+    @Test
+    void testCreateTableAlias() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertEquals("T1_", query.createTableAlias());
         assertEquals("T2_", query.createTableAlias());
@@ -656,7 +697,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTableAlias() {
+    @Test
+    void testPrepareTableAlias() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         String tableAlias = query.prepareTableAlias(null);
         assertEquals("T1_", tableAlias);
@@ -666,7 +708,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntityMeta() {
+    @Test
+    void testPrepareEntityMeta() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         EntityMeta entityMeta = query.prepareEntityMeta(Aaa.class, null);
         assertEquals("Aaa", entityMeta.getName());
@@ -676,7 +719,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntityMeta_nonEntity() {
+    @Test
+    void testPrepareEntityMeta_nonEntity() {
         AutoSelectImpl<AaaDto> query = new AutoSelectImpl<AaaDto>(manager,
                 AaaDto.class);
         query.prepareCallerClassAndMethodName("getResultList");
@@ -691,7 +735,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntity_selectClause() {
+    @Test
+    void testPrepareEntity_selectClause() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         List<PropertyMapper> propertyMapperList = new ArrayList<PropertyMapper>(
@@ -709,7 +754,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntity_selectClause_includes() {
+    @Test
+    void testPrepareEntity_selectClause_includes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("name", "bbbId");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -727,7 +773,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntity_selectClause_excludes() {
+    @Test
+    void testPrepareEntity_selectClause_excludes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.excludes("name", "bbbId");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -745,7 +792,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntity_selectClause_includesAndExcludes() {
+    @Test
+    void testPrepareEntity_selectClause_includesAndExcludes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("name", "bbbId");
         query.excludes("id", "name");
@@ -764,7 +812,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntity_valueTypes() {
+    @Test
+    void testPrepareEntity_valueTypes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         List<PropertyMapper> propertyMapperList = new ArrayList<PropertyMapper>(
@@ -786,7 +835,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareEntity_propertyMappers() throws Exception {
+    @Test
+    void testPrepareEntity_propertyMappers() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         List<PropertyMapper> propertyMapperList = new ArrayList<PropertyMapper>(
@@ -817,7 +867,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareEntity_idIndices() throws Exception {
+    @Test
+    void testPrepareEntity_idIndices() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         List<PropertyMapper> propertyMapperList = new ArrayList<PropertyMapper>(
@@ -836,7 +887,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareEntity_clob() throws Exception {
+    @Test
+    void testPrepareEntity_clob() throws Exception {
         AutoSelectImpl<MyAaa> query = new AutoSelectImpl<MyAaa>(manager,
                 MyAaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
@@ -856,7 +908,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntity_getCount() {
+    @Test
+    void testPrepareEntity_getCount() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.count = true;
         query.prepareCallerClassAndMethodName("getCount");
@@ -876,7 +929,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareEntity_selectClause_eager() {
+    @Test
+    void testPrepareEntity_selectClause_eager() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.eager("aaa.lazyName");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -897,7 +951,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareTarget_entityMapper() throws Exception {
+    @Test
+    void testPrepareTarget_entityMapper() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -927,7 +982,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareTarget_fromClause() throws Exception {
+    @Test
+    void testPrepareTarget_fromClause() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -938,7 +994,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareJoin_tableAlias() throws Exception {
+    @Test
+    void testPrepareJoin_tableAlias() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -950,7 +1007,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSplitBaseAndProperty() throws Exception {
+    @Test
+    void testSplitBaseAndProperty() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         String[] names = query.splitBaseAndProperty("bbb");
@@ -963,7 +1021,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSplitBaseAndProperty_nest() throws Exception {
+    @Test
+    void testSplitBaseAndProperty_nest() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         String[] names = query.splitBaseAndProperty("bbb.ccc");
@@ -976,7 +1035,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSplitBaseAndProperty_nest2() throws Exception {
+    @Test
+    void testSplitBaseAndProperty_nest2() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         String[] names = query.splitBaseAndProperty("bbb.ccc.ddd");
@@ -989,7 +1049,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetBaseEntityMeta() throws Exception {
+    @Test
+    void testGetBaseEntityMeta() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1001,7 +1062,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetBaseEntityMeta_baseJoinNotFound() throws Exception {
+    @Test
+    void testGetBaseEntityMeta_baseJoinNotFound() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1020,7 +1082,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetBaseEntityMapper() throws Exception {
+    @Test
+    void testGetBaseEntityMapper() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1033,7 +1096,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetBaseEntityMapper_baseJoinNotFound() throws Exception {
+    @Test
+    void testGetBaseEntityMapper_baseJoinNotFound() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1052,7 +1116,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetPropertyMeta() throws Exception {
+    @Test
+    void testGetPropertyMeta() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1066,7 +1131,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetPropertyMeta_propertyMetaNotFound() throws Exception {
+    @Test
+    void testGetPropertyMeta_propertyMetaNotFound() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1085,7 +1151,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetInverseEntityMeta() throws Exception {
+    @Test
+    void testGetInverseEntityMeta() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1098,7 +1165,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetInverseEntityMeta_badEntity() throws Exception {
+    @Test
+    void testGetInverseEntityMeta_badEntity() throws Exception {
         AutoSelectImpl<BadAaa> query = new AutoSelectImpl<BadAaa>(manager,
                 BadAaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
@@ -1115,7 +1183,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetInverseEntityMeta_joinDuplicated() throws Exception {
+    @Test
+    void testGetInverseEntityMeta_joinDuplicated() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1132,7 +1201,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetInversePropertyMeta() throws Exception {
+    @Test
+    void testGetInversePropertyMeta() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1151,7 +1221,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetInversePropertyMeta_nonOwner() throws Exception {
+    @Test
+    void testGetInversePropertyMeta_nonOwner() throws Exception {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1170,7 +1241,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateRelationshipEntityMapper_manyToOne() throws Exception {
+    @Test
+    void testCreateRelationshipEntityMapper_manyToOne() throws Exception {
         AutoSelectImpl<Ddd> query = new AutoSelectImpl<Ddd>(manager, Ddd.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1189,7 +1261,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateRelationshipEntityMapper_manyToOne_nullInverse()
+    @Test
+    void testCreateRelationshipEntityMapper_manyToOne_nullInverse()
             throws Exception {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.prepareCallerClassAndMethodName("getResultList");
@@ -1208,7 +1281,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateRelationshipEntityMapper_oneToOne() throws Exception {
+    @Test
+    void testCreateRelationshipEntityMapper_oneToOne() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1227,7 +1301,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateRelationshipEntityMapper_oneToOne_inverse()
+    @Test
+    void testCreateRelationshipEntityMapper_oneToOne_inverse()
             throws Exception {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.prepareCallerClassAndMethodName("getResultList");
@@ -1247,7 +1322,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateRelationshipEntityMapper_oneToMany() throws Exception {
+    @Test
+    void testCreateRelationshipEntityMapper_oneToMany() throws Exception {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1266,7 +1342,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareJoin_sql() throws Exception {
+    @Test
+    void testPrepareJoin_sql() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1279,7 +1356,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareJoin_sql_includes() throws Exception {
+    @Test
+    void testPrepareJoin_sql_includes() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("name", "bbbId");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -1293,7 +1371,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareJoin_sql_excludes() throws Exception {
+    @Test
+    void testPrepareJoin_sql_excludes() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.excludes("name", "bbbId");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -1307,7 +1386,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareJoin_sql_mappedBy() throws Exception {
+    @Test
+    void testPrepareJoin_sql_mappedBy() throws Exception {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1319,7 +1399,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareJoin_sql_mappedBy_includes() {
+    @Test
+    void testPrepareJoin_sql_mappedBy_includes() {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.includes("name", "aaa");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -1332,7 +1413,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareJoin_sql_mappedBy_excludes() {
+    @Test
+    void testPrepareJoin_sql_mappedBy_excludes() {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.excludes("name", "aaa");
         query.prepareCallerClassAndMethodName("getResultList");
@@ -1346,7 +1428,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareJoin_sql_nest() throws Exception {
+    @Test
+    void testPrepareJoin_sql_nest() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1359,7 +1442,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareJoin_sql_nest_includesAndExcludes() {
+    @Test
+    void testPrepareJoin_sql_nest_includesAndExcludes() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("name", "bbb.name", "bbb.ccc.name");
         query.excludes("name", "bbb", "bbb.ccc");
@@ -1374,7 +1458,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareJoin_sql_nest_includesAndExcludes2() {
+    @Test
+    void testPrepareJoin_sql_nest_includesAndExcludes2() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("id", "name", "bbb", "bbb.ccc");
         query.excludes("name", "bbb.name", "bbb.ccc.name");
@@ -1389,7 +1474,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareJoin_sql_nest_includesAndExcludes3() {
+    @Test
+    void testPrepareJoin_sql_nest_includesAndExcludes3() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("id", "name", "bbb");
         query.excludes("bbb.ccc");
@@ -1404,7 +1490,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareJoin_sql_nest_includesAndExcludes4() {
+    @Test
+    void testPrepareJoin_sql_nest_includesAndExcludes4() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.includes("id", "name", "bbb", "bbb.ccc");
         query.excludes("bbb.ccc");
@@ -1419,7 +1506,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareJoin_sql_nest_includesAndExcludes5() {
+    @Test
+    void testPrepareJoin_sql_nest_includesAndExcludes5() {
         AutoSelectImpl<Bbb> query = new AutoSelectImpl<Bbb>(manager, Bbb.class);
         query.includes("id", "name", "aaa");
         query.excludes("aaa.bbb");
@@ -1437,7 +1525,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareJoin_sql_condition() throws Exception {
+    @Test
+    void testPrepareJoin_sql_condition() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
@@ -1450,7 +1539,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_nopaging()
+    @Test
+    void testCreateResultListResultSetHandler_nopaging()
             throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepare("getResultList");
@@ -1462,7 +1552,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_paging_notSupportsLimit()
+    @Test
+    void testCreateResultListResultSetHandler_paging_notSupportsLimit()
             throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.limit(10);
@@ -1475,7 +1566,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultListResultSetHandler_paging_supportsLimit()
+    @Test
+    void testCreateResultListResultSetHandler_paging_supportsLimit()
             throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         manager.setDialect(new PostgreDialect());
@@ -1489,7 +1581,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateSingleResultResultSetHandler() throws Exception {
+    @Test
+    void testCreateSingleResultResultSetHandler() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepare("getResultList");
         ResultSetHandler handler = query.createSingleResultResultSetHandler();
@@ -1500,7 +1593,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateIterateResultSetHandler() throws Exception {
+    @Test
+    void testCreateIterateResultSetHandler() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepare("getResultList");
         ResultSetHandler handler = query
@@ -1517,7 +1611,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareId() {
+    @Test
+    void testPrepareId() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.id(1);
         query.prepare("getSingleResult");
@@ -1533,7 +1628,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareId_invalidLength() {
+    @Test
+    void testPrepareId_invalidLength() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
             query.id(1, 2);
@@ -1546,7 +1642,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIdSql() {
+    @Test
+    void testIdSql() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.id(1);
         query.prepare("getResultList");
@@ -1559,7 +1656,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareVersion() {
+    @Test
+    void testPrepareVersion() {
         AutoSelectImpl<Eee> query = new AutoSelectImpl<Eee>(manager, Eee.class);
         query.id(1);
         query.version(2);
@@ -1579,7 +1677,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareVersion_noVersionProperty() {
+    @Test
+    void testPrepareVersion_noVersionProperty() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.id(1);
         try {
@@ -1593,7 +1692,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareVersion_withoutIdProperty() {
+    @Test
+    void testPrepareVersion_withoutIdProperty() {
         AutoSelectImpl<Eee> query = new AutoSelectImpl<Eee>(manager, Eee.class);
         query.version(2);
         try {
@@ -1607,7 +1707,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIdVersionSql() {
+    @Test
+    void testIdVersionSql() {
         AutoSelectImpl<Eee> query = new AutoSelectImpl<Eee>(manager, Eee.class);
         query.id(1);
         query.version(2);
@@ -1622,7 +1723,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIdVersionSql_withCondition() {
+    @Test
+    void testIdVersionSql_withCondition() {
         AutoSelectImpl<Eee> query = new AutoSelectImpl<Eee>(manager, Eee.class);
         query.id(1).version(2).where("lastUpdated = ?",
                 Parameter.date(new Date()));
@@ -1640,7 +1742,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testIdVersionSql_withJoinCondition() {
+    @Test
+    void testIdVersionSql_withJoinCondition() {
         AutoSelectImpl<Eee> query = new AutoSelectImpl<Eee>(manager, Eee.class);
         query.leftOuterJoin("fff", false, "fff.id = 100").id(1).version(2)
                 .where("lastUpdated = ?", Parameter.date(new Date()));
@@ -1656,7 +1759,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testWhere_map() throws Exception {
+    @Test
+    void testWhere_map() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("aaa", 1);
@@ -1668,7 +1772,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testWhere_criteria() throws Exception {
+    @Test
+    void testWhere_criteria() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.where("id = ?", 1));
         assertEquals("id = ?", query.criteria);
@@ -1680,7 +1785,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testWhere_where() throws Exception {
+    @Test
+    void testWhere_where() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.where(new SimpleWhere().eq("id", 1)));
         query.prepare("getResultList");
@@ -1693,7 +1799,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testWhere_wheres() throws Exception {
+    @Test
+    void testWhere_wheres() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.where(new SimpleWhere().eq("id", 1),
                 new SimpleWhere().eq("name", "aaa")));
@@ -1708,7 +1815,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testWhere_emptyWhere() throws Exception {
+    @Test
+    void testWhere_emptyWhere() throws Exception {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         assertSame(query, query.where(new SimpleWhere().eq("name", null)));
         assertNull(query.criteria);
@@ -1719,7 +1827,8 @@ public class AutoSelectImplTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testWhere_wrapper() throws Exception {
+    @Test
+    void testWhere_wrapper() throws Exception {
         AutoSelectImpl<Emp> query = new AutoSelectImpl<Emp>(manager, Emp.class);
         assertSame(query, query.where(new SimpleWhere().eq("hiredate",
                 timestamp(new Date(0)))));
@@ -1732,7 +1841,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_EQ() {
+    @Test
+    void testPrepareCondition_EQ() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id", "1");
@@ -1750,7 +1860,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_EQ2() {
+    @Test
+    void testPrepareCondition_EQ2() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_EQ", 1);
@@ -1768,7 +1879,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_EQ_NEST() {
+    @Test
+    void testPrepareCondition_EQ_NEST() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("bbb.id", 1);
@@ -1786,7 +1898,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_NE() {
+    @Test
+    void testPrepareCondition_NE() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_NE", 1);
@@ -1804,7 +1917,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_NE_NEST() {
+    @Test
+    void testPrepareCondition_NE_NEST() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -1823,7 +1937,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_LT() {
+    @Test
+    void testPrepareCondition_LT() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_LT", 1);
@@ -1841,7 +1956,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_LT_NEST() {
+    @Test
+    void testPrepareCondition_LT_NEST() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -1860,7 +1976,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_LE() {
+    @Test
+    void testPrepareCondition_LE() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_LE", 1);
@@ -1878,7 +1995,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_LE_NEST() {
+    @Test
+    void testPrepareCondition_LE_NEST() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -1897,7 +2015,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_GT() {
+    @Test
+    void testPrepareCondition_GT() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_GT", 1);
@@ -1915,7 +2034,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_GT_NEST() {
+    @Test
+    void testPrepareCondition_GT_NEST() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -1934,7 +2054,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_GE() {
+    @Test
+    void testPrepareCondition_GE() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_GE", 1);
@@ -1952,7 +2073,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_GE_NEST() {
+    @Test
+    void testPrepareCondition_GE_NEST() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -1971,7 +2093,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_IN() {
+    @Test
+    void testPrepareCondition_IN() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_IN", new Object[] { 1, 2 });
@@ -1991,7 +2114,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_IN_List() {
+    @Test
+    void testPrepareCondition_IN_List() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_IN", Arrays.asList(1, 2));
@@ -2011,7 +2135,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_IN_nest() {
+    @Test
+    void testPrepareCondition_IN_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2032,7 +2157,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_NOT_IN() {
+    @Test
+    void testPrepareCondition_NOT_IN() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_NOT_IN", new Object[] { 1, 2 });
@@ -2052,7 +2178,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_NOT_IN_List() {
+    @Test
+    void testPrepareCondition_NOT_IN_List() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id_NOT_IN", Arrays.asList(1, 2));
@@ -2072,7 +2199,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_NOT_IN_nest() {
+    @Test
+    void testPrepareCondition_NOT_IN_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2093,7 +2221,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_LIKE() {
+    @Test
+    void testPrepareCondition_LIKE() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("name_LIKE", "aaa");
@@ -2111,7 +2240,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_LIKE_nest() {
+    @Test
+    void testPrepareCondition_LIKE_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2130,7 +2260,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_STARTS() {
+    @Test
+    void testPrepareCondition_STARTS() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("name_STARTS", "aaa");
@@ -2148,7 +2279,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_STARTS_nest() {
+    @Test
+    void testPrepareCondition_STARTS_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2167,7 +2299,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_ENDS() {
+    @Test
+    void testPrepareCondition_ENDS() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("name_ENDS", "aaa");
@@ -2185,7 +2318,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_ENDS_nest() {
+    @Test
+    void testPrepareCondition_ENDS_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2204,7 +2338,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_CONTAINS() {
+    @Test
+    void testPrepareCondition_CONTAINS() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("name_CONTAINS", "aaa");
@@ -2222,7 +2357,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_CONTAINS_nest() {
+    @Test
+    void testPrepareCondition_CONTAINS_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2241,7 +2377,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_IS_NULL() {
+    @Test
+    void testPrepareCondition_IS_NULL() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("name_IS_NULL", true);
@@ -2257,7 +2394,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_IS_NULL_nest() {
+    @Test
+    void testPrepareCondition_IS_NULL_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2274,7 +2412,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_IS_NOT_NULL() {
+    @Test
+    void testPrepareCondition_IS_NOT_NULL() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("name_IS_NOT_NULL", true);
@@ -2290,7 +2429,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_IS_NOT_NULL_nest() {
+    @Test
+    void testPrepareCondition_IS_NOT_NULL_nest() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb");
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2307,7 +2447,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_columnNotFound() {
+    @Test
+    void testPrepareCondition_columnNotFound() {
         AutoSelectImpl<BadAaa> query = new AutoSelectImpl<BadAaa>(manager,
                 BadAaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
@@ -2326,7 +2467,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCondition_empty() {
+    @Test
+    void testPrepareCondition_empty() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         Map<String, Object> w = new HashMap<String, Object>();
         w.put("id", null);
@@ -2342,7 +2484,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql() {
+    @Test
+    void testPrepareSql() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.prepare("getResultList");
         assertNotNull(query.executedSql);
@@ -2351,7 +2494,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareOrderBy() {
+    @Test
+    void testPrepareOrderBy() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").orderBy("name, bbb.id desc");
         query.prepare("getResultList");
@@ -2361,7 +2505,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareOrderByItems() {
+    @Test
+    void testPrepareOrderByItems() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").orderBy(new OrderByItem("name"),
                 new OrderByItem("bbb.id", OrderingSpec.DESC));
@@ -2373,7 +2518,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareOrderBy_sql() {
+    @Test
+    void testPrepareOrderBy_sql() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").orderBy("bbb.id desc");
         query.prepare("getResultList");
@@ -2385,7 +2531,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareCriteria() {
+    @Test
+    void testPrepareCriteria() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").where("bbb.id = ?", 1);
         query.prepare("getResultList");
@@ -2397,7 +2544,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate() {
+    @Test
+    void testForUpdate() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdate();
         query.prepare(null);
@@ -2408,7 +2556,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate_join() {
+    @Test
+    void testForUpdate_join() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").leftOuterJoin("bbb.ccc");
         query.forUpdate();
@@ -2423,7 +2572,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate_withLockHint() {
+    @Test
+    void testForUpdate_withLockHint() {
         manager.setDialect(new MssqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdate();
@@ -2436,7 +2586,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate_withLockHint_join() {
+    @Test
+    void testForUpdate_withLockHint_join() {
         manager.setDialect(new MssqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").leftOuterJoin("bbb.ccc");
@@ -2453,7 +2604,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate_notSupported() {
+    @Test
+    void testForUpdate_notSupported() {
         manager.setDialect(new HsqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2467,7 +2619,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate_innerJoin_notSupported() {
+    @Test
+    void testForUpdate_innerJoin_notSupported() {
         manager.setDialect(new Db2Dialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2482,7 +2635,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate_outerJoin_notSupported() {
+    @Test
+    void testForUpdate_outerJoin_notSupported() {
         manager.setDialect(new PostgreDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2497,7 +2651,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdate_withPaging() {
+    @Test
+    void testForUpdate_withPaging() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
             query.forUpdate();
@@ -2512,7 +2667,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_columnAlias() {
+    @Test
+    void testForUpdateWithProperty_columnAlias() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdate("name");
@@ -2524,7 +2680,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_columnAlias_join() {
+    @Test
+    void testForUpdateWithProperty_columnAlias_join() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").leftOuterJoin("bbb.ccc");
@@ -2540,7 +2697,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_tableAlias() {
+    @Test
+    void testForUpdateWithProperty_tableAlias() {
         manager.setDialect(new PostgreDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdate("name");
@@ -2552,7 +2710,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_tableAlias_join() {
+    @Test
+    void testForUpdateWithProperty_tableAlias_join() {
         manager.setDialect(new PostgreDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.join("bbb", JoinType.INNER).join("bbb.ccc", JoinType.INNER);
@@ -2568,7 +2727,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_lockHint() {
+    @Test
+    void testForUpdateWithProperty_lockHint() {
         manager.setDialect(new MssqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdate("name");
@@ -2581,7 +2741,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_lockHint_join() {
+    @Test
+    void testForUpdateWithProperty_lockHint_join() {
         manager.setDialect(new MssqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").leftOuterJoin("bbb.ccc");
@@ -2598,7 +2759,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_notSupported() {
+    @Test
+    void testForUpdateWithProperty_notSupported() {
         manager.setDialect(new HsqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2612,7 +2774,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_join_notSupported() {
+    @Test
+    void testForUpdateWithProperty_join_notSupported() {
         manager.setDialect(new PostgreDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2628,7 +2791,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_invalidProperty() {
+    @Test
+    void testForUpdateWithProperty_invalidProperty() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2643,7 +2807,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_invalidRelationship() {
+    @Test
+    void testForUpdateWithProperty_invalidRelationship() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2659,7 +2824,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWithProperty_invalidJoin() {
+    @Test
+    void testForUpdateWithProperty_invalidJoin() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2675,7 +2841,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateNowait() {
+    @Test
+    void testForUpdateNowait() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdateNowait();
@@ -2686,7 +2853,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateNowait_lockHint() {
+    @Test
+    void testForUpdateNowait_lockHint() {
         manager.setDialect(new MssqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdateNowait();
@@ -2699,7 +2867,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateNowait_notSupported() {
+    @Test
+    void testForUpdateNowait_notSupported() {
         manager.setDialect(new HsqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2713,7 +2882,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateNowaitWithProperty() {
+    @Test
+    void testForUpdateNowaitWithProperty() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdateNowait("name");
@@ -2724,7 +2894,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateNowaitWithProperty_lockHint() {
+    @Test
+    void testForUpdateNowaitWithProperty_lockHint() {
         manager.setDialect(new MssqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdateNowait("name");
@@ -2737,7 +2908,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateNowaitWithProperty_notSupported() {
+    @Test
+    void testForUpdateNowaitWithProperty_notSupported() {
         manager.setDialect(new HsqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2751,7 +2923,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWait() {
+    @Test
+    void testForUpdateWait() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdateWait(10);
@@ -2762,7 +2935,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWait_notSupported() {
+    @Test
+    void testForUpdateWait_notSupported() {
         manager.setDialect(new HsqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2776,7 +2950,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWaitWithProperty() {
+    @Test
+    void testForUpdateWaitWithProperty() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.forUpdateWait(10, "name");
@@ -2787,7 +2962,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateWaitWithProperty_notSupported() {
+    @Test
+    void testForUpdateWaitWithProperty_notSupported() {
         manager.setDialect(new HsqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         try {
@@ -2801,7 +2977,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateSql() {
+    @Test
+    void testForUpdateSql() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").orderBy("bbb.id desc").forUpdate();
         query.prepare("getResultList");
@@ -2816,7 +2993,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testForUpdateSql_lockHint() {
+    @Test
+    void testForUpdateSql_lockHint() {
         manager.setDialect(new MssqlDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").orderBy("bbb.id desc").forUpdate();
@@ -2831,7 +3009,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testEagerSql() {
+    @Test
+    void testEagerSql() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.eager("lazyName");
         query.prepare("getResultList");
@@ -2843,7 +3022,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testEagerSql_withJoin() {
+    @Test
+    void testEagerSql_withJoin() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").eager("bbb.lazyName");
         query.prepare("getResultList");
@@ -2857,7 +3037,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testHint() {
+    @Test
+    void testHint() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.hint("index(Aaa index)");
@@ -2870,7 +3051,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testHint_notSupport() {
+    @Test
+    void testHint_notSupport() {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.hint("index(Aaa index)");
         query.prepare("getResultList");
@@ -2882,7 +3064,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testHint_withJoin() {
+    @Test
+    void testHint_withJoin() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb", false);
@@ -2897,7 +3080,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testConvertEntityNameToTableAlias() {
+    @Test
+    void testConvertEntityNameToTableAlias() {
         manager.setDialect(new OracleDialect());
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").leftOuterJoin("bbb.ddds");
@@ -2910,7 +3094,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCompleted_getResultList() {
+    @Test
+    void testCompleted_getResultList() {
 
         AutoSelectImplDummy<Aaa> query = new AutoSelectImplDummy<Aaa>(manager,
                 Aaa.class);
@@ -2926,7 +3111,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCompleted_getSingleResult() {
+    @Test
+    void testCompleted_getSingleResult() {
 
         AutoSelectImplDummy<Aaa> query = new AutoSelectImplDummy<Aaa>(manager,
                 Aaa.class);
@@ -2942,7 +3128,8 @@ public class AutoSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCompleted_getCount() {
+    @Test
+    void testCompleted_getCount() {
 
         AutoSelectImplDummy<Aaa> query = new AutoSelectImplDummy<Aaa>(manager,
                 Aaa.class);
@@ -2969,17 +3156,17 @@ public class AutoSelectImplTest extends TestCase {
             super(jdbcManager, baseClass);
         }
 
-        @Override
+        
         protected List<E> getResultListInternal() {
             return Collections.emptyList();
         }
 
-        @Override
+        
         protected E getSingleResultInternal() {
             return null;
         }
 
-        @Override
+        
         public long getCount() {
             try {
                 return super.getCount();

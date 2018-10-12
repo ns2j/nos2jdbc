@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.types;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.ValueType;
 
@@ -23,19 +24,21 @@ import org.seasar.extension.jdbc.ValueType;
  * @author higa
  * 
  */
-public class ValueTypes2Test extends TestCase {
+class ValueTypes2Test {
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         ValueTypes.setEnumDefaultValueType(EnumOrdinalType.class);
         ValueTypes.clear();
-        super.tearDown();
+        ;
     }
 
     /**
      * @throws Exception
      */
-    public void testEnum() throws Exception {
+    @Test
+    void testEnum() throws Exception {
         ValueType valueType = ValueTypes.getValueType(MyEnum.class);
         assertNotNull(valueType);
         assertTrue(valueType instanceof EnumOrdinalType);
@@ -47,7 +50,8 @@ public class ValueTypes2Test extends TestCase {
     /**
      * @throws Exception
      */
-    public void testEnumString() throws Exception {
+    @Test
+    void testEnumString() throws Exception {
         ValueType valueType = ValueTypes.getEnumStringValueType(MyEnum.class);
         assertNotNull(valueType);
         assertTrue(valueType instanceof EnumType);
@@ -58,7 +62,8 @@ public class ValueTypes2Test extends TestCase {
     /**
      * @throws Exception
      */
-    public void testEnumOrdinal() throws Exception {
+    @Test
+    void testEnumOrdinal() throws Exception {
         ValueType valueType = ValueTypes.getEnumOrdinalValueType(MyEnum.class);
         assertNotNull(valueType);
         assertTrue(valueType instanceof EnumOrdinalType);
@@ -69,7 +74,8 @@ public class ValueTypes2Test extends TestCase {
     /**
      * @throws Exception
      */
-    public void testInheritedEnum() throws Exception {
+    @Test
+    void testInheritedEnum() throws Exception {
         ValueType valueType = ValueTypes.getValueType(MyEnum2.ONE.getClass());
         assertNotNull(valueType);
         assertTrue(valueType instanceof EnumOrdinalType);
@@ -81,7 +87,8 @@ public class ValueTypes2Test extends TestCase {
     /**
      * @throws Exception
      */
-    public void testEnum_CustomValueType() throws Exception {
+    @Test
+    void testEnum_CustomValueType() throws Exception {
         ValueTypes.setEnumDefaultValueType(EnumType.class);
         ValueType valueType = ValueTypes.getValueType(MyEnum.class);
         assertNotNull(valueType);
@@ -94,7 +101,8 @@ public class ValueTypes2Test extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsSimpleType() throws Exception {
+    @Test
+    void testIsSimpleType() throws Exception {
         assertTrue(ValueTypes.isSimpleType(String.class));
         assertTrue(ValueTypes.isSimpleType(int.class));
         assertTrue(ValueTypes.isSimpleType(MyEnum.class));
@@ -120,7 +128,7 @@ public class ValueTypes2Test extends TestCase {
          */
         ONE {
 
-            @Override
+            
             public void f() {
             }
 
@@ -130,7 +138,7 @@ public class ValueTypes2Test extends TestCase {
          */
         TWO {
 
-            @Override
+            
             public void f() {
             }
         };

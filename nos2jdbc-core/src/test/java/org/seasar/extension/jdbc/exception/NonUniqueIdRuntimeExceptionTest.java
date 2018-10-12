@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class NonUniqueIdRuntimeExceptionTest extends TestCase {
+class NonUniqueIdRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         NonUniqueIdRuntimeException ex = new NonUniqueIdRuntimeException("Hoge");
         System.out.println(ex.getMessage());
         assertEquals("Hoge", ex.getEntityName());

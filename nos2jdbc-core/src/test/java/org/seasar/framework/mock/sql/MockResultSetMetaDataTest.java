@@ -17,13 +17,14 @@ package org.seasar.framework.mock.sql;
 
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class MockResultSetMetaDataTest extends TestCase {
+class MockResultSetMetaDataTest {
 
     /**
      * Test method for
@@ -31,7 +32,8 @@ public class MockResultSetMetaDataTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testGetColumnCount() throws Exception {
+    @Test
+    void testGetColumnCount() throws Exception {
         MockResultSetMetaData meta = new MockResultSetMetaData();
         meta.addColumnMetaData(new MockColumnMetaData());
         assertEquals(1, meta.getColumnCount());
@@ -43,7 +45,8 @@ public class MockResultSetMetaDataTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testGetColumnLabel() throws Exception {
+    @Test
+    void testGetColumnLabel() throws Exception {
         MockResultSetMetaData meta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
         columnMeta.setColumnLabel("aaa");
@@ -55,7 +58,8 @@ public class MockResultSetMetaDataTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testFindColumn() throws Exception {
+    @Test
+    void testFindColumn() throws Exception {
         MockResultSetMetaData meta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
         columnMeta.setColumnName("aaa");

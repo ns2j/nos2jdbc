@@ -23,17 +23,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  */
-public class ReflectionUtilTest extends TestCase {
+class ReflectionUtilTest {
 
     /**
      * @throws Exception
      */
-    public void testForName() throws Exception {
+    @Test
+    void testForName() throws Exception {
         Class<Foo> clazz = ReflectionUtil
                 .forName(getClass().getName() + "$Foo");
         assertNotNull(clazz);
@@ -42,7 +44,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetConstructor() throws Exception {
+    @Test
+    void testGetConstructor() throws Exception {
         Constructor<Foo> ctor = ReflectionUtil.getConstructor(Foo.class);
         assertNotNull(ctor);
     }
@@ -50,7 +53,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetDeclaredConstructor() throws Exception {
+    @Test
+    void testGetDeclaredConstructor() throws Exception {
         Constructor<Foo> ctor = ReflectionUtil.getDeclaredConstructor(
                 Foo.class, int.class, String.class);
         assertNotNull(ctor);
@@ -59,7 +63,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetField() throws Exception {
+    @Test
+    void testGetField() throws Exception {
         Field f = ReflectionUtil.getField(Foo.class, "s");
         assertNotNull(f);
     }
@@ -67,7 +72,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetDeclaredField() throws Exception {
+    @Test
+    void testGetDeclaredField() throws Exception {
         Field f = ReflectionUtil.getDeclaredField(Foo.class, "n");
         assertNotNull(f);
     }
@@ -75,7 +81,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetMethod() throws Exception {
+    @Test
+    void testGetMethod() throws Exception {
         Method m = ReflectionUtil.getMethod(Foo.class, "getS");
         assertNotNull(m);
 
@@ -86,7 +93,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetDeclaredMethod() throws Exception {
+    @Test
+    void testGetDeclaredMethod() throws Exception {
         Method m = ReflectionUtil.getDeclaredMethod(Foo.class, "getN");
         assertNotNull(m);
 
@@ -97,7 +105,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testNewInstance() throws Exception {
+    @Test
+    void testNewInstance() throws Exception {
         Foo foo = ReflectionUtil.newInstance(Foo.class);
         assertNotNull(foo);
 
@@ -113,7 +122,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetValue() throws Exception {
+    @Test
+    void testGetValue() throws Exception {
         Foo foo = new Foo(10, "foo");
 
         Field f = ReflectionUtil.getDeclaredField(Foo.class, "n");
@@ -129,7 +139,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetValue() throws Exception {
+    @Test
+    void testSetValue() throws Exception {
         Foo foo = new Foo();
 
         Field f = ReflectionUtil.getDeclaredField(Foo.class, "n");
@@ -145,7 +156,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testInvoke() throws Exception {
+    @Test
+    void testInvoke() throws Exception {
         Foo foo = new Foo();
 
         Method m = ReflectionUtil.getDeclaredMethod(Foo.class, "setN",
@@ -162,7 +174,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfCollectionFromField() throws Exception {
+    @Test
+    void testGetElementTypeOfCollectionFromField() throws Exception {
         Type clazz = ReflectionUtil.getField(Foo.class, "collection")
                 .getGenericType();
         assertEquals(String.class, ReflectionUtil
@@ -172,7 +185,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfCollectionFromParameter() throws Exception {
+    @Test
+    void testGetElementTypeOfCollectionFromParameter() throws Exception {
         Method m = Foo.class.getMethod("convert", Collection.class,
                 Collection.class);
         assertEquals(Object.class, ReflectionUtil
@@ -184,7 +198,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfCollectionFromReturnType() throws Exception {
+    @Test
+    void testGetElementTypeOfCollectionFromReturnType() throws Exception {
         Method m = Foo.class.getMethod("convert", Collection.class,
                 Collection.class);
         assertEquals(String.class, ReflectionUtil
@@ -194,7 +209,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfListFromField() throws Exception {
+    @Test
+    void testGetElementTypeOfListFromField() throws Exception {
         Type clazz = ReflectionUtil.getField(Foo.class, "list")
                 .getGenericType();
         assertEquals(String.class, ReflectionUtil.getElementTypeOfList(clazz));
@@ -203,7 +219,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfListFromParameter() throws Exception {
+    @Test
+    void testGetElementTypeOfListFromParameter() throws Exception {
         Method m = Foo.class.getMethod("convert", List.class, List.class);
         assertEquals(Object.class, ReflectionUtil
                 .getElementTypeOfListFromParameterType(m, 0));
@@ -214,7 +231,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfListFromReturnType() throws Exception {
+    @Test
+    void testGetElementTypeOfListFromReturnType() throws Exception {
         Method m = Foo.class.getMethod("convert", List.class, List.class);
         assertEquals(String.class, ReflectionUtil
                 .getElementTypeOfListFromReturnType(m));
@@ -223,7 +241,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfSetFromField() throws Exception {
+    @Test
+    void testGetElementTypeOfSetFromField() throws Exception {
         Type clazz = ReflectionUtil.getField(Foo.class, "set").getGenericType();
         assertEquals(String.class, ReflectionUtil.getElementTypeOfSet(clazz));
     }
@@ -231,7 +250,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfSetFromParameter() throws Exception {
+    @Test
+    void testGetElementTypeOfSetFromParameter() throws Exception {
         Method m = Foo.class.getMethod("convert", Set.class, Set.class);
         assertEquals(Object.class, ReflectionUtil
                 .getElementTypeOfSetFromParameterType(m, 0));
@@ -242,7 +262,8 @@ public class ReflectionUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetElementTypeOfSetFromReturnType() throws Exception {
+    @Test
+    void testGetElementTypeOfSetFromReturnType() throws Exception {
         Method m = Foo.class.getMethod("convert", Set.class, Set.class);
         assertEquals(String.class, ReflectionUtil
                 .getElementTypeOfSetFromReturnType(m));

@@ -17,19 +17,21 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.JoinColumnNameAndReferencedColumnNameMandatoryRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
 public class JoinColumnNameAndReferencedColumnNameMandatoryRuntimeExceptionTest
-		extends TestCase {
+	 {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		JoinColumnNameAndReferencedColumnNameMandatoryRuntimeException ex = new JoinColumnNameAndReferencedColumnNameMandatoryRuntimeException(
 				"Hoge", "aaa", 2);
 		System.out.println(ex.getMessage());

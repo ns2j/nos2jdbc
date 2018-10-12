@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SystemPropertyNotFoundRuntimeExceptionTest {
+class SystemPropertyNotFoundRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        SystemPropertyNotFoundRuntimeException e = new SystemPropertyNotFoundRuntimeException(
-                "aaa");
+    void test() throws Exception {
+        SystemPropertyNotFoundRuntimeException e = new SystemPropertyNotFoundRuntimeException("aaa");
         assertEquals("aaa", e.getPropertyName());
         System.out.println(e.getMessage());
     }

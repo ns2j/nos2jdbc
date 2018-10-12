@@ -18,7 +18,8 @@ package org.seasar.extension.jdbc.handler;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.PropertyMapper;
 import org.seasar.extension.jdbc.ValueType;
@@ -35,14 +36,15 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class BeanListAutoResultSetHandlerTest extends TestCase {
+class BeanListAutoResultSetHandlerTest {
 
     /**
      * @throws Exception
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         Field field1 = Aaa.class.getDeclaredField("id");
@@ -80,7 +82,8 @@ public class BeanListAutoResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandleWithLimit() throws Exception {
+    @Test
+    void testHandleWithLimit() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         Field field1 = Aaa.class.getDeclaredField("id");

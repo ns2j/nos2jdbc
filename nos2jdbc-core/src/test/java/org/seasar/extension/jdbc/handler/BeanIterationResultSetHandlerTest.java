@@ -18,7 +18,8 @@ package org.seasar.extension.jdbc.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
@@ -34,7 +35,7 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class BeanIterationResultSetHandlerTest extends TestCase {
+class BeanIterationResultSetHandlerTest {
 
     int count;
 
@@ -45,7 +46,8 @@ public class BeanIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         BeanIterationResultSetHandler handler = new BeanIterationResultSetHandler(
                 AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
@@ -85,7 +87,8 @@ public class BeanIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithLimit() throws Exception {
+    @Test
+    void testHandle_WithLimit() throws Exception {
         BeanIterationResultSetHandler handler = new BeanIterationResultSetHandler(
                 AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 2,
@@ -117,7 +120,8 @@ public class BeanIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithExit() throws Exception {
+    @Test
+    void testHandle_WithExit() throws Exception {
         BeanIterationResultSetHandler handler = new BeanIterationResultSetHandler(
                 AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,

@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.mapper;
 
 import java.lang.reflect.Field;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
@@ -26,12 +27,13 @@ import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
  * @author higa
  * 
  */
-public class PropertyMapperImplTest extends TestCase {
+class PropertyMapperImplTest {
 
 	/**
 	 * @throws Exception
 	 */
-	public void testMap() throws Exception {
+	@Test
+    void testMap() throws Exception {
 		Field field = Aaa.class.getDeclaredField("id");
 		PropertyMapperImpl mapper = new PropertyMapperImpl(field, 0);
 		Aaa aaa = new Aaa();

@@ -24,7 +24,7 @@ import java.util.Date;
 
 import javax.annotation.Generated;
 
-import org.junit.runner.RunWith;
+//i import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;

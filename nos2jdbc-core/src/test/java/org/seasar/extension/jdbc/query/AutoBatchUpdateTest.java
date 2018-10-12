@@ -22,7 +22,8 @@ import java.util.List;
 
 import javax.persistence.OptimisticLockException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
@@ -46,14 +47,15 @@ import org.seasar.framework.mock.sql.MockPreparedStatement;
 /**
  * @author koichik
  */
-public class AutoBatchUpdateTest extends TestCase {
+class AutoBatchUpdateTest {
 
     private JdbcManagerImpl manager;
 
     private int addBatchCalled;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -77,8 +79,9 @@ public class AutoBatchUpdateTest extends TestCase {
         manager.setEntityMetaFactory(emFactory);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -87,7 +90,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -99,7 +103,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -111,7 +116,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -123,7 +129,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testIncludeVersion() {
+    @Test
+    void testIncludeVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -136,7 +143,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testIncrementVersions() {
+    @Test
+    void testIncrementVersions() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -150,7 +158,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testIncrementVersions_includeVersion() {
+    @Test
+    void testIncrementVersions_includeVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -165,7 +174,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testIncludes() {
+    @Test
+    void testIncludes() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -188,7 +198,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testExcludes() {
+    @Test
+    void testExcludes() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -211,7 +222,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget() {
+    @Test
+    void testPrepareTarget() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -226,7 +238,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_includesVersion() {
+    @Test
+    void testPrepareTarget_includesVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -243,7 +256,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_includes() {
+    @Test
+    void testPrepareTarget_includes() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -257,7 +271,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_excludes() {
+    @Test
+    void testPrepareTarget_excludes() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -272,7 +287,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareTarget_includesAndExcludes() {
+    @Test
+    void testPrepareTarget_includesAndExcludes() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -286,7 +302,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSetClause() {
+    @Test
+    void testPrepareSetClause() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -300,7 +317,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSetClause_includesVersion() {
+    @Test
+    void testPrepareSetClause_includesVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -314,7 +332,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareWhereClause() {
+    @Test
+    void testPrepareWhereClause() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -326,7 +345,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareWhereClause_inclduesVersion() {
+    @Test
+    void testPrepareWhereClause_inclduesVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -339,7 +359,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql() {
+    @Test
+    void testPrepareSql() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -353,7 +374,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_includesVersion() {
+    @Test
+    void testPrepareSql_includesVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -368,7 +390,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams() {
+    @Test
+    void testPrepareParams() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -408,7 +431,8 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareParams_includesVersion() {
+    @Test
+    void testPrepareParams_includesVersion() {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
@@ -449,23 +473,24 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute() throws Exception {
+    @Test
+    void testExecute() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -492,23 +517,24 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testExecute_includesVersion() throws Exception {
+    @Test
+    void testExecute_includesVersion() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -530,23 +556,24 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testOptimisticLock() throws Exception {
+    @Test
+    void testOptimisticLock() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 0 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -567,23 +594,24 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testOptimisticLock_includesVersion() throws Exception {
+    @Test
+    void testOptimisticLock_includesVersion() throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 0 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -607,24 +635,25 @@ public class AutoBatchUpdateTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testOptimisticLock_suppressOptimisticLockException()
+    @Test
+    void testOptimisticLock_suppressOptimisticLockException()
             throws Exception {
         List<Eee> entities = Arrays.asList(new Eee(1, "foo"),
                 new Eee(2, "bar"), new Eee(3, "baz"));
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
                 entities) {
 
-            @Override
+            
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 0 };
                     }
 
-                    @Override
+                    
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }

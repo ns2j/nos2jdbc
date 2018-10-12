@@ -32,7 +32,7 @@ import javax.persistence.Version;
  * 
  */
 @Entity
-public class Aaa {
+class Aaa {
 
     /** */
     @Id

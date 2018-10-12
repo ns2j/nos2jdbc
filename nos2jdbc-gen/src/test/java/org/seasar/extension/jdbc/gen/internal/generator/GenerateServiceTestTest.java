@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactoryImpl;
@@ -29,14 +28,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateServiceTestTest {
+class GenerateServiceTestTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
@@ -46,7 +44,7 @@ public class GenerateServiceTestTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConventionImpl pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -68,26 +66,22 @@ public class GenerateServiceTestTest {
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ServiceTestModelFactoryImpl serviceTestModelFactory = new ServiceTestModelFactoryImpl(
-                "hoge.service", "Service", "Test", "rootpackagename", "none", "");
-        ServiceTestModel model = serviceTestModelFactory
-                .getServiceTestModel(entityMeta);
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "java/servicetest.ftl", "UTF-8", false);
+        ServiceTestModelFactoryImpl serviceTestModelFactory = new ServiceTestModelFactoryImpl("hoge.service", "Service", "Test", "rootpackagename", "none", "");
+        ServiceTestModel model = serviceTestModelFactory.getServiceTestModel(entityMeta);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/servicetest.ftl", "UTF-8", false);
         generator.generate(context);
         String path = getClass().getName().replace(".", "/") + ".txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
-
     /**
      * 
      * @throws Exception
      */
-/*i    
+    /*i    
     @Test
-    public void test_s2junit4() throws Exception {
+    void test_s2junit4() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         ServiceTestModelFactoryImpl serviceTestModelFactory = new ServiceTestModelFactoryImpl(
                 "hoge.service", "Service", "Test", "rootpackagename", "none", "");

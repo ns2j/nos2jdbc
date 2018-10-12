@@ -18,19 +18,21 @@ package org.seasar.framework.util;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  * 
  */
-public class TigerMapUtilTest extends TestCase {
+class TigerMapUtilTest {
 
     /**
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testCreate() {
+    @Test
+    void testCreate() {
         Map map = MapUtil.createHashMap();
         assertTrue(map instanceof ConcurrentHashMap);
     }

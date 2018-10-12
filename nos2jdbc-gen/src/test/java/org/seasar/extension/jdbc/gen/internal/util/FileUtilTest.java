@@ -16,37 +16,33 @@
 package org.seasar.extension.jdbc.gen.internal.util;
 
 import java.io.File;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class FileUtilTest {
+class FileUtilTest {
 
     /**
      * 
      */
     @Test
-    public void testCreateJavaFile() {
+    void testCreateJavaFile() {
         File baseDir = new File("base");
         File javaFile = new File(baseDir, "aaa");
         javaFile = new File(javaFile, "bbb");
         javaFile = new File(javaFile, "Ccc.java");
-        assertEquals(javaFile, FileUtil.createJavaFile(baseDir, "aaa.bbb",
-                "Ccc"));
+        assertEquals(javaFile, FileUtil.createJavaFile(baseDir, "aaa.bbb", "Ccc"));
     }
 
     /**
      * 
      */
     @Test
-    public void testCreateJavaFile_defaultPackage() {
+    void testCreateJavaFile_defaultPackage() {
         File baseDir = new File("base");
-        assertEquals(new File(baseDir, "Ccc.java"), FileUtil.createJavaFile(
-                baseDir, null, "Ccc"));
+        assertEquals(new File(baseDir, "Ccc.java"), FileUtil.createJavaFile(baseDir, null, "Ccc"));
     }
 }

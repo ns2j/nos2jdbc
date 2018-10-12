@@ -19,7 +19,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ResultSetHandler;
@@ -50,12 +51,13 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author higa
  * 
  */
-public class SqlSelectImplTest extends TestCase {
+class SqlSelectImplTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -64,8 +66,9 @@ public class SqlSelectImplTest extends TestCase {
         manager.setPersistenceConvention(new PersistenceConventionImpl());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -74,7 +77,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerClass() {
+    @Test
+    void testCallerClass() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         assertSame(query, query.callerClass(getClass()));
@@ -84,7 +88,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testCallerMethodName() {
+    @Test
+    void testCallerMethodName() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         assertSame(query, query.callerMethodName("hoge"));
@@ -94,7 +99,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testMaxRows() {
+    @Test
+    void testMaxRows() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         assertSame(query, query.maxRows(100));
@@ -104,7 +110,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testFetchSize() {
+    @Test
+    void testFetchSize() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         assertSame(query, query.fetchSize(100));
@@ -114,7 +121,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testQueryTimeout() {
+    @Test
+    void testQueryTimeout() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         assertSame(query, query.queryTimeout(100));
@@ -124,7 +132,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testLimit() {
+    @Test
+    void testLimit() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         assertSame(query, query.limit(100));
@@ -134,7 +143,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testOffset() {
+    @Test
+    void testOffset() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         assertSame(query, query.offset(100));
@@ -144,7 +154,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepare_executedSql() {
+    @Test
+    void testPrepare_executedSql() {
         manager.setDialect(new PostgreDialect());
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
@@ -156,7 +167,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testConstructor_nullPointer() {
+    @Test
+    void testConstructor_nullPointer() {
         try {
             new SqlSelectImpl<AaaDto>(manager, AaaDto.class,
                     "select foo2, aaa_bbb from hoge where aaa = ?",
@@ -170,7 +182,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepare_nullBindVariable2() {
+    @Test
+    void testPrepare_nullBindVariable2() {
         try {
             new SqlSelectImpl<AaaDto>(manager, AaaDto.class,
                     "select foo2, aaa_bbb from hoge where aaa = ?",
@@ -184,11 +197,12 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetResultList() {
+    @Test
+    void testGetResultList() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -229,11 +243,12 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetResultList_prepare() {
+    @Test
+    void testGetResultList_prepare() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -263,12 +278,13 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetResultList_paging() {
+    @Test
+    void testGetResultList_paging() {
         manager.setDialect(new PostgreDialect());
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -304,13 +320,14 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetResultList_parameters() {
+    @Test
+    void testGetResultList_parameters() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class,
                 "select foo2, aaa_bbb from hoge where aaa = ? and bbb = ?",
                 "111", "222") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -346,14 +363,15 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetResultList_parameters_paging() {
+    @Test
+    void testGetResultList_parameters_paging() {
         manager.setDialect(new PostgreDialect());
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class,
                 "select foo2, aaa_bbb from hoge where aaa = ? and bbb = ?",
                 "111", "222") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -389,11 +407,12 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult() {
+    @Test
+    void testGetSingleResult() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -433,11 +452,12 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult_prepare() {
+    @Test
+    void testGetSingleResult_prepare() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -467,12 +487,13 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult_paging() {
+    @Test
+    void testGetSingleResult_paging() {
         manager.setDialect(new PostgreDialect());
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -507,11 +528,12 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult_simpleType() {
+    @Test
+    void testGetSingleResult_simpleType() {
         SqlSelectImpl<Integer> query = new SqlSelectImpl<Integer>(manager,
                 Integer.class, "select count(*) as cnt from aaa") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -537,11 +559,12 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult_nodata() {
+    @Test
+    void testGetSingleResult_nodata() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -568,11 +591,12 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult_nonunique() {
+    @Test
+    void testGetSingleResult_nonunique() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class, "select foo2, aaa_bbb from hoge where aaa = ?") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -610,13 +634,14 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult_parameters() {
+    @Test
+    void testGetSingleResult_parameters() {
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class,
                 "select foo2, aaa_bbb from hoge where aaa = ? and bbb = ?",
                 "111", "222") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -651,14 +676,15 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResult_parameters_paging() {
+    @Test
+    void testGetSingleResult_parameters_paging() {
         manager.setDialect(new PostgreDialect());
         SqlSelectImpl<AaaDto> query = new SqlSelectImpl<AaaDto>(manager,
                 AaaDto.class,
                 "select foo2, aaa_bbb from hoge where aaa = ? and bbb = ?",
                 "111", "222") {
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -693,7 +719,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql() {
+    @Test
+    void testPrepareSql() {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa");
         query.prepare("getResultList");
@@ -704,7 +731,8 @@ public class SqlSelectImplTest extends TestCase {
     /**
      * 
      */
-    public void testPrepareSql_getCount() {
+    @Test
+    void testPrepareSql_getCount() {
         SqlSelectImpl<Long> query = new SqlSelectImpl<Long>(manager,
                 Long.class, "select * from aaa");
         query.count = true;
@@ -718,7 +746,8 @@ public class SqlSelectImplTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testParams_valueType() throws Exception {
+    @Test
+    void testParams_valueType() throws Exception {
         SqlSelectImpl<Aaa> query = new SqlSelectImpl<Aaa>(manager, Aaa.class,
                 "select * from aaa where bbb = ? and ccc = ? and ddd = ?",
                 "hoge", lob("foo"), time(new Date()));

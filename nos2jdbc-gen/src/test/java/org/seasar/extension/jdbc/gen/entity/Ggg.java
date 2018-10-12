@@ -25,7 +25,7 @@ import javax.persistence.Id;
  * 
  */
 @Entity
-public class Ggg {
+class Ggg {
 
     /** */
     @Id

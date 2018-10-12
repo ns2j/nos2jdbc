@@ -17,13 +17,14 @@ package org.seasar.extension.jdbc.exception;
 
 import java.lang.reflect.Field;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class FieldDuplicatedRuntimeExceptionTest extends TestCase {
+class FieldDuplicatedRuntimeExceptionTest {
 
     @SuppressWarnings("unused")
     private String hoge;
@@ -32,7 +33,8 @@ public class FieldDuplicatedRuntimeExceptionTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testAll() throws Exception {
+    @Test
+    void testAll() throws Exception {
         Field field = getClass().getDeclaredField("hoge");
         FieldDuplicatedRuntimeException ex = new FieldDuplicatedRuntimeException(
                 field);

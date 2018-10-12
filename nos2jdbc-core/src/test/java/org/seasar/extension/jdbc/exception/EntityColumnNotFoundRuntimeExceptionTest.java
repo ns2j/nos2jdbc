@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.EntityColumnNotFoundRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class EntityColumnNotFoundRuntimeExceptionTest extends TestCase {
+class EntityColumnNotFoundRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		EntityColumnNotFoundRuntimeException ex = new EntityColumnNotFoundRuntimeException(
 				"hoge", "aaa");
 		System.out.println(ex.getMessage());

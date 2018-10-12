@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.handler;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.exception.SNonUniqueResultException;
 import org.seasar.extension.jdbc.handler.ObjectResultSetHandler;
@@ -29,7 +30,7 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class ObjectResultSetHandlerTest extends TestCase {
+class ObjectResultSetHandlerTest {
 
 	private static final String SQL = "select count(*) as cnt from aaa";
 
@@ -37,7 +38,8 @@ public class ObjectResultSetHandlerTest extends TestCase {
 	 * @throws Exception
 	 * 
 	 */
-	public void testHandle() throws Exception {
+	@Test
+    void testHandle() throws Exception {
 		ObjectResultSetHandler handler = new ObjectResultSetHandler(
 				ValueTypes.INTEGER, SQL);
 		MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -54,7 +56,8 @@ public class ObjectResultSetHandlerTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testHandle_nonUniqueResult() throws Exception {
+	@Test
+    void testHandle_nonUniqueResult() throws Exception {
 		ObjectResultSetHandler handler = new ObjectResultSetHandler(
 				ValueTypes.INTEGER, SQL);
 		MockResultSetMetaData rsMeta = new MockResultSetMetaData();

@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.sql;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 
  * @author higa
  */
-public class IllegalBoolExpressionRuntimeExceptionTest extends TestCase {
+class IllegalBoolExpressionRuntimeExceptionTest {
 
     /**
      * @throws Exception
      */
-    public void testGetMessage() throws Exception {
+    @Test
+    void testGetMessage() throws Exception {
         IllegalBoolExpressionRuntimeException ex = new IllegalBoolExpressionRuntimeException(
                 "hoge");
         assertEquals("hoge", ex.getExpression());

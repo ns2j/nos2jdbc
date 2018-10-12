@@ -18,9 +18,8 @@ package org.seasar.framework.beans.impl;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.IllegalDiiguRuntimeException;
 import org.seasar.framework.beans.MethodNotFoundRuntimeException;
@@ -30,12 +29,13 @@ import org.seasar.framework.beans.PropertyDesc;
  * @author higa
  * @author manhole
  */
-public class BeanDescImplTest extends TestCase {
+class BeanDescImplTest {
 
     /**
      * @throws Exception
      */
-    public void testPropertyDesc() throws Exception {
+    @Test
+    void testPropertyDesc() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         assertEquals(5, beanDesc.getPropertyDescSize());
         PropertyDesc propDesc = beanDesc.getPropertyDesc("aaa");
@@ -44,23 +44,19 @@ public class BeanDescImplTest extends TestCase {
         assertNotNull(propDesc.getReadMethod());
         assertNull(propDesc.getWriteMethod());
         assertNotNull(propDesc.getField());
-
         propDesc = beanDesc.getPropertyDesc("CCC");
         assertEquals("CCC", propDesc.getPropertyName());
         assertEquals(boolean.class, propDesc.getPropertyType());
         assertNotNull(propDesc.getReadMethod());
         assertNull(propDesc.getWriteMethod());
-
         propDesc = beanDesc.getPropertyDesc("eee");
         assertEquals("eee", propDesc.getPropertyName());
         assertEquals(String.class, propDesc.getPropertyType());
         assertNotNull(propDesc.getReadMethod());
         assertNotNull(propDesc.getWriteMethod());
-
         propDesc = beanDesc.getPropertyDesc("fff");
         assertEquals("fff", propDesc.getPropertyName());
         assertEquals(Boolean.class, propDesc.getPropertyType());
-
         assertFalse(beanDesc.hasPropertyDesc("hhh"));
         assertFalse(beanDesc.hasPropertyDesc("iii"));
     }
@@ -68,54 +64,54 @@ public class BeanDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testInvoke() throws Exception {
+    @Test
+    void testInvoke() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
-        assertEquals("1", new Integer(3), beanDesc.invoke(new MyBean(), "add",
-                new Object[] { new Integer(1), new Integer(2) }));
+        assertEquals(new Integer(3), beanDesc.invoke(new MyBean(), "add", new Object[] { new Integer(1), new Integer(2) }), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testInvoke2() throws Exception {
+    @Test
+    void testInvoke2() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
-        assertEquals("1", new Integer(3), beanDesc.invoke(new MyBean(), "add2",
-                new Object[] { new BigDecimal(1), new BigDecimal(2) }));
+        assertEquals(new Integer(3), beanDesc.invoke(new MyBean(), "add2", new Object[] { new BigDecimal(1), new BigDecimal(2) }), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testInvoke3() throws Exception {
+    @Test
+    void testInvoke3() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(Math.class);
-        assertEquals("1", new Integer(3), beanDesc.invoke(null, "max",
-                new Object[] { new Integer(1), new Integer(3) }));
-        assertEquals("2", new Long(3), beanDesc.invoke(null, "max",
-                new Object[] { new Long(1), new Long(3) }));
+        assertEquals(new Integer(3), beanDesc.invoke(null, "max", new Object[] { new Integer(1), new Integer(3) }), "1");
+        assertEquals(new Long(3), beanDesc.invoke(null, "max", new Object[] { new Long(1), new Long(3) }), "2");
     }
 
     /**
      * @throws Exception
      */
-    public void testInvoke4() throws Exception {
+    @Test
+    void testInvoke4() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(Math.class);
-        assertEquals("1", new Double(3), beanDesc.invoke(null, "ceil",
-                new Object[] { new BigDecimal(2.1) }));
+        assertEquals(new Double(3), beanDesc.invoke(null, "ceil", new Object[] { new BigDecimal(2.1) }), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testInvoke5() throws Exception {
+    @Test
+    void testInvoke5() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
-        assertEquals("1", new Integer("3"), beanDesc.invoke(new MyBean(),
-                "echo", new Object[] { new Double("3") }));
+        assertEquals(new Integer("3"), beanDesc.invoke(new MyBean(), "echo", new Object[] { new Double("3") }), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testInvokeForException() throws Exception {
+    @Test
+    void testInvokeForException() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         try {
             beanDesc.invoke(new MyBean(), "throwException", null);
@@ -128,41 +124,45 @@ public class BeanDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testNewInstance() throws Exception {
+    @Test
+    void testNewInstance() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(Integer.class);
         Integer i = new Integer(10);
         Object[] args = new Object[] { i };
-        assertEquals("1", i, beanDesc.newInstance(args));
+        assertEquals(i, beanDesc.newInstance(args), "1");
         Object[] args2 = new Object[] { "10" };
-        assertEquals("2", i, beanDesc.newInstance(args2));
+        assertEquals(i, beanDesc.newInstance(args2), "2");
     }
 
     /**
      * @throws Exception
      */
-    public void testNewInstance2() throws Exception {
+    @Test
+    void testNewInstance2() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(Integer.class);
         BigDecimal d = new BigDecimal(10);
         Object[] args = new Object[] { d };
-        assertEquals("1", new Integer(10), beanDesc.newInstance(args));
+        assertEquals(new Integer(10), beanDesc.newInstance(args), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testGetFields() throws Exception {
+    @Test
+    void testGetFields() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
-        assertTrue("1", beanDesc.hasField("HOGE"));
+        assertTrue(beanDesc.hasField("HOGE"), "1");
         Field field = beanDesc.getField("HOGE");
-        assertEquals("2", "hoge2", field.get(null));
-        assertTrue("3", beanDesc.hasField("aaa"));
-        assertFalse("4", beanDesc.hasField("aaA"));
+        assertEquals("hoge2", field.get(null), "2");
+        assertTrue(beanDesc.hasField("aaa"), "3");
+        assertFalse(beanDesc.hasField("aaA"), "4");
     }
 
     /**
      * @throws Exception
      */
-    public void testHasMethod() throws Exception {
+    @Test
+    void testHasMethod() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         assertTrue(beanDesc.hasMethod("getAaa"));
         assertFalse(beanDesc.hasMethod("getaaa"));
@@ -171,7 +171,8 @@ public class BeanDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetMethod() throws Exception {
+    @Test
+    void testGetMethod() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         Method method = beanDesc.getMethod("getAaa", new Class[0]);
         assertNotNull(method);
@@ -186,7 +187,8 @@ public class BeanDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetMethodNoException() throws Exception {
+    @Test
+    void testGetMethodNoException() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         Method method = beanDesc.getMethodNoException("getAaa", new Class[0]);
         assertNotNull(method);
@@ -198,27 +200,30 @@ public class BeanDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetMethodNames() throws Exception {
+    @Test
+    void testGetMethodNames() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(getClass());
         String[] names = beanDesc.getMethodNames();
         for (int i = 0; i < names.length; ++i) {
             System.out.println(names[i]);
         }
-        assertTrue("1", names.length > 0);
+        assertTrue(names.length > 0, "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testInvalidProperty() throws Exception {
+    @Test
+    void testInvalidProperty() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean2.class);
-        assertEquals("1", false, beanDesc.hasPropertyDesc("aaa"));
+        assertEquals(false, beanDesc.hasPropertyDesc("aaa"), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testAddFields() throws Exception {
+    @Test
+    void testAddFields() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         Field eee = beanDesc.getField("eee");
         assertTrue(eee.isAccessible());
@@ -231,7 +236,8 @@ public class BeanDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetMethodParameterNames() throws Exception {
+    @Test
+    void testGetMethodParameterNames() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         Method m = beanDesc.getMethod("echo", new Class[] { Integer.class });
         try {
@@ -246,6 +252,7 @@ public class BeanDescImplTest extends TestCase {
      * 
      */
     public static interface MyInterface {
+
         /**
          * 
          */
@@ -256,6 +263,7 @@ public class BeanDescImplTest extends TestCase {
      * 
      */
     public static interface MyInterface2 extends MyInterface {
+
         /**
          * 
          */
@@ -378,6 +386,7 @@ public class BeanDescImplTest extends TestCase {
      * 
      */
     public class MyBean2 {
+
         /**
          * 
          */
@@ -410,6 +419,7 @@ public class BeanDescImplTest extends TestCase {
      * 
      */
     public static class MyBean3 {
+
         /**
          * 
          */

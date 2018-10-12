@@ -15,24 +15,22 @@
  */
 package org.seasar.extension.jdbc.gen.exception;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class UnsupportedSqlTypeRuntimeExceptionTest {
+class UnsupportedSqlTypeRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        UnsupportedSqlTypeRuntimeException e = new UnsupportedSqlTypeRuntimeException(
-                1111);
+    void test() throws Exception {
+        UnsupportedSqlTypeRuntimeException e = new UnsupportedSqlTypeRuntimeException(1111);
         assertEquals(1111, e.getSqlType());
         System.out.println(e.getMessage());
     }

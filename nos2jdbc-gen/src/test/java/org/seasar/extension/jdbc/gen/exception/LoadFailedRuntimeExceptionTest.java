@@ -15,25 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.exception.LoadFailedRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class LoadFailedRuntimeExceptionTest {
+class LoadFailedRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        LoadFailedRuntimeException e = new LoadFailedRuntimeException(
-                new Exception(), "aaa", 1);
+    void test() throws Exception {
+        LoadFailedRuntimeException e = new LoadFailedRuntimeException(new Exception(), "aaa", 1);
         assertEquals("aaa", e.getDumpFilePath());
         assertEquals(1, e.getLineNumber());
         System.out.println(e.getMessage());

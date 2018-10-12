@@ -20,9 +20,8 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
-
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.IllegalPropertyRuntimeException;
 import org.seasar.framework.beans.PropertyDesc;
@@ -33,12 +32,13 @@ import org.seasar.framework.beans.impl.sub.MogeBeanFactory;
  * @author higa
  * 
  */
-public class PropertyDescImplTest extends TestCase {
+class PropertyDescImplTest {
 
     /**
      * @throws Exception
      */
-    public void testSetValue() throws Exception {
+    @Test
+    void testSetValue() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("fff");
@@ -49,7 +49,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetValue_null() throws Exception {
+    @Test
+    void testSetValue_null() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("fff");
@@ -60,7 +61,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetValue_notWritable() throws Exception {
+    @Test
+    void testSetValue_notWritable() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("aaa");
@@ -75,7 +77,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetValue_notWritableWithField() throws Exception {
+    @Test
+    void testSetValue_notWritableWithField() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("jjj");
@@ -90,13 +93,14 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetValue_invalidType() throws Exception {
+    @Test
+    void testSetValue_invalidType() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("url");
         try {
-        propDesc.setValue(myBean, new Object());
-        fail();
+            propDesc.setValue(myBean, new Object());
+            fail();
         } catch (IllegalPropertyRuntimeException expected) {
             expected.printStackTrace();
         }
@@ -105,7 +109,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetValue_notReable() throws Exception {
+    @Test
+    void testGetValue_notReable() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("iii");
@@ -120,7 +125,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetValue_notReableWithField() throws Exception {
+    @Test
+    void testGetValue_notReableWithField() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("kkk");
@@ -135,7 +141,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetIllegalValue() throws Exception {
+    @Test
+    void testSetIllegalValue() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("fff");
@@ -150,29 +157,32 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetBigDecimalValue() throws Exception {
+    @Test
+    void testSetBigDecimalValue() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("ggg");
         propDesc.setValue(myBean, new Integer(1));
-        assertEquals("1", new BigDecimal(1), myBean.getGgg());
+        assertEquals(new BigDecimal(1), myBean.getGgg(), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testSetTimestampValue() throws Exception {
+    @Test
+    void testSetTimestampValue() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("hhh");
         propDesc.setValue(myBean, "2000/11/8");
-        assertNotNull("1", myBean.getHhh());
+        assertNotNull(myBean.getHhh(), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testSetCalendarValue() throws Exception {
+    @Test
+    void testSetCalendarValue() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("cal");
@@ -184,7 +194,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetIntegerValueToString() throws Exception {
+    @Test
+    void testSetIntegerValueToString() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("str");
@@ -195,7 +206,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSetNullToString() throws Exception {
+    @Test
+    void testSetNullToString() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("str");
@@ -206,18 +218,20 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testConvertWithStringConstructor() throws Exception {
+    @Test
+    void testConvertWithStringConstructor() throws Exception {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("URL");
         propDesc.setValue(myBean, "http://www.seasar.org");
-        assertNotNull("1", myBean.getURL());
+        assertNotNull(myBean.getURL(), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testGetBeanDesc() throws Exception {
+    @Test
+    void testGetBeanDesc() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("URL");
         assertNotNull(propDesc.getBeanDesc());
@@ -226,7 +240,8 @@ public class PropertyDescImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPackagePrivateBean() throws Exception {
+    @Test
+    void testPackagePrivateBean() throws Exception {
         MogeBean moge = MogeBeanFactory.create("moge");
         BeanDesc beanDesc = new BeanDescImpl(moge.getClass());
         PropertyDesc propDesc = beanDesc.getPropertyDesc("name");
@@ -400,5 +415,4 @@ public class PropertyDescImplTest extends TestCase {
             this.cal = cal;
         }
     }
-
 }

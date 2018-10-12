@@ -22,7 +22,7 @@ import javax.persistence.Entity;
  * 
  */
 @Entity
-public class Ddd {
+class Ddd {
 
     /** */
     public String name;

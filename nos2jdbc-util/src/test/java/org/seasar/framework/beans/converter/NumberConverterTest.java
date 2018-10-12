@@ -17,18 +17,20 @@ package org.seasar.framework.beans.converter;
 
 import java.sql.Timestamp;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class NumberConverterTest extends TestCase {
+class NumberConverterTest {
 
     /**
      * @throws Exception
      */
-    public void testGetAsObject() throws Exception {
+    @Test
+    void testGetAsObject() throws Exception {
         NumberConverter converter = new NumberConverter("##0");
         assertEquals(new Long("100"), converter.getAsObject("100"));
     }
@@ -36,7 +38,8 @@ public class NumberConverterTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetAsString() throws Exception {
+    @Test
+    void testGetAsString() throws Exception {
         NumberConverter converter = new NumberConverter("##0");
         assertEquals("100", converter.getAsString(new Integer("100")));
     }
@@ -44,7 +47,8 @@ public class NumberConverterTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsTarget() throws Exception {
+    @Test
+    void testIsTarget() throws Exception {
         NumberConverter converter = new NumberConverter("##0");
         assertTrue(converter.isTarget(Integer.class));
         assertFalse(converter.isTarget(Timestamp.class));

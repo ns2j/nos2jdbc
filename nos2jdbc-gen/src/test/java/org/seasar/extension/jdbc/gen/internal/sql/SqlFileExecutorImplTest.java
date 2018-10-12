@@ -16,40 +16,34 @@
 package org.seasar.extension.jdbc.gen.internal.sql;
 
 import java.io.File;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class SqlFileExecutorImplTest {
+class SqlFileExecutorImplTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testIsTarget() throws Exception {
-        SqlFileExecutorImpl executor = new SqlFileExecutorImpl(
-                new StandardGenDialect(), "UTF-8", ';', null);
+    void testIsTarget() throws Exception {
+        SqlFileExecutorImpl executor = new SqlFileExecutorImpl(new StandardGenDialect(), "UTF-8", ';', null);
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCanonicalName("aaa.bbb.ccc");
         DatabaseDesc databaseDesc = new DatabaseDesc();
         databaseDesc.addTableDesc(tableDesc);
         File match = new File("aaa.bbb.ccc.sql");
         File unmatch = new File("xxx.sql");
-
         assertTrue(executor.isTarget(databaseDesc, match));
         assertTrue(executor.isTarget(databaseDesc, unmatch));
-
         databaseDesc.setFiltered(true);
-
         assertTrue(executor.isTarget(databaseDesc, match));
         assertFalse(executor.isTarget(databaseDesc, unmatch));
     }

@@ -15,20 +15,19 @@
  */
 package org.seasar.extension.jdbc.gen.internal.data;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class DumperImplTest {
+class DumperImplTest {
 
     private GenDialect dialect;
 
@@ -37,7 +36,7 @@ public class DumperImplTest {
     /**
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         dialect = new StandardGenDialect();
         dumper = new DumperImpl(dialect, "UTF-8");
@@ -47,18 +46,15 @@ public class DumperImplTest {
      * 
      */
     @Test
-    public void testBuildSqlWithOrderbyId() {
+    void testBuildSqlWithOrderbyId() {
         PrimaryKeyDesc primaryKeyDesc = new PrimaryKeyDesc();
         primaryKeyDesc.addColumnName("ID1");
         primaryKeyDesc.addColumnName("ID2");
-
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCatalogName("AAA");
         tableDesc.setSchemaName("BBB");
         tableDesc.setName("HOGE");
         tableDesc.setPrimaryKeyDesc(primaryKeyDesc);
-
-        assertEquals("select * from AAA.BBB.HOGE order by ID1, ID2", dumper
-                .buildSqlWithSort(tableDesc));
+        assertEquals("select * from AAA.BBB.HOGE order by ID1, ID2", dumper.buildSqlWithSort(tableDesc));
     }
 }

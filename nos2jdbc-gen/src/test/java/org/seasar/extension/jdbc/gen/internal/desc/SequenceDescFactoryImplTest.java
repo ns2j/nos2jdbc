@@ -16,14 +16,12 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import java.lang.reflect.Field;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.TableMeta;
@@ -35,15 +33,14 @@ import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
 @SequenceGenerator(name = "generator2", sequenceName = "bbb", initialValue = 10, allocationSize = 20)
-public class SequenceDescFactoryImplTest {
+class SequenceDescFactoryImplTest {
 
     private PropertyMetaFactoryImpl propertyMetaFactory;
 
@@ -76,7 +73,7 @@ public class SequenceDescFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -84,9 +81,7 @@ public class SequenceDescFactoryImplTest {
         propertyMetaFactory = new PropertyMetaFactoryImpl();
         propertyMetaFactory.setPersistenceConvention(pc);
         propertyMetaFactory.setColumnMetaFactory(cmf);
-        sequenceDescFactoryImpl = new SequenceDescFactoryImpl(
-                new OracleGenDialect(), new ValueTypeProviderImpl(
-                        new OracleDialect()));
+        sequenceDescFactoryImpl = new SequenceDescFactoryImpl(new OracleGenDialect(), new ValueTypeProviderImpl(new OracleDialect()));
     }
 
     /**
@@ -94,13 +89,11 @@ public class SequenceDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetSequenceDesc_sequenceId() throws Exception {
+    void testGetSequenceDesc_sequenceId() throws Exception {
         Field field = getClass().getDeclaredField("sequenceId");
         EntityMeta entityMeta = new EntityMeta();
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(
-                entityMeta, propertyMeta);
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(entityMeta, propertyMeta);
         assertNotNull(sequenceDesc);
         assertEquals("aaa", sequenceDesc.getSequenceName());
         assertEquals(10, sequenceDesc.getInitialValue());
@@ -113,14 +106,12 @@ public class SequenceDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetSequenceDesc_classAnnotatedSequenceId() throws Exception {
+    void testGetSequenceDesc_classAnnotatedSequenceId() throws Exception {
         Field field = getClass().getDeclaredField("classAnnotatedSequenceId");
         EntityMeta entityMeta = new EntityMeta();
         entityMeta.setEntityClass(getClass());
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(
-                entityMeta, propertyMeta);
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(entityMeta, propertyMeta);
         assertNotNull(sequenceDesc);
         assertEquals("bbb", sequenceDesc.getSequenceName());
         assertEquals(10, sequenceDesc.getInitialValue());
@@ -133,17 +124,15 @@ public class SequenceDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetSequenceDesc_autoId() throws Exception {
+    void testGetSequenceDesc_autoId() throws Exception {
         Field field = getClass().getDeclaredField("autoId");
         TableMeta tableMeta = new TableMeta();
         tableMeta.setName("HOGE");
         EntityMeta entityMeta = new EntityMeta();
         entityMeta.setEntityClass(getClass());
         entityMeta.setTableMeta(tableMeta);
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(
-                entityMeta, propertyMeta);
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(entityMeta, propertyMeta);
         assertNotNull(sequenceDesc);
         assertEquals("HOGE_AUTO_ID", sequenceDesc.getSequenceName());
         assertEquals(1, sequenceDesc.getInitialValue());
@@ -156,13 +145,11 @@ public class SequenceDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetSequenceDesc_assignId() throws Exception {
+    void testGetSequenceDesc_assignId() throws Exception {
         Field field = getClass().getDeclaredField("assignId");
         EntityMeta entityMeta = new EntityMeta();
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(
-                entityMeta, propertyMeta);
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(entityMeta, propertyMeta);
         assertNull(sequenceDesc);
     }
 
@@ -171,14 +158,11 @@ public class SequenceDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetSequenceDesc_nonId() throws Exception {
+    void testGetSequenceDesc_nonId() throws Exception {
         Field field = getClass().getDeclaredField("nonId");
         EntityMeta entityMeta = new EntityMeta();
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                field, entityMeta);
-        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(
-                entityMeta, propertyMeta);
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(field, entityMeta);
+        SequenceDesc sequenceDesc = sequenceDescFactoryImpl.getSequenceDesc(entityMeta, propertyMeta);
         assertNull(sequenceDesc);
     }
-
 }

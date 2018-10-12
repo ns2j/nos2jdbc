@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.sql.cache;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.sql.Node;
 import org.seasar.extension.sql.context.SqlContextImpl;
@@ -24,10 +25,11 @@ import org.seasar.extension.sql.context.SqlContextImpl;
  * @author higa
  * 
  */
-public class NodeCacheTest extends TestCase {
+class NodeCacheTest {
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         NodeCache.clear();
     }
 
@@ -38,7 +40,8 @@ public class NodeCacheTest extends TestCase {
     /**
      * 
      */
-    public void testGetNode() {
+    @Test
+    void testGetNode() {
         Node node = NodeCache.getNode(getPath(), null);
         assertNotNull(node);
         SqlContextImpl ctx = new SqlContextImpl();
@@ -50,7 +53,8 @@ public class NodeCacheTest extends TestCase {
     /**
      * 
      */
-    public void testGetNode_dbmsName() {
+    @Test
+    void testGetNode_dbmsName() {
         Node node = NodeCache.getNode(getPath(), "oracle");
         assertNotNull(node);
         SqlContextImpl ctx = new SqlContextImpl();
@@ -62,7 +66,8 @@ public class NodeCacheTest extends TestCase {
     /**
      * 
      */
-    public void testGetNode_disallowVariableSql() {
+    @Test
+    void testGetNode_disallowVariableSql() {
         Node variableNode = NodeCache.getNode(getPath(), null);
         assertNotNull(variableNode);
         assertSame(variableNode, NodeCache.getNode(getPath(), null));
@@ -82,7 +87,8 @@ public class NodeCacheTest extends TestCase {
     /**
      * 
      */
-    public void testGetNode_dbmsName_notFound() {
+    @Test
+    void testGetNode_dbmsName_notFound() {
         Node node = NodeCache.getNode(getPath(), "xxx");
         assertNotNull(node);
         SqlContextImpl ctx = new SqlContextImpl();
@@ -94,14 +100,16 @@ public class NodeCacheTest extends TestCase {
     /**
      * 
      */
-    public void testGetNode_notFound() {
+    @Test
+    void testGetNode_notFound() {
         assertNull(NodeCache.getNode("notFound", null));
     }
 
     /**
      * 
      */
-    public void testGetNode_withBom() {
+    @Test
+    void testGetNode_withBom() {
         Node node = NodeCache.getNode(getPath(), "bom");
         assertNotNull(node);
         SqlContextImpl ctx = new SqlContextImpl();

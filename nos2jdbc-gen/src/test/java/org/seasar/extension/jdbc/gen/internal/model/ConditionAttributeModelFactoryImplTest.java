@@ -15,19 +15,18 @@
  */
 package org.seasar.extension.jdbc.gen.internal.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.internal.model.ConditionAttributeModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.model.ConditionAttributeModel;
 import org.seasar.extension.jdbc.where.condition.NullableStringCondition;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ConditionAttributeModelFactoryImplTest {
+class ConditionAttributeModelFactoryImplTest {
 
     private ConditionAttributeModelFactoryImpl factory = new ConditionAttributeModelFactoryImpl();
 
@@ -39,12 +38,11 @@ public class ConditionAttributeModelFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetConditionAttributeModel() throws Exception {
+    void testGetConditionAttributeModel() throws Exception {
         PropertyMeta propertyMeta = new PropertyMeta();
         propertyMeta.setName("property");
         propertyMeta.setField(getClass().getDeclaredField("property"));
-        ConditionAttributeModel model = factory
-                .getConditionAttributeModel(propertyMeta);
+        ConditionAttributeModel model = factory.getConditionAttributeModel(propertyMeta);
         assertEquals("property", model.getName());
         assertEquals(String.class, model.getAttributeClass());
         assertEquals(NullableStringCondition.class, model.getConditionClass());

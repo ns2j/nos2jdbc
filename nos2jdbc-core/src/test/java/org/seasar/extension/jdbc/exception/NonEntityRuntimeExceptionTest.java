@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class NonEntityRuntimeExceptionTest extends TestCase {
+class NonEntityRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         NonEntityRuntimeException ex = new NonEntityRuntimeException(getClass());
         System.out.println(ex.getMessage());
         assertEquals(getClass(), ex.getTargetClass());

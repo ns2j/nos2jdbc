@@ -15,22 +15,21 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author taedium
  * 
  */
-public class TransactionRuntimeExceptionTest {
+class TransactionRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        TransactionRuntimeException e = new TransactionRuntimeException(
-                new Exception());
+    void test() throws Exception {
+        TransactionRuntimeException e = new TransactionRuntimeException(new Exception());
         System.out.println(e.getMessage());
     }
 }

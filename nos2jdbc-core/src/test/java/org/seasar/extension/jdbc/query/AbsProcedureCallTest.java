@@ -23,7 +23,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -50,7 +51,7 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class AbsProcedureCallTest extends TestCase {
+class AbsProcedureCallTest {
 
     private JdbcManagerImpl manager;
 
@@ -66,8 +67,9 @@ public class AbsProcedureCallTest extends TestCase {
 
     private int registeredCount;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -76,8 +78,9 @@ public class AbsProcedureCallTest extends TestCase {
         manager.setPersistenceConvention(new PersistenceConventionImpl());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
     }
@@ -86,16 +89,17 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSetupCallableStatement() throws Exception {
+    @Test
+    void testSetupCallableStatement() throws Exception {
         MyCall query = new MyCall(manager) {
 
-            @Override
+            
             protected void prepareOutParams(CallableStatement cs) {
                 preparedOutParams = true;
                 super.prepareOutParams(cs);
             }
 
-            @Override
+            
             protected void prepareInParams(PreparedStatement ps) {
                 preparedInParams = true;
                 super.prepareInParams(ps);
@@ -118,10 +122,11 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetCallableStatement() throws Exception {
+    @Test
+    void testGetCallableStatement() throws Exception {
         MyCall query = new MyCall(manager) {
 
-            @Override
+            
             protected void setupCallableStatement(CallableStatement cs) {
                 setupedCallableStatement = true;
                 super.setupCallableStatement(cs);
@@ -137,7 +142,8 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testMaxRows() throws Exception {
+    @Test
+    void testMaxRows() throws Exception {
         MyCall query = new MyCall(manager);
         assertSame(query, query.maxRows(100));
         assertEquals(100, query.maxRows);
@@ -147,7 +153,8 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testFetchSize() throws Exception {
+    @Test
+    void testFetchSize() throws Exception {
         MyCall query = new MyCall(manager);
         assertSame(query, query.fetchSize(10));
         assertEquals(10, query.fetchSize);
@@ -157,11 +164,12 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testPrepareOutParams() throws Exception {
+    @Test
+    void testPrepareOutParams() throws Exception {
         MyCall query = new MyCall(manager);
         MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-            @Override
+            
             public void registerOutParameter(int parameterIndex, int sqlType)
                     throws SQLException {
                 paramIndex = parameterIndex;
@@ -184,11 +192,12 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testHandleOutParams_nonParam_resultSet() throws Exception {
+    @Test
+    void testHandleOutParams_nonParam_resultSet() throws Exception {
         MyCall query = new MyCall(manager);
         MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-            @Override
+            
             public ResultSet getResultSet() throws SQLException {
                 MockResultSetMetaData rsMeta = new MockResultSetMetaData();
                 MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -224,12 +233,13 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testHandleOutParams_outParam_resultSet() throws Exception {
+    @Test
+    void testHandleOutParams_outParam_resultSet() throws Exception {
         manager.setDialect(new OracleDialect());
         MyCall query = new MyCall(manager);
         MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-            @Override
+            
             public Object getObject(int parameterIndex) throws SQLException {
                 MockResultSetMetaData rsMeta = new MockResultSetMetaData();
                 MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -265,12 +275,13 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testHandleOutParams_resultSet_notGenerics() throws Exception {
+    @Test
+    void testHandleOutParams_resultSet_notGenerics() throws Exception {
         manager.setDialect(new OracleDialect());
         MyCall query = new MyCall(manager);
         MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-            @Override
+            
             public Object getObject(int parameterIndex) throws SQLException {
                 MockResultSetMetaData rsMeta = new MockResultSetMetaData();
                 MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -308,11 +319,12 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testHandleOutParams_notResultSet() throws Exception {
+    @Test
+    void testHandleOutParams_notResultSet() throws Exception {
         MyCall query = new MyCall(manager);
         MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-            @Override
+            
             public String getString(int parameterIndex) throws SQLException {
                 return "aaa";
             }
@@ -333,15 +345,16 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCall() throws Exception {
+    @Test
+    void testCall() throws Exception {
         MyCall query = new MyCall(manager) {
 
-            @Override
+            
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-                    @Override
+                    
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa";
@@ -370,7 +383,8 @@ public class AbsProcedureCallTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testNonParam() throws Exception {
+    @Test
+    void testNonParam() throws Exception {
         MyCall query = new MyCall(manager);
         Field field = MyDto.class.getDeclaredField("aaaList_OUT");
         field.setAccessible(true);
@@ -391,7 +405,7 @@ public class AbsProcedureCallTest extends TestCase {
             super(jdbcManager);
         }
 
-        @Override
+        
         protected void prepare(String methodName) {
             prepareCallerClassAndMethodName(methodName);
         }

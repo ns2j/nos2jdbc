@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.OneToOneFKNotFoundRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class OneToOneFKNotFoundRuntimeExceptionTest extends TestCase {
+class OneToOneFKNotFoundRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testGetAll() {
+	@Test
+    void testGetAll() {
 		OneToOneFKNotFoundRuntimeException ex = new OneToOneFKNotFoundRuntimeException(
 				"Hoge", "aaa", "aaa_id");
 		System.out.println(ex.getMessage());

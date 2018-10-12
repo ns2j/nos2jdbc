@@ -15,30 +15,32 @@
  */
 package org.seasar.framework.beans.factory;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.framework.beans.BeanDesc;
 
 /**
  * @author higa
  */
-public class BeanDescFactoryTest extends TestCase {
+class BeanDescFactoryTest {
 
     /**
      * @throws Exception
      */
-    public void testGetBeanDesc() throws Exception {
+    @Test
+    void testGetBeanDesc() throws Exception {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(MyBean.class);
-        assertSame("1", beanDesc, BeanDescFactory.getBeanDesc(MyBean.class));
+        assertSame(beanDesc, BeanDescFactory.getBeanDesc(MyBean.class), "1");
     }
 
     /**
      * @throws Exception
      */
-    public void testClear() throws Exception {
+    @Test
+    void testClear() throws Exception {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(MyBean.class);
         BeanDescFactory.clear();
-        assertNotSame("1", beanDesc, BeanDescFactory.getBeanDesc(MyBean.class));
+        assertNotSame(beanDesc, BeanDescFactory.getBeanDesc(MyBean.class), "1");
     }
 
     /**
@@ -88,5 +90,4 @@ public class BeanDescFactoryTest extends TestCase {
         public void setEee(String eee) {
         }
     }
-
 }

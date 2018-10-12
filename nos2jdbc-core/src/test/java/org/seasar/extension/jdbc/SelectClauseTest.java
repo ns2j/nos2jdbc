@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class SelectClauseTest extends TestCase {
+class SelectClauseTest {
 
     /**
      * 
      */
-    public void testAddSql() {
+    @Test
+    void testAddSql() {
         SelectClause selectClause = new SelectClause();
         selectClause.addSql("T1_", "AAA_ID");
         assertEquals("T1_.AAA_ID as C1_", selectClause.toSql());
@@ -40,7 +42,8 @@ public class SelectClauseTest extends TestCase {
     /**
      * 
      */
-    public void testAddSql2() {
+    @Test
+    void testAddSql2() {
         SelectClause selectClause = new SelectClause();
         selectClause.addSql("count(*)");
         assertEquals("count(*)", selectClause.toSql());
@@ -51,7 +54,8 @@ public class SelectClauseTest extends TestCase {
     /**
      * 
      */
-    public void testGetLength() {
+    @Test
+    void testGetLength() {
         SelectClause selectClause = new SelectClause();
         assertEquals(0, selectClause.getLength());
         selectClause.addSql("T1_", "AAA_ID");

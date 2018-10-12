@@ -24,7 +24,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -47,12 +48,13 @@ import org.seasar.framework.mock.sql.MockDataSource;
 /**
  * @author koichik
  */
-public class AutoProcedureCallImplTest extends TestCase {
+class AutoProcedureCallImplTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -60,8 +62,9 @@ public class AutoProcedureCallImplTest extends TestCase {
         manager.setDialect(new StandardDialect());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -70,7 +73,8 @@ public class AutoProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_noArg() throws Exception {
+    @Test
+    void testPrepareParameter_noArg() throws Exception {
         AutoProcedureCallImpl query = new AutoProcedureCallImpl(manager, "hoge");
         query.prepare("execute");
         assertEquals("{call hoge()}", query.executedSql);
@@ -80,7 +84,8 @@ public class AutoProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType() throws Exception {
         AutoProcedureCallImpl query = new AutoProcedureCallImpl(manager,
                 "hoge", 1);
         query.prepare("execute");
@@ -94,7 +99,8 @@ public class AutoProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto() throws Exception {
+    @Test
+    void testPrepareParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.arg2 = "aaa";
         dto.arg3 = "bbb";
@@ -127,7 +133,8 @@ public class AutoProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_resultSet() throws Exception {
+    @Test
+    void testPrepareParameter_resultSet() throws Exception {
         MyDto2 dto = new MyDto2();
         dto.arg2 = "aaa";
         AutoProcedureCallImpl query = new AutoProcedureCallImpl(manager,
@@ -158,7 +165,8 @@ public class AutoProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_clob() throws Exception {
+    @Test
+    void testPrepareParameter_clob() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.largeName = "aaa";
         AutoProcedureCallImpl query = new AutoProcedureCallImpl(manager,
@@ -174,7 +182,8 @@ public class AutoProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_temporalType() throws Exception {
+    @Test
+    void testPrepareParameter_temporalType() throws Exception {
         MyDto4 dto = new MyDto4();
         Date date = new Date();
         dto.timestamp = date;
@@ -191,19 +200,20 @@ public class AutoProcedureCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCall() throws Exception {
+    @Test
+    void testCall() throws Exception {
         MyDto dto = new MyDto();
         dto.arg2 = "aaa";
         dto.arg3 = "bbb";
         AutoProcedureCallImpl query = new AutoProcedureCallImpl(manager,
                 "hoge", dto) {
 
-            @Override
+            
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-                    @Override
+                    
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

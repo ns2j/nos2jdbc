@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.entity.Bbb;
@@ -24,12 +25,13 @@ import org.seasar.extension.jdbc.entity.Bbb;
  * @author higa
  * 
  */
-public class MappingContextTest extends TestCase {
+class MappingContextTest {
 
     /**
      * 
      */
-    public void testSetAndGetCache() {
+    @Test
+    void testSetAndGetCache() {
         MappingContext ctx = new MappingContext(10);
         assertNull(ctx.getCache(Aaa.class, 1));
         Aaa aaa = new Aaa();
@@ -40,7 +42,8 @@ public class MappingContextTest extends TestCase {
     /**
      * 
      */
-    public void testCheckDone() {
+    @Test
+    void testCheckDone() {
         MappingContext ctx = new MappingContext(10);
         EntityMapper mapper = new MyEntityMapper();
         Aaa aaa = new Aaa();
@@ -55,7 +58,8 @@ public class MappingContextTest extends TestCase {
     /**
      * 
      */
-    public void testCheckDone_entityMapper() {
+    @Test
+    void testCheckDone_entityMapper() {
         MappingContext ctx = new MappingContext(10);
         EntityMapper mapper = new MyEntityMapper();
         Aaa aaa = new Aaa();
@@ -70,7 +74,8 @@ public class MappingContextTest extends TestCase {
     /**
      * 
      */
-    public void testClear() {
+    @Test
+    void testClear() {
         MappingContext ctx = new MappingContext(10);
         EntityMapper mapper = new MyEntityMapper();
         Aaa aaa = new Aaa();

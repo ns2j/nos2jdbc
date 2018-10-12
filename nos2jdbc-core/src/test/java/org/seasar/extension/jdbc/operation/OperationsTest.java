@@ -19,7 +19,8 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.Where;
 
@@ -30,12 +31,13 @@ import static org.seasar.extension.jdbc.where.EmployeeNames.*;
  * @author koichik
  * 
  */
-public class OperationsTest extends TestCase {
+class OperationsTest {
 
     /**
      * 
      */
-    public void test() {
+    @Test
+    void test() {
         Where w = and(eq(name(), "111"), ne(department().id(), 111),
                 isNull(id()), ge(hireDate(), new Date(0)));
         assertEquals(
@@ -59,7 +61,8 @@ public class OperationsTest extends TestCase {
     /**
      * 
      */
-    public void testIn() {
+    @Test
+    void testIn() {
         Where w = in(department().id(), 111, 222);
         assertEquals("department.id in (?, ?)", w.getCriteria());
 
@@ -77,7 +80,8 @@ public class OperationsTest extends TestCase {
     /**
      * 
      */
-    public void testIn_List() {
+    @Test
+    void testIn_List() {
         Where w = in(department().id(), Arrays.asList(111, 222));
         assertEquals("department.id in (?, ?)", w.getCriteria());
 
@@ -95,7 +99,8 @@ public class OperationsTest extends TestCase {
     /**
      * 
      */
-    public void testIn_Set() {
+    @Test
+    void testIn_Set() {
         Where w = in(department().name(), new LinkedHashSet<String>(Arrays
                 .asList("aaa", "bbb", "   ")))
                 .excludesWhitespace();
@@ -115,7 +120,8 @@ public class OperationsTest extends TestCase {
     /**
      * 
      */
-    public void testNotIn() {
+    @Test
+    void testNotIn() {
         Where w = notIn(department().id(), 111, 222);
         assertEquals("department.id not in (?, ?)", w.getCriteria());
 
@@ -133,7 +139,8 @@ public class OperationsTest extends TestCase {
     /**
      * 
      */
-    public void testNotIn_List() {
+    @Test
+    void testNotIn_List() {
         Where w = notIn(department().id(), Arrays.asList(111, 222));
         assertEquals("department.id not in (?, ?)", w.getCriteria());
 
@@ -151,7 +158,8 @@ public class OperationsTest extends TestCase {
     /**
      * 
      */
-    public void testNotIn_Set() {
+    @Test
+    void testNotIn_Set() {
         Where w = notIn(department().name(),
                 new LinkedHashSet<String>(Arrays.asList("aaa", "bbb", "   ")))
                 .excludesWhitespace();

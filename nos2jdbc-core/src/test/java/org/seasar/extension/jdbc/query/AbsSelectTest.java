@@ -23,7 +23,8 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.IterationCallback;
@@ -60,17 +61,18 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class AbsSelectTest extends TestCase {
+class AbsSelectTest {
 
     private JdbcManagerImpl manager;
 
     private JdbcContextImpl jdbcContext;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl() {
 
-            @Override
+            
             public JdbcContext getJdbcContext() {
                 jdbcContext = (JdbcContextImpl) super.getJdbcContext();
                 return jdbcContext;
@@ -85,8 +87,9 @@ public class AbsSelectTest extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
     }
@@ -95,7 +98,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testMaxRows() throws Exception {
+    @Test
+    void testMaxRows() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         assertSame(query, query.maxRows(100));
         assertEquals(100, query.maxRows);
@@ -105,7 +109,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testFetchSize() throws Exception {
+    @Test
+    void testFetchSize() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         assertSame(query, query.fetchSize(10));
         assertEquals(10, query.fetchSize);
@@ -115,7 +120,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testLimit() throws Exception {
+    @Test
+    void testLimit() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         assertSame(query, query.limit(9));
         assertEquals(9, query.limit);
@@ -125,7 +131,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testOffset() throws Exception {
+    @Test
+    void testOffset() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         assertSame(query, query.offset(8));
         assertEquals(8, query.offset);
@@ -135,7 +142,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testDisallowNoResult() throws Exception {
+    @Test
+    void testDisallowNoResult() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         assertSame(query, query.disallowNoResult());
         assertTrue(query.disallowNoResult);
@@ -145,7 +153,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testSetupPreparedStatement() throws Exception {
+    @Test
+    void testSetupPreparedStatement() throws Exception {
         String sql = "select * from aaa where id = ?";
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.fetchSize = 10;
@@ -165,7 +174,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetPreparedStatement() throws Exception {
+    @Test
+    void testGetPreparedStatement() throws Exception {
         String sql = "select * from aaa where id = ?";
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.fetchSize = 10;
@@ -196,7 +206,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testGetCursorPreparedStatement() throws Exception {
+    @Test
+    void testGetCursorPreparedStatement() throws Exception {
         String sql = "select * from aaa where id = ?";
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.fetchSize = 10;
@@ -226,7 +237,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultSet_noPaging() throws Exception {
+    @Test
+    void testCreateResultSet_noPaging() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         JdbcContext jdbcContext = manager.getJdbcContext();
         query.processResultSet(jdbcContext, new ResultSetHandler() {
@@ -244,7 +256,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultSet_limit_supportOffset() throws Exception {
+    @Test
+    void testCreateResultSet_limit_supportOffset() throws Exception {
         manager.setDialect(new PostgreDialect());
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.offset = 5;
@@ -265,7 +278,8 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultSet_limit_supportOffset_offsetOnly()
+    @Test
+    void testCreateResultSet_limit_supportOffset_offsetOnly()
             throws Exception {
         manager.setDialect(new PostgreDialect());
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
@@ -286,20 +300,21 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultSet_limit_supportOffset_offsetOnly_notSupportOffsetWithoutLimit()
+    @Test
+    void testCreateResultSet_limit_supportOffset_offsetOnly_notSupportOffsetWithoutLimit()
             throws Exception {
         manager.setDialect(new MysqlDialect());
         final MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class) {
 
             MockResultSet rs = new MockResultSet();
 
-            @Override
+            
             protected Object processCursorPreparedStatement(
                     final JdbcContext jdbcContext,
                     final StatementHandler<Object, PreparedStatement> handler) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public ResultSet executeQuery() throws SQLException {
                         rs.addRowData(new ArrayMap());
                         rs.addRowData(new ArrayMap());
@@ -333,19 +348,20 @@ public class AbsSelectTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateResultSet_notSupportOffset_cursorSupport()
+    @Test
+    void testCreateResultSet_notSupportOffset_cursorSupport()
             throws Exception {
         final MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class) {
 
             MockResultSet rs = new MockResultSet();
 
-            @Override
+            
             protected Object processCursorPreparedStatement(
                     final JdbcContext jdbcContext,
                     final StatementHandler<Object, PreparedStatement> handler) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
-                    @Override
+                    
                     public ResultSet executeQuery() throws SQLException {
                         rs.addRowData(new ArrayMap());
                         rs.addRowData(new ArrayMap());
@@ -380,17 +396,18 @@ public class AbsSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testGetResultListInternal() {
+    @Test
+    void testGetResultListInternal() {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createResultListResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanListResultSetHandler(baseClass, dialect, manager
                         .getPersistenceConvention(), "select * from aaa");
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -425,17 +442,18 @@ public class AbsSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testGetResultListInternal_noResult() {
+    @Test
+    void testGetResultListInternal_noResult() {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createResultListResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanListResultSetHandler(baseClass, dialect, manager
                         .getPersistenceConvention(), "select * from aaa");
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -462,17 +480,18 @@ public class AbsSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testGetResultListInternal_disallowNoResult() {
+    @Test
+    void testGetResultListInternal_disallowNoResult() {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createResultListResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanListResultSetHandler(baseClass, dialect, manager
                         .getPersistenceConvention(), "select * from aaa");
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -501,17 +520,18 @@ public class AbsSelectTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResultInternal() {
+    @Test
+    void testGetSingleResultInternal() {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createSingleResultResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanResultSetHandler(baseClass, dialect, manager
                         .getPersistenceConvention(), "select * from aaa");
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -543,17 +563,18 @@ public class AbsSelectTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResultInternal_noResult() {
+    @Test
+    void testGetSingleResultInternal_noResult() {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createSingleResultResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanResultSetHandler(baseClass, dialect, manager
                         .getPersistenceConvention(), "select * from aaa");
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -579,17 +600,18 @@ public class AbsSelectTest extends TestCase {
     /**
      * 
      */
-    public void testGetSingleResultInternal_disallowNoResult() {
+    @Test
+    void testGetSingleResultInternal_disallowNoResult() {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createSingleResultResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanResultSetHandler(baseClass, dialect, manager
                         .getPersistenceConvention(), "select * from aaa");
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -619,11 +641,12 @@ public class AbsSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testIterateInternal() {
+    @Test
+    void testIterateInternal() {
         final List<AaaDto> list = new ArrayList<AaaDto>();
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createIterateResultSetHandler(
                     IterationCallback callback) {
                 DbmsDialect dialect = jdbcManager.getDialect();
@@ -632,7 +655,7 @@ public class AbsSelectTest extends TestCase {
                         "select * from aaa", 0, callback);
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -673,11 +696,12 @@ public class AbsSelectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testIterateListInternal_noResult() {
+    @Test
+    void testIterateListInternal_noResult() {
         final List<AaaDto> list = new ArrayList<AaaDto>();
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
-            @Override
+            
             protected ResultSetHandler createIterateResultSetHandler(
                     IterationCallback callback) {
                 DbmsDialect dialect = jdbcManager.getDialect();
@@ -686,7 +710,7 @@ public class AbsSelectTest extends TestCase {
                         "select * from aaa", 0, callback);
             }
 
-            @Override
+            
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -718,7 +742,8 @@ public class AbsSelectTest extends TestCase {
     /**
      * 
      */
-    public void testConvertLimitSql() {
+    @Test
+    void testConvertLimitSql() {
         manager.setDialect(new PostgreDialect());
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.limit = 10;
@@ -729,7 +754,8 @@ public class AbsSelectTest extends TestCase {
     /**
      * 
      */
-    public void testConvertLimitSql_limitOffsetZero_db2() {
+    @Test
+    void testConvertLimitSql_limitOffsetZero_db2() {
         manager.setDialect(new Db2Dialect());
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         assertEquals("select * from aaa", query
@@ -739,7 +765,8 @@ public class AbsSelectTest extends TestCase {
     /**
      * 
      */
-    public void testConvertSql_supportOffsetWithoutLimit() {
+    @Test
+    void testConvertSql_supportOffsetWithoutLimit() {
         manager.setDialect(new PostgreDialect());
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.offset = 5;
@@ -750,7 +777,8 @@ public class AbsSelectTest extends TestCase {
     /**
      * 
      */
-    public void testConvertSql_notSupportLimit() {
+    @Test
+    void testConvertSql_notSupportLimit() {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.limit = 10;
         query.offset = 5;
@@ -769,23 +797,23 @@ public class AbsSelectTest extends TestCase {
             super(jdbcManager, baseClass);
         }
 
-        @Override
+        
         protected ResultSetHandler createResultListResultSetHandler() {
             return null;
         }
 
-        @Override
+        
         protected ResultSetHandler createSingleResultResultSetHandler() {
             return null;
         }
 
-        @Override
+        
         protected ResultSetHandler createIterateResultSetHandler(
                 IterationCallback<T, ?> callback) {
             return null;
         }
 
-        @Override
+        
         protected void prepare(String methodName) {
         }
     }

@@ -15,25 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.NextVersionExceededRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class NextVersionExceededRuntimeExceptionTest {
+class NextVersionExceededRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        NextVersionExceededRuntimeException e = new NextVersionExceededRuntimeException(
-                "aaa");
+    void test() throws Exception {
+        NextVersionExceededRuntimeException e = new NextVersionExceededRuntimeException("aaa");
         assertEquals("aaa", e.getDdlInfoFilePath());
         System.out.println(e.getMessage());
     }

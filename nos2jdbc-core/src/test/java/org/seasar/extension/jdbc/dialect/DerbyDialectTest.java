@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.dialect;
 
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.framework.exception.SQLRuntimeException;
 
@@ -25,14 +26,15 @@ import org.seasar.framework.exception.SQLRuntimeException;
  * @author taedium
  * 
  */
-public class DerbyDialectTest extends TestCase {
+class DerbyDialectTest {
 
     private DerbyDialect dialect = new DerbyDialect();
 
     /**
      * @throws Exception
      */
-    public void testIsUniqueConstraintViolation() throws Exception {
+    @Test
+    void testIsUniqueConstraintViolation() throws Exception {
         assertTrue(dialect
                 .isUniqueConstraintViolation(new Exception(
                         new SQLRuntimeException(SQLException.class

@@ -18,23 +18,21 @@ package org.seasar.extension.jdbc.gen.internal.arg;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ArgumentsBuilderTest {
+class ArgumentsBuilderTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testBuild() throws Exception {
+    void testBuild() throws Exception {
         MyBean bean = new MyBean();
         bean.setString("aaa");
         bean.setInteger(1);
@@ -43,7 +41,6 @@ public class ArgumentsBuilderTest {
         bean.setMyEnum(MyEnum.AAA);
         bean.setList(Arrays.asList("aaa", "bbb"));
         bean.setFile(new File("aaa"));
-
         ArgumentsBuilder builder = new ArgumentsBuilder(bean);
         List<String> args = builder.build();
         assertEquals(7, args.size());
@@ -53,15 +50,14 @@ public class ArgumentsBuilderTest {
         assertTrue(args.contains("ch=\\u0097"));
         assertTrue(args.contains("myEnum=AAA"));
         assertTrue(args.contains("list=['aaa','bbb']"));
-        assertTrue(args.contains("file='" + new File("aaa").getCanonicalPath()
-                + "'"));
+        assertTrue(args.contains("file='" + new File("aaa").getCanonicalPath() + "'"));
     }
 
     /**
      * 
      */
     @Test
-    public void testBuild_nullOrDefaultValue() {
+    void testBuild_nullOrDefaultValue() {
         MyBean bean = new MyBean();
         ArgumentsBuilder builder = new ArgumentsBuilder(bean);
         List<String> args = builder.build();
@@ -216,16 +212,14 @@ public class ArgumentsBuilderTest {
         public void setObject(Object object) {
             this.object = object;
         }
-
     }
 
     /** */
     public static enum MyEnum {
+
         /** */
-        AAA,
-        /** */
-        BBB,
-        /** */
-        CCC;
+        AAA, /** */
+        BBB, /** */
+        CCC
     }
 }

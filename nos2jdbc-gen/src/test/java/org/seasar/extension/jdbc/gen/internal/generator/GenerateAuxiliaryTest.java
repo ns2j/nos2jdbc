@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.generator;
 
 import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
@@ -29,14 +28,13 @@ import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.util.TextUtil;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class GenerateAuxiliaryTest {
+class GenerateAuxiliaryTest {
 
     private GeneratorImplStub generator;
 
@@ -44,7 +42,7 @@ public class GenerateAuxiliaryTest {
      * @throws Exception
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         generator = new GeneratorImplStub();
     }
@@ -54,27 +52,24 @@ public class GenerateAuxiliaryTest {
      * @throws Exception
      */
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         ColumnDesc no1 = new ColumnDesc();
         no1.setName("no1");
         no1.setDefinition("serial");
         no1.setIdentity(false);
         no1.setNullable(false);
         no1.setUnique(true);
-
         ColumnDesc no2 = new ColumnDesc();
         no2.setName("no2");
         no2.setDefinition(" BIGSERIAL ");
         no2.setIdentity(false);
         no2.setNullable(false);
         no2.setUnique(true);
-
         ColumnDesc name = new ColumnDesc();
         name.setName("name");
         name.setDefinition("varchar");
         name.setNullable(false);
         name.setUnique(false);
-
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCatalogName("AAA");
         tableDesc.setSchemaName("BBB");
@@ -83,11 +78,7 @@ public class GenerateAuxiliaryTest {
         tableDesc.addColumnDesc(no1);
         tableDesc.addColumnDesc(no2);
         tableDesc.addColumnDesc(name);
-
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(
-                new PostgreGenDialect(), new MockDataSource(),
-                SqlIdentifierCaseType.ORIGINALCASE,
-                SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactoryImpl factory = new TableModelFactoryImpl(new PostgreGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {
@@ -95,13 +86,9 @@ public class GenerateAuxiliaryTest {
             }
         };
         TableModel model = factory.getTableModel(tableDesc);
-
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "sql/create-auxiliary.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/create-auxiliary.ftl", "UTF-8", false);
         generator.generate(context);
-
         System.out.println(generator.getResult());
-
         String path = getClass().getName().replace(".", "/") + "_Create.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }
@@ -111,27 +98,24 @@ public class GenerateAuxiliaryTest {
      * @throws Exception
      */
     @Test
-    public void testDrop() throws Exception {
+    void testDrop() throws Exception {
         ColumnDesc no1 = new ColumnDesc();
         no1.setName("no1");
         no1.setDefinition("serial");
         no1.setIdentity(false);
         no1.setNullable(false);
         no1.setUnique(true);
-
         ColumnDesc no2 = new ColumnDesc();
         no2.setName("no2");
         no2.setDefinition(" BIGSERIAL ");
         no2.setIdentity(false);
         no2.setNullable(false);
         no2.setUnique(true);
-
         ColumnDesc name = new ColumnDesc();
         name.setName("name");
         name.setDefinition("varchar");
         name.setNullable(false);
         name.setUnique(false);
-
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCatalogName("AAA");
         tableDesc.setSchemaName("BBB");
@@ -140,11 +124,7 @@ public class GenerateAuxiliaryTest {
         tableDesc.addColumnDesc(no1);
         tableDesc.addColumnDesc(no2);
         tableDesc.addColumnDesc(name);
-
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(
-                new PostgreGenDialect(), new MockDataSource(),
-                SqlIdentifierCaseType.ORIGINALCASE,
-                SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactoryImpl factory = new TableModelFactoryImpl(new PostgreGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {
@@ -152,13 +132,9 @@ public class GenerateAuxiliaryTest {
             }
         };
         TableModel model = factory.getTableModel(tableDesc);
-
-        GenerationContext context = new GenerationContextImpl(model, new File(
-                "file"), "sql/drop-auxiliary.ftl", "UTF-8", false);
+        GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/drop-auxiliary.ftl", "UTF-8", false);
         generator.generate(context);
-
         System.out.println(generator.getResult());
-
         String path = getClass().getName().replace(".", "/") + "_Drop.txt";
         assertEquals(TextUtil.readUTF8(path), generator.getResult());
     }

@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class NonBooleanIsNullConditionRuntimeExceptionTest extends TestCase {
+class NonBooleanIsNullConditionRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         NonBooleanIsNullConditionRuntimeException ex = new NonBooleanIsNullConditionRuntimeException(
                 "is null", String.class);
         System.out.println(ex.getMessage());

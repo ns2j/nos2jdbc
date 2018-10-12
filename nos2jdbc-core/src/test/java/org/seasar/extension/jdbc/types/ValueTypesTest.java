@@ -21,7 +21,8 @@ import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.impl.ResultSetWrapper;
@@ -29,12 +30,13 @@ import org.seasar.extension.jdbc.impl.ResultSetWrapper;
 /**
  * 
  */
-public class ValueTypesTest extends TestCase {
+class ValueTypesTest {
 
     /**
      * @throws Exception
      */
-    public void testGetValueType() throws Exception {
+    @Test
+    void testGetValueType() throws Exception {
         assertEquals(ValueTypes.TIMESTAMP, ValueTypes
                 .getValueType(GregorianCalendar.class));
 
@@ -43,14 +45,16 @@ public class ValueTypesTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetValueType_unknownClass() throws Exception {
+    @Test
+    void testGetValueType_unknownClass() throws Exception {
         assertEquals(ValueTypes.OBJECT, ValueTypes.getValueType(getClass()));
     }
 
     /**
      * @throws Exception
      */
-    public void testUserDefineType() throws Exception {
+    @Test
+    void testUserDefineType() throws Exception {
         ValueType valueType = ValueTypes.getValueType(Authority.class);
         assertNotNull(valueType);
         assertTrue(valueType instanceof UserDefineType);
@@ -66,7 +70,8 @@ public class ValueTypesTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsSimpleType() throws Exception {
+    @Test
+    void testIsSimpleType() throws Exception {
         assertFalse(ValueTypes.isSimpleType(HashMap.class));
         assertTrue(ValueTypes.isSimpleType(byte[].class));
         assertTrue(ValueTypes.isSimpleType(InputStream.class));

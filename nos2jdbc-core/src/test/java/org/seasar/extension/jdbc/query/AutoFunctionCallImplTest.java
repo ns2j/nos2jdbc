@@ -24,7 +24,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -47,12 +48,13 @@ import org.seasar.framework.mock.sql.MockDataSource;
 /**
  * @author koichik
  */
-public class AutoFunctionCallImplTest extends TestCase {
+class AutoFunctionCallImplTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -60,8 +62,9 @@ public class AutoFunctionCallImplTest extends TestCase {
         manager.setDialect(new StandardDialect());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -70,7 +73,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareReturnParameter_simpleType() throws Exception {
         AutoFunctionCallImpl<Integer> query = new AutoFunctionCallImpl<Integer>(
                 manager, Integer.class, "hoge");
         query.prepare("getSingleResult");
@@ -84,7 +88,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_simpleType_temporalType()
+    @Test
+    void testPrepareReturnParameter_simpleType_temporalType()
             throws Exception {
         AutoFunctionCallImpl<Calendar> query = (AutoFunctionCallImpl<Calendar>) new AutoFunctionCallImpl<Calendar>(
                 manager, Calendar.class, "hoge").temporal(TemporalType.TIME);
@@ -99,7 +104,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_simpleList() throws Exception {
+    @Test
+    void testPrepareReturnParameter_simpleList() throws Exception {
         AutoFunctionCallImpl<Integer> query = new AutoFunctionCallImpl<Integer>(
                 manager, Integer.class, "hoge");
         query.resultList = true;
@@ -114,7 +120,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareReturnParameter_dtoList() throws Exception {
+    @Test
+    void testPrepareReturnParameter_dtoList() throws Exception {
         AutoFunctionCallImpl<MyDto3> query = new AutoFunctionCallImpl<MyDto3>(
                 manager, MyDto3.class, "hoge");
         query.resultList = true;
@@ -129,7 +136,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_simpleType() throws Exception {
+    @Test
+    void testPrepareParameter_simpleType() throws Exception {
         AutoFunctionCallImpl<String> query = new AutoFunctionCallImpl<String>(
                 manager, String.class, "hoge", 1);
         query.prepare("getSingleResult");
@@ -147,7 +155,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_dto() throws Exception {
+    @Test
+    void testPrepareParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.arg1 = "aaa";
         dto.arg2 = "bbb";
@@ -186,7 +195,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_resultSet() throws Exception {
+    @Test
+    void testPrepareParameter_resultSet() throws Exception {
         MyDto2 dto = new MyDto2();
         AutoFunctionCallImpl<Integer> query = new AutoFunctionCallImpl<Integer>(
                 manager, Integer.class, "hoge", dto);
@@ -208,7 +218,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_clob() throws Exception {
+    @Test
+    void testPrepareParameter_clob() throws Exception {
         MyDto3 dto = new MyDto3();
         dto.largeName = "aaa";
         AutoFunctionCallImpl<Integer> query = new AutoFunctionCallImpl<Integer>(
@@ -230,7 +241,8 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testPrepareParameter_temporalType() throws Exception {
+    @Test
+    void testPrepareParameter_temporalType() throws Exception {
         MyDto4 dto = new MyDto4();
         Calendar calendar = Calendar.getInstance();
         dto.time = calendar;
@@ -253,19 +265,20 @@ public class AutoFunctionCallImplTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testCall() throws Exception {
+    @Test
+    void testCall() throws Exception {
         MyDto dto = new MyDto();
         dto.arg1 = "aaa";
         dto.arg2 = "bbb";
         AutoFunctionCallImpl<String> query = new AutoFunctionCallImpl<String>(
                 manager, String.class, "hoge", dto) {
 
-            @Override
+            
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
-                    @Override
+                    
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

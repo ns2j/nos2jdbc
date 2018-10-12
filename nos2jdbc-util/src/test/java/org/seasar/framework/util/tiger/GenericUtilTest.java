@@ -25,18 +25,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author koichik
  * 
  */
-public class GenericUtilTest extends TestCase {
+class GenericUtilTest {
 
     /**
      * @throws Exception
      */
-    public void testClass() throws Exception {
+    @Test
+    void testClass() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Foo.class);
         assertNotNull(map);
         assertFalse(map.isEmpty());
@@ -46,7 +48,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGenericMethod() throws Exception {
+    @Test
+    void testGenericMethod() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Fuga.class);
         assertNotNull(map);
         assertTrue(map.isEmpty());
@@ -58,7 +61,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testArray() throws Exception {
+    @Test
+    void testArray() throws Exception {
         Method m1 = ArrayType.class.getMethod("arrayOfStringClass");
         Type t1 = m1.getGenericReturnType();
         Type t2 = GenericUtil.getElementTypeOfArray(t1);
@@ -69,7 +73,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testList() throws Exception {
+    @Test
+    void testList() throws Exception {
         Method m1 = ListType.class.getMethod("listOfString");
         Type t1 = m1.getGenericReturnType();
         assertTrue(GenericUtil.isTypeOf(t1, List.class));
@@ -91,7 +96,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testSet() throws Exception {
+    @Test
+    void testSet() throws Exception {
         Method m1 = SetType.class.getMethod("setOfString");
         Type t1 = m1.getGenericReturnType();
         assertTrue(GenericUtil.isTypeOf(t1, Set.class));
@@ -113,7 +119,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testMap() throws Exception {
+    @Test
+    void testMap() throws Exception {
         Method m1 = MapType.class.getMethod("mapOfStringToObject");
         Type t1 = m1.getGenericReturnType();
         assertTrue(GenericUtil.isTypeOf(t1, Map.class));
@@ -139,7 +146,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetTypeVariableMap() throws Exception {
+    @Test
+    void testGetTypeVariableMap() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(Hoge.class);
         assertEquals(4, map.size());
@@ -161,7 +169,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetActualClass() throws Exception {
+    @Test
+    void testGetActualClass() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(Hoge.class);
 
@@ -191,7 +200,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetActualElementClassOfArray() throws Exception {
+    @Test
+    void testGetActualElementClassOfArray() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(Hoge.class);
         Method method = Hoge.class.getMethod("array");
@@ -202,7 +212,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetActualElementClassOfList() throws Exception {
+    @Test
+    void testGetActualElementClassOfList() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(Hoge.class);
         Method method = Hoge.class.getMethod("list");
@@ -213,7 +224,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetActualElementClassOfSet() throws Exception {
+    @Test
+    void testGetActualElementClassOfSet() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(Hoge.class);
         Method method = Hoge.class.getMethod("set");
@@ -224,7 +236,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetActualKeyClassOfMap() throws Exception {
+    @Test
+    void testGetActualKeyClassOfMap() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(Hoge.class);
         Method method = Hoge.class.getMethod("map");
@@ -235,7 +248,8 @@ public class GenericUtilTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testGetActualValueClassOfMap() throws Exception {
+    @Test
+    void testGetActualValueClassOfMap() throws Exception {
         Map<TypeVariable<?>, Type> map = GenericUtil
                 .getTypeVariableMap(Hoge.class);
         Method method = Hoge.class.getMethod("map");

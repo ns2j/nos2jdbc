@@ -17,17 +17,15 @@ package org.seasar.extension.jdbc.gen.internal.dialect;
 
 import java.math.BigDecimal;
 import java.sql.Types;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect.ColumnType;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class MssqlGenDialectTest {
+class MssqlGenDialectTest {
 
     private MssqlGenDialect dialect = new MssqlGenDialect();
 
@@ -36,7 +34,7 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_int() throws Exception {
+    void testGetColumnType_int() throws Exception {
         ColumnType type = dialect.getColumnType("int identity", Types.OTHER);
         assertEquals("int", type.getColumnDefinition(0, 0, 0, null));
         assertEquals(Integer.class, type.getAttributeClass(0, 0, 0));
@@ -47,7 +45,7 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_bigint() throws Exception {
+    void testGetColumnType_bigint() throws Exception {
         ColumnType type = dialect.getColumnType("bigint identity", Types.OTHER);
         assertEquals("bigint", type.getColumnDefinition(0, 0, 0, null));
         assertEquals(Long.class, type.getAttributeClass(0, 0, 0));
@@ -58,9 +56,8 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_smallint() throws Exception {
-        ColumnType type = dialect.getColumnType("smallint identity",
-                Types.OTHER);
+    void testGetColumnType_smallint() throws Exception {
+        ColumnType type = dialect.getColumnType("smallint identity", Types.OTHER);
         assertEquals("smallint", type.getColumnDefinition(0, 0, 0, null));
         assertEquals(Short.class, type.getAttributeClass(0, 0, 0));
     }
@@ -70,9 +67,8 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_tinyint() throws Exception {
-        ColumnType type = dialect
-                .getColumnType("tinyint identity", Types.OTHER);
+    void testGetColumnType_tinyint() throws Exception {
+        ColumnType type = dialect.getColumnType("tinyint identity", Types.OTHER);
         assertEquals("tinyint", type.getColumnDefinition(0, 0, 0, null));
         assertEquals(Short.class, type.getAttributeClass(0, 0, 0));
     }
@@ -82,9 +78,8 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_decimal() throws Exception {
-        ColumnType type = dialect
-                .getColumnType("decimal identity", Types.OTHER);
+    void testGetColumnType_decimal() throws Exception {
+        ColumnType type = dialect.getColumnType("decimal identity", Types.OTHER);
         assertEquals("decimal(10,2)", type.getColumnDefinition(0, 10, 2, null));
         assertEquals(BigDecimal.class, type.getAttributeClass(0, 10, 2));
     }
@@ -94,9 +89,8 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_numeric() throws Exception {
-        ColumnType type = dialect
-                .getColumnType("numeric identity", Types.OTHER);
+    void testGetColumnType_numeric() throws Exception {
+        ColumnType type = dialect.getColumnType("numeric identity", Types.OTHER);
         assertEquals("numeric(10,2)", type.getColumnDefinition(0, 10, 2, null));
         assertEquals(BigDecimal.class, type.getAttributeClass(0, 10, 2));
     }
@@ -106,7 +100,7 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_nchar() throws Exception {
+    void testGetColumnType_nchar() throws Exception {
         ColumnType type = dialect.getColumnType("nchar", Types.OTHER);
         assertEquals("nchar(10)", type.getColumnDefinition(10, 0, 0, null));
         assertEquals(String.class, type.getAttributeClass(10, 0, 0));
@@ -117,7 +111,7 @@ public class MssqlGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetColumnType_ntext() throws Exception {
+    void testGetColumnType_ntext() throws Exception {
         ColumnType type = dialect.getColumnType("ntext", Types.OTHER);
         assertEquals("ntext", type.getColumnDefinition(10, 0, 0, null));
         assertEquals(String.class, type.getAttributeClass(10, 0, 0));

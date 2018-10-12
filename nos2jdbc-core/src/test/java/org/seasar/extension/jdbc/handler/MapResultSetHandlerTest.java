@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.handler;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.exception.SNonUniqueResultException;
@@ -31,14 +32,15 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class MapResultSetHandlerTest extends TestCase {
+class MapResultSetHandlerTest {
 
     /**
      * @throws Exception
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         MapResultSetHandler handler = new MapResultSetHandler(Map.class,
                 new StandardDialect(), new PersistenceConventionImpl(),
                 "select * from aaa");
@@ -63,7 +65,8 @@ public class MapResultSetHandlerTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testHandle_nonUniqueResult() throws Exception {
+    @Test
+    void testHandle_nonUniqueResult() throws Exception {
         String sql = "select * from aaa";
         MapResultSetHandler handler = new MapResultSetHandler(Map.class,
                 new StandardDialect(), new PersistenceConventionImpl(),

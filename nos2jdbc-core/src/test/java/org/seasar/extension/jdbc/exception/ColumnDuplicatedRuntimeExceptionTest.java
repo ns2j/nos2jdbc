@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.ColumnDuplicatedRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class ColumnDuplicatedRuntimeExceptionTest extends TestCase {
+class ColumnDuplicatedRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		ColumnDuplicatedRuntimeException ex = new ColumnDuplicatedRuntimeException(
 				"Hoge", "aaaName", "aaaName2", "aaa_name");
 		System.out.println(ex.getMessage());

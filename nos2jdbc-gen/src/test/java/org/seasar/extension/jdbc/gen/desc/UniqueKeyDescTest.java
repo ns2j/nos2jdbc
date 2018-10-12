@@ -16,36 +16,31 @@
 package org.seasar.extension.jdbc.gen.desc;
 
 import junitx.framework.Assert;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class UniqueKeyDescTest {
+class UniqueKeyDescTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testEquals() throws Exception {
+    void testEquals() throws Exception {
         UniqueKeyDesc uniqueKeyDesc = new UniqueKeyDesc();
         uniqueKeyDesc.addColumnName("AAA");
         UniqueKeyDesc uniqueKeyDesc2 = new UniqueKeyDesc();
         uniqueKeyDesc2.addColumnName("aaa");
         UniqueKeyDesc uniqueKeyDesc3 = new UniqueKeyDesc();
         uniqueKeyDesc3.addColumnName("XXX");
-
         assertEquals(uniqueKeyDesc, uniqueKeyDesc2);
         assertEquals(uniqueKeyDesc.hashCode(), uniqueKeyDesc2.hashCode());
-        Assert.assertNotEquals(uniqueKeyDesc, uniqueKeyDesc3);
-        Assert.assertNotEquals(uniqueKeyDesc.hashCode(), uniqueKeyDesc3
-                .hashCode());
+        assertNotEquals(uniqueKeyDesc, uniqueKeyDesc3);
+        assertNotEquals(uniqueKeyDesc.hashCode(), uniqueKeyDesc3.hashCode());
     }
-
 }

@@ -20,7 +20,8 @@ import java.io.IOException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -32,7 +33,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * 
  * @author koichik
  */
-public class SAXParserFactoryUtilTest extends TestCase {
+class SAXParserFactoryUtilTest {
 
     boolean included;
 
@@ -41,7 +42,8 @@ public class SAXParserFactoryUtilTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testSetXIncludeAware() throws Exception {
+    @Test
+    void testSetXIncludeAware() throws Exception {
         SAXParserFactory spf = SAXParserFactoryUtil.newInstance();
         SAXParserFactoryUtil.setXIncludeAware(spf, true);
         spf.setNamespaceAware(true);
@@ -52,7 +54,7 @@ public class SAXParserFactoryUtilTest extends TestCase {
         is.setSystemId("include.xml");
         parser.parse(is, new DefaultHandler() {
 
-            @Override
+            
             public void startElement(String uri, String localName,
                     String qName, Attributes attributes) throws SAXException {
                 if ("bar".equals(qName)) {
@@ -60,7 +62,7 @@ public class SAXParserFactoryUtilTest extends TestCase {
                 }
             }
 
-            @Override
+            
             public InputSource resolveEntity(String publicId, String systemId)
                     throws IOException, SAXException {
                 InputSource is = new InputSource(

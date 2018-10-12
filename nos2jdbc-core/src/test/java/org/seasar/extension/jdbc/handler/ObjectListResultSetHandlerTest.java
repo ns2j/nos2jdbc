@@ -17,7 +17,8 @@ package org.seasar.extension.jdbc.handler;
 
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.mock.sql.MockColumnMetaData;
@@ -29,14 +30,15 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class ObjectListResultSetHandlerTest extends TestCase {
+class ObjectListResultSetHandlerTest {
 
     /**
      * @throws Exception
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         ObjectListResultSetHandler handler = new ObjectListResultSetHandler(
                 ValueTypes.INTEGER);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -61,7 +63,8 @@ public class ObjectListResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandleWithLimit() throws Exception {
+    @Test
+    void testHandleWithLimit() throws Exception {
         ObjectListResultSetHandler handler = new ObjectListResultSetHandler(
                 ValueTypes.INTEGER, 1);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();

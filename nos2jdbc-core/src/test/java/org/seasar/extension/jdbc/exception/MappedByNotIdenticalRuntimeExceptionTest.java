@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.entity.Bbb;
 import org.seasar.extension.jdbc.entity.Ddd;
@@ -24,12 +25,13 @@ import org.seasar.extension.jdbc.entity.Ddd;
  * @author higa
  * 
  */
-public class MappedByNotIdenticalRuntimeExceptionTest extends TestCase {
+class MappedByNotIdenticalRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         MappedByNotIdenticalRuntimeException ex = new MappedByNotIdenticalRuntimeException(
                 "Bbb", "ddds", "bbb", Bbb.class, Ddd.class, "bbb", getClass());
         System.out.println(ex.getMessage());

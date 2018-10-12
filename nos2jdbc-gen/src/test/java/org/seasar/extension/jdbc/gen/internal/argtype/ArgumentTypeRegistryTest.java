@@ -17,27 +17,25 @@ package org.seasar.extension.jdbc.gen.internal.argtype;
 
 import java.io.File;
 import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ArgumentTypeRegistryTest {
+class ArgumentTypeRegistryTest {
 
     private BeanDesc beanDesc;
 
     /**
      * 
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         beanDesc = BeanDescFactory.getBeanDesc(MyBean.class);
     }
@@ -45,12 +43,10 @@ public class ArgumentTypeRegistryTest {
     /**
      * 
      */
-    @After
+    @AfterEach
     public void tearDown() {
-        ArgumentTypeRegistry.registerArgumentType(String.class,
-                StringType.class);
-        ArgumentTypeRegistry.registerCollectionArgumentType(List.class,
-                ListType.class);
+        ArgumentTypeRegistry.registerArgumentType(String.class, StringType.class);
+        ArgumentTypeRegistry.registerCollectionArgumentType(List.class, ListType.class);
     }
 
     /**
@@ -58,9 +54,8 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testGetArgumentType_String() throws Exception {
-        ArgumentType<String> argumentType = ArgumentTypeRegistry
-                .getArgumentType(beanDesc.getPropertyDesc("string"));
+    void testGetArgumentType_String() throws Exception {
+        ArgumentType<String> argumentType = ArgumentTypeRegistry.getArgumentType(beanDesc.getPropertyDesc("string"));
         assertNotNull(argumentType);
     }
 
@@ -69,9 +64,8 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testGetArgumentType_Integer() throws Exception {
-        ArgumentType<String> argumentType = ArgumentTypeRegistry
-                .getArgumentType(beanDesc.getPropertyDesc("integer"));
+    void testGetArgumentType_Integer() throws Exception {
+        ArgumentType<String> argumentType = ArgumentTypeRegistry.getArgumentType(beanDesc.getPropertyDesc("integer"));
         assertNotNull(argumentType);
     }
 
@@ -80,9 +74,8 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testGetArgumentType_MyEnum() throws Exception {
-        ArgumentType<String> argumentType = ArgumentTypeRegistry
-                .getArgumentType(beanDesc.getPropertyDesc("myEnum"));
+    void testGetArgumentType_MyEnum() throws Exception {
+        ArgumentType<String> argumentType = ArgumentTypeRegistry.getArgumentType(beanDesc.getPropertyDesc("myEnum"));
         assertNotNull(argumentType);
     }
 
@@ -91,9 +84,8 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testGetArgumentType_List() throws Exception {
-        ArgumentType<List<File>> argumentType = ArgumentTypeRegistry
-                .getArgumentType(beanDesc.getPropertyDesc("list"));
+    void testGetArgumentType_List() throws Exception {
+        ArgumentType<List<File>> argumentType = ArgumentTypeRegistry.getArgumentType(beanDesc.getPropertyDesc("list"));
         assertNotNull(argumentType);
     }
 
@@ -102,11 +94,9 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testRegisterArgumentType() throws Exception {
-        ArgumentTypeRegistry.registerArgumentType(String.class,
-                MyArgumentType.class);
-        ArgumentType<String> argumentType = ArgumentTypeRegistry
-                .getArgumentType(String.class);
+    void testRegisterArgumentType() throws Exception {
+        ArgumentTypeRegistry.registerArgumentType(String.class, MyArgumentType.class);
+        ArgumentType<String> argumentType = ArgumentTypeRegistry.getArgumentType(String.class);
         assertTrue(argumentType instanceof MyArgumentType);
         assertEquals("#aaa#", argumentType.toObject("aaa"));
         assertEquals("*aaa*", argumentType.toText("aaa"));
@@ -117,10 +107,9 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testDeregisterArgumentType() throws Exception {
+    void testDeregisterArgumentType() throws Exception {
         ArgumentTypeRegistry.deregisterArgumentType(String.class);
-        ArgumentType<String> argumentType = ArgumentTypeRegistry
-                .getArgumentType(String.class);
+        ArgumentType<String> argumentType = ArgumentTypeRegistry.getArgumentType(String.class);
         assertNull(argumentType);
     }
 
@@ -129,11 +118,9 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testRegisterCollectionArgumentType() throws Exception {
-        ArgumentTypeRegistry.registerCollectionArgumentType(List.class,
-                MyCollectionArgumentType.class);
-        ArgumentType<List<String>> argumentType = ArgumentTypeRegistry
-                .getCollectionArgumentType(List.class, String.class);
+    void testRegisterCollectionArgumentType() throws Exception {
+        ArgumentTypeRegistry.registerCollectionArgumentType(List.class, MyCollectionArgumentType.class);
+        ArgumentType<List<String>> argumentType = ArgumentTypeRegistry.getCollectionArgumentType(List.class, String.class);
         assertTrue(argumentType instanceof MyCollectionArgumentType);
     }
 
@@ -142,10 +129,9 @@ public class ArgumentTypeRegistryTest {
      * @throws Exception
      */
     @Test
-    public void testDeregisterCollectionArgumentType() throws Exception {
+    void testDeregisterCollectionArgumentType() throws Exception {
         ArgumentTypeRegistry.deregisterCollectionArgumentType(List.class);
-        ArgumentType<List<String>> argumentType = ArgumentTypeRegistry
-                .getCollectionArgumentType(List.class, String.class);
+        ArgumentType<List<String>> argumentType = ArgumentTypeRegistry.getCollectionArgumentType(List.class, String.class);
         assertNull(argumentType);
     }
 
@@ -223,17 +209,15 @@ public class ArgumentTypeRegistryTest {
         public void setList(List<File> list) {
             this.list = list;
         }
-
     }
 
     /** */
     public static enum MyEnum {
+
         /** */
-        AAA,
-        /** */
-        BBB,
-        /** */
-        CCC;
+        AAA, /** */
+        BBB, /** */
+        CCC
     }
 
     /**
@@ -268,5 +252,4 @@ public class ArgumentTypeRegistryTest {
             super(argumentType);
         }
     }
-
 }

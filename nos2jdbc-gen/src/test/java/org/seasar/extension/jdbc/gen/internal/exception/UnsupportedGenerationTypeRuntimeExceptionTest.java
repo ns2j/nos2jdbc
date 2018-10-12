@@ -16,25 +16,22 @@
 package org.seasar.extension.jdbc.gen.internal.exception;
 
 import javax.persistence.GenerationType;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class UnsupportedGenerationTypeRuntimeExceptionTest {
+class UnsupportedGenerationTypeRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        UnsupportedGenerationTypeRuntimeException e = new UnsupportedGenerationTypeRuntimeException(
-                GenerationType.IDENTITY, "aaa", "bbb");
+    void test() throws Exception {
+        UnsupportedGenerationTypeRuntimeException e = new UnsupportedGenerationTypeRuntimeException(GenerationType.IDENTITY, "aaa", "bbb");
         assertEquals("aaa", e.getEntityName());
         assertEquals("bbb", e.getPropertyName());
         System.out.println(e.getMessage());

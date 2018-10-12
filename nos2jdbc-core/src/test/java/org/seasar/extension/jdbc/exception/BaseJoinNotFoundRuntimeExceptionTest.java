@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.BaseJoinNotFoundRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class BaseJoinNotFoundRuntimeExceptionTest extends TestCase {
+class BaseJoinNotFoundRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		BaseJoinNotFoundRuntimeException ex = new BaseJoinNotFoundRuntimeException(
 				"Aaa", "xxx.ccc", "xxx");
 		System.out.println(ex.getMessage());

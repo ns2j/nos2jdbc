@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.util;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class QueryTokenizerTest extends TestCase {
+class QueryTokenizerTest {
 
     /**
      * 
      */
-    public void testNextToken() {
+    @Test
+    void testNextToken() {
         QueryTokenizer tokenizer = new QueryTokenizer("aaa=?");
         assertEquals(QueryTokenizer.TT_WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -38,7 +40,8 @@ public class QueryTokenizerTest extends TestCase {
     /**
      * 
      */
-    public void testNextToken_firstBlank() {
+    @Test
+    void testNextToken_firstBlank() {
         QueryTokenizer tokenizer = new QueryTokenizer(" aaa=?");
         assertEquals(QueryTokenizer.TT_OTHER, tokenizer.nextToken());
         assertEquals(" ", tokenizer.getToken());
@@ -52,7 +55,8 @@ public class QueryTokenizerTest extends TestCase {
     /**
      * 
      */
-    public void testNextToken_singleQuote() {
+    @Test
+    void testNextToken_singleQuote() {
         QueryTokenizer tokenizer = new QueryTokenizer("aaa='xxx' and bbb='yyy'");
         assertEquals(QueryTokenizer.TT_WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -78,7 +82,8 @@ public class QueryTokenizerTest extends TestCase {
     /**
      * 
      */
-    public void testNextToken_singleQuote_first() {
+    @Test
+    void testNextToken_singleQuote_first() {
         QueryTokenizer tokenizer = new QueryTokenizer("'xxx'='xxx'");
         assertEquals(QueryTokenizer.TT_QUOTE, tokenizer.nextToken());
         assertEquals("'xxx'", tokenizer.getToken());
@@ -92,7 +97,8 @@ public class QueryTokenizerTest extends TestCase {
     /**
      * 
      */
-    public void testNextToken_word() {
+    @Test
+    void testNextToken_word() {
         QueryTokenizer tokenizer = new QueryTokenizer("aaa");
         assertEquals(QueryTokenizer.TT_WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -102,7 +108,8 @@ public class QueryTokenizerTest extends TestCase {
     /**
      * 
      */
-    public void testNextToken_comma() {
+    @Test
+    void testNextToken_comma() {
         QueryTokenizer tokenizer = new QueryTokenizer("aaa, bbb");
         assertEquals(QueryTokenizer.TT_WORD, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());

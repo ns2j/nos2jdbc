@@ -18,11 +18,9 @@ package org.seasar.extension.jdbc.gen.internal.dialect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Types;
-
 import javax.persistence.Lob;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.dialect.PostgreDialect;
@@ -34,14 +32,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockConnection;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class PostgreGenDialectTest {
+class PostgreGenDialectTest {
 
     private PostgreGenDialect dialect = new PostgreGenDialect();
 
@@ -55,7 +52,7 @@ public class PostgreGenDialectTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -70,7 +67,7 @@ public class PostgreGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_integer() throws Exception {
+    void testGetSqlType_integer() throws Exception {
         SqlType type = dialect.getSqlType(Types.INTEGER);
         assertEquals("serial", type.getDataType(10, 0, 0, true));
         assertEquals("integer", type.getDataType(10, 0, 0, false));
@@ -81,7 +78,7 @@ public class PostgreGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_bigint() throws Exception {
+    void testGetSqlType_bigint() throws Exception {
         SqlType type = dialect.getSqlType(Types.BIGINT);
         assertEquals("bigserial", type.getDataType(10, 0, 0, true));
         assertEquals("bigint", type.getDataType(10, 0, 0, false));
@@ -92,7 +89,7 @@ public class PostgreGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_clob() throws Exception {
+    void testGetSqlType_clob() throws Exception {
         SqlType type = dialect.getSqlType(Types.CLOB);
         assertEquals("text", type.getDataType(10, 0, 0, false));
     }
@@ -102,7 +99,7 @@ public class PostgreGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlType_blob() throws Exception {
+    void testGetSqlType_blob() throws Exception {
         SqlType type = dialect.getSqlType(Types.BLOB);
         assertEquals("oid", type.getDataType(10, 0, 0, false));
         assertEquals(PostgreGenDialect.PostgreBlobType.class, type.getClass());
@@ -113,11 +110,9 @@ public class PostgreGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testGetSqlTypeWithPropertyMeta() throws Exception {
-        ValueTypeProviderImpl valueTypeProvider = new ValueTypeProviderImpl(
-                new PostgreDialect());
-        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(
-                getClass().getDeclaredField("lob"), new EntityMeta());
+    void testGetSqlTypeWithPropertyMeta() throws Exception {
+        ValueTypeProviderImpl valueTypeProvider = new ValueTypeProviderImpl(new PostgreDialect());
+        PropertyMeta propertyMeta = propertyMetaFactory.createPropertyMeta(getClass().getDeclaredField("lob"), new EntityMeta());
         SqlType sqlType = dialect.getSqlType(valueTypeProvider, propertyMeta);
         assertEquals("text", sqlType.getDataType(10, 0, 0, false));
     }
@@ -127,7 +122,7 @@ public class PostgreGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testCreateSqlBlockContext() throws Exception {
+    void testCreateSqlBlockContext() throws Exception {
         SqlBlockContext context = dialect.createSqlBlockContext();
         assertFalse(context.isInSqlBlock());
         context.addKeyword("$$");
@@ -141,12 +136,10 @@ public class PostgreGenDialectTest {
      * @throws Exception
      */
     @Test
-    public void testPostgreBlobType_bindEmptyValue() throws Exception {
+    void testPostgreBlobType_bindEmptyValue() throws Exception {
         Connection conn = new MockConnection();
-        PreparedStatement ps = conn
-                .prepareStatement("select * from a where b = ?");
-        PostgreGenDialect.PostgreBlobType blobType = new PostgreGenDialect.PostgreBlobType(
-                "oid");
+        PreparedStatement ps = conn.prepareStatement("select * from a where b = ?");
+        PostgreGenDialect.PostgreBlobType blobType = new PostgreGenDialect.PostgreBlobType("oid");
         blobType.bindValue(ps, 1, "");
     }
 }

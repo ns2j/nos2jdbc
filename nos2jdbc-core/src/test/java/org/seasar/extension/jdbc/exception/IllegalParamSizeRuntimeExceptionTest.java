@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class IllegalParamSizeRuntimeExceptionTest extends TestCase {
+class IllegalParamSizeRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         IllegalParamSizeRuntimeException ex = new IllegalParamSizeRuntimeException(
                 1, 2);
         System.out.println(ex.getMessage());

@@ -19,30 +19,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ListTypeTest {
+class ListTypeTest {
 
-    private ListType<String> stringListType = new ListType<String>(
-            new StringType());
+    private ListType<String> stringListType = new ListType<String>(new StringType());
 
-    private ListType<Integer> numberListType = new ListType<Integer>(
-            new NumberType<Integer>(Integer.class));
+    private ListType<Integer> numberListType = new ListType<Integer>(new NumberType<Integer>(Integer.class));
 
     /**
      * 
      */
     @Test
-    public void testToObject_stringValue() {
-        Collection<? extends String> collection = stringListType
-                .toObject("['aaa','bbb']");
+    void testToObject_stringValue() {
+        Collection<? extends String> collection = stringListType.toObject("['aaa','bbb']");
         assertEquals(2, collection.size());
         Iterator<? extends String> it = collection.iterator();
         assertEquals("aaa", it.next());
@@ -53,9 +48,8 @@ public class ListTypeTest {
      * 
      */
     @Test
-    public void testToObject_integerValue() {
-        Collection<? extends Integer> collection = numberListType
-                .toObject("[1,2]");
+    void testToObject_integerValue() {
+        Collection<? extends Integer> collection = numberListType.toObject("[1,2]");
         assertEquals(2, collection.size());
         Iterator<? extends Integer> it = collection.iterator();
         assertEquals(new Integer(1), it.next());
@@ -66,7 +60,7 @@ public class ListTypeTest {
      * 
      */
     @Test
-    public void testToObject_empty() {
+    void testToObject_empty() {
         Collection<? extends String> collection = stringListType.toObject("[]");
         assertTrue(collection.isEmpty());
     }
@@ -75,7 +69,7 @@ public class ListTypeTest {
      * 
      */
     @Test
-    public void testToText() {
+    void testToText() {
         List<String> list = new ArrayList<String>();
         list.add("aaa");
         list.add("bbb");
@@ -87,10 +81,9 @@ public class ListTypeTest {
      * 
      */
     @Test
-    public void testToText_empty() {
+    void testToText_empty() {
         List<String> list = new ArrayList<String>();
         String s = stringListType.toText(list);
         assertEquals("[]", s);
     }
-
 }

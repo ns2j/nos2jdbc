@@ -15,15 +15,14 @@
  */
 package org.seasar.extension.jdbc.gen.internal.argtype;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class ClassTypeTest {
+class ClassTypeTest {
 
     private ClassType classType = new ClassType();
 
@@ -31,7 +30,7 @@ public class ClassTypeTest {
      * 
      */
     @Test
-    public void testToObject() {
+    void testToObject() {
         assertSame(Aaa.class, classType.toObject(Aaa.class.getName()));
     }
 
@@ -39,10 +38,8 @@ public class ClassTypeTest {
      * 
      */
     @Test
-    public void testToText() {
-        assertEquals(
-                "org.seasar.extension.jdbc.gen.internal.argtype.ClassTypeTest$Aaa",
-                classType.toText(Aaa.class));
+    void testToText() {
+        assertEquals("org.seasar.extension.jdbc.gen.internal.argtype.ClassTypeTest$Aaa", classType.toText(Aaa.class));
     }
 
     /**

@@ -18,7 +18,8 @@ package org.seasar.extension.jdbc.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
@@ -32,7 +33,7 @@ import org.seasar.framework.util.ArrayMap;
  * @author higa
  * 
  */
-public class ObjectIterationResultSetHandlerTest extends TestCase {
+class ObjectIterationResultSetHandlerTest {
 
     int count;
 
@@ -43,7 +44,8 @@ public class ObjectIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle() throws Exception {
+    @Test
+    void testHandle() throws Exception {
         ObjectIterationResultSetHandler handler = new ObjectIterationResultSetHandler(
                 ValueTypes.INTEGER, 0,
                 new IterationCallback<Integer, Integer>() {
@@ -71,7 +73,8 @@ public class ObjectIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithLimit() throws Exception {
+    @Test
+    void testHandle_WithLimit() throws Exception {
         ObjectIterationResultSetHandler handler = new ObjectIterationResultSetHandler(
                 ValueTypes.INTEGER, 2,
                 new IterationCallback<Integer, Integer>() {
@@ -97,7 +100,8 @@ public class ObjectIterationResultSetHandlerTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testHandle_WithExit() throws Exception {
+    @Test
+    void testHandle_WithExit() throws Exception {
         ObjectIterationResultSetHandler handler = new ObjectIterationResultSetHandler(
                 ValueTypes.INTEGER, 0,
                 new IterationCallback<Integer, Integer>() {

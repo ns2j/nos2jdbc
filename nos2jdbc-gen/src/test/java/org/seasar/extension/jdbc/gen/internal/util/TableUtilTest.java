@@ -15,35 +15,29 @@
  */
 package org.seasar.extension.jdbc.gen.internal.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class TableUtilTest {
+class TableUtilTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void testBuildCanonicalTableName() throws Exception {
+    void testBuildCanonicalTableName() throws Exception {
         GenDialect dialect = new StandardGenDialect();
-        assertEquals("aaa.bbb.ccc", TableUtil.buildCanonicalTableName(dialect,
-                "AAA", "BBB", "CCC"));
-        assertEquals("bbb.ccc", TableUtil.buildCanonicalTableName(dialect,
-                null, "BBB", "CCC"));
-        assertEquals("aaa..ccc", TableUtil.buildCanonicalTableName(dialect,
-                "AAA", null, "CCC"));
-        assertEquals("ccc", TableUtil.buildCanonicalTableName(dialect, null,
-                null, "CCC"));
-        assertEquals("aaa.bbb.ccc", TableUtil.buildCanonicalTableName(dialect,
-                "\"AAA\"", "\"BBB\"", "\"CCC\""));
+        assertEquals("aaa.bbb.ccc", TableUtil.buildCanonicalTableName(dialect, "AAA", "BBB", "CCC"));
+        assertEquals("bbb.ccc", TableUtil.buildCanonicalTableName(dialect, null, "BBB", "CCC"));
+        assertEquals("aaa..ccc", TableUtil.buildCanonicalTableName(dialect, "AAA", null, "CCC"));
+        assertEquals("ccc", TableUtil.buildCanonicalTableName(dialect, null, null, "CCC"));
+        assertEquals("aaa.bbb.ccc", TableUtil.buildCanonicalTableName(dialect, "\"AAA\"", "\"BBB\"", "\"CCC\""));
     }
 
     /**
@@ -51,13 +45,10 @@ public class TableUtilTest {
      * @throws Exception
      */
     @Test
-    public void testFullTableName() throws Exception {
-        assertEquals("AAA.BBB.CCC", TableUtil.buildFullTableName("AAA", "BBB",
-                "CCC"));
-        assertEquals("BBB.CCC", TableUtil
-                .buildFullTableName(null, "BBB", "CCC"));
-        assertEquals("AAA.CCC", TableUtil
-                .buildFullTableName("AAA", null, "CCC"));
+    void testFullTableName() throws Exception {
+        assertEquals("AAA.BBB.CCC", TableUtil.buildFullTableName("AAA", "BBB", "CCC"));
+        assertEquals("BBB.CCC", TableUtil.buildFullTableName(null, "BBB", "CCC"));
+        assertEquals("AAA.CCC", TableUtil.buildFullTableName("AAA", null, "CCC"));
         assertEquals("CCC", TableUtil.buildFullTableName(null, null, "CCC"));
     }
 
@@ -66,25 +57,22 @@ public class TableUtilTest {
      * @throws Exception
      */
     @Test
-    public void testSplitCanonicalTableName() throws Exception {
+    void testSplitCanonicalTableName() throws Exception {
         String[] elements = TableUtil.splitCanonicalTableName("aaa.bbb.ccc");
         assertEquals(3, elements.length);
         assertEquals("aaa", elements[0]);
         assertEquals("bbb", elements[1]);
         assertEquals("ccc", elements[2]);
-
         elements = TableUtil.splitCanonicalTableName("bbb.ccc");
         assertEquals(3, elements.length);
         assertEquals(null, elements[0]);
         assertEquals("bbb", elements[1]);
         assertEquals("ccc", elements[2]);
-
         elements = TableUtil.splitCanonicalTableName("aaa..ccc");
         assertEquals(3, elements.length);
         assertEquals("aaa", elements[0]);
         assertEquals(null, elements[1]);
         assertEquals("ccc", elements[2]);
-
         elements = TableUtil.splitCanonicalTableName("ccc");
         assertEquals(3, elements.length);
         assertEquals(null, elements[0]);

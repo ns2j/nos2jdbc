@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.where;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.ConditionType;
 
@@ -24,12 +25,13 @@ import static org.seasar.extension.jdbc.where.EmployeeNames.*;
 /**
  * @author koichik
  */
-public class MultiValueOperatorTest extends TestCase {
+class MultiValueOperatorTest {
 
     /**
      * 
      */
-    public void test() {
+    @Test
+    void test() {
         ComposableWhere w = new MultiValueOperator(ConditionType.IN,
                 department().name(), "111", "222", "333");
         assertEquals("department.name in (?, ?, ?)", w.getCriteria());
@@ -50,7 +52,8 @@ public class MultiValueOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testNull() {
+    @Test
+    void testNull() {
         ComposableWhere w = new MultiValueOperator(ConditionType.IN, name());
         assertEquals("", w.getCriteria());
 
@@ -64,7 +67,8 @@ public class MultiValueOperatorTest extends TestCase {
     /**
      * 
      */
-    public void testExcludeWhitespace() {
+    @Test
+    void testExcludeWhitespace() {
         ComposableWhere w = new MultiValueOperator(ConditionType.IN, name(),
                 "   ", "   ").excludesWhitespace();
         assertEquals("", w.getCriteria());

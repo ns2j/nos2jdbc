@@ -17,18 +17,20 @@ package org.seasar.extension.jdbc.exception;
 
 import org.seasar.extension.jdbc.exception.JoinColumnNotFoundRuntimeException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class JoinColumnNotFoundRuntimeExceptionTest extends TestCase {
+class JoinColumnNotFoundRuntimeExceptionTest {
 
 	/**
 	 * 
 	 */
-	public void testAll() {
+	@Test
+    void testAll() {
 		JoinColumnNotFoundRuntimeException ex = new JoinColumnNotFoundRuntimeException(
 				"Hoge", "aaa");
 		System.out.println(ex.getMessage());

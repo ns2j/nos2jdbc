@@ -15,16 +15,15 @@
  */
 package org.seasar.extension.jdbc.gen.internal.data;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.gen.internal.data.DumpFileTokenizer.TokenType.*;
 
 /**
  * @author taedium
  * 
  */
-public class DumpFileTokenizerTest {
+class DumpFileTokenizerTest {
 
     private DumpFileTokenizer tokenizer = new DumpFileTokenizer(',');
 
@@ -33,7 +32,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testValue() throws Exception {
+    void testValue() throws Exception {
         String s = "aaa, bbb, \r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -50,7 +49,6 @@ public class DumpFileTokenizerTest {
         assertEquals("\r\n", tokenizer.getToken());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("", tokenizer.getToken());
-
         tokenizer.addChars(null, -1);
         assertEquals(END_OF_FILE, tokenizer.nextToken());
     }
@@ -60,7 +58,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testValue_escaped() throws Exception {
+    void testValue_escaped() throws Exception {
         String s = "\"a\"\"a,a\"\r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -74,7 +72,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testValue_escaped_extraWhitespace() throws Exception {
+    void testValue_escaped_extraWhitespace() throws Exception {
         String s = "\"a\" , \"b\" \r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -92,12 +90,11 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfBuffer() throws Exception {
+    void testEndOfBuffer() throws Exception {
         String s = "aa";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("aa", tokenizer.getToken());
-
         s = "a,bbb\r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -113,7 +110,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfBuffer_CRAfterDelimiter() throws Exception {
+    void testEndOfBuffer_CRAfterDelimiter() throws Exception {
         String s = "aaa,\r";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -124,7 +121,6 @@ public class DumpFileTokenizerTest {
         assertEquals("", tokenizer.getToken());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("\r", tokenizer.getToken());
-
         s = "\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(END_OF_LINE, tokenizer.nextToken());
@@ -135,7 +131,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfBuffer_CRAfterCRLF() throws Exception {
+    void testEndOfBuffer_CRAfterCRLF() throws Exception {
         String s = "aaa\r\n\r";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -146,7 +142,6 @@ public class DumpFileTokenizerTest {
         assertEquals("", tokenizer.getToken());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("\r", tokenizer.getToken());
-
         s = "\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(END_OF_LINE, tokenizer.nextToken());
@@ -157,7 +152,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testNull() throws Exception {
+    void testNull() throws Exception {
         String s = "aaa,,bbb\r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -181,7 +176,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testNull_afterStartOfLine() throws Exception {
+    void testNull_afterStartOfLine() throws Exception {
         String s = ",bbb\r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(NULL, tokenizer.nextToken());
@@ -201,7 +196,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testNull_BeforeEndOfLine() throws Exception {
+    void testNull_BeforeEndOfLine() throws Exception {
         String s = "aaa,\r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -221,7 +216,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfLine_CRLF() throws Exception {
+    void testEndOfLine_CRLF() throws Exception {
         String s = "aaa\r\nbbb\r";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -230,7 +225,6 @@ public class DumpFileTokenizerTest {
         assertEquals("\r\n", tokenizer.getToken());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("bbb\r", tokenizer.getToken());
-
         s = "\nccc\r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -248,7 +242,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfLine_CR() throws Exception {
+    void testEndOfLine_CR() throws Exception {
         String s = "aaa\rbbb";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -257,7 +251,6 @@ public class DumpFileTokenizerTest {
         assertEquals("\r", tokenizer.getToken());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("bbb", tokenizer.getToken());
-
         s = "\rccc\r";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -273,7 +266,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfLine_LF() throws Exception {
+    void testEndOfLine_LF() throws Exception {
         String s = "aaa\nbbb";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -282,7 +275,6 @@ public class DumpFileTokenizerTest {
         assertEquals("\n", tokenizer.getToken());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("bbb", tokenizer.getToken());
-
         s = "\nccc\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -300,7 +292,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfLine_escaped() throws Exception {
+    void testEndOfLine_escaped() throws Exception {
         String s = "\"aaa\r\nbbb\"\r\n";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(VALUE, tokenizer.nextToken());
@@ -314,12 +306,11 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfFile() throws Exception {
+    void testEndOfFile() throws Exception {
         String s = "aaa\r";
         tokenizer.addChars(s.toCharArray(), s.length());
         assertEquals(END_OF_BUFFER, tokenizer.nextToken());
         assertEquals("aaa\r", tokenizer.getToken());
-
         tokenizer.addChars(null, -1);
         assertEquals(VALUE, tokenizer.nextToken());
         assertEquals("aaa", tokenizer.getToken());
@@ -334,7 +325,7 @@ public class DumpFileTokenizerTest {
      * @throws Exception
      */
     @Test
-    public void testEndOfFile_noValue() throws Exception {
+    void testEndOfFile_noValue() throws Exception {
         tokenizer.addChars(null, -1);
         assertEquals(END_OF_FILE, tokenizer.nextToken());
         assertEquals("", tokenizer.getToken());

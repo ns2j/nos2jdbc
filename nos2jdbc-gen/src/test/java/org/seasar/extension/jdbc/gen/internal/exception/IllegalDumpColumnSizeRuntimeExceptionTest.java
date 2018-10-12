@@ -15,25 +15,23 @@
  */
 package org.seasar.extension.jdbc.gen.internal.exception;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpColumnSizeRuntimeException;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class IllegalDumpColumnSizeRuntimeExceptionTest {
+class IllegalDumpColumnSizeRuntimeExceptionTest {
 
     /**
      * 
      * @throws Exception
      */
     @Test
-    public void test() throws Exception {
-        IllegalDumpColumnSizeRuntimeException e = new IllegalDumpColumnSizeRuntimeException(
-                "aaa", 1, 2, 3);
+    void test() throws Exception {
+        IllegalDumpColumnSizeRuntimeException e = new IllegalDumpColumnSizeRuntimeException("aaa", 1, 2, 3);
         assertEquals("aaa", e.getDumpFilePath());
         assertEquals(1, e.getLineNumber());
         assertEquals(2, e.getLineColumnSize());

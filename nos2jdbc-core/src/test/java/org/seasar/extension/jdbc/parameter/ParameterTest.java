@@ -24,7 +24,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -36,13 +37,14 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-public class ParameterTest extends TestCase {
+class ParameterTest {
 
     /**
      * 
      * @throws Exception
      */
-    public void testWrapIfNecessary() throws Exception {
+    @Test
+    void testWrapIfNecessary() throws Exception {
         MyDto dto = new MyDto();
         dto.aaa = "hoge";
         dto.bbb = "foo";
@@ -69,7 +71,8 @@ public class ParameterTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testParams() throws Exception {
+    @Test
+    void testParams() throws Exception {
         Map<String, Object> map = params("a", 1).$("b", new BigDecimal("2")).$(
                 "c", "3").$();
         assertEquals(3, map.size());

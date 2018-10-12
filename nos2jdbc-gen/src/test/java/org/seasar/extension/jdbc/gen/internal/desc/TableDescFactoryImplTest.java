@@ -16,7 +16,6 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,9 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.dialect.H2Dialect;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
@@ -44,14 +42,13 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class TableDescFactoryImplTest {
+class TableDescFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
@@ -61,7 +58,7 @@ public class TableDescFactoryImplTest {
      * 
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         PersistenceConvention pc = new PersistenceConventionImpl();
         ColumnMetaFactoryImpl cmf = new ColumnMetaFactoryImpl();
@@ -75,25 +72,15 @@ public class TableDescFactoryImplTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(pmf);
         entityMetaFactory.setTableMetaFactory(tmf);
-
         GenDialect dialect = new H2GenDialect();
-        ValueTypeProvider valueTypeProvider = new ValueTypeProviderImpl(
-                new H2Dialect());
-        ColumnDescFactoryImpl colFactory = new ColumnDescFactoryImpl(dialect,
-                valueTypeProvider);
-        PrimaryKeyDescFactoryImpl pkFactory = new PrimaryKeyDescFactoryImpl(
-                dialect);
-        UniqueKeyDescFactoryImpl ukFactory = new UniqueKeyDescFactoryImpl(
-                dialect);
-        ForeignKeyDescFactoryImpl fkFactory = new ForeignKeyDescFactoryImpl(
-                dialect, entityMetaFactory, true);
-        SequenceDescFactoryImpl seqFactory = new SequenceDescFactoryImpl(
-                dialect, valueTypeProvider);
-        IdTableDescFactoryImpl idTabFactory = new IdTableDescFactoryImpl(
-                dialect, ukFactory);
-
-        tableDescFactory = new TableDescFactoryImpl(dialect, colFactory,
-                pkFactory, ukFactory, fkFactory, seqFactory, idTabFactory);
+        ValueTypeProvider valueTypeProvider = new ValueTypeProviderImpl(new H2Dialect());
+        ColumnDescFactoryImpl colFactory = new ColumnDescFactoryImpl(dialect, valueTypeProvider);
+        PrimaryKeyDescFactoryImpl pkFactory = new PrimaryKeyDescFactoryImpl(dialect);
+        UniqueKeyDescFactoryImpl ukFactory = new UniqueKeyDescFactoryImpl(dialect);
+        ForeignKeyDescFactoryImpl fkFactory = new ForeignKeyDescFactoryImpl(dialect, entityMetaFactory, true);
+        SequenceDescFactoryImpl seqFactory = new SequenceDescFactoryImpl(dialect, valueTypeProvider);
+        IdTableDescFactoryImpl idTabFactory = new IdTableDescFactoryImpl(dialect, ukFactory);
+        tableDescFactory = new TableDescFactoryImpl(dialect, colFactory, pkFactory, ukFactory, fkFactory, seqFactory, idTabFactory);
     }
 
     /**
@@ -101,7 +88,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testGetTableDesc() throws Exception {
+    void testGetTableDesc() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertNotNull(tableDesc);
@@ -113,7 +100,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testName() throws Exception {
+    void testName() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertEquals("hoge", tableDesc.getCatalogName());
@@ -126,7 +113,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testColumnDescList() throws Exception {
+    void testColumnDescList() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertEquals(2, tableDesc.getColumnDescList().size());
@@ -137,7 +124,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testColumnDescList_multiClass() throws Exception {
+    void testColumnDescList_multiClass() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ggg.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         List<ColumnDesc> list = tableDesc.getColumnDescList();
@@ -155,7 +142,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testPrimaryKeyDescList() throws Exception {
+    void testPrimaryKeyDescList() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertNotNull(tableDesc.getPrimaryKeyDesc());
@@ -166,7 +153,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testForeignKeyDescList() throws Exception {
+    void testForeignKeyDescList() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertEquals(1, tableDesc.getForeignKeyDescList().size());
@@ -177,7 +164,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testUniqueKeyDescList_uniqueConstraints() throws Exception {
+    void testUniqueKeyDescList_uniqueConstraints() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertEquals(1, tableDesc.getUniqueKeyDescList().size());
@@ -188,7 +175,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testUniqueKeyDescList_unique() throws Exception {
+    void testUniqueKeyDescList_unique() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ddd.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertEquals(1, tableDesc.getUniqueKeyDescList().size());
@@ -199,7 +186,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testSequenceDescList() throws Exception {
+    void testSequenceDescList() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertEquals(1, tableDesc.getSequenceDescList().size());
@@ -210,7 +197,7 @@ public class TableDescFactoryImplTest {
      * @throws Exception
      */
     @Test
-    public void testIdTableDescList() throws Exception {
+    void testIdTableDescList() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Ccc.class);
         TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
         assertEquals(1, tableDesc.getIdTableDescList().size());
@@ -242,7 +229,6 @@ public class TableDescFactoryImplTest {
         /** */
         @Id
         public Integer id;
-
     }
 
     /** */
@@ -253,7 +239,6 @@ public class TableDescFactoryImplTest {
         @Id
         @GeneratedValue(strategy = GenerationType.TABLE)
         public Integer id;
-
     }
 
     /** */
@@ -305,5 +290,4 @@ public class TableDescFactoryImplTest {
         /** */
         public String name3;
     }
-
 }

@@ -15,15 +15,14 @@
  */
 package org.seasar.extension.jdbc.gen.internal.argtype;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-public class EnumTypeTest {
+class EnumTypeTest {
 
     private EnumType<MyEnum> enumType = new EnumType<MyEnum>(MyEnum.class);
 
@@ -32,7 +31,7 @@ public class EnumTypeTest {
      * @throws Exception
      */
     @Test
-    public void testToObject() throws Exception {
+    void testToObject() throws Exception {
         assertEquals(MyEnum.AAA, enumType.toObject("AAA"));
     }
 
@@ -41,7 +40,7 @@ public class EnumTypeTest {
      * @throws Exception
      */
     @Test
-    public void testToText() throws Exception {
+    void testToText() throws Exception {
         assertEquals("AAA", enumType.toText(MyEnum.AAA));
     }
 
@@ -51,9 +50,9 @@ public class EnumTypeTest {
      * 
      */
     public static enum MyEnum {
+
         /** */
-        AAA,
-        /** */
-        BBB;
+        AAA, /** */
+        BBB
     }
 }

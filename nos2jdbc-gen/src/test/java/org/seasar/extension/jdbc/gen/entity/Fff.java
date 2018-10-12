@@ -26,7 +26,7 @@ import javax.persistence.TableGenerator;
  * 
  */
 @Entity
-public class Fff {
+class Fff {
 
     /** */
     @Id

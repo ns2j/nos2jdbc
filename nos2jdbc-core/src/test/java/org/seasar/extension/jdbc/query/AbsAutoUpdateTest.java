@@ -19,7 +19,8 @@ import java.sql.SQLException;
 
 import javax.persistence.EntityExistsException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
@@ -41,12 +42,13 @@ import org.seasar.framework.mock.sql.MockDataSource;
  * @author higa
  * 
  */
-public class AbsAutoUpdateTest extends TestCase {
+class AbsAutoUpdateTest {
 
     private JdbcManagerImpl manager;
 
-    @Override
-    protected void setUp() throws Exception {
+    
+    @BeforeEach
+    void setUp() throws Exception {
         manager = new JdbcManagerImpl();
         manager.setSyncRegistry(new TransactionSynchronizationRegistryImpl(
                 new TransactionManagerImpl()));
@@ -70,8 +72,9 @@ public class AbsAutoUpdateTest extends TestCase {
         manager.setEntityMetaFactory(emFactory);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @AfterEach
+    void tearDown() throws Exception {
         SqlLogRegistry regisry = SqlLogRegistryLocator.getInstance();
         regisry.clear();
         manager = null;
@@ -80,7 +83,8 @@ public class AbsAutoUpdateTest extends TestCase {
     /**
      * 
      */
-    public void testEntityExistsException() {
+    @Test
+    void testEntityExistsException() {
         Eee entity = new Eee();
         entity.version = new Long(1);
         MyUpdate<Eee> query = new MyUpdate<Eee>(manager, entity);
@@ -102,26 +106,26 @@ public class AbsAutoUpdateTest extends TestCase {
             super(jdbcManager, entity);
         }
 
-        @Override
+        
         protected int executeInternal() {
             throw new SQLRuntimeException(new SQLException("hoge", "23"));
         }
 
-        @Override
+        
         protected boolean isOptimisticLock() {
             return false;
         }
 
-        @Override
+        
         protected String toSql() {
             return null;
         }
 
-        @Override
+        
         protected void prepare(String methodName) {
         }
 
-        @Override
+        
         protected void logSql() {
         }
 

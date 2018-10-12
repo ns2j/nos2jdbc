@@ -15,18 +15,20 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class NonRelationshipRuntimeExceptionTest extends TestCase {
+class NonRelationshipRuntimeExceptionTest {
 
     /**
      * 
      */
-    public void testAll() {
+    @Test
+    void testAll() {
         UnsupportedRelationshipRuntimeException ex = new UnsupportedRelationshipRuntimeException(
                 "hoge", "aaa");
         System.out.println(ex.getMessage());

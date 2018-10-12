@@ -18,7 +18,8 @@ package org.seasar.extension.jdbc.mapper;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
@@ -29,13 +30,14 @@ import org.seasar.extension.jdbc.entity.Ddd;
  * @author higa
  * 
  */
-public class ManyToOneEntityMapperImplTest extends TestCase {
+class ManyToOneEntityMapperImplTest {
 
     /**
      * 
      * @throws Exception
      */
-    public void testMap() throws Exception {
+    @Test
+    void testMap() throws Exception {
         Field field = Bbb.class.getDeclaredField("id");
         PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
         Field field2 = Bbb.class.getDeclaredField("name");

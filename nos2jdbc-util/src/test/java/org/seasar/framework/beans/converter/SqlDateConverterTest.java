@@ -15,18 +15,20 @@
  */
 package org.seasar.framework.beans.converter;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class SqlDateConverterTest extends TestCase {
+class SqlDateConverterTest {
 
     /**
      * @throws Exception
      */
-    public void testGetAsObjectAndGetAsString() throws Exception {
+    @Test
+    void testGetAsObjectAndGetAsString() throws Exception {
         SqlDateConverter converter = new SqlDateConverter("yyyy/MM/dd");
         java.sql.Date result = (java.sql.Date) converter
                 .getAsObject("2008/01/16");
@@ -37,7 +39,8 @@ public class SqlDateConverterTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testIsTarget() throws Exception {
+    @Test
+    void testIsTarget() throws Exception {
         SqlDateConverter converter = new SqlDateConverter("yyyy/MM/dd");
         assertTrue(converter.isTarget(java.sql.Date.class));
         assertFalse(converter.isTarget(java.util.Date.class));

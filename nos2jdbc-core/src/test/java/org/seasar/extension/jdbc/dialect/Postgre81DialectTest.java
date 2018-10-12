@@ -19,7 +19,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.SelectForUpdateType;
 
@@ -29,7 +30,7 @@ import static org.seasar.framework.util.tiger.Pair.*;
  * @author higa
  * 
  */
-public class Postgre81DialectTest extends TestCase {
+class Postgre81DialectTest {
 
     private Postgre81Dialect dialect = new Postgre81Dialect();
 
@@ -49,7 +50,8 @@ public class Postgre81DialectTest extends TestCase {
      * 
      */
     @SuppressWarnings("unchecked")
-    public void testGetForUpdateString() {
+    @Test
+    void testGetForUpdateString() {
         assertEquals(" for update", dialect.getForUpdateString(
                 SelectForUpdateType.NORMAL, 0));
         assertEquals(" for update nowait", dialect.getForUpdateString(

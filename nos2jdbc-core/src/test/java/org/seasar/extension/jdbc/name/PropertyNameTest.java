@@ -19,19 +19,21 @@ import java.util.Map;
 
 import org.seasar.framework.util.tiger.CollectionsUtil;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class PropertyNameTest extends TestCase {
+class PropertyNameTest {
 
     /**
      * 
      * @throws Exception
      */
-    public void testSimple() throws Exception {
+    @Test
+    void testSimple() throws Exception {
         assertEquals("aaa1", new Aaa().aaa1().toString());
     }
 
@@ -39,7 +41,8 @@ public class PropertyNameTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testRelationship() throws Exception {
+    @Test
+    void testRelationship() throws Exception {
         assertEquals("bbb", new Aaa().bbb().toString());
     }
 
@@ -47,7 +50,8 @@ public class PropertyNameTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testRelationshipProperty() throws Exception {
+    @Test
+    void testRelationshipProperty() throws Exception {
         assertEquals("bbb.bbb1", new Aaa().bbb().bbb1().toString());
         assertEquals("ccc.ccc1", new Bbb().ccc().ccc1().toString());
     }
@@ -56,7 +60,8 @@ public class PropertyNameTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testNestRelationship() throws Exception {
+    @Test
+    void testNestRelationship() throws Exception {
         assertEquals("bbb.ccc", new Aaa().bbb().ccc().toString());
         assertEquals("bbb.aaa.bbb", new Aaa().bbb().aaa().bbb().toString());
     }
@@ -65,14 +70,16 @@ public class PropertyNameTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testNestRelationshipProperty() throws Exception {
+    @Test
+    void testNestRelationshipProperty() throws Exception {
         assertEquals("bbb.ccc.ccc1", new Aaa().bbb().ccc().ccc1().toString());
     }
 
     /**
      * @throws Exception
      */
-    public void testEquals() throws Exception {
+    @Test
+    void testEquals() throws Exception {
         assertTrue(new Aaa().aaa1().equals(new Aaa().aaa1()));
         assertTrue(new Aaa().aaa1().equals("aaa1"));
     }
@@ -80,7 +87,8 @@ public class PropertyNameTest extends TestCase {
     /**
      * @throws Exception
      */
-    public void testHashcode() throws Exception {
+    @Test
+    void testHashcode() throws Exception {
         Map<CharSequence, String> map = CollectionsUtil.newHashMap();
         map.put(new Aaa().aaa1(), "hoge");
         assertEquals("hoge", map.get(new Aaa().aaa1()));

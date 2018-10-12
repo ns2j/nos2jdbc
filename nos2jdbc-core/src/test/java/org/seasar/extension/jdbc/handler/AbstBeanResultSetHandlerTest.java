@@ -24,7 +24,8 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.PropertyType;
@@ -46,12 +47,13 @@ import org.seasar.framework.util.CaseInsensitiveMap;
  * @author higa
  * 
  */
-public class AbstBeanResultSetHandlerTest extends TestCase {
+class AbstBeanResultSetHandlerTest {
 
     /**
      * 
      */
-    public void testCreatePropertyDescMapWithColumn_publicfield() {
+    @Test
+    void testCreatePropertyDescMapWithColumn_publicfield() {
         MyHandler handler = new MyHandler(AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         CaseInsensitiveMap map = handler.createPropertyDescMapWithColumn();
@@ -61,7 +63,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
     /**
      * 
      */
-    public void testCreatePropertyDescMapWithColumn_property() {
+    @Test
+    void testCreatePropertyDescMapWithColumn_property() {
         MyHandler handler = new MyHandler(Aaa2Dto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         CaseInsensitiveMap map = handler.createPropertyDescMapWithColumn();
@@ -71,7 +74,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
     /**
      * 
      */
-    public void testCreatePropertyDescMapWithColumn_nothing() {
+    @Test
+    void testCreatePropertyDescMapWithColumn_nothing() {
         MyHandler handler = new MyHandler(Aaa3Dto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         CaseInsensitiveMap map = handler.createPropertyDescMapWithColumn();
@@ -81,7 +85,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
     /**
      * 
      */
-    public void testCreatePropertyDescMapWithColumn_emptyName() {
+    @Test
+    void testCreatePropertyDescMapWithColumn_emptyName() {
         MyHandler handler = new MyHandler(Aaa4Dto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         CaseInsensitiveMap map = handler.createPropertyDescMapWithColumn();
@@ -92,7 +97,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreatePropertyTypes() throws Exception {
+    @Test
+    void testCreatePropertyTypes() throws Exception {
         MyHandler handler = new MyHandler(AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -114,7 +120,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreatePropertyTypes_noNameConversion() throws Exception {
+    @Test
+    void testCreatePropertyTypes_noNameConversion() throws Exception {
         PersistenceConventionImpl persistenceConvention = new PersistenceConventionImpl();
         persistenceConvention.setNoNameConversion(true);
         MyHandler handler = new MyHandler(Aaa7Dto.class, new StandardDialect(),
@@ -142,7 +149,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreatePropertyTypes_propertyNotExists() throws Exception {
+    @Test
+    void testCreatePropertyTypes_propertyNotExists() throws Exception {
         MyHandler handler = new MyHandler(Aaa5Dto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -163,7 +171,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateRow() throws Exception {
+    @Test
+    void testCreateRow() throws Exception {
         MyHandler handler = new MyHandler(AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -189,7 +198,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
      * @throws Exception
      * 
      */
-    public void testCreateRow_propertyNotExists() throws Exception {
+    @Test
+    void testCreateRow_propertyNotExists() throws Exception {
         MyHandler handler = new MyHandler(AaaDto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -218,7 +228,8 @@ public class AbstBeanResultSetHandlerTest extends TestCase {
      * 
      * @throws Exception
      */
-    public void testGetValueType() throws Exception {
+    @Test
+    void testGetValueType() throws Exception {
         MyHandler handler = new MyHandler(Aaa6Dto.class, new StandardDialect(),
                 new PersistenceConventionImpl());
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Aaa6Dto.class);

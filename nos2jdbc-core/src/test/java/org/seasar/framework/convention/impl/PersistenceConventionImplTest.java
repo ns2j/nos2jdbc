@@ -15,25 +15,28 @@
  */
 package org.seasar.framework.convention.impl;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author higa
  * 
  */
-public class PersistenceConventionImplTest extends TestCase {
+class PersistenceConventionImplTest {
 
     private PersistenceConventionImpl convention = new PersistenceConventionImpl();
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @BeforeEach
+    void setUp() throws Exception {
+        ;
     }
 
     /**
      * Test method for
      * {@link org.seasar.framework.convention.impl.PersistenceConventionImpl#fromTableNameToEntityName(java.lang.String)}.
      */
-    public void testFromTableNameToEntityName() {
+    @Test
+    void testFromTableNameToEntityName() {
         assertEquals("Emp", convention.fromTableNameToEntityName("EMP"));
         assertEquals("AaaBbb", convention.fromTableNameToEntityName("AAA_BBB"));
     }
@@ -42,7 +45,8 @@ public class PersistenceConventionImplTest extends TestCase {
      * Test method for
      * {@link org.seasar.framework.convention.impl.PersistenceConventionImpl#fromEntityNameToTableName(java.lang.String)}.
      */
-    public void testFromEntityNameToTableName() {
+    @Test
+    void testFromEntityNameToTableName() {
         assertEquals("EMP", convention.fromEntityNameToTableName("Emp"));
         assertEquals("AAA_BBB", convention.fromEntityNameToTableName("AaaBbb"));
     }
@@ -51,7 +55,8 @@ public class PersistenceConventionImplTest extends TestCase {
      * Test method for
      * {@link org.seasar.framework.convention.impl.PersistenceConventionImpl#fromColumnNameToPropertyName(java.lang.String)}.
      */
-    public void testFromColumnNameToPropertyName() {
+    @Test
+    void testFromColumnNameToPropertyName() {
         assertEquals("aaa", convention.fromColumnNameToPropertyName("AAA"));
         assertEquals("aaaBbb", convention
                 .fromColumnNameToPropertyName("AAA_BBB"));
@@ -61,7 +66,8 @@ public class PersistenceConventionImplTest extends TestCase {
      * Test method for
      * {@link org.seasar.framework.convention.impl.PersistenceConventionImpl#fromPropertyNameToColumnName(java.lang.String)}.
      */
-    public void testFromPropertyNameToColumnName() {
+    @Test
+    void testFromPropertyNameToColumnName() {
         assertEquals("AAA", convention.fromPropertyNameToColumnName("aaa"));
         assertEquals("AAA_BBB", convention
                 .fromPropertyNameToColumnName("aaaBbb"));
