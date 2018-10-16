@@ -25,10 +25,10 @@ import org.seasar.framework.util.ReaderUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StatementUtil;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 <#if componentType == "cdi" || componentType == "ejb">
+import static org.junit.Assert.*;
+import org.junit.Test;p
+import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -38,9 +38,10 @@ import org.jboss.shrinkwrap.api.Archive;
 import ${rootPackageName}.ArchiveTestUtil;
 </#if>
 <#if componentType == "spring">
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 </#if>
 
 /**
@@ -58,8 +59,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(Arquillian.class)
 </#if>
 <#if componentType == "spring">
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {${springAppConfig}.class})
+@SpringJUnitConfig(${springAppConfig}.class)
 </#if>
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime}")
 public class ${shortClassName} {

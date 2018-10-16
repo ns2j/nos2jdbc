@@ -2,9 +2,6 @@ package org.seasar.extension.jdbc.gen.internal.generator;
 
 import javax.annotation.Generated;
 import org.seasar.extension.jdbc.JdbcManager;
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static hoge.entity.AaaNames.*;
 

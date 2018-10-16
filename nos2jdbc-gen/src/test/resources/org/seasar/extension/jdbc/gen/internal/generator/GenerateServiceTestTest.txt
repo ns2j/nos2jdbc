@@ -1,9 +1,6 @@
 package hoge.service;
 
 import javax.annotation.Generated;
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 /**
