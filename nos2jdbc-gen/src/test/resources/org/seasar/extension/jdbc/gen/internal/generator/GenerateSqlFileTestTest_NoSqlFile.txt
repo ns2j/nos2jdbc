@@ -16,9 +16,6 @@ import org.seasar.framework.util.ReaderUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StatementUtil;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * SQLファイルのテストクラスです。
