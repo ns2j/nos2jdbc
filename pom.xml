@@ -6,7 +6,7 @@
   <groupId>nos2jdbc</groupId>
   <artifactId>nos2jdbc</artifactId>
   <packaging>pom</packaging>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <name>nos2jdbc</name>
   <url>https://github.com/ns2j/nos2jdbc</url>
   <dependencies>
