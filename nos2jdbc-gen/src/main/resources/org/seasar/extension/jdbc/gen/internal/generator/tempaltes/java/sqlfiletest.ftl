@@ -27,7 +27,7 @@ import org.seasar.framework.util.StatementUtil;
 
 <#if componentType == "cdi" || componentType == "ejb">
 import static org.junit.Assert.*;
-import org.junit.Test;p
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
