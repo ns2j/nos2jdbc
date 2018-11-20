@@ -31,8 +31,8 @@ import org.seasar.extension.jdbc.gen.internal.sqltype.ClobType;
 public class HsqlGenDialect extends StandardGenDialect {
 
     /** テーブルが見つからないことを示すエラーコード */
-    protected static int TABLE_NOT_FOUND_ERROR_CODE = -22;
-
+    //protected static int TABLE_NOT_FOUND_ERROR_CODE = -22;
+    protected static int TABLE_NOT_FOUND_ERROR_CODE = -5501;
     /** カラムが見つからないことを示すエラーコード */
     protected static int COLUMN_NOT_FOUND_ERROR_CODE = -28;
 
