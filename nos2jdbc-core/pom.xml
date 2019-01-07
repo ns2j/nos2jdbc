@@ -6,7 +6,7 @@
   <groupId>nos2jdbc</groupId>
   <artifactId>nos2jdbc-core</artifactId>
   <packaging>jar</packaging>
-  <version>1.2.1</version>
+  <version>1.2.2</version>
 
   <!-- More Project Information -->
   <name>nos2jdbc-core</name>
@@ -101,7 +101,7 @@
     <dependency>
       <groupId>nos2jdbc</groupId>
       <artifactId>nos2jdbc-util</artifactId>
-      <version>1.2.1</version>
+      <version>1.2.2</version>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
