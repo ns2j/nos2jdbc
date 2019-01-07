@@ -2,6 +2,8 @@ package nos2jdbc;
 
 import javax.transaction.TransactionManager;
 
+import org.seasar.extension.jta.TransactionManagerImpl;
+
 public class TransactionManagerRegistry {
     static TransactionManager transactionManager;
 
@@ -10,6 +12,8 @@ public class TransactionManagerRegistry {
     }
 
     static public synchronized TransactionManager get() {
+	if (transactionManager == null)
+	    transactionManager = new TransactionManagerImpl();
 	return transactionManager;
     }
 

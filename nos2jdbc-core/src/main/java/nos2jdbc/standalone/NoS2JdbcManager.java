@@ -60,7 +60,7 @@ public class NoS2JdbcManager {
 
 	DataSource dataSource = ds;
 
-	TransactionManager tm = new TransactionManagerImpl();
+	TransactionManager tm = TransactionManagerRegistry.get();
 	TransactionSynchronizationRegistry syncRegistry = new TransactionSynchronizationRegistryImpl(tm);
 
 	DbmsDialect dialect = new OracleDialect();;
