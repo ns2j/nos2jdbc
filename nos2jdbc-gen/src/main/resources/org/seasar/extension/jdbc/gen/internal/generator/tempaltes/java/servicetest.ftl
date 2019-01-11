@@ -50,7 +50,7 @@ import static ${importName};
 <#if componentType == "spring">
 @SpringJUnitConfig(${springAppConfig}.class)
 </#if>
-@Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime}")
+@Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime?string["yyyy/MM/dd HH:mm:ss"]}")
 public class ${shortClassName} {
 
 <#if componentType == "cdi" || componentType == "ejb">

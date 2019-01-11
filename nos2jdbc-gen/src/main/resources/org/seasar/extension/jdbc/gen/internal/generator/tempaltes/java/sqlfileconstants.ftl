@@ -26,7 +26,7 @@ import static ${importName};
  * @author ${lib.author}
 </#if>
  */
-@Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime}")
+@Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime?string["yyyy/MM/dd HH:mm:ss"]}")
 public final class ${shortClassName} {
 <#list sqlFileConstantFieldModelList as constant>
 
