@@ -3,17 +3,171 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>nos2jdbc</groupId>
+  <groupId>com.github.ns2j</groupId>
   <artifactId>nos2jdbc</artifactId>
   <packaging>pom</packaging>
-  <version>1.2.2</version>
+  <version>1.3.0</version>
   <name>nos2jdbc</name>
-  <url>https://github.com/ns2j/nos2jdbc</url>
-  <dependencies>
-  </dependencies>
+  <description>No Seasar2 Container's s2jdbc</description>
+  <url>https://github.com/ns2j/nos2jdbc/</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>gari</name>
+      <email>31337551+ns2j@users.noreply.github.com</email>
+      <organization>nos2jdbc project</organization>
+      <organizationUrl>http://github.com/ns2j/nos2jdbc/</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/ns2j/nos2jdbc.git</connection>
+    <developerConnection>scm:git:ssh://github.com:ns2j/nos2jdbc.git</developerConnection>
+    <url>http://github.com/ns2j/nos2jdbc/</url>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <modules>
     <module>nos2jdbc-util</module>
     <module>nos2jdbc-core</module>
     <module>nos2jdbc-gen</module>
   </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.3.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <defaultGoal>validate</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.1.1</version>
+          <configuration>
+            <excludes>
+              <exclude>oracle/**</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.0.1</version>
+            <configuration>
+              <encoding>UTF-8</encoding>
+              <docencoding>UTF-8</docencoding>
+              <charset>UTF-8</charset>
+              <failOnError>false</failOnError>
+              <detectLinks>false</detectLinks>
+              <groups>
+                <group>
+                  <title>NOS2JDBC</title>
+                  <packages>nos2jdbc*</packages>
+                </group>
+                <group>
+                  <title>S2JDBC</title>
+                  <packages>org.seasar.extension.jdbc*</packages>
+                </group>
+                <group>
+                  <title>S2Tx</title>
+                  <packages>org.seasar.extension.tx*</packages>
+                </group>
+                <group>
+                  <title>S2BeanUtils</title>
+                  <packages>org.seasar.framework.beans*</packages>
+                </group>
+                <group>
+                  <title>JPA</title>
+                  <packages>org.seasar.framework.jpa*</packages>
+                </group>
+              </groups>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
