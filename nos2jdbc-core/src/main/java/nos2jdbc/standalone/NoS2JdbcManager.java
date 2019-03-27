@@ -19,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 import javax.transaction.TransactionManager;
@@ -70,13 +72,13 @@ public class NoS2JdbcManager {
 	} else {
 	    if (ds == null) {
 		String driverName = ps.getProperty("driverClassName");
-		String url = ps.getProperty("URL");
-		String user = ps.getProperty("user");
-		String password = ps.getProperty("password", "");
-		int poolSize = Integer.valueOf(ps.getProperty("poolSize", "900"));
+		String url = resolveEnvVars(ps.getProperty("URL"));
+		String user = resolveEnvVars(ps.getProperty("user"));
+		String password = resolveEnvVars(ps.getProperty("password", ""));
+		int poolSize = Integer.valueOf(resolveEnvVars(ps.getProperty("poolSize", "900")));
 		dataSource = new NoS2JdbcDataSource(tm, driverName, url, user, password, poolSize);
 	    }
-	    String dialectName = ltrim(rtrim(ps.getProperty("dialect")));
+	    String dialectName = ltrim(rtrim(resolveEnvVars(ps.getProperty("dialect"))));
 	    dialect = getDialect(dialectName);
 	}
 
@@ -88,6 +90,24 @@ public class NoS2JdbcManager {
 	TransactionManagerRegistry.register(tm);
     }
 
+    private String resolveEnvVars(String input)
+    {
+        if (null == input)
+            return null;
+
+        // match ${ENV_VAR_NAME} or $ENV_VAR_NAME
+        Pattern p = Pattern.compile("\\$\\{(\\w+)\\}|\\$(\\w+)");
+        Matcher m = p.matcher(input); // get a matcher object
+        StringBuffer sb = new StringBuffer();
+        while(m.find()){
+            String envVarName = null == m.group(1) ? m.group(2) : m.group(1);
+            String envVarValue = System.getenv(envVarName);
+            m.appendReplacement(sb, null == envVarValue ? "" : envVarValue);
+        }
+        m.appendTail(sb);
+        return sb.toString();
+    }
+    
     private DataSource getMockDataSource(String mock) {
 	Class<?> c;
 	try {
