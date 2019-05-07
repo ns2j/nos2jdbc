@@ -29,7 +29,7 @@ import ${rootPackageName}.ArchiveTestUtil;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.boot.test.context.SpringBootTest;
 </#if>
 <#if staticImportNameSet?size gt 0>
 
@@ -49,7 +49,7 @@ import static ${importName};
 @RunWith(Arquillian.class)
 </#if>
 <#if componentType == "spring">
-@SpringJUnitConfig(${springAppConfig}.class)
+@SpringBootTest
 </#if>
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime?string["yyyy/MM/dd HH:mm:ss"]}")
 public class ${shortClassName} {

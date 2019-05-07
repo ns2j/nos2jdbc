@@ -104,8 +104,6 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     protected boolean overwrite = false;
   //i
     protected String componentType = "none";
-//i
-    protected String springAppConfig = "";
 
     /** エンティティメタデータのリーダ */
     protected EntityMetaReader entityMetaReader;
@@ -433,14 +431,6 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     public void setComponentType(String componentType) {
         this.componentType = componentType;
     }
-  //i    
-    public String getSpringAppConfig() {
-        return springAppConfig;
-    }
-//i
-    public void setSpringAppConfig(String springAppConfig) {
-        this.springAppConfig = springAppConfig;
-    }
 
     @Override
     protected void doValidate() {
@@ -531,7 +521,7 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     protected EntityTestModelFactory createEntityTestModelFactory() {
         return factory.createEntityTestModelFactory(this,
                 jdbcManagerName, testClassNameSuffix, namesModelFactory,
-                useNamesClass, rootPackageName, componentType, springAppConfig);
+                useNamesClass, rootPackageName, componentType);
     }
 
     /**

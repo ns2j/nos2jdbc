@@ -59,8 +59,6 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
     protected String rootPackageName;
 //i
     protected String componentType = "none";
-//i
-    protected String springAppConfig = "";
 
     /** 名前モデルのファクトリ */
     protected NamesModelFactory namesModelFactory;
@@ -93,7 +91,7 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
     public EntityTestModelFactoryImpl(String jdbcManagerName, String testClassNameSuffix,
             NamesModelFactory namesModelFactory, boolean useNamesClass,
             String rootPackageName,
-            String componentType, String springAppConfig) {
+            String componentType) {
 //i        if (configPath == null) {
 //i            throw new NullPointerException("configPath");
 //i        }
@@ -118,7 +116,6 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
 //i        this.useS2junit4 = useS2junit4;
         this.rootPackageName = rootPackageName;
         this.componentType = componentType;
-        this.springAppConfig = springAppConfig;
     }
 
     public EntityTestModel getEntityTestModel(EntityMeta entityMeta) {
@@ -135,7 +132,6 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
 //i        
         entityTestModel.setRootPackageName(rootPackageName);
         entityTestModel.setComponentType(componentType);
-        entityTestModel.setSpringAppConfig(springAppConfig);
         doIdValue(entityTestModel, entityMeta);
         doAssociationName(entityTestModel, entityMeta);
         doNamesModel(entityTestModel, entityMeta);

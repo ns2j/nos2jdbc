@@ -68,7 +68,7 @@ class GenerateServiceTestTest {
     @Test
     void test() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ServiceTestModelFactoryImpl serviceTestModelFactory = new ServiceTestModelFactoryImpl("hoge.service", "Service", "Test", "rootpackagename", "none", "");
+        ServiceTestModelFactoryImpl serviceTestModelFactory = new ServiceTestModelFactoryImpl("hoge.service", "Service", "Test", "rootpackagename", "none");
         ServiceTestModel model = serviceTestModelFactory.getServiceTestModel(entityMeta);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/servicetest.ftl", "UTF-8", false);
         generator.generate(context);
