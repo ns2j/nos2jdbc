@@ -18,8 +18,7 @@ package org.seasar.framework.log;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
 import org.seasar.framework.message.MessageFormatter;
 
 /**
@@ -34,7 +33,8 @@ public class Logger {
 
     private static boolean initialized;
 
-    private final Log log;
+    private final org.slf4j.Logger log;
+
 
     /**
      * {@link Logger}を返します。
@@ -65,13 +65,13 @@ public class Logger {
      * リソースを開放します。
      */
     public synchronized static void dispose() {
-        LogFactory.releaseAll();
+        //LoggerFactory.releaseAll();
         loggers.clear();
         initialized = false;
     }
 
     private Logger(final Class clazz) {
-        log = LogFactory.getLog(clazz);
+        log = LoggerFactory.getLogger(clazz);
     }
 
     /**
@@ -91,7 +91,7 @@ public class Logger {
      */
     public final void debug(Object message, Throwable throwable) {
         if (isDebugEnabled()) {
-            log.debug(message, throwable);
+            log.debug(message.toString(), throwable);
         }
     }
 
@@ -102,7 +102,7 @@ public class Logger {
      */
     public final void debug(Object message) {
         if (isDebugEnabled()) {
-            log.debug(message);
+            log.debug(message.toString());
         }
     }
 
@@ -123,7 +123,7 @@ public class Logger {
      */
     public final void info(Object message, Throwable throwable) {
         if (isInfoEnabled()) {
-            log.info(message, throwable);
+            log.info(message.toString(), throwable);
         }
     }
 
@@ -134,7 +134,7 @@ public class Logger {
      */
     public final void info(Object message) {
         if (isInfoEnabled()) {
-            log.info(message);
+            log.info(message.toString());
         }
     }
 
@@ -145,7 +145,7 @@ public class Logger {
      * @param throwable
      */
     public final void warn(Object message, Throwable throwable) {
-        log.warn(message, throwable);
+        log.warn(message.toString(), throwable);
     }
 
     /**
@@ -154,7 +154,7 @@ public class Logger {
      * @param message
      */
     public final void warn(Object message) {
-        log.warn(message);
+        log.warn(message.toString());
     }
 
     /**
@@ -164,7 +164,7 @@ public class Logger {
      * @param throwable
      */
     public final void error(Object message, Throwable throwable) {
-        log.error(message, throwable);
+        log.error(message.toString(), throwable);
     }
 
     /**
@@ -173,7 +173,7 @@ public class Logger {
      * @param message
      */
     public final void error(Object message) {
-        log.error(message);
+        log.error(message.toString());
     }
 
     /**
@@ -182,18 +182,18 @@ public class Logger {
      * @param message
      * @param throwable
      */
-    public final void fatal(Object message, Throwable throwable) {
-        log.fatal(message, throwable);
-    }
+    //public final void fatal(Object message, Throwable throwable) {
+    //    log.fatal(message.toString(), throwable);
+    //}
 
     /**
      * FATAL情報を出力します。
      * 
      * @param message
      */
-    public final void fatal(Object message) {
-        log.fatal(message);
-    }
+    //public final void fatal(Object message) {
+    //    log.fatal(message.toString());
+    //}
 
     /**
      * ログを出力します。
@@ -239,9 +239,9 @@ public class Logger {
             case 'E':
                 log.error(message, throwable);
                 break;
-            case 'F':
-                log.fatal(message, throwable);
-                break;
+           // case 'F':
+           //     log.fatal(message, throwable);
+           //     break;
             default:
                 throw new IllegalArgumentException(String.valueOf(messageType));
             }
@@ -258,8 +258,8 @@ public class Logger {
             return log.isWarnEnabled();
         case 'E':
             return log.isErrorEnabled();
-        case 'F':
-            return log.isFatalEnabled();
+       // case 'F':
+       //     return log.isFatalEnabled();
         default:
             throw new IllegalArgumentException(String.valueOf(messageType));
         }

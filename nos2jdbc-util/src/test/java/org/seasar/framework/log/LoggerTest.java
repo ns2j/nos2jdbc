@@ -69,10 +69,10 @@ class LoggerTest {
     /**
      * @throws Exception
      */
-    @Test
-    void testFatal() throws Exception {
-        _logger.fatal("fatal");
-    }
+   // @Test
+   // void testFatal() throws Exception {
+   //     _logger.fatal("fatal");
+   // }
 
     /**
      * @throws Exception
@@ -95,7 +95,7 @@ class LoggerTest {
         long sysout = System.currentTimeMillis() - start;
         start = System.currentTimeMillis();
         for (int i = 0; i < num; i++) {
-            _logger.fatal("test" + i);
+            _logger.error("test" + i);
         }
         long logger = System.currentTimeMillis() - start;
         System.out.println("System.out:" + sysout);
