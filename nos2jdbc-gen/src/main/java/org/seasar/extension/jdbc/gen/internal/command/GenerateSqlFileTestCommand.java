@@ -78,8 +78,6 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
     protected boolean overwrite = true;
 //i
     protected String componentType = "none";
-//i
-    protected String springAppConfig = "";
     
     /** SQLファイルテストのモデルのファクトリ */
     protected SqlFileTestModelFactory sqlFileTestModelFactory;
@@ -322,14 +320,6 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
     public void setComponentType(String componentType) {
         this.componentType = componentType;
     }
-//i    
-    public String getSpringAppConfig() {
-        return springAppConfig;
-    }
-//i
-    public void setSpringAppConfig(String springAppConfig) {
-        this.springAppConfig = springAppConfig;
-    }
 
     @Override
     protected void doValidate() {
@@ -368,7 +358,7 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
         return factory.createSqlFileTestModelFactory(this, classpathDir,
                 sqlFileSet, jdbcManagerName, ClassUtil.concatName(
                         rootPackageName, subPackageName), shortClassName,
-                rootPackageName, componentType, springAppConfig);
+                rootPackageName, componentType);
     }
 
     /**

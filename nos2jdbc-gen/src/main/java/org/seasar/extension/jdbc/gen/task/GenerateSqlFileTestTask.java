@@ -206,8 +206,4 @@ public class GenerateSqlFileTestTask extends AbstractTask {
     public void setComponentType(String componentType) {
         command.setComponentType(componentType);
     }
-//i
-    public void setSpringAppConfig(String springAppConfig) {
-        command.setSpringAppConfig(springAppConfig);
-    }
 }

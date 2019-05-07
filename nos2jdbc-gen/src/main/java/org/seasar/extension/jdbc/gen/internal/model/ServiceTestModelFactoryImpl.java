@@ -49,8 +49,6 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
 //i    protected boolean useS2junit4;
 //i
     protected String componentType = "none";
-//i
-    protected String springAppConfig = "";
     
     /** クラスモデルのサポート */
     protected ClassModelSupport classModelSupport = new ClassModelSupport();
@@ -71,12 +69,10 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
      *            ルートパッケージ名
      * @param componentType
      *            コンポーネントタイプ
-     * @param springAppConfig
-     *            SpringFrameworkのAppConfig
      */
     public ServiceTestModelFactoryImpl(String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
-            String rootPackageName, String componentType, String springAppConfig) {
+            String rootPackageName, String componentType) {
 //i        if (configPath == null) {
 //i            throw new NullPointerException("configPath");
 //i        }
@@ -98,7 +94,6 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
 //i        
         this.rootPackageName = rootPackageName;
         this.componentType = componentType;
-        this.springAppConfig = springAppConfig;
     }
 
     public ServiceTestModel getServiceTestModel(EntityMeta entityMeta) {
@@ -117,7 +112,6 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
         //i
         serviceTestModel.setServiceClassNameSuffix(serviceClassNameSuffix);
         serviceTestModel.setComponentType(componentType);
-        serviceTestModel.setSpringAppConfig(springAppConfig);
         doImportName(serviceTestModel, entityMeta);
         doGeneratedInfo(serviceTestModel, entityMeta);
         return serviceTestModel;

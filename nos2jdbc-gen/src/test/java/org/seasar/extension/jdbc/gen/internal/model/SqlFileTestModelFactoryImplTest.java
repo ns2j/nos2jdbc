@@ -50,7 +50,7 @@ class SqlFileTestModelFactoryImplTest {
                 set.add("oracle");
                 return set;
             }
-        }, "rootpackagename", "none", "");
+        }, "rootpackagename", "none");
         SqlFileTestModel model = factory.getSqlFileTestModel();
         //i        assertEquals("s2jdbc.dicon", model.getConfigPath());
         assertEquals("jdbcManager", model.getJdbcManagerName());
