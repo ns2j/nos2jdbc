@@ -57,8 +57,6 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
     protected String rootPackageName;
 //i
     protected String componentType = "none";
-//i
-    protected String springAppConfig = "";
     /**
      * インスタンスを構築します。
      * 
@@ -79,10 +77,10 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
      */
     public SqlFileTestModelFactoryImpl(File classpathDir, Set<File> sqlFileSet,
             String jdbcManagerName, String packageName,
-            String shortClassName, String rootPackageName, String componentType, String springAppConfig) {
+            String shortClassName, String rootPackageName, String componentType) {
         this(classpathDir, sqlFileSet, jdbcManagerName,
                 packageName, shortClassName, new SqlFileSupport(),
-                rootPackageName, componentType, springAppConfig);
+                rootPackageName, componentType);
     }
 
     /**
@@ -109,7 +107,7 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
             Set<File> sqlFileSet, String jdbcManagerName,
             String packageName, String shortClassName,
             SqlFileSupport sqlFileSupport,
-            String rootPackageName, String componentType, String springAppConfig) {
+            String rootPackageName, String componentType) {
         if (classpathDir == null) {
             throw new NullPointerException("classpathDir");
         }
@@ -141,7 +139,6 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
         this.sqlFilePathList = createSqlFilePathList(classpathDir, sqlFileSet);
         this.rootPackageName = rootPackageName;
         this.componentType = componentType;
-        this.springAppConfig = springAppConfig;
     }
 
     /**
@@ -171,7 +168,6 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
 //i
         model.setRootPackageName(rootPackageName);
         model.setComponentType(componentType);
-        model.setSpringAppConfig(springAppConfig);
         doGeneratedInfo(model);
         return model;
     }

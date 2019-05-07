@@ -412,7 +412,7 @@ public interface Factory {
     ServiceTestModelFactory createServiceTestModelFactory(Command command,
             String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
-            String rootPackageName, String componentType, String springAppConfig);
+            String rootPackageName, String componentType);
 
     /**
      * {@link NoS2AbstServiceModelFactory}の実装を作成します。
@@ -459,7 +459,7 @@ public interface Factory {
     EntityTestModelFactory createEntityTestModelFactory(Command command,
             String jdbcManagerName,
             String testClassNameSuffix, NamesModelFactory namesModelFactory,
-            boolean useNamesClass, String rootPackageName, String componentType, String springAppConfig);
+            boolean useNamesClass, String rootPackageName, String componentType);
 
     /**
      * {@link NamesModelFactory}の実装を作成します。
@@ -600,14 +600,12 @@ public interface Factory {
      *            ルートパッケージ名
      * @param componentType
      *            コンポーネントタイプ
-     * @param springAppConfig
-     *            SpringFrameworkのAppConfig
      * @return {@link SqlFileTestModelFactory}の実装
      */
     SqlFileTestModelFactory createSqlFileTestModelFactory(Command command,
             File classpathDir, Set<File> sqlFileSet,
             String jdbcManagerName, String packageName, String shortClassName,
-            String rootPackageName, String componentType, String springAppConfig);
+            String rootPackageName, String componentType);
 
     /**
      * {@link SqlFileTestModelFactory}の実装を作成します。

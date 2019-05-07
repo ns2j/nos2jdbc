@@ -42,7 +42,7 @@ class EntityTestModelFactoryImplTest {
     @BeforeEach
     public void setUp() throws Exception {
         //i	
-        factory = new EntityTestModelFactoryImpl("jdbcManager", "Test", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "rootpackagename", "none", "");
+        factory = new EntityTestModelFactoryImpl("jdbcManager", "Test", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "rootpackagename", "none");
     }
 
     /**

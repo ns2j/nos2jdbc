@@ -36,7 +36,7 @@ class ServiceTestModelFactoryImplTest {
     @BeforeEach
     public void setUp() throws Exception {
         //i	
-        factory = new ServiceTestModelFactoryImpl("hoge", "Service", "Test", "rootpackagename", "none", "");
+        factory = new ServiceTestModelFactoryImpl("hoge", "Service", "Test", "rootpackagename", "none");
     }
 
     /**

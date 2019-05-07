@@ -238,11 +238,11 @@ public class FactoryImpl implements Factory {
     public ServiceTestModelFactory createServiceTestModelFactory(
             Command command, String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
-            String rootPackageName, String componentType, String springAppConfig) {
+            String rootPackageName, String componentType) {
 
         return new ServiceTestModelFactoryImpl(packageName,
                 serviceClassNameSuffix, testClassNameSuffix,
-                rootPackageName, componentType, springAppConfig);
+                rootPackageName, componentType);
     }
 //i
     public NoS2AbstServiceModelFactory createNoS2AbstServiceModelFactory(
@@ -270,11 +270,11 @@ public class FactoryImpl implements Factory {
             String jdbcManagerName,
             String testClassNameSuffix, NamesModelFactory namesModelFactory,
             boolean useNamesClass,
-            String rootPackageName, String componentType, String springAppConfig) {
+            String rootPackageName, String componentType) {
 
         return new EntityTestModelFactoryImpl(jdbcManagerName,
                 testClassNameSuffix, namesModelFactory, useNamesClass,
-                rootPackageName, componentType, springAppConfig);
+                rootPackageName, componentType);
     }
 
     public NamesModelFactory createNamesModelFactory(Command command,
@@ -330,11 +330,11 @@ public class FactoryImpl implements Factory {
             Command command, File classpathDir, Set<File> sqlFileSet,
             String jdbcManagerName, String packageName,
             String shortClassName,
-            String rootPackageName, String componentType, String springAppConfig) {
+            String rootPackageName, String componentType) {
 
         return new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet,
                 jdbcManagerName, packageName, shortClassName,
-                rootPackageName, componentType, springAppConfig);
+                rootPackageName, componentType);
     }
 
     public SqlFileConstantsModelFactory createSqlFileConstantsModelFactory(

@@ -56,7 +56,7 @@ class GenerateSqlFileTestTest {
         Set<File> sqlFileSet = new HashSet<File>();
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/aaa.sql"));
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/bbb.sql"));
-        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none", "");
+        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none");
         SqlFileTestModel model = sqlFileTestModelFactory.getSqlFileTestModel();
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/sqlfiletest.ftl", "UTF-8", false);
         generator.generate(context);
@@ -97,7 +97,7 @@ class GenerateSqlFileTestTest {
     @Test
     void testNoSqlFile() throws Exception {
         File classpathDir = ResourceUtil.getBuildDir(getClass());
-        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, Collections.<File>emptySet(), "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none", "");
+        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, Collections.<File>emptySet(), "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none");
         SqlFileTestModel model = sqlFileTestModelFactory.getSqlFileTestModel();
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/sqlfiletest.ftl", "UTF-8", false);
         generator.generate(context);
