@@ -51,7 +51,7 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
     protected static boolean docletAvailable;
     static {
         try {
-        	Class.forName("jdk.javadoc.doclet.Doclet");
+            Class.forName("jdk.javadoc.doclet.Doclet");
             docletAvailable = true;
         } catch (final Throwable ignore) {
         }
