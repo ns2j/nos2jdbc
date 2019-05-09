@@ -15,7 +15,6 @@
  */
 package org.seasar.extension.jdbc.gen.desc;
 
-import junitx.framework.Assert;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
