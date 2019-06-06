@@ -5,7 +5,7 @@
    <parent>
         <groupId>com.github.ns2j</groupId>
         <artifactId>nos2jdbc</artifactId>
-        <version>1.4.1</version>
+        <version>1.4.2-SNAPSHOT</version>
     </parent>
 
   <artifactId>nos2jdbc-core</artifactId>
@@ -17,7 +17,7 @@
     <dependency>
       <groupId>com.github.ns2j</groupId>
       <artifactId>nos2jdbc-util</artifactId>
-      <version>1.4.1</version>
+      <version>1.4.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
