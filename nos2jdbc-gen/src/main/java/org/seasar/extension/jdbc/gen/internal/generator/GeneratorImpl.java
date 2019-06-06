@@ -86,8 +86,8 @@ public class GeneratorImpl implements Generator {
         if (templateFileEncoding == null) {
             throw new NullPointerException("templateFileEncoding");
         }
-        this.configuration = new Configuration();
-        configuration.setObjectWrapper(new DefaultObjectWrapper());
+        this.configuration = new Configuration(Configuration.getVersion());
+        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.getVersion()));
         configuration.setSharedVariable("include", new IncludeDirective());
         configuration.setSharedVariable("currentDate", new OnDemandDateModel());
         configuration.setEncoding(Locale.getDefault(), templateFileEncoding);
