@@ -1,4 +1,6 @@
 <#import "/lib.ftl" as lib>
+<#import "cdi.ftl" as cdi>
+<#import "spring.ftl" as spring>
 <#if lib.copyright??>
 ${lib.copyright}
 </#if>
@@ -14,22 +16,10 @@ import ${importName};
 </#list>
 
 <#if componentType == "cdi" || componentType == "ejb">
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import javax.inject.Inject;
-
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
-
-import ${rootPackageName}.ArchiveTestUtil;
+<@cdi.importForTest/>
 </#if>
 <#if componentType == "spring">
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+<@spring.importForTest/>
 </#if>
 <#if staticImportNameSet?size gt 0>
   <#list staticImportNameSet as importName>
