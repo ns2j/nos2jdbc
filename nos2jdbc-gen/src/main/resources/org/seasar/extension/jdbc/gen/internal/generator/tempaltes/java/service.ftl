@@ -1,4 +1,7 @@
 <#import "/lib.ftl" as lib>
+<#import "cdi.ftl" as cdi>
+<#import "ejb.ftl" as ejb>
+<#import "spring.ftl" as spring>
 <#if lib.copyright??>
 ${lib.copyright}
 </#if>
@@ -20,15 +23,13 @@ import static ${importName};
 </#if>
 
 <#if componentType == "cdi">
-import javax.enterprise.context.Dependent;
-import javax.transaction.Transactional;
+<@cdi.importForService/>
 </#if>
 <#if componentType == "ejb">
-import javax.ejb.Stateless;
+<@ejb.importForService/>
 </#if>
 <#if componentType == "spring">
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+<@spring.importForService/>
 </#if>
 
 /**
@@ -40,16 +41,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime?string["yyyy/MM/dd HH:mm:ss"]}")
 <#if componentType == "cdi">
-@Dependent
-@Transactional
-@${serviceClassNameSuffix}Qualifier
+<@cdi.annotationForService/>
 </#if>
 <#if componentType == "ejb">
-@Stateless
+<@ejb.annotationForService/>
 </#if>
 <#if componentType == "spring">
-@Service
-@Transactional
+<@spring.annotationForService/>
 </#if>
 public class ${shortClassName} extends ${shortSuperclassName}<${shortEntityClassName}> {
 <#if jdbcManagerSetterNecessary>
