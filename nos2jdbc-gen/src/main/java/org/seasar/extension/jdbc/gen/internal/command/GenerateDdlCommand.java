@@ -1188,7 +1188,8 @@ public class GenerateDdlCommand extends AbstractCommand {
         sqlUnitExecutor = createSqlUnitExecutor();
         dumper = createDumper();
 
-        logRdbmsAndGenDialect(dialect);
+        if (isDump())
+            logRdbmsAndGenDialect(dialect);
     }
 
     @Override
