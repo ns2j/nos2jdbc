@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.spi.ToolProvider;
 
 import javax.persistence.Entity;
 
@@ -32,8 +33,6 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassTraversal;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ClassTraversal.ClassHandler;
-
-import com.sun.javadoc.Doclet;
 
 import nos2jdbc.gen.annotation.DisableGen;
 
@@ -52,7 +51,7 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
     protected static boolean docletAvailable;
     static {
         try {
-            Class.forName("com.sun.javadoc.Doclet"); // tools.jar
+        	Class.forName("jdk.javadoc.doclet.Doclet");
             docletAvailable = true;
         } catch (final Throwable ignore) {
         }
@@ -229,6 +228,7 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
         if (!docletAvailable) {
             throw new DocletUnavailableRuntimeException();
         }
+
         String[] args = createDocletArgs();
         StringBuilder buf = new StringBuilder();
         for (String arg : args) {
@@ -238,7 +238,8 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
 
         CommentDocletContext.setEntityMetaList(entityMetaList);
         try {
-            com.sun.tools.javadoc.Main.execute(args);
+            ToolProvider javadoc = ToolProvider.findFirst("javadoc").orElseThrow();
+            javadoc.run(System.out, System.out, args);
         } finally {
             CommentDocletContext.setEntityMetaList(null);
         }
@@ -251,6 +252,7 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
      */
     protected String[] createDocletArgs() {
         StringBuilder srcDirListBuf = new StringBuilder();
+        System.out.println(javaFileSrcDirList);
         for (File dir : javaFileSrcDirList) {
             srcDirListBuf.append(FileUtil.getCanonicalPath(dir));
             srcDirListBuf.append(File.pathSeparator);
@@ -270,6 +272,9 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
         if (logger.isDebugEnabled()) {
             args.add("-verbose");
         }
+        args.add("--charset");
+        args.add(javaFileEncoding);
+
         return args.toArray(new String[args.size()]);
     }
 
