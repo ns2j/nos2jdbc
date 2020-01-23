@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.gen.internal.exception;
 
 import org.seasar.framework.exception.SRuntimeException;
 
-import com.sun.javadoc.Doclet;
-
 /**
  * {@link Doclet}が使用できない場合にスローされます。
  * 
