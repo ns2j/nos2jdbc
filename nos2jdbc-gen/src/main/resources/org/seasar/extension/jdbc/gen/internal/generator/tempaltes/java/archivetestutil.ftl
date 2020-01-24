@@ -19,7 +19,7 @@ public class ArchiveTestUtil {
 		.addAsLibraries(
 			Maven.resolver()
 			.loadPomFromFile("pom.xml")
-			.importRuntimeDependencies()
+			.importCompileAndRuntimeDependencies()
 			.resolve()
 			.withTransitivity()
 			.asFile());
