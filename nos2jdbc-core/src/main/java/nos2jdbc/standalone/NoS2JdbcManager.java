@@ -92,19 +92,19 @@ public class NoS2JdbcManager {
         TransactionManagerRegistry.register(tm);
     }
 
-    private String resolveEnvVars(String input)
-    {
+    private String resolveEnvVars(String input) {
         if (null == input)
             return null;
 
-        // match ${ENV_VAR_NAME} or $ENV_VAR_NAME
-        Pattern p = Pattern.compile("\\$\\{(\\w+)\\}|\\$(\\w+)");
+        // match ${ENV_VAR_NAME}, ${ENV_VAR_NAME:default_value} or $ENV_VAR_NAME
+         Pattern p = Pattern.compile("\\$\\{(\\w+)(:(.*))?\\}|\\$(\\w+)");
         Matcher m = p.matcher(input); // get a matcher object
         StringBuffer sb = new StringBuffer();
         while(m.find()){
-            String envVarName = null == m.group(1) ? m.group(2) : m.group(1);
+            String envVarName = null == m.group(1) ? m.group(4) : m.group(1);
+            String defaultValue = null == m.group(3) ? "" : m.group(3);
             String envVarValue = System.getenv(envVarName);
-            m.appendReplacement(sb, null == envVarValue ? "" : envVarValue);
+            m.appendReplacement(sb, null == envVarValue ? defaultValue : envVarValue);
         }
         m.appendTail(sb);
         return sb.toString();
