@@ -24,6 +24,8 @@ import org.seasar.extension.dataset.DataReader;
 import org.seasar.extension.dataset.DataSet;
 import org.seasar.extension.dataset.DataTable;
 import org.seasar.extension.dataset.TableReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SQLを扱うための {@link DataReader}です。
@@ -32,6 +34,7 @@ import org.seasar.extension.dataset.TableReader;
  * 
  */
 public class SqlReader implements DataReader {
+    final static private Logger logger = LoggerFactory.getLogger(SqlReader.class);
 
     private DataSource dataSource;
 
@@ -122,6 +125,7 @@ public class SqlReader implements DataReader {
         tableReaders.add(reader);
     }
 
+    @Override
     public DataSet read() {
         DataSet dataSet = new DataSetImpl();
         for (int i = 0; i < tableReaders.size(); ++i) {

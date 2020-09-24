@@ -34,7 +34,7 @@ public class BeanListReader extends BeanReader {
      * @param list
      *            リスト
      */
-    public BeanListReader(List list) {
+    public BeanListReader(List<?> list) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(list.get(0).getClass());
         setupColumns(beanDesc);
         for (int i = 0; i < list.size(); ++i) {

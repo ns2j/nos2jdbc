@@ -28,10 +28,17 @@ public class ObjectType implements ColumnType {
     ObjectType() {
     }
 
+    @Override
     public Object convert(Object value, String formatPattern) {
         return value;
     }
 
+    @Override
+    public Object convert(Class<?> clazz, Object value) {
+        return value;
+    }
+
+    @Override
     public boolean equals(Object arg1, Object arg2) {
         if (arg1 == null) {
             return arg2 == null;
@@ -65,6 +72,7 @@ public class ObjectType implements ColumnType {
         return arg1.equals(arg2);
     }
 
+    @Override
     public Class getType() {
         return Object.class;
     }

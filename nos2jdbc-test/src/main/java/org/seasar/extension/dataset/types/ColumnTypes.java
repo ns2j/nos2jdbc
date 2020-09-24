@@ -83,9 +83,9 @@ public class ColumnTypes {
      */
     public static final ColumnType BOOLEAN = new BooleanType();
 
-    private static Map typesByClass = MapUtil.createHashMap(20);
+    private static Map<Class<?>, ColumnType> typesByClass = MapUtil.createHashMap(20);
 
-    private static Map typesBySqlType = MapUtil.createHashMap(20);
+    private static Map<Integer, ColumnType> typesBySqlType = MapUtil.createHashMap(20);
 
     static {
         registerColumnType(String.class, STRING);
@@ -182,8 +182,7 @@ public class ColumnTypes {
      * @return カラムの型
      */
     public static ColumnType getColumnType(int type) {
-        ColumnType columnType = (ColumnType) typesBySqlType.get(new Integer(
-                type));
+        ColumnType columnType = typesBySqlType.get(type);
         if (columnType != null) {
             return columnType;
         }
@@ -211,8 +210,8 @@ public class ColumnTypes {
      *            クラス
      * @return カラムの型
      */
-    public static ColumnType getColumnType(Class clazz) {
-        ColumnType columnType = (ColumnType) typesByClass.get(clazz);
+    public static ColumnType getColumnType(Class<?> clazz) {
+        ColumnType columnType = typesByClass.get(clazz);
         if (columnType != null) {
             return columnType;
         }
@@ -230,8 +229,8 @@ public class ColumnTypes {
      */
     public static ColumnType registerColumnType(int sqlType,
             ColumnType columnType) {
-        return (ColumnType) typesBySqlType
-                .put(new Integer(sqlType), columnType);
+        return typesBySqlType
+                .put(sqlType, columnType);
     }
 
     /**
@@ -243,8 +242,8 @@ public class ColumnTypes {
      *            カラムの型
      * @return 指定されたクラスに関連した以前のカラムの型。カラムの型にマッピングなかった場合には<code>null</code>
      */
-    public static ColumnType registerColumnType(Class clazz,
+    public static ColumnType registerColumnType(Class<?> clazz,
             ColumnType columnType) {
-        return (ColumnType) typesByClass.put(clazz, columnType);
+        return typesByClass.put(clazz, columnType);
     }
 }

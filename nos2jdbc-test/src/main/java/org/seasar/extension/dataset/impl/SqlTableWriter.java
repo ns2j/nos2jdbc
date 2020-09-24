@@ -25,6 +25,8 @@ import org.seasar.extension.dataset.RowState;
 import org.seasar.extension.dataset.TableWriter;
 import org.seasar.extension.jdbc.util.ConnectionUtil;
 import org.seasar.extension.jdbc.util.DataSourceUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SQL用の {@link TableWriter}です。
@@ -33,7 +35,8 @@ import org.seasar.extension.jdbc.util.DataSourceUtil;
  * 
  */
 public class SqlTableWriter implements TableWriter {
-
+    final static private Logger logger = LoggerFactory.getLogger(SqlTableWriter.class);
+    
     private DataSource dataSource;
 
     /**
@@ -55,6 +58,7 @@ public class SqlTableWriter implements TableWriter {
         return dataSource;
     }
 
+    @Override
     public void write(DataTable table) {
         if (!table.hasMetaData()) {
             setupMetaData(table);

@@ -20,13 +20,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.seasar.extension.dataset.DataRow;
 import org.seasar.extension.dataset.DataSet;
 import org.seasar.extension.dataset.DataSetConstants;
@@ -45,7 +46,7 @@ import org.seasar.framework.util.StringConversionUtil;
  * @author azusa
  * 
  */
-public class XlsWriter implements DataWriter, DataSetConstants {
+public class SsWriter implements DataWriter, DataSetConstants {
 
     /**
      * 出力ストリームです。
@@ -55,69 +56,69 @@ public class XlsWriter implements DataWriter, DataSetConstants {
     /**
      * ワークブックです。
      */
-    protected HSSFWorkbook workbook;
+    protected Workbook workbook;
 
     /**
      * 日付用のスタイルです。
      */
-    protected HSSFCellStyle dateStyle;
+    protected CellStyle dateStyle;
 
     /**
      * Base64用のスタイルです。
      */
-    protected HSSFCellStyle base64Style;
+    protected CellStyle base64Style;
 
     /**
-     * {@link XlsWriter}を作成します。
+     * {@link SsWriter}を作成します。
      * 
      * @param path
      *            パス
      */
-    public XlsWriter(String path) {
+    public SsWriter(String path) {
         this(new File(ResourceUtil.getResourceAsFile("."), path));
     }
 
     /**
-     * {@link XlsWriter}を作成します。
+     * {@link SsWriter}を作成します。
      * 
      * @param dirName
      *            ディレクトリ名
      * @param fileName
      *            ファイル名
      */
-    public XlsWriter(String dirName, String fileName) {
+    public SsWriter(String dirName, String fileName) {
         this(ResourceUtil.getResourceAsFile(dirName), fileName);
     }
 
     /**
-     * {@link XlsWriter}を作成します。
+     * {@link SsWriter}を作成します。
      * 
      * @param dir
      *            ディレクトリ
      * @param fileName
      *            ファイル名
      */
-    public XlsWriter(File dir, String fileName) {
+    public SsWriter(File dir, String fileName) {
         this(new File(dir, fileName));
     }
 
     /**
-     * {@link XlsWriter}を作成します。
+     * {@link SsWriter}を作成します。
      * 
      * @param file
      *            ファイル
      */
-    public XlsWriter(File file) {
+    public SsWriter(File file) {
         this(FileOutputStreamUtil.create(file));
     }
 
     /**
-     * {@link XlsWriter}を作成します。
+     * {@link SsWriter}を作成します。
      * 
      * @param out
      *            出力ストリーム
      */
-    public XlsWriter(OutputStream out) {
+    public SsWriter(OutputStream out) {
         setOutputStream(out);
     }
 
@@ -129,33 +130,37 @@ public class XlsWriter implements DataWriter, DataSetConstants {
      */
     public void setOutputStream(OutputStream out) {
         this.out = out;
-        workbook = new HSSFWorkbook();
-        HSSFDataFormat df = workbook.createDataFormat();
+        try {
+            workbook = WorkbookFactory.create(true);
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+        DataFormat df = workbook.createDataFormat();
         dateStyle = workbook.createCellStyle();
         dateStyle.setDataFormat(df.getFormat(DATE_FORMAT));
         base64Style = workbook.createCellStyle();
         base64Style.setDataFormat(df.getFormat(BASE64_FORMAT));
     }
 
+    @Override
     public void write(DataSet dataSet) {
         for (int i = 0; i < dataSet.getTableSize(); ++i) {
             DataTable table = dataSet.getTable(i);
-            HSSFSheet sheet = workbook.createSheet();
+            Sheet sheet = workbook.createSheet();
             workbook.setSheetName(i, table.getTableName());
-            HSSFRow headerRow = sheet.createRow(0);
+            Row headerRow = sheet.createRow(0);
             for (int j = 0; j < table.getColumnSize(); ++j) {
-                HSSFCell cell = headerRow.createCell((short) j);
-                cell
-                        .setCellValue(new HSSFRichTextString(table
+                Cell cell = headerRow.createCell((short) j);
+                cell.setCellValue(workbook.getCreationHelper().createRichTextString(table
                                 .getColumnName(j)));
             }
             for (int j = 0; j < table.getRowSize(); ++j) {
-                HSSFRow row = sheet.createRow(j + 1);
+                Row row = sheet.createRow(j + 1);
                 for (int k = 0; k < table.getColumnSize(); ++k) {
                     DataRow dataRow = table.getRow(j);
                     Object value = dataRow.getValue(k);
                     if (value != null) {
-                        HSSFCell cell = row.createCell((short) k);
+                        Cell cell = row.createCell((short) k);
                         setValue(cell, value);
                     }
                 }
@@ -178,20 +183,21 @@ public class XlsWriter implements DataWriter, DataSetConstants {
      * @param value
      *            値
      */
-    protected void setValue(HSSFCell cell, Object value) {
+    protected void setValue(Cell cell, Object value) {
+        CreationHelper helper = workbook.getCreationHelper();
         if (value instanceof Number) {
-            cell.setCellValue(new HSSFRichTextString(value.toString()));
+            cell.setCellValue(helper.createRichTextString(value.toString()));
         } else if (value instanceof Date) {
             cell.setCellValue((Date) value);
             cell.setCellStyle(dateStyle);
         } else if (value instanceof byte[]) {
-            cell.setCellValue(new HSSFRichTextString(Base64Util
+            cell.setCellValue(helper.createRichTextString(Base64Util
                     .encode((byte[]) value)));
             cell.setCellStyle(base64Style);
         } else if (value instanceof Boolean) {
             cell.setCellValue(((Boolean) value).booleanValue());
         } else {
-            cell.setCellValue(new HSSFRichTextString(StringConversionUtil
+            cell.setCellValue(helper.createRichTextString(StringConversionUtil
                     .toString(value, null)));
         }
     }

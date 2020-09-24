@@ -66,7 +66,7 @@ public class BeanReader implements DataReader {
     protected void setupColumns(BeanDesc beanDesc) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            Class propertyType = pd.getPropertyType();
+            Class<?> propertyType = pd.getPropertyType();
             table.addColumn(pd.getPropertyName(), ColumnTypes
                     .getColumnType(propertyType));
         }
@@ -91,8 +91,12 @@ public class BeanReader implements DataReader {
         row.setState(RowStates.UNCHANGED);
     }
 
+    @Override
     public DataSet read() {
         return dataSet;
     }
-
+    
+    public DataTable readTable() {
+        return table;
+    }
 }

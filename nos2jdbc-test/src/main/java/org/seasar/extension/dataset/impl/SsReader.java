@@ -19,14 +19,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-
-import org.apache.poi.hssf.record.RowRecord;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.SpreadsheetVersion;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.seasar.extension.dataset.ColumnType;
 import org.seasar.extension.dataset.DataReader;
 import org.seasar.extension.dataset.DataRow;
@@ -40,6 +40,8 @@ import org.seasar.framework.util.FileInputStreamUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.util.TimestampConversionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Excel用の {@link DataReader}です。
@@ -48,7 +50,8 @@ import org.seasar.framework.util.TimestampConversionUtil;
  * @author manhole
  * @author azusa
  */
-public class XlsReader implements DataReader, DataSetConstants {
+public class SsReader implements DataReader, DataSetConstants {
+    final private static Logger logger = LoggerFactory.getLogger(SsReader.class);
 
     /**
      * データセットです。
@@ -58,12 +61,12 @@ public class XlsReader implements DataReader, DataSetConstants {
     /**
      * ワークブックです。
      */
-    protected HSSFWorkbook workbook;
+    protected Workbook workbook;
 
     /**
      * データフォーマットです。
      */
-    protected HSSFDataFormat dataFormat;
+    protected DataFormat dataFormat;
 
     /**
      * 文字列をトリミングするかどうか
@@ -71,41 +74,41 @@ public class XlsReader implements DataReader, DataSetConstants {
     protected boolean trimString = true;
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param path
      *            パス
      */
-    public XlsReader(String path) {
+    public SsReader(String path) {
         this(path, true);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param path
      *            パス
      * @param trimString
      *            文字列をトリムするかどうか
      */
-    public XlsReader(String path, boolean trimString) {
+    public SsReader(String path, boolean trimString) {
         this(ResourceUtil.getResourceAsStream(path), trimString);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param dirName
      *            ディレクトリ名
      * @param fileName
      *            ファイル名
      */
-    public XlsReader(String dirName, String fileName) {
+    public SsReader(String dirName, String fileName) {
         this(dirName, fileName, true);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param dirName
      *            ディレクトリ名
@@ -114,24 +117,24 @@ public class XlsReader implements DataReader, DataSetConstants {
      * @param trimString
      *            文字列をトリムするかどうか
      */
-    public XlsReader(String dirName, String fileName, boolean trimString) {
+    public SsReader(String dirName, String fileName, boolean trimString) {
         this(ResourceUtil.getResourceAsFile(dirName), fileName, trimString);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param dir
      *            ディレクトリ
      * @param fileName
      *            ファイル名
      */
-    public XlsReader(File dir, String fileName) {
+    public SsReader(File dir, String fileName) {
         this(dir, fileName, true);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param dir
      *            ディレクトリ
@@ -140,54 +143,54 @@ public class XlsReader implements DataReader, DataSetConstants {
      * @param trimString
      *            文字列をトリムするかどうか
      */
-    public XlsReader(File dir, String fileName, boolean trimString) {
+    public SsReader(File dir, String fileName, boolean trimString) {
         this(new File(dir, fileName), trimString);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param file
      *            ファイル
      */
-    public XlsReader(File file) {
+    public SsReader(File file) {
         this(file, true);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param file
      *            ファイル
      * @param trimString
      *            文字列をトリムするかどうか
      */
-    public XlsReader(File file, boolean trimString) {
+    public SsReader(File file, boolean trimString) {
         this(FileInputStreamUtil.create(file), trimString);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param in
      *            入力ストリーム
      */
-    public XlsReader(InputStream in) {
+    public SsReader(InputStream in) {
         this(in, true);
     }
 
     /**
-     * {@link XlsReader}を作成します。
+     * {@link SsReader}を作成します。
      * 
      * @param in
      *            入力ストリーム
      * @param trimString
      *            文字列をトリムするかどうか
      */
-    public XlsReader(InputStream in, boolean trimString) {
+    public SsReader(InputStream in, boolean trimString) {
         this.trimString = trimString;
         try {
-            workbook = new HSSFWorkbook(in);
+            workbook = WorkbookFactory.create(in);
         } catch (IOException ex) {
             throw new IORuntimeException(ex);
         }
@@ -198,6 +201,7 @@ public class XlsReader implements DataReader, DataSetConstants {
         }
     }
 
+    @Override
     public DataSet read() {
         return dataSet;
     }
@@ -211,7 +215,7 @@ public class XlsReader implements DataReader, DataSetConstants {
      *            シート
      * @return テーブル
      */
-    protected DataTable createTable(String sheetName, HSSFSheet sheet) {
+    protected DataTable createTable(String sheetName, Sheet sheet) {
         DataTable table = dataSet.addTable(sheetName);
         int rowCount = sheet.getLastRowNum();
         if (rowCount > 0) {
@@ -231,11 +235,11 @@ public class XlsReader implements DataReader, DataSetConstants {
      * @param sheet
      *            シート
      */
-    protected void setupColumns(DataTable table, HSSFSheet sheet) {
-        HSSFRow nameRow = sheet.getRow(0);
-        HSSFRow valueRow = sheet.getRow(1);
+    protected void setupColumns(DataTable table, Sheet sheet) {
+        Row nameRow = sheet.getRow(0);
+        Row valueRow = sheet.getRow(1);
         for (int i = 0; i <= Short.MAX_VALUE; ++i) {
-            HSSFCell nameCell = nameRow.getCell((short) i);
+            Cell nameCell = nameRow.getCell((short) i);
             if (nameCell == null) {
                 break;
             }
@@ -243,9 +247,12 @@ public class XlsReader implements DataReader, DataSetConstants {
             if (columnName.length() == 0) {
                 break;
             }
-            HSSFCell valueCell = null;
+            Cell valueCell = null;
             if (valueRow != null) {
                 for (int j = 1; j <= sheet.getLastRowNum(); j++) {
+                    if (sheet.getRow(j) == null)
+                        //throw new RuntimeException("tableName: " + table.getTableName() + ", columnName: " + columnName + ", row: " + j + ", LastRowNum: " + sheet.getLastRowNum());
+                        break;
                     valueCell = sheet.getRow(j).getCell((short) i);
                     if (valueCell != null
                             && !StringUtil.isEmpty(valueCell.toString())) {
@@ -269,9 +276,9 @@ public class XlsReader implements DataReader, DataSetConstants {
      * @param sheet
      *            シート
      */
-    protected void setupRows(DataTable table, HSSFSheet sheet) {
-        for (int i = 1; i <= RowRecord.MAX_ROW_NUMBER; ++i) {
-            HSSFRow row = sheet.getRow(i);
+    protected void setupRows(DataTable table, Sheet sheet) {
+        for (int i = 1; i <= SpreadsheetVersion.EXCEL97.getMaxRows(); ++i) {
+            Row row = sheet.getRow(i);
             if (row == null) {
                 break;
             }
@@ -287,10 +294,10 @@ public class XlsReader implements DataReader, DataSetConstants {
      * @param row
      *            行
      */
-    protected void setupRow(DataTable table, HSSFRow row) {
+    protected void setupRow(DataTable table, Row row) {
         DataRow dataRow = table.addRow();
         for (int i = 0; i < table.getColumnSize(); ++i) {
-            HSSFCell cell = row.getCell((short) i);
+            Cell cell = row.getCell((short) i);
             Object value = getValue(cell);
             dataRow.setValue(i, value);
         }
@@ -303,8 +310,8 @@ public class XlsReader implements DataReader, DataSetConstants {
      *            セル
      * @return セルがBase64でフォーマットされているかどうか
      */
-    public boolean isCellBase64Formatted(HSSFCell cell) {
-        HSSFCellStyle cs = cell.getCellStyle();
+    public boolean isCellBase64Formatted(Cell cell) {
+        CellStyle cs = cell.getCellStyle();
         short dfNum = cs.getDataFormat();
         return BASE64_FORMAT.equals(dataFormat.getFormat(dfNum));
     }
@@ -316,8 +323,8 @@ public class XlsReader implements DataReader, DataSetConstants {
      *            セル
      * @return セルが日付のフォーマットかどうか
      */
-    public boolean isCellDateFormatted(HSSFCell cell) {
-        HSSFCellStyle cs = cell.getCellStyle();
+    public boolean isCellDateFormatted(Cell cell) {
+        CellStyle cs = cell.getCellStyle();
         short dfNum = cs.getDataFormat();
         String format = dataFormat.getFormat(dfNum);
         if (StringUtil.isEmpty(format)) {
@@ -337,12 +344,13 @@ public class XlsReader implements DataReader, DataSetConstants {
      *            セル
      * @return セルの値
      */
-    public Object getValue(HSSFCell cell) {
+    public Object getValue(Cell cell) {
         if (cell == null) {
             return null;
         }
+
         switch (cell.getCellType()) {
-        case HSSFCell.CELL_TYPE_NUMERIC:
+        case NUMERIC:
             if (isCellDateFormatted(cell)) {
                 return TimestampConversionUtil.toTimestamp(cell
                         .getDateCellValue());
@@ -352,10 +360,11 @@ public class XlsReader implements DataReader, DataSetConstants {
                 return new BigDecimal((int) numericCellValue);
             }
             return new BigDecimal(Double.toString(numericCellValue));
-        case HSSFCell.CELL_TYPE_STRING:
+        case STRING:
             String s = cell.getRichStringCellValue().getString();
             if (s != null) {
-                s = StringUtil.rtrim(s);
+                if (trimString)
+                    s = StringUtil.rtrim(s);
                 if (!trimString && s.length() > 1 && s.startsWith("\"")
                         && s.endsWith("\"")) {
                     s = s.substring(1, s.length() - 1);
@@ -368,9 +377,15 @@ public class XlsReader implements DataReader, DataSetConstants {
                 return Base64Util.decode(s);
             }
             return s;
-        case HSSFCell.CELL_TYPE_BOOLEAN:
+        case BOOLEAN:
             boolean b = cell.getBooleanCellValue();
             return Boolean.valueOf(b);
+        case FORMULA:
+            String f = cell.getCellFormula();
+            if (f.equalsIgnoreCase("TRUE()"))
+                return Boolean.valueOf(true);
+            else
+                return Boolean.valueOf(false);
         default:
             return null;
         }
@@ -383,16 +398,16 @@ public class XlsReader implements DataReader, DataSetConstants {
      *            セル
      * @return カラムの型
      */
-    protected ColumnType getColumnType(HSSFCell cell) {
+    protected ColumnType getColumnType(Cell cell) {
         switch (cell.getCellType()) {
-        case HSSFCell.CELL_TYPE_NUMERIC:
+        case NUMERIC:
             if (isCellDateFormatted(cell)) {
                 return ColumnTypes.TIMESTAMP;
             }
             return ColumnTypes.BIGDECIMAL;
-        case HSSFCell.CELL_TYPE_BOOLEAN:
+        case BOOLEAN:
             return ColumnTypes.BOOLEAN;
-        case HSSFCell.CELL_TYPE_STRING:
+        case STRING:
             if (isCellBase64Formatted(cell)) {
                 return ColumnTypes.BINARY;
             } else if (trimString) {
@@ -400,6 +415,8 @@ public class XlsReader implements DataReader, DataSetConstants {
             } else {
                 return ColumnTypes.NOT_TRIM_STRING;
             }
+        case FORMULA:
+            return ColumnTypes.BOOLEAN;
         default:
             return ColumnTypes.STRING;
         }

@@ -33,6 +33,8 @@ public interface ColumnType {
      * @return 変換後の値
      */
     Object convert(Object value, String formatPattern);
+    
+    Object convert(Class<?> clazz, Object value);
 
     /**
      * 等しいかどうかを返します。
