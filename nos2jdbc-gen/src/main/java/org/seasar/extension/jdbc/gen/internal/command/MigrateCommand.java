@@ -149,6 +149,9 @@ public class MigrateCommand extends AbstractCommand {
     /** ローダ */
     protected Loader loader;
 
+    //i
+    protected boolean isTestDb;
+
     /**
      * SQLステートメントの区切り文字を返します。
      * 
@@ -529,6 +532,13 @@ public class MigrateCommand extends AbstractCommand {
     public void setApplyEnvToVersion(boolean applyEnvToVersion) {
         this.applyEnvToVersion = applyEnvToVersion;
     }
+    //i
+    public boolean isTestDb() {
+        return this.isTestDb;
+    }
+    public void setTestDb(boolean isTestDb) {
+        this.isTestDb = isTestDb;
+    }
 
     @Override
     protected void doValidate() {
@@ -542,8 +552,8 @@ public class MigrateCommand extends AbstractCommand {
         dialect = getGenDialect(genDialectClassName);
         valueTypeProvider = createValueTypeProvider();
         if (transactional) {
-//i            userTransaction = SingletonS2Container
-//i                    .getComponent(UserTransaction.class);
+            //i            userTransaction = SingletonS2Container
+            //i                    .getComponent(UserTransaction.class);
             userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
         sqlFileExecutor = createSqlFileExecutor();
@@ -564,6 +574,7 @@ public class MigrateCommand extends AbstractCommand {
 
         migrater.migrate(new Migrater.Callback() {
 
+            @Override
             public void drop(SqlExecutionContext sqlExecutionContext, File file) {
                 if (sqlFileExecutor.isTarget(databaseDesc, file)) {
                     boolean haltOnError = sqlExecutionContext.isHaltOnError();
@@ -576,6 +587,7 @@ public class MigrateCommand extends AbstractCommand {
                 }
             }
 
+            @Override
             public void create(SqlExecutionContext sqlExecutionContext,
                     File file) {
                 if (sqlFileExecutor.isTarget(databaseDesc, file)) {
@@ -671,8 +683,9 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link Loader}の実装
      */
     protected Loader createLoader() {
+        //
         return factory.createLoader(this, dialect, dumpFileEncoding,
-                loadBatchSize, false);
+                loadBatchSize, false, isTestDb);
     }
 
     /**

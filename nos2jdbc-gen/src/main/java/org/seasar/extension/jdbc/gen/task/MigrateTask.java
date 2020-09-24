@@ -278,4 +278,9 @@ public class MigrateTask extends AbstractTask {
     public void setApplyEnvToVersion(boolean applyEnvToVersion) {
         command.setApplyEnvToVersion(applyEnvToVersion);
     }
+    
+    //i
+    public void setTestDb(boolean isTestDb) {
+        command.setTestDb(isTestDb);
+    }   
 }

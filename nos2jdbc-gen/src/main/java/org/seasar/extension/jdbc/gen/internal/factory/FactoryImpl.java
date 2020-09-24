@@ -28,10 +28,12 @@ import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.data.Dumper;
 import org.seasar.extension.jdbc.gen.data.Loader;
+import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.desc.EntitySetDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.event.GenDdlListener;
+import org.seasar.extension.jdbc.gen.exception.LoadFailedRuntimeException;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.data.DumperImpl;
@@ -86,6 +88,7 @@ import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
+import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
@@ -101,6 +104,7 @@ import org.seasar.framework.convention.PersistenceConvention;
  */
 public class FactoryImpl implements Factory {
 
+    @Override
     public EntityMetaReader createEntityMetaReader(Command command,
             File classpathDir, String packageName,
             EntityMetaFactory entityMetaFactory, String shortClassNamePattern,
@@ -113,6 +117,7 @@ public class FactoryImpl implements Factory {
                 javaFileEncoding);
     }
 
+    @Override
     public DatabaseDescFactory createDatabaseDescFactory(Command command,
             EntityMetaFactory entityMetaFactory,
             EntityMetaReader entityMetaReader, GenDialect dialect,
@@ -122,12 +127,14 @@ public class FactoryImpl implements Factory {
                 dialect, valueTypeProvider, regardRelationshipAsFk);
     }
 
+    @Override
     public Dumper createDumper(Command command, GenDialect dialect,
             String dumpFileEncoding) {
 
         return new DumperImpl(dialect, dumpFileEncoding);
     }
 
+    @Override
     public SqlUnitExecutor createSqlUnitExecutor(Command command,
             DataSource dataSource, UserTransaction userTransaction,
             boolean haltOnError) {
@@ -135,6 +142,7 @@ public class FactoryImpl implements Factory {
         return new SqlUnitExecutorImpl(dataSource, userTransaction, haltOnError);
     }
 
+    @Override
     public DbTableMetaReader createDbTableMetaReader(Command command,
             DataSource dataSource, GenDialect dialect, String schemaName,
             String tableNamePattern, String ignoreTableNamePattern,
@@ -144,6 +152,7 @@ public class FactoryImpl implements Factory {
                 tableNamePattern, ignoreTableNamePattern, readComment);
     }
 
+    @Override
     public SqlFileExecutor createSqlFileExecutor(Command command,
             GenDialect dialect, String sqlFileEncoding,
             char statementDelimiter, String blockDelimiter) {
@@ -152,6 +161,7 @@ public class FactoryImpl implements Factory {
                 statementDelimiter, blockDelimiter);
     }
 
+    @Override
     public ConditionModelFactory createConditionModelFactory(Command command,
             String packageName, String conditionClassNameSuffix) {
 
@@ -162,12 +172,14 @@ public class FactoryImpl implements Factory {
                 associationModelFactory, packageName, conditionClassNameSuffix);
     }
 
+    @Override
     public Generator createGenerator(Command command,
             String templateFileEncoding, File templateFilePrimaryDir) {
 
         return new GeneratorImpl(templateFileEncoding, templateFilePrimaryDir);
     }
 
+    @Override
     public DdlVersionDirectoryTree createDdlVersionDirectoryTree(
             Command command, File baseDir, File versionFile,
             String versionNoPattern, String env, boolean applyEnvToVersion) {
@@ -176,6 +188,7 @@ public class FactoryImpl implements Factory {
                 versionNoPattern, applyEnvToVersion ? env : null);
     }
 
+    @Override
     public DdlVersionIncrementer createDdlVersionIncrementer(Command command,
             DdlVersionDirectoryTree ddlVersionDirectoryTree,
             GenDdlListener genDdlListener, GenDialect dialect,
@@ -187,6 +200,7 @@ public class FactoryImpl implements Factory {
                 dropFileNameList);
     }
 
+    @Override
     public TableModelFactory createTableModelFactory(Command command,
             GenDialect dialect, DataSource dataSource,
             SqlIdentifierCaseType sqlIdentifierCaseType,
@@ -198,6 +212,7 @@ public class FactoryImpl implements Factory {
                 tableOption, useComment);
     }
 
+    @Override
     public EntitySetDescFactory createEntitySetDescFactory(Command command,
             DbTableMetaReader dbTableMetaReader,
             PersistenceConvention persistenceConvention, GenDialect dialect,
@@ -210,6 +225,7 @@ public class FactoryImpl implements Factory {
                 pluralFormFile, generationType, initialValue, allocationSize);
     }
 
+    @Override
     public EntityModelFactory createEntityModelFactory(Command command,
             String packageName, Class<?> superclass, boolean useTemporalType,
             boolean useAccessor, boolean useComment, boolean showCatalogName,
@@ -226,6 +242,7 @@ public class FactoryImpl implements Factory {
                 useComment, showCatalogName, showSchemaName, showTableName);
     }
 //i
+    @Override
     public ServiceModelFactory createServiceModelFactory(Command command,
             String packageName, String serviceClassNameSuffix,
             NamesModelFactory namesModelFactory, boolean useNamesClass,
@@ -235,6 +252,7 @@ public class FactoryImpl implements Factory {
                 namesModelFactory, useNamesClass, jdbcManagerName, componentType);
     }
 
+    @Override
     public ServiceTestModelFactory createServiceTestModelFactory(
             Command command, String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
@@ -245,6 +263,7 @@ public class FactoryImpl implements Factory {
                 rootPackageName, componentType);
     }
 //i
+    @Override
     public NoS2AbstServiceModelFactory createNoS2AbstServiceModelFactory(
             Command command, String packageName, String serviceClassNameSuffix,
             String componentType) {
@@ -253,6 +272,7 @@ public class FactoryImpl implements Factory {
                 serviceClassNameSuffix, componentType);
     }
 //i
+    @Override
     public ServiceBaseQualifierModelFactory createServiceBaseQualifierModelFactory(
             Command command, String packageName, String serviceClassNameSuffix,
             String componentType) {
@@ -261,11 +281,13 @@ public class FactoryImpl implements Factory {
                 serviceClassNameSuffix, componentType);
     }
 //i
+    @Override
     public ArchiveTestUtilModelFactory createArchiveTestUtilModelFactory(
             Command command, String packageName) {
         return new ArchiveTestUtilModelFactoryImpl(packageName);
     }
 
+    @Override
     public EntityTestModelFactory createEntityTestModelFactory(Command command,
             String jdbcManagerName,
             String testClassNameSuffix, NamesModelFactory namesModelFactory,
@@ -277,18 +299,21 @@ public class FactoryImpl implements Factory {
                 rootPackageName, componentType);
     }
 
+    @Override
     public NamesModelFactory createNamesModelFactory(Command command,
             String packageName, String namesClassNameSuffix) {
 
         return new NamesModelFactoryImpl(packageName, namesClassNameSuffix);
     }
 
+    @Override
     public NamesAggregateModelFactory createNamesAggregateModelFactory(
             Command command, String packageName, String shortClassName) {
 
         return new NamesAggregateModelFactoryImpl(packageName, shortClassName);
     }
 
+    @Override
     public SchemaInfoTable createSchemaInfoTable(Command command,
             DataSource dataSource, GenDialect dialect, String fullTableName,
             String columnName) {
@@ -297,6 +322,7 @@ public class FactoryImpl implements Factory {
                 columnName);
     }
 
+    @Override
     public Migrater createMigrater(Command command,
             SqlUnitExecutor sqlUnitExecutor, SchemaInfoTable schemaInfoTable,
             DdlVersionDirectoryTree ddlVersionDirectoryTree, String version,
@@ -306,12 +332,25 @@ public class FactoryImpl implements Factory {
                 ddlVersionDirectoryTree, version, env);
     }
 
+    @Override
     public Loader createLoader(Command command, GenDialect dialect,
-            String dumpFileEncoding, int batchSize, boolean delete) {
-
-        return new LoaderImpl(dialect, dumpFileEncoding, batchSize, delete);
+            String dumpFileEncoding, int batchSize, boolean delete, boolean isTestDb) {
+      //i
+        if (!isTestDb)
+            return new LoaderImpl(dialect, dumpFileEncoding, batchSize, delete);
+        else
+            return new Loader() {
+            @Override
+            public void load(SqlExecutionContext sqlExecutionContext, DatabaseDesc databaseDesc, File dumpFile)
+                    throws LoadFailedRuntimeException {}
+            @Override
+            public boolean isTarget(DatabaseDesc databaseDesc, File file) {
+                return false;
+            }
+        };
     }
 
+    @Override
     public GenerationContext createGenerationContext(Command command,
             Object model, File file, String templateName, String encoding,
             boolean overwrite) {
@@ -320,12 +359,14 @@ public class FactoryImpl implements Factory {
                 overwrite);
     }
 
+    @Override
     public ValueTypeProvider createValueTypeProvider(Command command,
             DbmsDialect dbmsDialect) {
 
         return new ValueTypeProviderImpl(dbmsDialect);
     }
 
+    @Override
     public SqlFileTestModelFactory createSqlFileTestModelFactory(
             Command command, File classpathDir, Set<File> sqlFileSet,
             String jdbcManagerName, String packageName,
@@ -337,6 +378,7 @@ public class FactoryImpl implements Factory {
                 rootPackageName, componentType);
     }
 
+    @Override
     public SqlFileConstantsModelFactory createSqlFileConstantsModelFactory(
             Command command, File classpathDir, Set<File> sqlFileSet,
             SqlFileConstantNamingRule sqlFileConstantNamingRule,
