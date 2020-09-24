@@ -6,7 +6,7 @@
   <groupId>com.github.ns2j</groupId>
   <artifactId>nos2jdbc</artifactId>
   <packaging>pom</packaging>
-  <version>1.5.1</version>
+  <version>1.6.0</version>
   <name>nos2jdbc</name>
   <description>No Seasar2 Container's s2jdbc</description>
   <url>https://github.com/ns2j/nos2jdbc/</url>
@@ -44,13 +44,14 @@
     <module>nos2jdbc-util</module>
     <module>nos2jdbc-core</module>
     <module>nos2jdbc-gen</module>
+    <module>nos2jdbc-test</module>
   </modules>
 
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.6.0</version>
+      <version>5.7.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -69,11 +70,11 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
+          <version>2.22.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.2.0</version>
           <configuration>
             <excludes>
               <exclude>oracle/**</exclude>
@@ -90,7 +91,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.0.1</version>
+            <version>3.2.1</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
