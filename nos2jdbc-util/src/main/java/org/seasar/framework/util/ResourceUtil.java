@@ -18,6 +18,8 @@ package org.seasar.framework.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Properties;
 
@@ -380,6 +382,22 @@ public class ResourceUtil {
         }
         return getFile(url);
     }
+
+    public static String getResourceAsString(String path) {
+        return getResourceAsString(path, null);
+    }
+
+    public static String getResourceAsString(String path, String extension) {
+        InputStream is = getResourceAsStream(path, extension);
+        try (StringWriter writer = new StringWriter();
+                InputStreamReader reader = new InputStreamReader(is);) {
+            reader.transferTo(writer);
+            return writer.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * パスを変換します。
