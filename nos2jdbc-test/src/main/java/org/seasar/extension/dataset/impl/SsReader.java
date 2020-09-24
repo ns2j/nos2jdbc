@@ -313,7 +313,8 @@ public class SsReader implements DataReader, DataSetConstants {
     public boolean isCellBase64Formatted(Cell cell) {
         CellStyle cs = cell.getCellStyle();
         short dfNum = cs.getDataFormat();
-        return BASE64_FORMAT.equals(dataFormat.getFormat(dfNum));
+        String df = dataFormat.getFormat(dfNum);
+        return BASE64_FORMAT.equals(df) || BASE64_FORMAT_LIBREOFFICE.equals(df);
     }
 
     /**
@@ -363,8 +364,7 @@ public class SsReader implements DataReader, DataSetConstants {
         case STRING:
             String s = cell.getRichStringCellValue().getString();
             if (s != null) {
-                if (trimString)
-                    s = StringUtil.rtrim(s);
+                s = StringUtil.rtrim(s);
                 if (!trimString && s.length() > 1 && s.startsWith("\"")
                         && s.endsWith("\"")) {
                     s = s.substring(1, s.length() - 1);

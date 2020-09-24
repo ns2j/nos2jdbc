@@ -33,4 +33,6 @@ public interface DataSetConstants {
      * Base64のフォーマットです。
      */
     String BASE64_FORMAT = "\\B\\:@";
+    String BASE64_FORMAT_LIBREOFFICE = "\"B:\"@";
+
 }
