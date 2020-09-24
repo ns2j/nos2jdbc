@@ -28,6 +28,8 @@ import org.seasar.extension.jdbc.util.ConnectionUtil;
 import org.seasar.extension.jdbc.util.DataSourceUtil;
 import org.seasar.extension.jdbc.util.DatabaseMetaDataUtil;
 import org.seasar.framework.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SQL用の {@link TableReader}です。
@@ -36,6 +38,7 @@ import org.seasar.framework.util.StringUtil;
  * 
  */
 public class SqlTableReader implements TableReader {
+    final static private Logger logger = LoggerFactory.getLogger(SqlTableReader.class);
 
     private DataSource dataSource;
 
@@ -162,6 +165,7 @@ public class SqlTableReader implements TableReader {
     /**
      * @see org.seasar.extension.dataset.TableReader#read()
      */
+    @Override
     public DataTable read() {
         SelectHandler selectHandler = new BasicSelectHandler(dataSource, sql,
                 new DataTableResultSetHandler(tableName));

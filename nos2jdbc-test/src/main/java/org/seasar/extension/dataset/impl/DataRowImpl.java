@@ -32,6 +32,8 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.CaseInsensitiveMap;
 import org.seasar.framework.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link DataRow}の実装クラスです。
@@ -40,6 +42,7 @@ import org.seasar.framework.util.StringUtil;
  * 
  */
 public class DataRowImpl implements DataRow {
+    final static private Logger logger = LoggerFactory.getLogger(DataRowImpl.class);
 
     private DataTable table_;
 
@@ -66,6 +69,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#getValue(int)
      */
+    @Override
     public Object getValue(int index) {
         return values_.get(index);
     }
@@ -73,6 +77,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#getValue(java.lang.String)
      */
+    @Override
     public Object getValue(String columnName)
             throws ColumnNotFoundRuntimeException {
 
@@ -84,9 +89,9 @@ public class DataRowImpl implements DataRow {
      * @see org.seasar.extension.dataset.DataRow#setValue(java.lang.String,
      *      java.lang.Object)
      */
+    @Override
     public void setValue(String columnName, Object value)
             throws ColumnNotFoundRuntimeException {
-
         DataColumn column = table_.getColumn(columnName);
         values_.put(columnName, column.convert(value));
         modify();
@@ -95,6 +100,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#setValue(int, java.lang.Object)
      */
+    @Override
     public void setValue(int index, Object value) {
         DataColumn column = table_.getColumn(index);
         values_.set(index, column.convert(value));
@@ -110,6 +116,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#remove()
      */
+    @Override
     public void remove() {
         state_ = RowStates.REMOVED;
     }
@@ -117,6 +124,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#getTable()
      */
+    @Override
     public DataTable getTable() {
         return table_;
     }
@@ -124,6 +132,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#getState()
      */
+    @Override
     public RowState getState() {
         return state_;
     }
@@ -131,10 +140,12 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#setState(org.seasar.extension.dataset.RowState)
      */
+    @Override
     public void setState(RowState state) {
         state_ = state;
     }
 
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer(100);
         buf.append("{");
@@ -147,6 +158,7 @@ public class DataRowImpl implements DataRow {
         return buf.toString();
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -171,6 +183,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#copyFrom(java.lang.Object)
      */
+    @Override
     public void copyFrom(Object source) {
         if (source instanceof Map) {
             copyFromMap((Map) source);

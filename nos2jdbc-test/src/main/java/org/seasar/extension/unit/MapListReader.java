@@ -32,11 +32,10 @@ public class MapListReader extends MapReader {
      * @param list
      *            リスト
      */
-    public MapListReader(List list) {
-        setupColumns((Map) list.get(0));
+    public MapListReader(List<Map<String, Object>> list) {
+        setupColumns(list.get(0));
         for (int i = 0; i < list.size(); ++i) {
-            Map map = (Map) list.get(i);
-            setupRow(map);
+            setupRow(list.get(i));
         }
     }
 

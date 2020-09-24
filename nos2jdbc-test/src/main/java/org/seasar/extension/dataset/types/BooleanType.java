@@ -27,10 +27,22 @@ public class BooleanType extends ObjectType {
     BooleanType() {
     }
 
+    @Override
     public Object convert(Object value, String formatPattern) {
         return BooleanConversionUtil.toBoolean(value);
     }
 
+    @Override
+    public Object convert(Class<?> clazz, Object value) {
+        if (clazz == Boolean.class) {
+            return BooleanConversionUtil.toBoolean(value);
+        } else if (clazz == boolean.class) {
+            return BooleanConversionUtil.toPrimitiveBoolean(value);
+        }
+        return value;
+    }
+    
+    @Override
     public Class getType() {
         return Boolean.class;
     }

@@ -52,7 +52,7 @@ public class MapReader implements DataReader {
      * @param map
      *            マップ
      */
-    public MapReader(Map map) {
+    public MapReader(Map<String, Object> map) {
         setupColumns(map);
         setupRow(map);
     }
@@ -64,9 +64,9 @@ public class MapReader implements DataReader {
      *            マップ
      * 
      */
-    protected void setupColumns(Map map) {
-        for (Iterator i = map.keySet().iterator(); i.hasNext();) {
-            String key = (String) i.next();
+    protected void setupColumns(Map<String, Object> map) {
+        for (Iterator<String> i = map.keySet().iterator(); i.hasNext();) {
+            String key = i.next();
             table.addColumn(key);
         }
     }
@@ -77,7 +77,7 @@ public class MapReader implements DataReader {
      * @param map
      *            マップ
      */
-    protected void setupRow(Map map) {
+    protected void setupRow(Map<String, Object> map) {
         DataRow row = table.addRow();
         for (int i = 0; i < table.getColumnSize(); ++i) {
             DataColumn column = table.getColumn(i);
@@ -90,6 +90,7 @@ public class MapReader implements DataReader {
         row.setState(RowStates.UNCHANGED);
     }
 
+    @Override
     public DataSet read() {
         return dataSet;
     }

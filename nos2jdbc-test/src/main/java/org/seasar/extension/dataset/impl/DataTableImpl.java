@@ -67,6 +67,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getTableName()
      */
+    @Override
     public String getTableName() {
         return tableName;
     }
@@ -74,6 +75,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#setTableName(java.lang.String)
      */
+    @Override
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
@@ -81,6 +83,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getRowSize()
      */
+    @Override
     public int getRowSize() {
         return rows.size();
     }
@@ -88,6 +91,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getRow(int)
      */
+    @Override
     public DataRow getRow(int index) {
         return (DataRow) rows.get(index);
     }
@@ -95,6 +99,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#addRow()
      */
+    @Override
     public DataRow addRow() {
         DataRow row = new DataRowImpl(this);
         rows.add(row);
@@ -105,6 +110,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getRemovedRowSize()
      */
+    @Override
     public int getRemovedRowSize() {
         return removedRows.size();
     }
@@ -112,6 +118,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getRemovedRow(int)
      */
+    @Override
     public DataRow getRemovedRow(int index) {
         return (DataRow) removedRows.get(index);
     }
@@ -119,6 +126,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#removeRows()
      */
+    @Override
     public DataRow[] removeRows() {
         for (int i = 0; i < rows.size();) {
             DataRow row = getRow(i);
@@ -135,6 +143,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getColumnSize()
      */
+    @Override
     public int getColumnSize() {
         return columns.size();
     }
@@ -142,6 +151,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getColumn(int)
      */
+    @Override
     public DataColumn getColumn(int index) {
         return (DataColumn) columns.get(index);
     }
@@ -149,6 +159,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getColumn(java.lang.String)
      */
+    @Override
     public DataColumn getColumn(String columnName) {
         DataColumn column = getColumn0(columnName);
         if (column == null) {
@@ -179,6 +190,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#hasColumn(java.lang.String)
      */
+    @Override
     public boolean hasColumn(String columnName) {
         return getColumn0(columnName) != null;
     }
@@ -186,6 +198,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getColumnName(int)
      */
+    @Override
     public String getColumnName(int index) {
         return getColumn(index).getColumnName();
     }
@@ -193,6 +206,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getColumnType(int)
      */
+    @Override
     public ColumnType getColumnType(int index) {
         return getColumn(index).getColumnType();
     }
@@ -200,6 +214,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#getColumnType(java.lang.String)
      */
+    @Override
     public ColumnType getColumnType(String columnName) {
         return getColumn(columnName).getColumnType();
     }
@@ -207,6 +222,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#addColumn(java.lang.String)
      */
+    @Override
     public DataColumn addColumn(String columnName) {
         return addColumn(columnName, ColumnTypes.OBJECT);
     }
@@ -215,6 +231,7 @@ public class DataTableImpl implements DataTable {
      * @see org.seasar.extension.dataset.DataTable#addColumn(java.lang.String,
      *      org.seasar.extension.dataset.ColumnType)
      */
+    @Override
     public DataColumn addColumn(String columnName, ColumnType columnType) {
         DataColumn column = new DataColumnImpl(columnName, columnType, columns
                 .size());
@@ -225,6 +242,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#hasMetaData()
      */
+    @Override
     public boolean hasMetaData() {
         return hasMetaData;
     }
@@ -232,6 +250,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#setupMetaData(java.sql.DatabaseMetaData)
      */
+    @Override
     public void setupMetaData(DatabaseMetaData dbMetaData) {
         Set primaryKeySet = DatabaseMetaDataUtil.getPrimaryKeySet(dbMetaData,
                 tableName);
@@ -261,6 +280,7 @@ public class DataTableImpl implements DataTable {
     /**
      * @see org.seasar.extension.dataset.DataTable#setupColumns(java.lang.Class)
      */
+    @Override
     public void setupColumns(Class beanClass) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(beanClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
@@ -270,6 +290,7 @@ public class DataTableImpl implements DataTable {
         }
     }
 
+    @Override
     public void copyFrom(Object source) {
         if (source instanceof List) {
             copyFromList((List) source);
@@ -293,6 +314,7 @@ public class DataTableImpl implements DataTable {
         row.setState(RowStates.UNCHANGED);
     }
 
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer(100);
         buf.append(tableName);
@@ -310,6 +332,7 @@ public class DataTableImpl implements DataTable {
         return buf.toString();
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;

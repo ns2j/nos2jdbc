@@ -16,8 +16,10 @@
 package org.seasar.extension.dataset.types;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.seasar.framework.util.BigDecimalConversionUtil;
+import org.seasar.framework.util.NumberConversionUtil;
 
 /**
  * 数値用の型です。
@@ -30,10 +32,27 @@ public class BigDecimalType extends ObjectType {
     BigDecimalType() {
     }
 
+    @Override
     public Object convert(Object value, String formatPattern) {
         return BigDecimalConversionUtil.toBigDecimal(value, formatPattern);
     }
+    
+    @Override
+    public Object convert(Class<?> clazz, Object value) {
+        if (clazz == Integer.class || clazz == Long.class ||
+                clazz == Float.class || clazz == Double.class||
+                clazz == BigDecimal.class || clazz == BigInteger.class) {
+            return NumberConversionUtil.convertNumber(clazz, value);
+        } else if (clazz == int.class || clazz == long.class ||
+                    clazz == float.class || clazz == double.class) {
+            return NumberConversionUtil.convertPrimitiveWrapper(clazz, value);
+        } else if (clazz == String.class) {
+            return value.toString();
+        }
+        return value;
+    }
 
+    @Override
     public Class getType() {
         return BigDecimal.class;
     }

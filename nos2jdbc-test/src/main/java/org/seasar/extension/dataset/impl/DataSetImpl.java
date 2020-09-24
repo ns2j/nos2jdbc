@@ -20,6 +20,8 @@ import org.seasar.extension.dataset.DataTable;
 import org.seasar.extension.dataset.TableNotFoundRuntimeException;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.CaseInsensitiveMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link DataSet}の実装です。
@@ -28,6 +30,7 @@ import org.seasar.framework.util.CaseInsensitiveMap;
  * 
  */
 public class DataSetImpl implements DataSet {
+    final static private Logger logger = LoggerFactory.getLogger(DataSetImpl.class);
 
     private ArrayMap tables = new CaseInsensitiveMap();
 
@@ -40,6 +43,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#getTableSize()
      */
+    @Override
     public int getTableSize() {
         return tables.size();
     }
@@ -47,6 +51,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#getTableName(int)
      */
+    @Override
     public String getTableName(int index) {
         return getTable(index).getTableName();
     }
@@ -54,6 +59,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#getTable(int)
      */
+    @Override
     public DataTable getTable(int index) {
         return (DataTable) tables.get(index);
     }
@@ -61,6 +67,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#hasTable(java.lang.String)
      */
+    @Override
     public boolean hasTable(String tableName) {
         return tables.containsKey(tableName);
     }
@@ -68,6 +75,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#getTable(java.lang.String)
      */
+    @Override
     public DataTable getTable(String tableName)
             throws TableNotFoundRuntimeException {
 
@@ -81,6 +89,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#addTable(java.lang.String)
      */
+    @Override
     public DataTable addTable(String tableName) {
         return addTable(new DataTableImpl(tableName));
     }
@@ -88,6 +97,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#addTable(org.seasar.extension.dataset.DataTable)
      */
+    @Override
     public DataTable addTable(DataTable table) {
         tables.put(table.getTableName(), table);
         return table;
@@ -96,6 +106,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#removeTable(org.seasar.extension.dataset.DataTable)
      */
+    @Override
     public DataTable removeTable(DataTable table) {
         return removeTable(table.getTableName());
     }
@@ -103,6 +114,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#removeTable(int)
      */
+    @Override
     public DataTable removeTable(int index) {
         return (DataTable) tables.remove(index);
     }
@@ -110,6 +122,7 @@ public class DataSetImpl implements DataSet {
     /**
      * @see org.seasar.extension.dataset.DataSet#removeTable(java.lang.String)
      */
+    @Override
     public DataTable removeTable(String tableName) {
         DataTable table = (DataTable) tables.remove(tableName);
         if (table == null) {
@@ -118,6 +131,7 @@ public class DataSetImpl implements DataSet {
         return table;
     }
 
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer(100);
         for (int i = 0; i < getTableSize(); ++i) {
@@ -127,6 +141,7 @@ public class DataSetImpl implements DataSet {
         return buf.toString();
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
