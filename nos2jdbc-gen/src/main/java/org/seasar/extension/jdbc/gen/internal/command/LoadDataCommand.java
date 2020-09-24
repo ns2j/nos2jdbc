@@ -480,6 +480,7 @@ public class LoadDataCommand extends AbstractCommand {
                     new DefaultExcludesFilenameFilter(), new FileComparetor(),
                     new FileUtil.FileHandler() {
 
+                        @Override
                         public void handle(File file) {
                             fileList.add(file);
                         }
@@ -493,6 +494,7 @@ public class LoadDataCommand extends AbstractCommand {
 
         sqlUnitExecutor.execute(new SqlUnitExecutor.Callback() {
 
+            @Override
             public void execute(SqlExecutionContext context) {
                 for (File file : fileList) {
                     if (loader.isTarget(databaseDesc, file)) {
@@ -547,7 +549,7 @@ public class LoadDataCommand extends AbstractCommand {
      */
     protected Loader createLoader() {
         return factory.createLoader(this, dialect, dumpFileEncoding,
-                loadBatchSize, delete);
+                loadBatchSize, delete, false);
     }
 
     /**

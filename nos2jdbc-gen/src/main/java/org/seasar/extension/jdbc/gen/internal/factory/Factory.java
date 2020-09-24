@@ -545,8 +545,9 @@ public interface Factory {
      *            ロードの前に存在するデータを削除する場合{@code true}、削除しない場合{@code false}を設定します。
      * @return {@link Loader}の実装
      */
+    //i
     Loader createLoader(Command command, GenDialect dialect,
-            String dumpFileEncoding, int batchSize, boolean delete);
+            String dumpFileEncoding, int batchSize, boolean delete, boolean testDb);
 
     /**
      * {@link GenerationContext}の実装を作成します。
