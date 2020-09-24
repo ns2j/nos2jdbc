@@ -40,26 +40,31 @@ public class BooleanIntegerType extends AbstractValueType {
         super(Types.INTEGER);
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, int index) throws SQLException {
         return BooleanConversionUtil.toBoolean(resultSet.getObject(index));
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, String columnName)
             throws SQLException {
 
         return BooleanConversionUtil.toBoolean(resultSet.getObject(columnName));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, int index) throws SQLException {
         return BooleanConversionUtil.toBoolean(cs.getObject(index));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, String parameterName)
             throws SQLException {
 
         return BooleanConversionUtil.toBoolean(cs.getObject(parameterName));
     }
 
+    @Override
     public void bindValue(PreparedStatement ps, int index, Object value)
             throws SQLException {
         if (value == null) {
@@ -69,6 +74,7 @@ public class BooleanIntegerType extends AbstractValueType {
         }
     }
 
+    @Override
     public void bindValue(CallableStatement cs, String parameterName,
             Object value) throws SQLException {
         if (value == null) {
@@ -78,12 +84,13 @@ public class BooleanIntegerType extends AbstractValueType {
         }
     }
 
+    @Override
     public String toText(Object value) {
         if (value == null) {
             return BindVariableUtil.nullText();
         }
         int var = toInt(value);
-        return BindVariableUtil.toText(new Integer(var));
+        return BindVariableUtil.toText(Integer.valueOf(var));
     }
 
     /**

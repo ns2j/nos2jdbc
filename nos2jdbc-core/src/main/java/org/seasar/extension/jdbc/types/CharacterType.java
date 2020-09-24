@@ -39,19 +39,23 @@ public class CharacterType extends AbstractValueType {
         super(Types.CHAR);
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, int index) throws SQLException {
         return toCharacter(resultSet.getString(index));
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, String columnName)
             throws SQLException {
         return toCharacter(resultSet.getString(columnName));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, int index) throws SQLException {
         return toCharacter(cs.getString(index));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, String parameterName)
             throws SQLException {
         return toCharacter(cs.getString(parameterName));
@@ -63,7 +67,7 @@ public class CharacterType extends AbstractValueType {
         }
         final char[] chars = value.toCharArray();
         if (chars.length == 1) {
-            return new Character(chars[0]);
+            return Character.valueOf(chars[0]);
         }
         if (chars.length == 0) {
             return null;
@@ -72,6 +76,7 @@ public class CharacterType extends AbstractValueType {
                 + " actual is [" + value + "]");
     }
 
+    @Override
     public void bindValue(PreparedStatement ps, int index, Object value)
             throws SQLException {
         if (value == null) {
@@ -81,6 +86,7 @@ public class CharacterType extends AbstractValueType {
         }
     }
 
+    @Override
     public void bindValue(CallableStatement cs, String parameterName,
             Object value) throws SQLException {
         if (value == null) {
@@ -90,6 +96,7 @@ public class CharacterType extends AbstractValueType {
         }
     }
 
+    @Override
     public String toText(Object value) {
         if (value == null) {
             return BindVariableUtil.nullText();
