@@ -17,9 +17,8 @@ package org.seasar.extension.sql.context;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
-import ognl.Ognl;
-
 import org.seasar.extension.sql.SqlContext;
+import org.seasar.framework.util.OgnlUtil;
 
 /**
  * @author higa
@@ -34,9 +33,9 @@ class SqlContextPropertyAccessorTest {
     void testGetProperty() throws Exception {
         SqlContext ctx = new SqlContextImpl();
         ctx.addArg("aaa", "111", String.class);
-        assertEquals("111", Ognl.getValue("aaa", ctx));
-        assertEquals(Boolean.TRUE, Ognl.getValue("has_aaa", ctx));
-        assertEquals(Boolean.TRUE, Ognl.getValue("has_aaa == true", ctx));
-        assertEquals(Boolean.FALSE, Ognl.getValue("has_bbb", ctx));
+        assertEquals("111", OgnlUtil.getValue("aaa", ctx));
+        assertEquals(Boolean.TRUE, OgnlUtil.getValue("has_aaa", ctx));
+        assertEquals(Boolean.TRUE, OgnlUtil.getValue("has_aaa == true", ctx));
+        assertEquals(Boolean.FALSE, OgnlUtil.getValue("has_bbb", ctx));
     }
 }
