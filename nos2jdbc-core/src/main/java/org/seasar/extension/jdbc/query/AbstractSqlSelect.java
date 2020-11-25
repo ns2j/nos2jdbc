@@ -41,6 +41,8 @@ import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.convention.PersistenceConvention;
 
+import nos2jdbc.annotation.NonAuto;
+
 /**
  * SQLをあつかう検索用の抽象クラスです。
  * 
@@ -83,7 +85,8 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
                     (Class<? extends Map>) baseClass, dialect,
                     persistenceConvention, executedSql, limit);
         }
-        if (baseClass.isAnnotationPresent(Entity.class)) {
+        if (baseClass.isAnnotationPresent(NonAuto.class)
+                && baseClass.isAnnotationPresent(Entity.class)) {
             EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();
             return new BeanListNonAutoResultSetHandler(baseClass, entityMetaFactory,
         	    dialect, executedSql, limit, shouldSetInverseField);
@@ -107,7 +110,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
             return new MapResultSetHandler((Class<? extends Map>) baseClass,
                     dialect, persistenceConvention, executedSql);
         }
-        if (baseClass.isAnnotationPresent(Entity.class)) {
+        if (baseClass.isAnnotationPresent(NonAuto.class)) {
             EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();
             return new BeanNonAutoResultSetHandler(baseClass, entityMetaFactory,
         	    dialect, executedSql, shouldSetInverseField);

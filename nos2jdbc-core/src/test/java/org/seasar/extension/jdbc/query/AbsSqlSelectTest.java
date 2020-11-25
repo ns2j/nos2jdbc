@@ -30,7 +30,6 @@ import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.dto.AaaDto;
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.handler.BeanIterationResultSetHandler;
-import org.seasar.extension.jdbc.handler.BeanListNonAutoResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanListResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanResultSetHandler;
 import org.seasar.extension.jdbc.handler.MapIterationResultSetHandler;
@@ -79,7 +78,7 @@ class AbsSqlSelectTest {
     void testCreateResultListResultSetHandler() throws Exception {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         ResultSetHandler handler = query.createResultListResultSetHandler();
-        assertEquals(BeanListNonAutoResultSetHandler.class, handler.getClass());
+        assertEquals(BeanListResultSetHandler.class, handler.getClass());
     }
 
     /**
@@ -117,7 +116,7 @@ class AbsSqlSelectTest {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.limit = 10;
         ResultSetHandler handler = query.createResultListResultSetHandler();
-        assertEquals(BeanListNonAutoResultSetHandler.class, handler.getClass());
+        assertEquals(BeanListResultSetHandler.class, handler.getClass());
     }
 
     /**
@@ -130,7 +129,7 @@ class AbsSqlSelectTest {
         MySelect<Aaa> query = new MySelect<Aaa>(manager, Aaa.class);
         query.limit = 10;
         ResultSetHandler handler = query.createResultListResultSetHandler();
-        assertEquals(BeanListNonAutoResultSetHandler.class, handler.getClass());
+        assertEquals(BeanListResultSetHandler.class, handler.getClass());
     }
 
     /**
@@ -220,6 +219,7 @@ class AbsSqlSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class);
         IterationCallback<AaaDto, Object> callback = new IterationCallback<AaaDto, Object>() {
 
+            @Override
             public Object iterate(AaaDto dto, IterationContext context) {
                 return null;
             }
@@ -238,6 +238,7 @@ class AbsSqlSelectTest {
         MySelect<Map> query = new MySelect<Map>(manager, Map.class);
         IterationCallback<Map, Object> callback = new IterationCallback<Map, Object>() {
 
+            @Override
             public Object iterate(Map map, IterationContext context) {
                 return null;
             }
@@ -256,6 +257,7 @@ class AbsSqlSelectTest {
         MySelect<Integer> query = new MySelect<Integer>(manager, Integer.class);
         IterationCallback<Integer, Object> callback = new IterationCallback<Integer, Object>() {
 
+            @Override
             public Object iterate(Integer integer, IterationContext context) {
                 return null;
             }
@@ -276,6 +278,7 @@ class AbsSqlSelectTest {
         }
 
         
+        @Override
         protected void prepare(String methodName) {
         }
 
