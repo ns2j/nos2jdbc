@@ -20,7 +20,6 @@ import java.util.Map;
 import ognl.ClassResolver;
 import ognl.Ognl;
 import ognl.OgnlException;
-
 //i import org.seasar.framework.container.S2Container;
 import org.seasar.framework.exception.OgnlRuntimeException;
 
@@ -95,9 +94,12 @@ public class OgnlUtil {
         try {
             Map newCtx = addClassResolverIfNecessary(ctx, root);
             if (newCtx != null) {
-                return Ognl.getValue(exp, newCtx, root);
+                if (exp instanceof String)
+                    return Ognl.getValue((String)exp, newCtx, root);
+                else
+                    return Ognl.getValue(exp, newCtx, root);
             } else {
-                return Ognl.getValue(exp, root);
+                return Ognl.getValue(exp, Ognl.createDefaultContext(root, new DefaultMemberAccess(true)), root);
             }
         } catch (OgnlException ex) {
             throw new OgnlRuntimeException(ex.getReason() == null ? ex : ex
@@ -151,6 +153,13 @@ public class OgnlUtil {
 //i                }
 //i            }
 //i        }
+        ClassResolverImpl classResolver = new ClassResolverImpl(Thread.currentThread().getClass().getClassLoader());
+        if (ctx == null) {
+                ctx = Ognl.createDefaultContext(root, new DefaultMemberAccess(false), classResolver, null);
+        } else {
+                ctx = Ognl.addDefaultContext(root, classResolver, ctx);
+        }
+
         return ctx;
     }
 
@@ -170,6 +179,7 @@ public class OgnlUtil {
             this.classLoader = classLoader;
         }
 
+        @Override
         public Class classForName(String className, Map ctx)
                 throws ClassNotFoundException {
             try {
