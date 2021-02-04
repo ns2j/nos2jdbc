@@ -34,7 +34,7 @@ import org.seasar.framework.util.ClassTraversal;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ClassTraversal.ClassHandler;
 
-import nos2jdbc.gen.annotation.DisableGen;
+import nos2jdbc.annotation.NonAuto;
 
 /**
  * {@link EntityMetaReader}の実装クラスです。
@@ -149,17 +149,19 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
         this.javaFileEncoding = javaFileEncoding;
     }
 
+    @Override
     public List<EntityMeta> read() {
         final List<EntityMeta> entityMetaList = new ArrayList<EntityMeta>();
 
         ClassTraversal.forEach(classpathDir, new ClassHandler() {
+            @Override
             public void processClass(String packageName, String shortClassName) {
                 if (isTargetPackage(packageName)
                         && isTargetClass(shortClassName)) {
                     String className = ClassUtil.concatName(packageName,
                             shortClassName);
                     Class<?> clazz = ClassUtil.forName(className);
-                    if (clazz.isAnnotationPresent(Entity.class) && !clazz.isAnnotationPresent(DisableGen.class)) {
+                    if (clazz.isAnnotationPresent(Entity.class) && !clazz.isAnnotationPresent(NonAuto.class)) {
                         EntityMeta entityMeta = entityMetaFactory
                                 .getEntityMeta(clazz);
                         entityMetaList.add(entityMeta);
@@ -278,6 +280,7 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
         return args.toArray(new String[args.size()]);
     }
 
+    @Override
     public boolean isFiltered() {
         return !shortClassNamePattern.pattern().equals(".*")
                 || !ignoreShortClassNamePattern.pattern().equals("");
