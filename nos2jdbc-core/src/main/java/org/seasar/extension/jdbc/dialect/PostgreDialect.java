@@ -173,7 +173,7 @@ public class PostgreDialect extends StandardDialect {
     @Override
     public boolean supportsForUpdate(final SelectForUpdateType type,
             boolean withTarget) {
-        return type == SelectForUpdateType.NORMAL;
+        return type != SelectForUpdateType.WAIT;
     }
 
     @Override
@@ -187,7 +187,8 @@ public class PostgreDialect extends StandardDialect {
             }
             buf.setLength(buf.length() - 2);
         }
-        return new String(buf);
+        final String sql = new String(buf);
+        return type == SelectForUpdateType.NOWAIT ? sql + " nowait" : sql;
     }
 
     @Override
@@ -208,35 +209,42 @@ public class PostgreDialect extends StandardDialect {
      */
     public static class PostgreTrait implements Trait {
 
+        @Override
         public int getSqlType() {
             return Types.BLOB;
         }
 
+        @Override
         public void set(final PreparedStatement ps, final int parameterIndex,
                 final byte[] bytes) throws SQLException {
             ps.setBlob(parameterIndex, new BlobImpl(bytes));
         }
 
+        @Override
         public void set(final CallableStatement cs, final String parameterName,
                 final byte[] bytes) throws SQLException {
             cs.setBytes(parameterName, bytes);
         }
 
+        @Override
         public byte[] get(final ResultSet rs, final int columnIndex)
                 throws SQLException {
             return BytesType.toBytes(rs.getBlob(columnIndex));
         }
 
+        @Override
         public byte[] get(final ResultSet rs, final String columnName)
                 throws SQLException {
             return BytesType.toBytes(rs.getBlob(columnName));
         }
 
+        @Override
         public byte[] get(final CallableStatement cs, final int columnIndex)
                 throws SQLException {
             return BytesType.toBytes(cs.getBlob(columnIndex));
         }
 
+        @Override
         public byte[] get(final CallableStatement cs, final String columnName)
                 throws SQLException {
             return BytesType.toBytes(cs.getBlob(columnName));
@@ -264,10 +272,12 @@ public class PostgreDialect extends StandardDialect {
             this.bytes = bytes;
         }
 
+        @Override
         public InputStream getBinaryStream() throws SQLException {
             return new ByteArrayInputStream(bytes);
         }
 
+        @Override
         public byte[] getBytes(final long pos, final int length)
                 throws SQLException {
             if (length == bytes.length) {
@@ -278,45 +288,54 @@ public class PostgreDialect extends StandardDialect {
             return result;
         }
 
+        @Override
         public long length() throws SQLException {
             return bytes.length;
         }
 
+        @Override
         public long position(final Blob pattern, final long start)
                 throws SQLException {
             throw new UnsupportedOperationException("position");
         }
 
+        @Override
         public long position(final byte[] pattern, final long start)
                 throws SQLException {
             throw new UnsupportedOperationException("position");
         }
 
+        @Override
         public OutputStream setBinaryStream(final long pos) throws SQLException {
             throw new UnsupportedOperationException("setBinaryStream");
         }
 
+        @Override
         public int setBytes(final long pos, final byte[] bytes,
                 final int offset, final int len) throws SQLException {
             throw new UnsupportedOperationException("setBytes");
         }
 
+        @Override
         public int setBytes(final long pos, final byte[] bytes)
                 throws SQLException {
             throw new UnsupportedOperationException("setBytes");
         }
 
+        @Override
         public void truncate(final long len) throws SQLException {
             throw new UnsupportedOperationException("truncate");
         }
 
-	public void free() throws SQLException {
+        @Override
+    public void free() throws SQLException {
             throw new UnsupportedOperationException("free");
-	}
+        }
 
-	public InputStream getBinaryStream(long pos, long length)
-		throws SQLException {
+        @Override
+    public InputStream getBinaryStream(long pos, long length)
+                throws SQLException {
             throw new UnsupportedOperationException("getBinaryStream");
-	}
+        }
     }
 }
