@@ -28,7 +28,6 @@ import org.seasar.extension.jdbc.dialect.H2Dialect;
 import org.seasar.extension.jdbc.dialect.HsqlDialect;
 import org.seasar.extension.jdbc.dialect.InterbaseDialect;
 import org.seasar.extension.jdbc.dialect.MaxdbDialect;
-import org.seasar.extension.jdbc.dialect.Mssql2005Dialect;
 import org.seasar.extension.jdbc.dialect.MssqlDialect;
 import org.seasar.extension.jdbc.dialect.MysqlDialect;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
@@ -128,7 +127,6 @@ public class GenDialectRegistry {
         dialectMap.put(InterbaseDialect.class.getName(), INTERBASE);
         dialectMap.put(MaxdbDialect.class.getName(), MAXDB);
         dialectMap.put(MssqlDialect.class.getName(), MSSQL);
-        dialectMap.put(Mssql2005Dialect.class.getName(), MSSQL_2005);
         dialectMap.put(MysqlDialect.class.getName(), MYSQL);
         dialectMap.put(OracleDialect.class.getName(), ORACLE);
         dialectMap.put(PostgreDialect.class.getName(), POSTGRE);
