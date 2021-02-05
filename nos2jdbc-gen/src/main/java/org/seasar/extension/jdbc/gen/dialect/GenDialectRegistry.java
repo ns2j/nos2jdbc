@@ -32,7 +32,6 @@ import org.seasar.extension.jdbc.dialect.Mssql2005Dialect;
 import org.seasar.extension.jdbc.dialect.MssqlDialect;
 import org.seasar.extension.jdbc.dialect.MysqlDialect;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
-import org.seasar.extension.jdbc.dialect.Postgre81Dialect;
 import org.seasar.extension.jdbc.dialect.PostgreDialect;
 import org.seasar.extension.jdbc.dialect.SqliteDialect;
 import org.seasar.extension.jdbc.dialect.SybaseDialect;
@@ -133,7 +132,6 @@ public class GenDialectRegistry {
         dialectMap.put(MysqlDialect.class.getName(), MYSQL);
         dialectMap.put(OracleDialect.class.getName(), ORACLE);
         dialectMap.put(PostgreDialect.class.getName(), POSTGRE);
-        dialectMap.put(Postgre81Dialect.class.getName(), POSTGRE81);
         dialectMap.put(SqliteDialect.class.getName(), SQLITE);
         dialectMap.put(SybaseDialect.class.getName(), SYBASE);
     }
