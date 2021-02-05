@@ -28,6 +28,11 @@ import org.seasar.framework.util.tiger.Pair;
  */
 public class MssqlDialect extends StandardDialect {
 
+    /**
+     * 一意制約違反を表す例外コード
+     */
+    protected static final int uniqueConstraintViolationCode = 2627;
+
     @Override
     public String getName() {
         return "mssql";
@@ -40,11 +45,14 @@ public class MssqlDialect extends StandardDialect {
 
     @Override
     public boolean supportsOffset() {
-        return false;
+        return true;
     }
 
     @Override
     public String convertLimitSql(String sql, int offset, int limit) {
+        if (offset > 0) {
+            return convertLimitSqlByRowNumber(sql, offset, limit);
+        }
         StringBuilder buf = new StringBuilder(sql.length() + 20);
         String lowerSql = sql.toLowerCase();
         int startOfSelect = lowerSql.indexOf("select");
@@ -103,4 +111,12 @@ public class MssqlDialect extends StandardDialect {
         return new String(buf);
     }
 
+    @Override
+    public boolean isUniqueConstraintViolation(Throwable t) {
+        final Integer code = getErrorCode(t);
+        if (code != null) {
+            return uniqueConstraintViolationCode == code.intValue();
+        }
+        return false;
+    }
 }
