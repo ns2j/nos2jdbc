@@ -18,6 +18,7 @@ package org.seasar.extension.jdbc.dialect;
 import javax.persistence.GenerationType;
 
 import org.seasar.extension.jdbc.SelectForUpdateType;
+import org.seasar.extension.jdbc.exception.OrderByNotFoundRuntimeException;
 import org.seasar.framework.util.tiger.Pair;
 
 /**
@@ -50,20 +51,22 @@ public class MssqlDialect extends StandardDialect {
 
     @Override
     public String convertLimitSql(String sql, int offset, int limit) {
-        if (offset > 0) {
-            return convertLimitSqlByRowNumber(sql, offset, limit);
-        }
+        if (sql.toLowerCase().lastIndexOf("order by") < 0)
+            throw new OrderByNotFoundRuntimeException(sql);
         StringBuilder buf = new StringBuilder(sql.length() + 20);
-        String lowerSql = sql.toLowerCase();
-        int startOfSelect = lowerSql.indexOf("select");
-        int endOfSelect = startOfSelect + 6;
-        if (" distinct".equals(lowerSql.substring(6, 15))) {
-            endOfSelect = startOfSelect + 15;
+        buf.append(sql);
+        if (offset > 0) {
+            buf.append(" offset ");
+            buf.append(offset);
+            buf.append(" rows");
         }
-        buf.append(sql.substring(0, endOfSelect));
-        buf.append(" top ");
-        buf.append(offset + limit);
-        buf.append(sql.substring(endOfSelect));
+        if (limit > 0) {
+            if (offset == 0)
+                buf.append(" offset 0 rows ");
+            buf.append(" fetch next ");
+            buf.append(limit);
+            buf.append(" rows only");
+        }
         return buf.toString();
     }
 

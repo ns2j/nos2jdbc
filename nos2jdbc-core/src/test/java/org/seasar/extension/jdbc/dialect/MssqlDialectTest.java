@@ -37,7 +37,7 @@ class MssqlDialectTest {
     @Test
     void testConvertLimitSql_limitOnly() throws Exception {
         String sql = "select * from emp order by id";
-        String expected = "select top 5 * from emp order by id";
+        String expected = "select * from emp order by id offset 0 rows  fetch next 5 rows only";
         assertEquals(expected, dialect.convertLimitSql(sql, 0, 5));
     }
 
@@ -47,7 +47,7 @@ class MssqlDialectTest {
     @Test
     void testConvertLimitSql_limitOnly_distinct() throws Exception {
         String sql = "select distinct * from emp order by id";
-        String expected = "select distinct top 5 * from emp order by id";
+        String expected = "select distinct * from emp order by id offset 0 rows  fetch next 5 rows only";
         assertEquals(expected, dialect.convertLimitSql(sql, 0, 5));
 
     }
