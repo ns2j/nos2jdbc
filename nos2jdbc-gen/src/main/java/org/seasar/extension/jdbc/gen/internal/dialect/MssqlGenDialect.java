@@ -33,6 +33,7 @@ import org.seasar.extension.jdbc.gen.internal.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.IntegerType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.TimeType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.TimestampType;
+import org.seasar.extension.jdbc.gen.internal.sqltype.VarcharType;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -55,8 +56,8 @@ public class MssqlGenDialect extends StandardGenDialect {
     public MssqlGenDialect() {
         sqlTypeMap.put(Types.BINARY, new BinaryType("varbinary($l)"));
         sqlTypeMap.put(Types.BOOLEAN, new BooleanType("bit"));
-        sqlTypeMap.put(Types.BLOB, new BlobType("image"));
-        sqlTypeMap.put(Types.CLOB, new ClobType("text"));
+        //sqlTypeMap.put(Types.BLOB, new BlobType("image"));
+        //sqlTypeMap.put(Types.CLOB, new ClobType("text"));
         sqlTypeMap.put(Types.DATE, new DateType("datetime"));
         sqlTypeMap.put(Types.DECIMAL, new DecimalType("decimal($p,$s)"));
         sqlTypeMap.put(Types.DOUBLE, new DoubleType("double precision"));
@@ -79,6 +80,17 @@ public class MssqlGenDialect extends StandardGenDialect {
         columnTypeMap.put("smallmoney", MssqlColumnType.SMALLMONEY);
         columnTypeMap.put("text", MssqlColumnType.TEXT);
         columnTypeMap.put("varbinary", MssqlColumnType.VARBINARY);
+
+    
+        sqlTypeMap.put(Types.VARCHAR, new VarcharType("nvarchar($l)"));
+
+        sqlTypeMap.put(Types.BLOB, new BlobType("varbinary(max)"));
+        sqlTypeMap.put(Types.CLOB, new ClobType("varchar(max)"));
+
+        //columnTypeMap.put("image", MssqlColumnType.IMAGE);
+        //columnTypeMap.put("ntext", MssqlColumnType.NTEXT);
+        //columnTypeMap.put("text", MssqlColumnType.TEXT);
+    
     }
 
     @Override
@@ -201,8 +213,8 @@ public class MssqlGenDialect extends StandardGenDialect {
         private static MssqlColumnType DECIMAL = new MssqlColumnType(
                 "decimal($p,$s)", BigDecimal.class);
 
-        private static MssqlColumnType IMAGE = new MssqlColumnType("image",
-                byte[].class, true);
+        //private static MssqlColumnType IMAGE = new MssqlColumnType("image",
+          //      byte[].class, true);
 
         private static MssqlColumnType INT = new MssqlColumnType("int",
                 Integer.class);
@@ -213,8 +225,8 @@ public class MssqlGenDialect extends StandardGenDialect {
         private static MssqlColumnType NCHAR = new MssqlColumnType("nchar($l)",
                 String.class);
 
-        private static MssqlColumnType NTEXT = new MssqlColumnType("ntext",
-                String.class);
+        //private static MssqlColumnType NTEXT = new MssqlColumnType("ntext",
+          //      String.class);
 
         private static MssqlColumnType NUMERIC = new MssqlColumnType(
                 "numeric($p,$s)", BigDecimal.class);
@@ -228,11 +240,20 @@ public class MssqlGenDialect extends StandardGenDialect {
         private static MssqlColumnType SMALLMONEY = new MssqlColumnType(
                 "smallmoney", BigDecimal.class);
 
-        private static MssqlColumnType TEXT = new MssqlColumnType("text",
-                String.class);
+        //private static MssqlColumnType TEXT = new MssqlColumnType("text",
+        //        String.class);
 
         private static MssqlColumnType VARBINARY = new MssqlColumnType(
                 "varbinary($l)", byte[].class);
+
+        private static MssqlColumnType IMAGE = new MssqlColumnType(
+                "varbinary(max)", byte[].class, true);
+
+        private static MssqlColumnType NTEXT = new MssqlColumnType(
+                "nvarchar(max)", String.class);
+
+        private static MssqlColumnType TEXT = new MssqlColumnType(
+                "varchar(max)", String.class);
 
         /**
          * インスタンスを構築します。
@@ -260,6 +281,7 @@ public class MssqlGenDialect extends StandardGenDialect {
                 boolean lob) {
             super(dataType, attributeClass, lob);
         }
+
 
     }
 

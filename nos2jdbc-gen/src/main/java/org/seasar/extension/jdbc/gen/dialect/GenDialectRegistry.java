@@ -43,11 +43,9 @@ import org.seasar.extension.jdbc.gen.internal.dialect.H2GenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.HsqlGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.InterbaseGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.MaxdbGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.Mssql2005GenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.MssqlGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.MysqlGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.OracleGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.Postgre81GenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.PostgreGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.SqliteGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
@@ -87,9 +85,6 @@ public class GenDialectRegistry {
     /** MaxDBの方言 */
     protected static MaxdbGenDialect MAXDB = new MaxdbGenDialect();
 
-    /** MS SQL Server 2005の方言 */
-    protected static Mssql2005GenDialect MSSQL_2005 = new Mssql2005GenDialect();
-
     /** MS SQL Serverの方言 */
     protected static MssqlGenDialect MSSQL = new MssqlGenDialect();
 
@@ -101,9 +96,6 @@ public class GenDialectRegistry {
 
     /** PostgreSQLの方言 */
     protected static PostgreGenDialect POSTGRE = new PostgreGenDialect();
-
-    /** PostgreSQL 8.1の方言 */
-    protected static Postgre81GenDialect POSTGRE81 = new Postgre81GenDialect();
 
     /** Sqliteの方言 */
     protected static SqliteGenDialect SQLITE = new SqliteGenDialect();
