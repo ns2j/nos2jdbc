@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.github.ns2j</groupId>
     <artifactId>nos2jdbc</artifactId>
-    <version>1.7.0</version>
+    <version>1.7.1</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -18,17 +18,17 @@
     <dependency>
       <groupId>com.github.ns2j</groupId>
       <artifactId>nos2jdbc-core</artifactId>
-      <version>1.7.0</version>
+      <version>1.7.1</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.7.0</version>
+      <version>5.7.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
-      <version>4.1.2</version>
+      <version>5.0.0</version>
     </dependency>
 
     <dependency>
