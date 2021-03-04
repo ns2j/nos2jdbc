@@ -187,6 +187,16 @@ public abstract class ${shortClassName}<T> {
         return jdbcManager.delete(entity).execute();
     }
 
+    public int[] insertBatch(List<T> entity) {
+        return jdbcManager.insertBatch(entity).execute();
+    }
+    public int[] updateBatch(List<T> entity) {
+        return jdbcManager.updateBatch(entity).execute();
+    }
+    public int[] deleteBatch(List<T> entity) {
+        return jdbcManager.deleteBatch(entity).execute();
+    }
+
     /**
      * SQLファイル検索を返します。
      * 
