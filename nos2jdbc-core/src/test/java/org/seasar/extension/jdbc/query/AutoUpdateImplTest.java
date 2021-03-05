@@ -87,27 +87,24 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testCallerClass() {
+    void callerClass() {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, new Eee());
         assertSame(query, query.callerClass(getClass()));
         assertEquals(getClass(), query.callerClass);
     }
 
     /**
-     * 
      */
     @Test
-    void testCallerMethodName() {
+    void callerMethodName() {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, new Eee());
         assertSame(query, query.callerMethodName("hoge"));
         assertEquals("hoge", query.callerMethodName);
     }
 
     /**
-     * 
      */
     @Test
     void testQueryTimeout() {
@@ -117,10 +114,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testIncludesVersion() {
+    void includesVersion() {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, new Eee());
         assertFalse(query.includeVersion);
         assertSame(query, query.includesVersion());
@@ -128,10 +124,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testIncrementVersions() {
+    void incrementVersions() {
         Eee e = new Eee(1, "foo");
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, e);
         query.incrementVersion();
@@ -139,10 +134,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testIncrementVersions_includeVersion() {
+    void incrementVersions_includeVersion() {
         Eee e = new Eee(1, "foo");
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, e);
         query.includesVersion();
@@ -151,10 +145,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testExcludesNull() {
+    void excludesNull() {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, new Eee());
         assertFalse(query.excludesNull);
         assertSame(query, query.excludesNull());
@@ -162,10 +155,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testIncludes() {
+    void includes() {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, new Eee());
         assertTrue(query.excludesProperties.isEmpty());
 
@@ -183,10 +175,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testExcludes() {
+    void excludes() {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, new Eee());
         assertTrue(query.excludesProperties.isEmpty());
 
@@ -204,10 +195,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testChangedFrom_entity() {
+    void changedFrom_entity() {
         Eee before = new Eee();
         before.id = 100;
         before.name = "hoge";
@@ -225,10 +215,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testChangedFrom_entity_same() {
+    void changedFrom_entity_same() {
         Eee before = new Eee();
         before.id = 100;
         before.name = "hoge";
@@ -248,10 +237,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testChangedFrom_map() {
+    void changedFrom_map() {
         Map<String, Object> before = CollectionsUtil.newHashMap();
         before.put("id", 100);
         before.put("name", "hoge");
@@ -263,10 +251,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testChangedFrom_map_same() {
+    void changedFrom_map_same() {
         Map<String, Object> before = CollectionsUtil.newHashMap();
         before.put("id", 100);
         before.put("name", "hoge");
@@ -283,10 +270,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget() {
+    void prepareTarget() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -300,10 +286,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_includesVersion() {
+    void prepareTarget_includesVersion() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -319,10 +304,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_excludesNull() {
+    void prepareTarget_excludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -335,10 +319,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_includes() {
+    void prepareTarget_includes() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -351,10 +334,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_excludes() {
+    void prepareTarget_excludes() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -368,10 +350,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_includesAndExcludes() {
+    void prepareTarget_includesAndExcludes() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -384,10 +365,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_includesAndExcludesNull() {
+    void prepareTarget_includesAndExcludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -400,10 +380,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_changedFromEntity() {
+    void prepareTarget_changedFromEntity() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "foo";
@@ -420,10 +399,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareTarget_changedFromMap() {
+    void prepareTarget_changedFromMap() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "foo";
@@ -439,10 +417,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareSetClause() {
+    void prepareSetClause() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -455,10 +432,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareSetClause_includesVersion() {
+    void prepareSetClause_includesVersion() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -471,10 +447,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareWhereClause() {
+    void prepareWhereClause() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -485,10 +460,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareWhereClause_inclduesVersion() {
+    void prepareWhereClause_inclduesVersion() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -500,10 +474,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareParams() {
+    void prepareParams() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -520,10 +493,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareParams_includesVersion() {
+    void prepareParams_includesVersion() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -541,10 +513,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testPrepareParams_excludesNull() throws Exception {
+    void prepareParams_excludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -559,10 +530,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareSql() {
+    void prepareSql() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -575,10 +545,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareSql_includesVersion() {
+    void prepareSql_includesVersion() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -592,10 +561,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * 
      */
     @Test
-    void testPrepareSql_excludesNull() {
+    void prepareSql_excludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -609,10 +577,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testExecute() throws Exception {
+    void execute() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -620,11 +587,13 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -647,10 +616,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testExecute_includesVersion() throws Exception {
+    void execute_includesVersion() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -658,11 +626,13 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -680,10 +650,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testExecute_excludesNull() throws Exception {
+    void execute_excludesNull() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -691,11 +660,13 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -713,10 +684,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testExecute_changedFrom_same() throws Exception {
+    void execute_changedFrom_same() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -734,10 +704,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testOptimisticLock() throws Exception {
+    void optimisticLock() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -745,11 +714,13 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 0;
                     }
@@ -768,10 +739,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testOptimisticLock_includesVersion() throws Exception {
+    void optimisticLock_includesVersion() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -779,11 +749,13 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 0;
                     }
@@ -798,11 +770,9 @@ class AutoUpdateImplTest {
     }
 
     /**
-     * @throws Exception
      */
     @Test
-    void testOptimisticLock_suppressOptimisticLockException()
-            throws Exception {
+    void optimisticLock_suppressOptimisticLockException() {
         Eee eee = new Eee();
         eee.id = 100;
         eee.name = "hoge";
@@ -810,11 +780,13 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 0;
                     }
