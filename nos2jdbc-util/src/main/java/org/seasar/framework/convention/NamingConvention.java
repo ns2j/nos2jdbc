@@ -26,21 +26,21 @@ public interface NamingConvention {
     /**
      * <code>view</code>のルートパスを返します。
      * 
-     * @return
+     * @return view root path
      */
     String getViewRootPath();
 
     /**
-     * <code>view</code>のルートパスが/のみの場合に取り除きます。 例:"/" -> "", "/hoge" -> "/hoge"
+     * <code>view</code>のルートパスが/のみの場合に取り除きます。 例:"/" -&gt; "", "/hoge" -&gt; "/hoge"
      * 
-     * @return
+     * @return adjusted view root path
      */
     String adjustViewRootPath();
 
     /**
      * <code>view</code>の拡張子を返します。
      * 
-     * @return
+     * @return view extension
      */
     String getViewExtension();
 
@@ -243,7 +243,7 @@ public interface NamingConvention {
     /**
      * <code>suffix</code>をパッケージ名に変換します。
      * 
-     * @param suffix
+     * @param suffix suffix
      * @return パッケージ名
      */
     String fromSuffixToPackageName(String suffix);
@@ -251,7 +251,7 @@ public interface NamingConvention {
     /**
      * クラス名を短いコンポーネント名に変換します。 短いコンポーネント名とは、"サブアプリケーション名_"がついていないコンポーネント名です。
      * 
-     * @param className
+     * @param className className
      * @return 短いコンポーネント名
      */
     String fromClassNameToShortComponentName(String className);
@@ -259,7 +259,7 @@ public interface NamingConvention {
     /**
      * クラス名をコンポーネント名に変換します。
      * 
-     * @param className
+     * @param className className
      * @return コンポーネント名
      */
     String fromClassNameToComponentName(String className);
@@ -267,7 +267,7 @@ public interface NamingConvention {
     /**
      * コンポーネント名を{@link Class}に変換します。
      * 
-     * @param componentName
+     * @param componentName componentName
      * @return {@link Class}
      */
     Class fromComponentNameToClass(String componentName);
@@ -275,7 +275,7 @@ public interface NamingConvention {
     /**
      * クラス名を実装クラス名に変換します。
      * 
-     * @param className
+     * @param className className
      * @return 実装クラス名
      */
     String toImplementationClassName(String className);
@@ -283,7 +283,7 @@ public interface NamingConvention {
     /**
      * クラス名をインターフェース名に変換します。
      * 
-     * @param className
+     * @param className className
      * @return インターフェース名
      */
     String toInterfaceClassName(String className);
@@ -291,7 +291,7 @@ public interface NamingConvention {
     /**
      * 規約に従っていないスキップすべきクラスかどうか返します。
      * 
-     * @param clazz
+     * @param clazz clazz
      * @return 規約に従っていないスキップすべきクラス
      */
     boolean isSkipClass(Class clazz);
@@ -300,7 +300,7 @@ public interface NamingConvention {
      * 最終的に利用されるクラスに変換します。 通常は、実装クラスですが、DaoのようにInterceptorで実体化される場合、
      * インターフェースの場合もあります。
      * 
-     * @param clazz
+     * @param clazz clazz
      * @return 最終的に利用されるクラス
      */
     Class toCompleteClass(Class clazz);
@@ -309,7 +309,7 @@ public interface NamingConvention {
      * コンポーネント名をクラス名の一部に変換します。 "_"は"."に"_"の後ろは大文字に変換されます。
      * 例えば、コンポーネント名がhoge_fooの場合、hoge.Fooになります。
      * 
-     * @param componentName
+     * @param componentName componentName
      * @return クラス名の一部
      */
     String fromComponentNameToPartOfClassName(String componentName);
@@ -318,7 +318,7 @@ public interface NamingConvention {
      * コンポーネント名を<code>suffix</code>に変換します。 コンポーネント名の最後から探して最初の大文字までを抽出して、
      * 先頭を小文字に変換したものが、 <code>suffix</code>になります。
      * 
-     * @param componentName
+     * @param componentName componentName
      * @return <code>suffix</code>
      */
     String fromComponentNameToSuffix(String componentName);
@@ -326,7 +326,7 @@ public interface NamingConvention {
     /**
      * クラス名を<code>suffix</code>に変換します。
      * 
-     * @param className
+     * @param className className
      * @return <code>suffix</code>
      */
     String fromClassNameToSuffix(String className);
@@ -334,7 +334,7 @@ public interface NamingConvention {
     /**
      * <code>View</code>のパスをページ名に変換します。
      * 
-     * @param path
+     * @param path path
      * @return ページ名
      */
     String fromPathToPageName(String path);
@@ -342,7 +342,7 @@ public interface NamingConvention {
     /**
      * <code>View</code>のパスをアクション名に変換します。
      * 
-     * @param path
+     * @param path path
      * @return アクション名
      */
     String fromPathToActionName(String path);
@@ -350,7 +350,7 @@ public interface NamingConvention {
     /**
      * ページ名を<code>View</code>のパスに変換します。
      * 
-     * @param pageName
+     * @param pageName pageName
      * @return <code>View</code>のパス
      */
     String fromPageNameToPath(String pageName);
@@ -358,7 +358,7 @@ public interface NamingConvention {
     /**
      * ページの{@link Class}を<code>View</code>のパスに変換します。
      * 
-     * @param pageClass
+     * @param pageClass pageClass
      * @return <code>View</code>のパス
      */
     String fromPageClassToPath(Class pageClass);
@@ -366,7 +366,7 @@ public interface NamingConvention {
     /**
      * アクション名を<code>View</code>のパスに変換します。
      * 
-     * @param actionName
+     * @param actionName actionName
      * @return <code>View</code>のパス
      */
     String fromActionNameToPath(String actionName);
@@ -374,7 +374,7 @@ public interface NamingConvention {
     /**
      * アクション名をページ名に変換します。
      * 
-     * @param actionName
+     * @param actionName actionName
      * @return ページ名
      */
     String fromActionNameToPageName(String actionName);
@@ -382,8 +382,8 @@ public interface NamingConvention {
     /**
      * ターゲットのクラス名かどうかを返します。
      * 
-     * @param className
-     * @param suffix
+     * @param className className
+     * @param suffix suffix
      * @return ターゲットのクラス名かどうか
      */
     boolean isTargetClassName(String className, String suffix);
@@ -391,7 +391,7 @@ public interface NamingConvention {
     /**
      * ターゲットのクラス名かどうかを返します。
      * 
-     * @param className
+     * @param className className
      * @return ターゲットのクラス名かどうか
      */
     boolean isTargetClassName(String className);
@@ -399,7 +399,7 @@ public interface NamingConvention {
     /**
      * HOT deployのターゲットのクラス名かどうかを返します。
      * 
-     * @param className
+     * @param className className
      * @return HOT deployのターゲットのクラス名かどうか
      */
     boolean isHotdeployTargetClassName(String className);
@@ -407,7 +407,7 @@ public interface NamingConvention {
     /**
      * 無視するクラス名かどうかを返します。
      * 
-     * @param className
+     * @param className className
      * @return 無視するクラス名かどうか
      */
     boolean isIgnoreClassName(String className);
@@ -415,7 +415,7 @@ public interface NamingConvention {
     /**
      * 妥当な<code>View</code>のルートパスかどうかを返します。
      * 
-     * @param path
+     * @param path path
      * @return 妥当な<code>View</code>のルートパスかどうか
      */
     boolean isValidViewRootPath(String path);

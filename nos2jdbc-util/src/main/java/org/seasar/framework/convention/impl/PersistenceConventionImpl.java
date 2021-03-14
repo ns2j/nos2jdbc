@@ -31,6 +31,7 @@ public class PersistenceConventionImpl implements PersistenceConvention {
 
     private boolean noNameConversion = false;
 
+    @Override
     public String fromTableNameToEntityName(String tableName) {
         AssertionUtil.assertNotNull("tableName", tableName);
         if (noNameConversion) {
@@ -40,6 +41,7 @@ public class PersistenceConventionImpl implements PersistenceConvention {
                 ignoreTablePrefix));
     }
 
+    @Override
     public String fromEntityNameToTableName(String entityName) {
         AssertionUtil.assertNotNull("entityName", entityName);
         if (noNameConversion) {
@@ -52,6 +54,7 @@ public class PersistenceConventionImpl implements PersistenceConvention {
         return tableName;
     }
 
+    @Override
     public String fromColumnNameToPropertyName(String columnName) {
         AssertionUtil.assertNotNull("columnName", columnName);
         if (noNameConversion) {
@@ -60,6 +63,7 @@ public class PersistenceConventionImpl implements PersistenceConvention {
         return StringUtil.decapitalize(StringUtil.camelize(columnName));
     }
 
+    @Override
     public String fromPropertyNameToColumnName(String propertyName) {
         AssertionUtil.assertNotNull("propertyName", propertyName);
         if (noNameConversion) {
@@ -68,10 +72,12 @@ public class PersistenceConventionImpl implements PersistenceConvention {
         return StringUtil.decamelize(propertyName);
     }
 
+    @Override
     public String fromFieldNameToPropertyName(String fieldName) {
         return fieldName;
     }
 
+    @Override
     public String fromPropertyNameToFieldName(String propertyName) {
         return propertyName;
     }
@@ -88,7 +94,7 @@ public class PersistenceConventionImpl implements PersistenceConvention {
     /**
      * 無視するテーブルの<code>prefix</code>を設定します。
      * 
-     * @param ignoreTablePrefix
+     * @param ignoreTablePrefix ignoreTablePrefix
      */
     public void setIgnoreTablePrefix(String ignoreTablePrefix) {
         this.ignoreTablePrefix = ignoreTablePrefix;
@@ -106,7 +112,7 @@ public class PersistenceConventionImpl implements PersistenceConvention {
     /**
      * 名前を変換しないかどうかを設定します。
      * 
-     * @param noNameConversion
+     * @param noNameConversion noNameConversion
      */
     public void setNoNameConversion(boolean noNameConversion) {
         this.noNameConversion = noNameConversion;
