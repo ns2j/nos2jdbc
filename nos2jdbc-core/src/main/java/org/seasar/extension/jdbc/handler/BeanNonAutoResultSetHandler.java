@@ -23,12 +23,9 @@ import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.ResultSetHandler;
 import org.seasar.extension.jdbc.exception.SNonUniqueResultException;
-import org.seasar.framework.convention.PersistenceConvention;
 
 /**
  * Beanのリストを返す {@link ResultSetHandler}です。
- * 
- * @author higa
  */
 public class BeanNonAutoResultSetHandler extends AbstractBeanNonAutoResultSetHandler {
     public BeanNonAutoResultSetHandler(Class<?> beanClass, EntityMetaFactory entityMetaFactory, DbmsDialect dialect,
@@ -36,6 +33,7 @@ public class BeanNonAutoResultSetHandler extends AbstractBeanNonAutoResultSetHan
 	super(beanClass, entityMetaFactory, dialect, sql, shouldSetInverseField);
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException {
 	if (entityMapper == null)
 	    prepare(rs.getMetaData());

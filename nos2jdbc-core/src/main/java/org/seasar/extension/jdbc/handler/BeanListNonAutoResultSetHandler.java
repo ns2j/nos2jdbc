@@ -15,41 +15,17 @@
  */
 package org.seasar.extension.jdbc.handler;
 
-import java.lang.reflect.Field;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.seasar.extension.jdbc.DbmsDialect;
-import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.MappingContext;
-import org.seasar.extension.jdbc.PropertyMapper;
-import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ResultSetHandler;
-import org.seasar.extension.jdbc.ValueType;
-import org.seasar.extension.jdbc.annotation.ReferentialActionType;
-import org.seasar.extension.jdbc.mapper.AbstractEntityMapper;
-import org.seasar.extension.jdbc.mapper.AbstractRelationshipEntityMapper;
-import org.seasar.extension.jdbc.mapper.EntityMapperImpl;
-import org.seasar.extension.jdbc.mapper.ManyToOneEntityMapperImpl;
-import org.seasar.extension.jdbc.mapper.OneToManyEntityMapperImpl;
-import org.seasar.extension.jdbc.mapper.OneToOneEntityMapperImpl;
-import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
-import org.seasar.framework.convention.PersistenceConvention;
-import org.seasar.framework.exception.NoSuchFieldRuntimeException;
-import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.Pair;
-import org.seasar.framework.util.tiger.ReflectionUtil;
 
 /**
  * Beanのリストを返す {@link ResultSetHandler}です。
- * 
- * @author higa
  */
 public class BeanListNonAutoResultSetHandler extends AbstractBeanNonAutoResultSetHandler {
     protected int limit;
@@ -66,6 +42,7 @@ public class BeanListNonAutoResultSetHandler extends AbstractBeanNonAutoResultSe
 	this.limit = limit;
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException {
 	if (entityMapper == null)
 	    prepare(rs.getMetaData());
