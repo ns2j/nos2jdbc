@@ -37,8 +37,8 @@ public class BigDecimalConversionUtil {
     protected static BigDecimalNormalizer normalizer = new DefaultNormalizer();
     static {
         try {
-            final Class clazz = Class.forName(TIGER_NORMALIZER_CLASS_NAME);
-            normalizer = (BigDecimalNormalizer) clazz.newInstance();
+            final Class<?> clazz = Class.forName(TIGER_NORMALIZER_CLASS_NAME);
+            normalizer = (BigDecimalNormalizer) ConstructorUtil.newInstance(clazz.getConstructor(), null);
         } catch (Exception ignore) {
         }
     }
@@ -126,10 +126,12 @@ public class BigDecimalConversionUtil {
      * 
      */
     public static class DefaultNormalizer implements BigDecimalNormalizer {
+        @Override
         public BigDecimal normalize(final BigDecimal dec) {
             return dec;
         }
 
+        @Override
         public String toString(final BigDecimal dec) {
             return dec.toString();
         }

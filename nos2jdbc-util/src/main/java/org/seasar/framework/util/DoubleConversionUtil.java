@@ -54,14 +54,14 @@ public class DoubleConversionUtil {
         } else if (o instanceof Double) {
             return (Double) o;
         } else if (o instanceof Number) {
-            return new Double(((Number) o).doubleValue());
+            return Double.valueOf(((Number) o).doubleValue());
         } else if (o instanceof String) {
             return toDouble((String) o);
         } else if (o instanceof java.util.Date) {
             if (pattern != null) {
-                return new Double(new SimpleDateFormat(pattern).format(o));
+                return Double.valueOf(new SimpleDateFormat(pattern).format(o));
             }
-            return new Double(((java.util.Date) o).getTime());
+            return Double.valueOf(((java.util.Date) o).getTime());
         } else {
             return toDouble(o.toString());
         }
@@ -71,7 +71,7 @@ public class DoubleConversionUtil {
         if (StringUtil.isEmpty(s)) {
             return null;
         }
-        return new Double(DecimalFormatUtil.normalize(s));
+        return Double.valueOf(DecimalFormatUtil.normalize(s));
     }
 
     /**

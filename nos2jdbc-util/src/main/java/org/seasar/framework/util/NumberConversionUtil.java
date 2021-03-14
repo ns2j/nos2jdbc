@@ -75,31 +75,31 @@ public class NumberConversionUtil {
             if (i != null) {
                 return i;
             }
-            return new Integer(0);
+            return Integer.valueOf(0);
         } else if (type == double.class) {
             Double d = DoubleConversionUtil.toDouble(o);
             if (d != null) {
                 return d;
             }
-            return new Double(0);
+            return Double.valueOf(0);
         } else if (type == long.class) {
             Long l = LongConversionUtil.toLong(o);
             if (l != null) {
                 return l;
             }
-            return new Long(0);
+            return Long.valueOf(0);
         } else if (type == float.class) {
             Float f = FloatConversionUtil.toFloat(o);
             if (f != null) {
                 return f;
             }
-            return new Float(0);
+            return Float.valueOf(0);
         } else if (type == short.class) {
             Short s = ShortConversionUtil.toShort(o);
             if (s != null) {
                 return s;
             }
-            return new Short((short) 0);
+            return Short.valueOf((short) 0);
         } else if (type == boolean.class) {
             Boolean b = BooleanConversionUtil.toBoolean(o);
             if (b != null) {
@@ -111,7 +111,7 @@ public class NumberConversionUtil {
             if (b != null) {
                 return b;
             }
-            return new Byte((byte) 0);
+            return Byte.valueOf((byte) 0);
         }
         return o;
     }
