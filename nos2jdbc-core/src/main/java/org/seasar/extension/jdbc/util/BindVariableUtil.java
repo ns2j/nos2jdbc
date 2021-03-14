@@ -7,11 +7,11 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
+ * UnleS required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * either expreS or implied. See the License for the specific language
+ * governing permiSions and limitations under the License.
  */
 package org.seasar.extension.jdbc.util;
 
@@ -20,10 +20,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import org.seasar.extension.jdbc.IllegalBindArgSizeRuntimeException;
 import org.seasar.extension.jdbc.ValueType;
-import org.seasar.framework.util.SStringBuilder;
 
 /**
  * バインド変数用のユーティリティです。
@@ -175,7 +173,7 @@ public class BindVariableUtil {
         } else if (bindVariable instanceof Number) {
             return bindVariable.toString();
         } else if (bindVariable instanceof Timestamp) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH.mm.S");
             return quote(sdf.format((java.util.Date) bindVariable));
         } else if (bindVariable instanceof java.util.Date) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -270,7 +268,7 @@ public class BindVariableUtil {
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(value);
-        SStringBuilder buf = new SStringBuilder();
+        StringBuilder buf = new StringBuilder();
         addDate(buf, calendar);
         return quote(buf.toString());
     }
@@ -288,7 +286,7 @@ public class BindVariableUtil {
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(value);
-        SStringBuilder buf = new SStringBuilder();
+        StringBuilder buf = new StringBuilder();
         addTime(buf, calendar);
         addTimeDecimalPart(buf, calendar.get(Calendar.MILLISECOND));
         return quote(buf.toString());
@@ -307,13 +305,14 @@ public class BindVariableUtil {
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(value);
-        SStringBuilder buf = new SStringBuilder(30);
+        StringBuilder buf = new StringBuilder(30);
         addDate(buf, calendar);
         addTime(buf, calendar);
         addTimeDecimalPart(buf, value.getNanos());
         return quote(buf.toString());
     }
 
+    
     /**
      * <code>byte[]</code>の文字列表現を返します。
      * 
@@ -351,7 +350,7 @@ public class BindVariableUtil {
      * @param calendar
      *            カレンダ
      */
-    protected static void addDate(SStringBuilder buf, Calendar calendar) {
+    protected static void addDate(StringBuilder buf, Calendar calendar) {
         int year = calendar.get(Calendar.YEAR);
         buf.append(year);
         buf.append('-');
@@ -369,14 +368,14 @@ public class BindVariableUtil {
     }
 
     /**
-     * 文字列バッファに<code>hh:mm:ss</code>のフォーマットで値を設定します。
+     * 文字列バッファに<code>hh:mm:S</code>のフォーマットで値を設定します。
      * 
      * @param buf
      *            文字列バッファ
      * @param calendar
      *            カレンダ
      */
-    protected static void addTime(SStringBuilder buf, Calendar calendar) {
+    protected static void addTime(StringBuilder buf, Calendar calendar) {
         if (buf.length() > 0) {
             buf.append(' ');
         }
@@ -407,7 +406,7 @@ public class BindVariableUtil {
      * @param decimalPart
      *            小数点以下の値
      */
-    protected static void addTimeDecimalPart(SStringBuilder buf, int decimalPart) {
+    protected static void addTimeDecimalPart(StringBuilder buf, int decimalPart) {
         if (decimalPart == 0) {
             return;
         }

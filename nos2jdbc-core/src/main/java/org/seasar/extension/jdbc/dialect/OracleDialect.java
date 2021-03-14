@@ -25,6 +25,10 @@ import javax.persistence.TemporalType;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SelectForUpdateType;
 import org.seasar.extension.jdbc.ValueType;
+import org.seasar.extension.jdbc.types.LocalDateTimeType;
+import org.seasar.extension.jdbc.types.LocalDateType;
+import org.seasar.extension.jdbc.types.LocalTimeType;
+import org.seasar.extension.jdbc.types.OffsetDateTimeType;
 import org.seasar.extension.jdbc.types.OracleDateCalendarType;
 import org.seasar.extension.jdbc.types.OracleDateType;
 import org.seasar.extension.jdbc.types.ValueTypes;
@@ -153,7 +157,17 @@ public class OracleDialect extends StandardDialect {
         if (valueType != null) {
             return valueType;
         }
-        return super.getValueType(propertyMeta);
+
+        ValueType vt = super.getValueType(propertyMeta);
+        if (vt.getClass() == LocalDateType.class)
+            return ValueTypes.JDBC42LOCALDATE;
+        if (vt.getClass() == LocalTimeType.class)
+            return ValueTypes.JDBC42LOCALTIME;
+        if (vt.getClass() == LocalDateTimeType.class)
+            return ValueTypes.JDBC42LOCALDATETIME;
+        if (vt.getClass() == OffsetDateTimeType.class)
+            return ValueTypes.JDBC42OFFSETDATETIME;
+        return vt;
     }
 
     @Override
@@ -173,7 +187,17 @@ public class OracleDialect extends StandardDialect {
                 return ORACLE_DATE_CALENDAR_TYPE;
             }
         }
-        return super.getValueType(clazz, lob, temporalType);
+
+        ValueType vt = super.getValueType(clazz, lob, temporalType);
+        if (vt.getClass() == LocalDateType.class)
+            return ValueTypes.JDBC42LOCALDATE;
+        if (vt.getClass() == LocalTimeType.class)
+            return ValueTypes.JDBC42LOCALTIME;
+        if (vt.getClass() == LocalDateTimeType.class)
+            return ValueTypes.JDBC42LOCALDATETIME;
+        if (vt.getClass() == OffsetDateTimeType.class)
+            return ValueTypes.JDBC42OFFSETDATETIME;
+        return vt;
     }
 
     @Override

@@ -27,6 +27,7 @@ import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SetClause;
 import org.seasar.extension.jdbc.WhereClause;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
+import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.IntegerConversionUtil;
 import org.seasar.framework.util.LongConversionUtil;
@@ -83,26 +84,31 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
         super(jdbcManager, entity);
     }
 
+    @Override
     public AutoUpdate<T> includesVersion() {
         includeVersion = true;
         return this;
     }
 
+    @Override
     public AutoUpdate<T> excludesNull() {
         excludesNull = true;
         return this;
     }
 
+    @Override
     public AutoUpdate<T> includes(final CharSequence... propertyNames) {
         includesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoUpdate<T> excludes(final CharSequence... propertyNames) {
         excludesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoUpdate<T> changedFrom(final T beforeEntity) {
         this.beforeStates = CollectionsUtil.newHashMap(entityMeta
                 .getPropertyMetaSize());
@@ -115,6 +121,7 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
         return this;
     }
 
+    @Override
     public AutoUpdate<T> changedFrom(
             final Map<String, ? extends Object> beforeStates) {
         this.beforeStates = CollectionsUtil.newHashMap(beforeStates.size());
@@ -122,6 +129,7 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
         return this;
     }
 
+    @Override
     public AutoUpdate<T> suppresOptimisticLockException() {
         suppresOptimisticLockException = true;
         return this;
@@ -180,6 +188,9 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
                     continue;
                 }
             }
+            if (propertyMeta.isCreateAt()) {
+                continue;
+            }
             targetProperties.add(propertyMeta);
         }
     }
@@ -221,7 +232,9 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
      */
     protected void prepareParams() {
         for (final PropertyMeta propertyMeta : targetProperties) {
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.isUpdateAt() ?
+                    TimestampUtil.getTimestamp(propertyMeta) :
+                    FieldUtil.get(propertyMeta.getField(), entity);
             addParam(value, propertyMeta);
         }
         for (final PropertyMeta propertyMeta : entityMeta

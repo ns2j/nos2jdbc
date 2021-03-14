@@ -31,6 +31,7 @@ import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValuesClause;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
+import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.NumberConversionUtil;
@@ -89,11 +90,13 @@ public class AutoBatchInsertImpl<T> extends
         super(jdbcManager, entities);
     }
 
+    @Override
     public AutoBatchInsert<T> includes(final CharSequence... propertyNames) {
         includesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoBatchInsert<T> excludes(final CharSequence... propertyNames) {
         excludesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
@@ -226,6 +229,11 @@ public class AutoBatchInsertImpl<T> extends
                                 NumberConversionUtil.convertNumber(fieldClass,
                                         value));
                     }
+                }
+                if (propertyMeta.isCreateAt()) {
+                    logger.info("isCreateAt is true");
+                    value = TimestampUtil.getTimestamp(propertyMeta);
+                    FieldUtil.set(propertyMeta.getField(), entity, value);
                 }
             }
             addParam(value, propertyMeta);

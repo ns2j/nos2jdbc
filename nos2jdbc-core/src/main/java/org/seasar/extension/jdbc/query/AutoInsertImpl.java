@@ -30,6 +30,7 @@ import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValuesClause;
 import org.seasar.extension.jdbc.exception.IdPropertyNotAssignedRuntimeException;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
+import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.NumberConversionUtil;
@@ -86,16 +87,19 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
         super(jdbcManager, entity);
     }
 
+    @Override
     public AutoInsert<T> excludesNull() {
         excludesNull = true;
         return this;
     }
 
+    @Override
     public AutoInsert<T> includes(final CharSequence... propertyNames) {
         includesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoInsert<T> excludes(final CharSequence... propertyNames) {
         excludesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
@@ -196,6 +200,9 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
                                 NumberConversionUtil.convertNumber(fieldClass,
                                         value));
                     }
+                } else if (propertyMeta.isCreateAt()) {
+                    value = TimestampUtil.getTimestamp(propertyMeta);
+                    FieldUtil.set(propertyMeta.getField(), entity, value);
                 }
             }
             addParam(value, propertyMeta);

@@ -26,6 +26,7 @@ import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SetClause;
 import org.seasar.extension.jdbc.WhereClause;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
+import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.IntegerConversionUtil;
 import org.seasar.framework.util.LongConversionUtil;
@@ -77,21 +78,25 @@ public class AutoBatchUpdateImpl<T> extends
         super(jdbcManager, entities);
     }
 
+    @Override
     public AutoBatchUpdate<T> includesVersion() {
         includeVersion = true;
         return this;
     }
 
+    @Override
     public AutoBatchUpdate<T> includes(final CharSequence... propertyNames) {
         includesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoBatchUpdate<T> excludes(final CharSequence... propertyNames) {
         excludesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoBatchUpdate<T> suppresOptimisticLockException() {
         suppresOptimisticLockException = true;
         return this;
@@ -127,6 +132,16 @@ public class AutoBatchUpdateImpl<T> extends
             if (excludesProperties.contains(propertyName)) {
                 continue;
             }
+            if (propertyMeta.isCreateAt()) {
+                continue;
+            }
+//            if (propertyMeta.isUpdateAt()) {
+//                continue;
+//                for (final T entity : entities) {
+  //                  FieldUtil.set(propertyMeta.getField(), entity, TimestampUtil.getTimestamp(propertyMeta));
+     //           }
+//            }
+
             targetProperties.add(propertyMeta);
         }
     }
@@ -166,7 +181,9 @@ public class AutoBatchUpdateImpl<T> extends
     @Override
     protected void prepareParams(final T entity) {
         for (final PropertyMeta propertyMeta : targetProperties) {
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.isUpdateAt() ?
+                    TimestampUtil.getTimestamp(propertyMeta) :
+                    FieldUtil.get(propertyMeta.getField(), entity);
             addParam(value, propertyMeta);
         }
         for (final PropertyMeta propertyMeta : entityMeta

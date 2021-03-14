@@ -116,6 +116,9 @@ public class PropertyMeta {
      */
     protected boolean lob;
 
+    protected boolean createAt;
+    protected boolean updateAt;
+    
     /**
      * 結合カラムメタデータのリストです。
      */
@@ -463,6 +466,19 @@ public class PropertyMeta {
      */
     public void setLob(boolean lob) {
         this.lob = lob;
+    }
+    
+    public boolean isCreateAt() {
+        return createAt;
+    }
+    public void setCreateAt(boolean createAt) {
+        this.createAt = createAt;
+    }
+    public boolean isUpdateAt() {
+        return updateAt;
+    }
+    public void setUpdateAt(boolean updateAt) {
+        this.updateAt = updateAt;
     }
 
     /**
