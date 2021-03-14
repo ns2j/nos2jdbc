@@ -57,17 +57,17 @@ public class ShortConversionUtil {
         } else if (o instanceof Short) {
             return (Short) o;
         } else if (o instanceof Number) {
-            return new Short(((Number) o).shortValue());
+            return Short.valueOf(((Number) o).shortValue());
         } else if (o instanceof String) {
             return toShort((String) o);
         } else if (o instanceof java.util.Date) {
             if (pattern != null) {
-                return new Short(new SimpleDateFormat(pattern).format(o));
+                return Short.valueOf(new SimpleDateFormat(pattern).format(o));
             }
-            return new Short((short) ((java.util.Date) o).getTime());
+            return Short.valueOf((short) ((java.util.Date) o).getTime());
         } else if (o instanceof Boolean) {
-            return ((Boolean) o).booleanValue() ? new Short((short) 1)
-                    : new Short((short) 0);
+            return ((Boolean) o).booleanValue() ? Short.valueOf((short) 1)
+                    : Short.valueOf((short) 0);
         } else {
             return toShort(o.toString());
         }
@@ -77,7 +77,7 @@ public class ShortConversionUtil {
         if (StringUtil.isEmpty(s)) {
             return null;
         }
-        return new Short(DecimalFormatUtil.normalize(s));
+        return Short.valueOf(DecimalFormatUtil.normalize(s));
     }
 
     /**

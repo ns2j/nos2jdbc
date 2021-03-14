@@ -54,16 +54,16 @@ public class IntegerConversionUtil {
         } else if (o instanceof Integer) {
             return (Integer) o;
         } else if (o instanceof Number) {
-            return new Integer(((Number) o).intValue());
+            return Integer.valueOf(((Number) o).intValue());
         } else if (o instanceof String) {
             return toInteger((String) o);
         } else if (o instanceof java.util.Date) {
             if (pattern != null) {
-                return new Integer(new SimpleDateFormat(pattern).format(o));
+                return Integer.valueOf(new SimpleDateFormat(pattern).format(o));
             }
-            return new Integer((int) ((java.util.Date) o).getTime());
+            return Integer.valueOf((int) ((java.util.Date) o).getTime());
         } else if (o instanceof Boolean) {
-            return ((Boolean) o).booleanValue() ? new Integer(1) : new Integer(
+            return ((Boolean) o).booleanValue() ? Integer.valueOf(1) : Integer.valueOf(
                     0);
         } else {
             return toInteger(o.toString());
@@ -74,7 +74,7 @@ public class IntegerConversionUtil {
         if (StringUtil.isEmpty(s)) {
             return null;
         }
-        return new Integer(DecimalFormatUtil.normalize(s));
+        return Integer.valueOf(DecimalFormatUtil.normalize(s));
     }
 
     /**
