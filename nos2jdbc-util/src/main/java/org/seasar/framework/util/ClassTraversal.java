@@ -46,8 +46,8 @@ public class ClassTraversal {
         /**
          * クラスを処理します。
          * 
-         * @param packageName
-         * @param shortClassName
+         * @param packageName package name
+         * @param shortClassName short class name
          */
         void processClass(String packageName, String shortClassName);
     }
@@ -55,8 +55,8 @@ public class ClassTraversal {
     /**
      * rootディレクトリ配下を処理します。
      * 
-     * @param rootDir
-     * @param handler
+     * @param rootDir rootDir
+     * @param handler handler
      */
     public static void forEach(final File rootDir, final ClassHandler handler) {
         forEach(rootDir, null, handler);
@@ -146,8 +146,6 @@ public class ClassTraversal {
      * 
      * @param zipInputStream
      *            ZIPファイル形式の入力ストリーム
-     * @param prefix
-     *            トラバースするリソースの名前が含む接頭辞。スラッシュ('/')で終了していなければなりません。
      * @param handler
      *            クラスを処理するハンドラ
      */

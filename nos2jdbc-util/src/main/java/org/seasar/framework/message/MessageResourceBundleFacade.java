@@ -25,7 +25,6 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.FileInputStreamUtil;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.PropertiesUtil;
-import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.URLUtil;
 
 /**
@@ -47,7 +46,7 @@ public class MessageResourceBundleFacade {
     /**
      * {@link MessageResourceBundleFacade}を作成します。
      * 
-     * @param url
+     * @param url url
      */
     public MessageResourceBundleFacade(URL url) {
         setup(url);
@@ -56,7 +55,7 @@ public class MessageResourceBundleFacade {
     /**
      * {@link MessageResourceBundle}を返します。
      * 
-     * @return
+     * @return {@link MessageResourceBundle}
      */
     public synchronized MessageResourceBundle getBundle() {
         if (isModified()) {
@@ -80,7 +79,7 @@ public class MessageResourceBundleFacade {
     /**
      * 親を設定します。
      * 
-     * @param parent
+     * @param parent parent
      */
     public synchronized void setParent(MessageResourceBundleFacade parent) {
         this.parent = parent;

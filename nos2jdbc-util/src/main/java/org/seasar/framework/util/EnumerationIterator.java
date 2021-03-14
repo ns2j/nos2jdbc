@@ -30,7 +30,7 @@ public class EnumerationIterator implements Iterator {
     /**
      * {@link EnumerationIterator}を作成します。
      * 
-     * @param e
+     * @param e e
      */
     public EnumerationIterator(final Enumeration e) {
         if (e == null) {
@@ -39,14 +39,17 @@ public class EnumerationIterator implements Iterator {
         this.enumeration = e;
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove");
     }
 
+    @Override
     public boolean hasNext() {
         return enumeration.hasMoreElements();
     }
 
+    @Override
     public Object next() {
         return enumeration.nextElement();
     }

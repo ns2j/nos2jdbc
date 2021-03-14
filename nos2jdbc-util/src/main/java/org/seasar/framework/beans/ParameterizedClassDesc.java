@@ -34,7 +34,7 @@ public interface ParameterizedClassDesc {
      * 原型となるクラスを返します。
      * 
      * @return 原型となるクラス
-     * @see lava.lang.ParameterizedType#getRawType()
+     * {@link java.lang.reflect.ParameterizedType#getActualTypeArguments()}
      */
     Class getRawClass();
 
@@ -45,7 +45,7 @@ public interface ParameterizedClassDesc {
      * </p>
      * 
      * @return 型引数を表す{@link ParameterizedClassDesc}の配列
-     * @see java.lang.ParameterizedType#getActualTypeArguments()
+     * {@link java.lang.reflect.ParameterizedType#getActualTypeArguments()}
      */
     ParameterizedClassDesc[] getArguments();
 

@@ -30,7 +30,7 @@ public class NamingRuntimeException extends SRuntimeException {
     /**
      * {@link NamingRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public NamingRuntimeException(NamingException cause) {
         super("ESSR0066", new Object[] { cause }, cause);

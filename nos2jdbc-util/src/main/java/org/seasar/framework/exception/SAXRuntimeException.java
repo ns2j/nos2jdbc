@@ -30,7 +30,7 @@ public class SAXRuntimeException extends SRuntimeException {
     /**
      * {@link SAXRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public SAXRuntimeException(SAXException cause) {
         super("ESSR0054", createArgs(cause), cause);

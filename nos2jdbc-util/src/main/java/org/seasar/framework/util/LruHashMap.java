@@ -47,7 +47,7 @@ public class LruHashMap extends LinkedHashMap {
     /**
      * {@link LruHashMap}を作成します。
      * 
-     * @param limitSize
+     * @param limitSize limitSize
      */
     public LruHashMap(final int limitSize) {
         this(limitSize, DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
@@ -56,9 +56,9 @@ public class LruHashMap extends LinkedHashMap {
     /**
      * {@link LruHashMap}を作成します。
      * 
-     * @param limitSize
-     * @param initialCapacity
-     * @param loadFactor
+     * @param limitSize limitSize
+     * @param initialCapacity initialCapacity
+     * @param loadFactor loadFactor
      */
     public LruHashMap(final int limitSize, final int initialCapacity,
             final float loadFactor) {
@@ -75,6 +75,7 @@ public class LruHashMap extends LinkedHashMap {
         return limitSize;
     }
 
+    @Override
     protected boolean removeEldestEntry(final Map.Entry entry) {
         return size() > limitSize;
     }

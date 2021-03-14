@@ -48,6 +48,7 @@ public class ClassPoolUtil {
     public static synchronized void initialize() {
         if (!initialized) {
             DisposableUtil.add(new Disposable() {
+                @Override
                 public void dispose() {
                     synchronized (ClassPoolUtil.class) {
                         classPoolMap.clear();
@@ -62,7 +63,7 @@ public class ClassPoolUtil {
     /**
      * ClassPoolを返します。
      * 
-     * @param targetClass
+     * @param targetClass target class
      * @return ClassPool
      */
     public static ClassPool getClassPool(final Class targetClass) {
@@ -72,7 +73,7 @@ public class ClassPoolUtil {
     /**
      * ClassPoolを返します。
      * 
-     * @param classLoader
+     * @param classLoader classLoader
      * @return ClassPool
      */
     public static ClassPool getClassPool(final ClassLoader classLoader) {
@@ -92,8 +93,8 @@ public class ClassPoolUtil {
     /**
      * CtClassに変換します。
      * 
-     * @param classPool
-     * @param clazz
+     * @param classPool classPool
+     * @param clazz class
      * @return CtClass
      */
     public static CtClass toCtClass(final ClassPool classPool, final Class clazz) {
@@ -103,8 +104,8 @@ public class ClassPoolUtil {
     /**
      * CtClassに変換します。
      * 
-     * @param classPool
-     * @param className
+     * @param classPool classPool
+     * @param className class name
      * @return CtClass
      */
     public static CtClass toCtClass(final ClassPool classPool,
@@ -119,8 +120,8 @@ public class ClassPoolUtil {
     /**
      * CtClassの配列に変換します。
      * 
-     * @param classPool
-     * @param classNames
+     * @param classPool classPool
+     * @param classNames class name
      * @return CtClassの配列
      */
     public static CtClass[] toCtClassArray(final ClassPool classPool,
@@ -138,8 +139,8 @@ public class ClassPoolUtil {
     /**
      * CtClassの配列に変換します。
      * 
-     * @param classPool
-     * @param classes
+     * @param classPool classPool
+     * @param classes classes
      * @return CtClassの配列
      */
     public static CtClass[] toCtClassArray(final ClassPool classPool,
@@ -157,8 +158,8 @@ public class ClassPoolUtil {
     /**
      * CtClassを作成します。
      * 
-     * @param classPool
-     * @param name
+     * @param classPool classPool
+     * @param name name
      * @return CtClass
      */
     public static CtClass createCtClass(final ClassPool classPool,
@@ -169,9 +170,9 @@ public class ClassPoolUtil {
     /**
      * CtClassを作成します。
      * 
-     * @param classPool
-     * @param name
-     * @param superClass
+     * @param classPool classPol
+     * @param name name
+     * @param superClass superClass
      * @return CtClass
      */
     public static CtClass createCtClass(final ClassPool classPool,
@@ -182,9 +183,9 @@ public class ClassPoolUtil {
     /**
      * CtClassを作成します。
      * 
-     * @param classPool
-     * @param name
-     * @param superClass
+     * @param classPool classPool
+     * @param name name
+     * @param superClass superClass
      * @return CtClass
      */
     public static CtClass createCtClass(final ClassPool classPool,

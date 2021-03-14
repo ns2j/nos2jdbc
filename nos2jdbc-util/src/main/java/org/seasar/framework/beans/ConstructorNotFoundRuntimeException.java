@@ -37,8 +37,8 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link ConstructorNotFoundRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param methodArgs
+     * @param targetClass targetClass
+     * @param methodArgs methodArgs
      */
     public ConstructorNotFoundRuntimeException(Class targetClass,
             Object[] methodArgs) {
@@ -52,8 +52,8 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link ConstructorNotFoundRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param paramTypes
+     * @param targetClass targetClass
+     * @param paramTypes paramTypes
      */
     public ConstructorNotFoundRuntimeException(Class targetClass,
             Class[] paramTypes) {
@@ -85,7 +85,7 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
     /**
      * パラメータの型の配列を返します。
      * 
-     * @return
+     * @return array of paramType
      */
     public Class[] getParamTypes() {
         return paramTypes;

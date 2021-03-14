@@ -80,9 +80,9 @@ public class MethodUtil {
     /**
      * {@link Method#invoke(Object, Object[])}の例外処理をラップします。
      * 
-     * @param method
-     * @param target
-     * @param args
+     * @param method method
+     * @param target target
+     * @param args args
      * @return 戻り値
      * @throws InvocationTargetRuntimeException
      *             {@link InvocationTargetException}が発生した場合
@@ -115,7 +115,7 @@ public class MethodUtil {
     /**
      * <code>abstract</code>かどうかを返します。
      * 
-     * @param method
+     * @param method method
      * @return <code>abstract</code>かどうか
      */
     public static boolean isAbstract(Method method) {
@@ -126,8 +126,8 @@ public class MethodUtil {
     /**
      * シグニチャを返します。
      * 
-     * @param methodName
-     * @param argTypes
+     * @param methodName method name
+     * @param argTypes array of argType
      * @return シグニチャ
      */
     public static String getSignature(String methodName, Class[] argTypes) {
@@ -149,8 +149,8 @@ public class MethodUtil {
     /**
      * シグニチャを返します。
      * 
-     * @param methodName
-     * @param methodArgs
+     * @param methodName method name
+     * @param methodArgs method args
      * @return シグニチャ
      */
     public static String getSignature(String methodName, Object[] methodArgs) {
@@ -176,7 +176,7 @@ public class MethodUtil {
     /**
      * equalsメソッドかどうかを返します。
      * 
-     * @param method
+     * @param method method
      * @return equalsメソッドかどうか
      */
     public static boolean isEqualsMethod(Method method) {
@@ -189,7 +189,7 @@ public class MethodUtil {
     /**
      * hashCodeメソッドかどうか返します。
      * 
-     * @param method
+     * @param method method
      * @return hashCodeメソッドかどうか
      */
     public static boolean isHashCodeMethod(Method method) {
@@ -201,7 +201,7 @@ public class MethodUtil {
     /**
      * toStringメソッドかどうか返します。
      * 
-     * @param method
+     * @param method method
      * @return toStringメソッドかどうか
      */
     public static boolean isToStringMethod(Method method) {
@@ -213,7 +213,7 @@ public class MethodUtil {
     /**
      * ブリッジメソッドかどうか返します。
      * 
-     * @param method
+     * @param method method
      * @return ブリッジメソッドかどうか
      */
     public static boolean isBridgeMethod(final Method method) {
@@ -227,7 +227,7 @@ public class MethodUtil {
     /**
      * 合成メソッドかどうかを返します。
      * 
-     * @param method
+     * @param method method
      * @return 合成メソッドかどうか
      */
     public static boolean isSyntheticMethod(final Method method) {
@@ -241,7 +241,7 @@ public class MethodUtil {
     /**
      * デフォルトメソッドかどうか返します。
      * 
-     * @param method
+     * @param method method
      * @return デフォルトメソッドかどうか
      */
     public static boolean isDefaultMethod(final Method method) {

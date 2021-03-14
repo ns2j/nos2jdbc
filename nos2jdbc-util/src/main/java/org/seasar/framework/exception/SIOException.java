@@ -36,8 +36,8 @@ public class SIOException extends IOException {
     /**
      * {@link SIOException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SIOException(String messageCode, Object[] args) {
         super(MessageFormatter.getMessage(messageCode, args));

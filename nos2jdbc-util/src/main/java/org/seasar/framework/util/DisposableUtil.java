@@ -22,7 +22,7 @@ import ognl.OgnlRuntime;
 
 import org.seasar.framework.log.Logger;
 
-/**
+/*
  * {@link org.seasar.framework.container.S2Container S2コンテナ}の終了時にリソースを破棄するためのユーティリティクラスです。
  * <p>
  * S2コンテナの終了時に破棄しなければならないリソースがある場合は、 {@link Disposable}を実装したクラスを作成し、

@@ -34,8 +34,8 @@ public class PropertyNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link PropertyNotFoundRuntimeException}を返します。
      * 
-     * @param componentClass
-     * @param propertyName
+     * @param componentClass componentClass
+     * @param propertyName propertyName
      */
     public PropertyNotFoundRuntimeException(Class componentClass,
             String propertyName) {
@@ -57,7 +57,7 @@ public class PropertyNotFoundRuntimeException extends SRuntimeException {
     /**
      * プロパティ名を返します。
      * 
-     * @return
+     * @return property name
      */
     public String getPropertyName() {
         return propertyName;

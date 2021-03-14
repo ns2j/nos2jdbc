@@ -36,8 +36,8 @@ public class FieldNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link FieldNotFoundRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param fieldName
+     * @param targetClass targetClass
+     * @param fieldName fieldName
      */
     public FieldNotFoundRuntimeException(Class targetClass, String fieldName) {
         super("ESSR0070", new Object[] { targetClass.getName(), fieldName });
@@ -57,7 +57,7 @@ public class FieldNotFoundRuntimeException extends SRuntimeException {
     /**
      * フィールド名を返します。
      * 
-     * @return
+     * @return field name
      */
     public String getFieldName() {
         return fieldName;

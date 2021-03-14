@@ -36,8 +36,8 @@ public class SNotSupportedException extends NotSupportedException {
     /**
      * {@link SNotSupportedException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SNotSupportedException(String messageCode, Object[] args) {
         super(MessageFormatter.getMessage(messageCode, args));

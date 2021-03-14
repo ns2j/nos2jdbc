@@ -121,7 +121,7 @@ public class SLinkedList implements Cloneable, Externalizable {
     /**
      * 先頭に追加します。
      * 
-     * @param o
+     * @param o o
      *            追加するオブジェクト
      */
     public void addFirst(final Object o) {
@@ -131,7 +131,7 @@ public class SLinkedList implements Cloneable, Externalizable {
     /**
      * 最後に追加します。
      * 
-     * @param o
+     * @param o o
      *            追加するオブジェクト
      */
     public void addLast(final Object o) {
@@ -182,7 +182,7 @@ public class SLinkedList implements Cloneable, Externalizable {
     /**
      * 要素を削除します。
      * 
-     * @param o
+     * @param o o
      * @return 削除されたかどうか
      */
     public boolean remove(final Object o) {
@@ -228,7 +228,7 @@ public class SLinkedList implements Cloneable, Externalizable {
     /**
      * エントリを返します。
      * 
-     * @param index
+     * @param index index
      * @return エントリ
      */
     public Entry getEntry(final int index) {
@@ -263,8 +263,8 @@ public class SLinkedList implements Cloneable, Externalizable {
     /**
      * 要素を設定します。
      * 
-     * @param index
-     * @param element
+     * @param index index
+     * @param element element
      * @return 元の要素
      */
     public Object set(final int index, final Object element) {
@@ -301,6 +301,7 @@ public class SLinkedList implements Cloneable, Externalizable {
         return -1;
     }
 
+    @Override
     public void writeExternal(final ObjectOutput s) throws IOException {
         s.writeInt(size);
         for (Entry e = header._next; e != header; e = e._next) {
@@ -308,6 +309,7 @@ public class SLinkedList implements Cloneable, Externalizable {
         }
     }
 
+    @Override
     public void readExternal(ObjectInput s) throws IOException,
             ClassNotFoundException {
 
@@ -319,6 +321,7 @@ public class SLinkedList implements Cloneable, Externalizable {
         }
     }
 
+    @Override
     public Object clone() {
         SLinkedList copy = new SLinkedList();
         for (Entry e = header._next; e != header; e = e._next) {

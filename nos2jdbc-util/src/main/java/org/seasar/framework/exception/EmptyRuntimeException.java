@@ -30,7 +30,7 @@ public class EmptyRuntimeException extends SRuntimeException {
     /**
      * {@link EmptyRuntimeException}を作成します。
      * 
-     * @param targetName
+     * @param targetName target class
      */
     public EmptyRuntimeException(String targetName) {
         super("ESSR0007", new Object[] { targetName });
@@ -40,7 +40,7 @@ public class EmptyRuntimeException extends SRuntimeException {
     /**
      * ターゲット名を返します。
      * 
-     * @return
+     * @return target name
      */
     public String getTargetName() {
         return targetName;

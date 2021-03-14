@@ -37,9 +37,9 @@ public class NoSuchConstructorRuntimeException extends SRuntimeException {
     /**
      * {@link NoSuchConstructorRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param argTypes
-     * @param cause
+     * @param targetClass target class
+     * @param argTypes array of argType
+     * @param cause cause of exception
      */
     public NoSuchConstructorRuntimeException(Class targetClass,
             Class[] argTypes, NoSuchMethodException cause) {
@@ -56,7 +56,7 @@ public class NoSuchConstructorRuntimeException extends SRuntimeException {
     /**
      * ターゲットのクラスを返します。
      * 
-     * @return
+     * @return target class
      */
     public Class getTargetClass() {
         return targetClass;
@@ -65,7 +65,7 @@ public class NoSuchConstructorRuntimeException extends SRuntimeException {
     /**
      * 引数の型の配列を返します。
      * 
-     * @return
+     * @return array of ArgType
      */
     public Class[] getArgTypes() {
         return argTypes;

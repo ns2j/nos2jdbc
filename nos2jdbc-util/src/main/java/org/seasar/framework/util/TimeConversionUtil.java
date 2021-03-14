@@ -150,7 +150,7 @@ public class TimeConversionUtil {
     /**
      * 日付パターンを返します。
      * 
-     * @param locale
+     * @param locale locale
      * @return 日付パターン
      */
     public static String getPattern(Locale locale) {

@@ -47,7 +47,7 @@ public class CaseInsensitiveSet extends AbstractSet implements Set,
     /**
      * {@link CaseInsensitiveSet}を作成します。
      * 
-     * @param c
+     * @param c c
      */
     public CaseInsensitiveSet(Collection c) {
         map = new CaseInsensitiveMap(Math.max((int) (c.size() / .75f) + 1, 16));
@@ -56,37 +56,44 @@ public class CaseInsensitiveSet extends AbstractSet implements Set,
 
     /**
      * {@link CaseInsensitiveSet}を作成します。
-     * 
-     * @param initialCapacity
+     *  
+     * @param initialCapacity initialCapacity
      */
     public CaseInsensitiveSet(int initialCapacity) {
         map = new CaseInsensitiveMap(initialCapacity);
     }
 
+    @Override
     public Iterator iterator() {
         return map.keySet().iterator();
     }
 
+    @Override
     public int size() {
         return map.size();
     }
 
+    @Override
     public boolean isEmpty() {
         return map.isEmpty();
     }
 
+    @Override
     public boolean contains(Object o) {
         return map.containsKey(o);
     }
 
+    @Override
     public boolean add(Object o) {
         return map.put(o, PRESENT) == null;
     }
 
+    @Override
     public boolean remove(Object o) {
         return map.remove(o) == PRESENT;
     }
 
+    @Override
     public void clear() {
         map.clear();
     }

@@ -36,8 +36,8 @@ public class SSystemException extends SystemException {
     /**
      * {@link SSystemException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SSystemException(String messageCode, Object[] args) {
         this(messageCode, args, null);
@@ -46,9 +46,9 @@ public class SSystemException extends SystemException {
     /**
      * {@link SSystemException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param cause
+     * @param messageCode message code
+     * @param args args
+     * @param cause cause of exception
      */
     public SSystemException(String messageCode, Object[] args, Throwable cause) {
         super(MessageFormatter.getMessage(messageCode, args));

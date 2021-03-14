@@ -51,7 +51,7 @@ public interface PropertyDesc {
     /**
      * getterメソッドを設定します。
      * 
-     * @param readMethod
+     * @param readMethod readMethod
      */
     void setReadMethod(Method readMethod);
 
@@ -72,7 +72,7 @@ public interface PropertyDesc {
     /**
      * setterメソッドを設定します。
      * 
-     * @param writeMethod
+     * @param writeMethod writeMethod
      */
     void setWriteMethod(Method writeMethod);
 
@@ -107,14 +107,14 @@ public interface PropertyDesc {
     /**
      * プロパティとして認識しているpublicフィールドを設定します。
      * 
-     * @param field
+     * @param field field
      */
     void setField(Field field);
 
     /**
      * プロパティの値を返します。
      * 
-     * @param target
+     * @param target target
      * @return プロパティの値
      * @throws IllegalStateException
      *             プロパティがreadableではない場合。
@@ -125,8 +125,8 @@ public interface PropertyDesc {
     /**
      * プロパティに値を設定します。
      * 
-     * @param target
-     * @param value
+     * @param target target target
+     * @param value value
      * @throws IllegalPropertyRuntimeException
      *             値の設定に失敗した場合。
      * @throws IllegalStateException
@@ -138,7 +138,7 @@ public interface PropertyDesc {
     /**
      * プロパティの型に応じて必要なら適切に変換します。
      * 
-     * @param value
+     * @param value value
      * @return 変換された値
      */
     Object convertIfNeed(Object value);

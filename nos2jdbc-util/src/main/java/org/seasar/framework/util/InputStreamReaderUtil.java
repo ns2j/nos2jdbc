@@ -38,7 +38,7 @@ public class InputStreamReaderUtil {
     /**
      * {@link InputStreamReader}を作成します。
      * 
-     * @param is
+     * @param is is
      * @return {@link InputStreamReader}
      * @see #create(InputStream, String)
      */
@@ -49,8 +49,8 @@ public class InputStreamReaderUtil {
     /**
      * {@link InputStreamReader}を作成します。
      * 
-     * @param is
-     * @param encoding
+     * @param is is
+     * @param encoding encoding
      * @return {@link InputStreamReader}
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合

@@ -38,7 +38,7 @@ public class CaseInsensitiveMap extends ArrayMap {
     /**
      * {@link CaseInsensitiveMap}を作成します。
      * 
-     * @param capacity
+     * @param capacity capacity
      */
     public CaseInsensitiveMap(int capacity) {
         super(capacity);
@@ -47,21 +47,24 @@ public class CaseInsensitiveMap extends ArrayMap {
     /**
      * キーが含まれているかどうかを返します。
      * 
-     * @param key
+     * @param key key
      * @return キーが含まれているかどうか
      */
     public final boolean containsKey(String key) {
         return super.containsKey(convertKey(key));
     }
 
+    @Override
     public final Object get(Object key) {
         return super.get(convertKey(key));
     }
 
+    @Override
     public final Object put(Object key, Object value) {
         return super.put(convertKey(key), value);
     }
 
+    @Override
     public final void putAll(Map map) {
         for (Iterator i = map.entrySet().iterator(); i.hasNext();) {
             Map.Entry entry = (Map.Entry) i.next();
@@ -69,10 +72,12 @@ public class CaseInsensitiveMap extends ArrayMap {
         }
     }
 
+    @Override
     public final Object remove(Object key) {
         return super.remove(convertKey(key));
     }
 
+    @Override
     public boolean containsKey(Object key) {
         return super.containsKey(convertKey(key));
     }

@@ -28,7 +28,7 @@ public class CannotCompileRuntimeException extends SRuntimeException {
     /**
      * {@link CannotCompileRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public CannotCompileRuntimeException(final CannotCompileException cause) {
         super("ESSR0017", new Object[] { cause }, cause);

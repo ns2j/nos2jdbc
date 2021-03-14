@@ -39,8 +39,8 @@ public class ResourceBundleUtil {
     /**
      * バンドルを返します。 見つからない場合は、<code>null</code>を返します。
      * 
-     * @param name
-     * @param locale
+     * @param name name
+     * @param locale locale
      * @return {@link ResourceBundle}
      * @see ResourceBundle#getBundle(String, Locale)
      */
@@ -58,9 +58,9 @@ public class ResourceBundleUtil {
     /**
      * バンドルを返します。 見つからない場合は、<code>null</code>を返します。
      * 
-     * @param name
-     * @param locale
-     * @param classLoader
+     * @param name name
+     * @param locale locale
+     * @param classLoader classLoader
      * @return {@link ResourceBundle}
      * @see ResourceBundle#getBundle(String, Locale, ClassLoader)
      */
@@ -79,7 +79,7 @@ public class ResourceBundleUtil {
     /**
      * {@link Map}に変換します。
      * 
-     * @param bundle
+     * @param bundle bundle
      * @return {@link Map}
      */
     public static final Map convertMap(ResourceBundle bundle) {
@@ -95,8 +95,8 @@ public class ResourceBundleUtil {
     /**
      * {@link Map}に変換します。
      * 
-     * @param name
-     * @param locale
+     * @param name name
+     * @param locale locale
      * @return {@link Map}
      */
     public static final Map convertMap(String name, Locale locale) {

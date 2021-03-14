@@ -36,7 +36,7 @@ public class CalendarConversionUtil {
     /**
      * {@link Calendar}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Calendar}
      */
     public static Calendar toCalendar(Object o) {
@@ -46,8 +46,8 @@ public class CalendarConversionUtil {
     /**
      * {@link Calendar}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link Calendar}
      */
     public static Calendar toCalendar(Object o, String pattern) {
@@ -68,7 +68,7 @@ public class CalendarConversionUtil {
      * 
      * @param calendar
      *            {@link Calendar}
-     * @return
+     * @return {@link Calendar}
      */
     public static Calendar localize(Calendar calendar) {
         if (calendar == null) {

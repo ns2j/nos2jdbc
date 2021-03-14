@@ -30,7 +30,7 @@ public class IORuntimeException extends SRuntimeException {
     /**
      * {@link IORuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public IORuntimeException(IOException cause) {
         super("ESSR0040", new Object[] { cause }, cause);

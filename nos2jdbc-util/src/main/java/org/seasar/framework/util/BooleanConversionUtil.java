@@ -32,7 +32,7 @@ public class BooleanConversionUtil {
     /**
      * {@link Boolean}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Boolean}
      */
     public static Boolean toBoolean(Object o) {
@@ -62,7 +62,7 @@ public class BooleanConversionUtil {
     /**
      * booleanに変換します。
      * 
-     * @param o
+     * @param o o
      * @return boolean
      */
     public static boolean toPrimitiveBoolean(Object o) {

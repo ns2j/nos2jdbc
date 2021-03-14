@@ -30,7 +30,7 @@ public class OgnlRuntimeException extends SRuntimeException {
     /**
      * {@link OgnlRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause {@link Throwable}
      */
     public OgnlRuntimeException(Throwable cause) {
         this(cause, null, 0);
@@ -39,9 +39,9 @@ public class OgnlRuntimeException extends SRuntimeException {
     /**
      * {@link OgnlRuntimeException}を作成します。
      * 
-     * @param cause
-     * @param path
-     * @param lineNumber
+     * @param cause cause of exception
+     * @param path path string
+     * @param lineNumber line number
      */
     public OgnlRuntimeException(Throwable cause, String path, int lineNumber) {
         super("ESSR0073",

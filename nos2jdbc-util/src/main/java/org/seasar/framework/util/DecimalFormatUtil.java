@@ -36,7 +36,7 @@ public class DecimalFormatUtil {
     /**
      * 数値の文字列での表記を正規化します。
      * 
-     * @param s
+     * @param s s
      * @return 正規化された文字列
      * @see #normalize(String, Locale)
      */
@@ -47,8 +47,8 @@ public class DecimalFormatUtil {
     /**
      * 数値の文字列での表記をグルーピングセパレータを削除し、小数点を.であらわした標準形に正規化します。
      * 
-     * @param s
-     * @param locale
+     * @param s s
+     * @param locale locale
      * @return 正規化された文字列
      */
     public static String normalize(String s, Locale locale) {

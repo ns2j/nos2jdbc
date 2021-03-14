@@ -38,8 +38,8 @@ public class StatementUtil {
     /**
      * SQLを実行します。
      * 
-     * @param statement
-     * @param sql
+     * @param statement statement
+     * @param sql sql
      * @return 実行した結果
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
@@ -57,8 +57,8 @@ public class StatementUtil {
     /**
      * フェッチサイズを設定します。
      * 
-     * @param statement
-     * @param fetchSize
+     * @param statement statement
+     * @param fetchSize fetchSize
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
      * @see Statement#setFetchSize(int)
@@ -75,8 +75,8 @@ public class StatementUtil {
     /**
      * 最大行数を設定します。
      * 
-     * @param statement
-     * @param maxRows
+     * @param statement statement
+     * @param maxRows maxRows
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
      * @see Statement#setMaxRows(int)
@@ -93,8 +93,8 @@ public class StatementUtil {
     /**
      * クエリタイムアウトを設定します。
      * 
-     * @param statement
-     * @param queryTimeout
+     * @param statement statement
+     * @param queryTimeout queryTimeout
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
      * @see Statement#setQueryTimeout(int)
@@ -111,7 +111,7 @@ public class StatementUtil {
     /**
      * {@link Statement}を閉じます。
      * 
-     * @param statement
+     * @param statement statement
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
      * @see Statement#close()
@@ -130,9 +130,10 @@ public class StatementUtil {
     /**
      * 結果セットを返します。
      * 
-     * @param statement
+     * @param statement statement
      * @return 結果セット
      * @throws SQLRuntimeException
+     *             {@link SQLException}が発生した場合
      */
     public static ResultSet getResultSet(Statement statement)
             throws SQLRuntimeException {

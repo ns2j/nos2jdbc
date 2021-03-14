@@ -44,8 +44,8 @@ public class ResourceTraversal {
         /**
          * リソースを処理します。
          * 
-         * @param path
-         * @param is
+         * @param path path
+         * @param is is
          */
         void processResource(String path, InputStream is);
     }
@@ -185,6 +185,7 @@ public class ResourceTraversal {
                 }
                 handler.processResource(entryName.substring(pos),
                         new FilterInputStream(zipInputStream) {
+                            @Override
                             public void close() throws IOException {
                                 ZipInputStreamUtil.closeEntry(zipInputStream);
                             }

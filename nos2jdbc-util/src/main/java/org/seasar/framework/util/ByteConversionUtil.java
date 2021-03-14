@@ -34,7 +34,7 @@ public class ByteConversionUtil {
     /**
      * {@link Byte}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Byte}
      */
     public static Byte toByte(Object o) {
@@ -44,8 +44,8 @@ public class ByteConversionUtil {
     /**
      * {@link Byte}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link Byte}
      */
     public static Byte toByte(Object o, String pattern) {
@@ -80,7 +80,7 @@ public class ByteConversionUtil {
     /**
      * byteに変換します。
      * 
-     * @param o
+     * @param o o
      * @return byte
      */
     public static byte toPrimitiveByte(Object o) {
@@ -90,8 +90,8 @@ public class ByteConversionUtil {
     /**
      * byteに変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return byte
      */
     public static byte toPrimitiveByte(Object o, String pattern) {

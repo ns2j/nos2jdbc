@@ -38,8 +38,8 @@ public class PropertiesUtil {
     /**
      * {@link Properties#load(InputStream)}の例外処理をラップします。
      * 
-     * @param props
-     * @param in
+     * @param props props
+     * @param in in
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
      */

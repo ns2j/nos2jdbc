@@ -36,8 +36,8 @@ public class SRollbackException extends RollbackException {
     /**
      * {@link SRollbackException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SRollbackException(String messageCode, Object[] args) {
         super(MessageFormatter.getMessage(messageCode, args));

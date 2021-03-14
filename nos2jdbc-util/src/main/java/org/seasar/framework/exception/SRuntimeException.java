@@ -38,7 +38,7 @@ public class SRuntimeException extends RuntimeException {
     /**
      * {@link SRuntimeException}を作成します。
      * 
-     * @param messageCode
+     * @param messageCode message code
      */
     public SRuntimeException(String messageCode) {
         this(messageCode, null, null);
@@ -47,8 +47,8 @@ public class SRuntimeException extends RuntimeException {
     /**
      * {@link SRuntimeException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SRuntimeException(String messageCode, Object[] args) {
         this(messageCode, args, null);
@@ -57,9 +57,9 @@ public class SRuntimeException extends RuntimeException {
     /**
      * {@link SRuntimeException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param cause
+     * @param messageCode message code
+     * @param args args
+     * @param cause cause of exception
      */
     public SRuntimeException(String messageCode, Object[] args, Throwable cause) {
 
@@ -88,6 +88,7 @@ public class SRuntimeException extends RuntimeException {
         return args;
     }
 
+    @Override
     public final String getMessage() {
         return message;
     }

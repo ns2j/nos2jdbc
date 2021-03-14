@@ -30,8 +30,8 @@ public class IllegalAccessRuntimeException extends SRuntimeException {
     /**
      * {@link IllegalAccessRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param cause
+     * @param targetClass target class
+     * @param cause cause of exception
      */
     public IllegalAccessRuntimeException(Class targetClass,
             IllegalAccessException cause) {
@@ -42,8 +42,8 @@ public class IllegalAccessRuntimeException extends SRuntimeException {
 
     /**
      * ターゲットクラスを返します。
-     * 
-     * @return
+     *
+     * @return target class
      */
     public Class getTargetClass() {
         return targetClass;

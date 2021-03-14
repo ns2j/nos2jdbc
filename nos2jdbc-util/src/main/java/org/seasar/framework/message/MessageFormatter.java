@@ -34,8 +34,8 @@ public class MessageFormatter {
     /**
      * メッセージを返します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      * @return メッセージ
      */
     public static String getMessage(String messageCode, Object[] args) {
@@ -49,8 +49,8 @@ public class MessageFormatter {
     /**
      * メッセージコードつきのメッセージを返します。
      * 
-     * @param messageCode
-     * @param simpleMessage
+     * @param messageCode message code
+     * @param simpleMessage simple message
      * @return メッセージコードつきのメッセージ
      */
     public static String getFormattedMessage(String messageCode,
@@ -61,8 +61,8 @@ public class MessageFormatter {
     /**
      * メッセージコードなしの単純なメッセージを返します。
      * 
-     * @param messageCode
-     * @param arguments
+     * @param messageCode message code
+     * @param arguments arguments
      * @return メッセージコードなしの単純なメッセージ
      */
     public static String getSimpleMessage(String messageCode, Object[] arguments) {

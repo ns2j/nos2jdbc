@@ -45,7 +45,7 @@ public class Base64Util {
     /**
      * Base64でエンコードします。
      * 
-     * @param inData
+     * @param inData inData
      * @return エンコードされたデータ
      */
     public static String encode(final byte[] inData) {
@@ -77,7 +77,7 @@ public class Base64Util {
     /**
      * Base64でエンコードされたデータをデコードします。
      * 
-     * @param inData
+     * @param inData inData
      * @return デコードされたデータ
      */
     public static byte[] decode(final String inData) {

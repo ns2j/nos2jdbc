@@ -36,10 +36,10 @@ public class NoSuchMethodRuntimeException extends SRuntimeException {
     /**
      * {@link NoSuchMethodRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param methodName
-     * @param argTypes
-     * @param cause
+     * @param targetClass target class
+     * @param methodName method name
+     * @param argTypes array of argType
+     * @param cause cause of exception
      */
     public NoSuchMethodRuntimeException(Class targetClass, String methodName,
             Class[] argTypes, NoSuchMethodException cause) {

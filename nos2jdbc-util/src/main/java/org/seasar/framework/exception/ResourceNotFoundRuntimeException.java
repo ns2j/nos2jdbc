@@ -30,7 +30,7 @@ public class ResourceNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link ResourceNotFoundRuntimeException}を作成します。
      * 
-     * @param path
+     * @param path path string
      */
     public ResourceNotFoundRuntimeException(String path) {
         super("ESSR0055", new Object[] { path });

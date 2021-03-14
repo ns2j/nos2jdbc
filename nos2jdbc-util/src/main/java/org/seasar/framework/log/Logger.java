@@ -39,7 +39,7 @@ public class Logger {
     /**
      * {@link Logger}を返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return {@link Logger}
      */
     public static synchronized Logger getLogger(final Class clazz) {
@@ -86,8 +86,8 @@ public class Logger {
     /**
      * DEBUG情報を出力します。
      * 
-     * @param message
-     * @param throwable
+     * @param message message
+     * @param throwable Throwable
      */
     public final void debug(Object message, Throwable throwable) {
         if (isDebugEnabled()) {
@@ -98,7 +98,7 @@ public class Logger {
     /**
      * DEBUG情報を出力します。
      * 
-     * @param message
+     * @param message message
      */
     public final void debug(Object message) {
         if (isDebugEnabled()) {
@@ -118,8 +118,8 @@ public class Logger {
     /**
      * INFO情報を出力します。
      * 
-     * @param message
-     * @param throwable
+     * @param message message
+     * @param throwable Throwwable
      */
     public final void info(Object message, Throwable throwable) {
         if (isInfoEnabled()) {
@@ -130,7 +130,7 @@ public class Logger {
     /**
      * INFO情報を出力します。
      * 
-     * @param message
+     * @param message message
      */
     public final void info(Object message) {
         if (isInfoEnabled()) {
@@ -141,8 +141,8 @@ public class Logger {
     /**
      * WARN情報を出力します。
      * 
-     * @param message
-     * @param throwable
+     * @param message message
+     * @param throwable Throwable
      */
     public final void warn(Object message, Throwable throwable) {
         log.warn(message.toString(), throwable);
@@ -151,7 +151,7 @@ public class Logger {
     /**
      * WARN情報を出力します。
      * 
-     * @param message
+     * @param message message
      */
     public final void warn(Object message) {
         log.warn(message.toString());
@@ -160,8 +160,8 @@ public class Logger {
     /**
      * ERROR情報を出力します。
      * 
-     * @param message
-     * @param throwable
+     * @param message message
+     * @param throwable Throwable
      */
     public final void error(Object message, Throwable throwable) {
         log.error(message.toString(), throwable);
@@ -170,7 +170,7 @@ public class Logger {
     /**
      * ERROR情報を出力します。
      * 
-     * @param message
+     * @param message message
      */
     public final void error(Object message) {
         log.error(message.toString());
@@ -179,8 +179,8 @@ public class Logger {
     /**
      * FATAL情報を出力します。
      * 
-     * @param message
-     * @param throwable
+     * @param message message
+     * @param throwable Throwwable
      */
     //public final void fatal(Object message, Throwable throwable) {
     //    log.fatal(message.toString(), throwable);
@@ -189,7 +189,7 @@ public class Logger {
     /**
      * FATAL情報を出力します。
      * 
-     * @param message
+     * @param message message
      */
     //public final void fatal(Object message) {
     //    log.fatal(message.toString());
@@ -198,7 +198,7 @@ public class Logger {
     /**
      * ログを出力します。
      * 
-     * @param throwable
+     * @param throwable Throwable
      */
     public final void log(Throwable throwable) {
         error(throwable.getMessage(), throwable);
@@ -207,8 +207,8 @@ public class Logger {
     /**
      * ログを出力します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public final void log(String messageCode, Object[] args) {
         log(messageCode, args, null);
@@ -217,9 +217,9 @@ public class Logger {
     /**
      * ログを出力します。
      * 
-     * @param messageCode
-     * @param args
-     * @param throwable
+     * @param messageCode message code
+     * @param args args
+     * @param throwable throwable
      */
     public final void log(String messageCode, Object[] args, Throwable throwable) {
         char messageType = messageCode.charAt(0);

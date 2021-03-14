@@ -34,7 +34,7 @@ public class SIllegalStateException extends IllegalStateException {
     /**
      * {@link SIllegalStateException}を作成します。
      * 
-     * @param messageCode
+     * @param messageCode message code
      */
     public SIllegalStateException(String messageCode) {
         super(MessageFormatter.getMessage(messageCode, null));
@@ -45,8 +45,8 @@ public class SIllegalStateException extends IllegalStateException {
     /**
      * {@link SIllegalStateException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SIllegalStateException(String messageCode, Object[] args) {
         super(MessageFormatter.getMessage(messageCode, args));

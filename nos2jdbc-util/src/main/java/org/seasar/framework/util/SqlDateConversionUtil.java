@@ -34,7 +34,7 @@ public class SqlDateConversionUtil {
     /**
      * {@link Date}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Date}
      */
     public static Date toDate(Object o) {
@@ -44,8 +44,8 @@ public class SqlDateConversionUtil {
     /**
      * {@link Date}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link Date}
      */
     public static Date toDate(Object o, String pattern) {

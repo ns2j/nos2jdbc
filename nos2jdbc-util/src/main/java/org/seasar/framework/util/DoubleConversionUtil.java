@@ -34,7 +34,7 @@ public class DoubleConversionUtil {
     /**
      * {@link Double}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Double}
      */
     public static Double toDouble(Object o) {
@@ -44,8 +44,8 @@ public class DoubleConversionUtil {
     /**
      * {@link Double}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link Double}
      */
     public static Double toDouble(Object o, String pattern) {
@@ -77,8 +77,8 @@ public class DoubleConversionUtil {
     /**
      * doubleに変換します。
      * 
-     * @param o
-     * @return double
+     * @param o o
+     * @return double double
      */
     public static double toPrimitiveDouble(Object o) {
         return toPrimitiveDouble(o, null);
@@ -87,9 +87,9 @@ public class DoubleConversionUtil {
     /**
      * doubleに変換します。
      * 
-     * @param o
-     * @param pattern
-     * @return double
+     * @param o o
+     * @param pattern pattern
+     * @return double double
      */
     public static double toPrimitiveDouble(Object o, String pattern) {
         if (o == null) {

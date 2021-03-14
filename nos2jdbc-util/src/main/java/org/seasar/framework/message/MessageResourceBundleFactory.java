@@ -44,7 +44,7 @@ public class MessageResourceBundleFactory {
     /**
      * {@link MessageResourceBundle}を返します。
      * 
-     * @param baseName
+     * @param baseName base name
      * @return {@link MessageResourceBundle}
      * @see #getBundle(String, Locale)
      */
@@ -55,8 +55,8 @@ public class MessageResourceBundleFactory {
     /**
      * {@link MessageResourceBundle}を返します。
      * 
-     * @param baseName
-     * @param locale
+     * @param baseName base name
+     * @param locale locale
      * @return {@link MessageResourceBundle}
      * @throws ResourceNotFoundRuntimeException
      *             リソースが見つからなかった場合
@@ -73,7 +73,7 @@ public class MessageResourceBundleFactory {
     /**
      * {@link MessageResourceBundle}を返します。 リソースが見つからなかった場合は、 nullを返します。
      * 
-     * @param baseName
+     * @param baseName base name
      * @return {@link MessageResourceBundle}
      * @see #getNullableBundle(String, Locale)
      */
@@ -84,8 +84,8 @@ public class MessageResourceBundleFactory {
     /**
      * {@link MessageResourceBundle}を返します。 リソースが見つからなかった場合は、 nullを返します。
      * 
-     * @param baseName
-     * @param locale
+     * @param baseName base name
+     * @param locale locale
      * @return {@link MessageResourceBundle}
      */
     public static MessageResourceBundle getNullableBundle(String baseName,
@@ -127,6 +127,7 @@ public class MessageResourceBundleFactory {
         synchronized (cache) {
             if (!initialized) {
                 DisposableUtil.add(new Disposable() {
+                    @Override
                     public void dispose() {
                         clear();
                         initialized = false;

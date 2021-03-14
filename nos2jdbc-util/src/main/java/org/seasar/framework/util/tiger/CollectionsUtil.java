@@ -957,7 +957,7 @@ public abstract class CollectionsUtil {
      *            {@link TreeMap}のキーの型
      * @param <V>
      *            {@link TreeMap}の値の型
-     * @param c
+     * @param c c
      * @return {@link TreeMap}の新しいインスタンス
      * @see TreeMap#TreeMap()
      */

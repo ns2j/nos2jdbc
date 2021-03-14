@@ -32,7 +32,7 @@ public class BinaryConversionUtil {
     /**
      * byteの配列に変換します。
      * 
-     * @param o
+     * @param o o
      * @return byteの配列
      */
     public static byte[] toBinary(Object o) {

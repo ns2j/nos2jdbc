@@ -32,7 +32,7 @@ public class SQLRuntimeException extends SRuntimeException {
     /**
      * {@link SQLRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public SQLRuntimeException(SQLException cause) {
         super("ESSR0072", new Object[] { getSql(cause), getRealMessage(cause),
@@ -57,7 +57,7 @@ public class SQLRuntimeException extends SRuntimeException {
     /**
      * 本当のメッセージを返します。
      * 
-     * @param cause
+     * @param cause cause of exception
      * @return 本当のメッセージ
      */
     protected static String getRealMessage(SQLException cause) {

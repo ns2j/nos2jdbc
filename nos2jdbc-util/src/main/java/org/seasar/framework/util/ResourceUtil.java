@@ -43,8 +43,8 @@ public class ResourceUtil {
     /**
      * リソースパスを返します。
      * 
-     * @param path
-     * @param extension
+     * @param path path
+     * @param extension extension
      * @return リソースパス
      */
     public static String getResourcePath(String path, String extension) {
@@ -61,7 +61,7 @@ public class ResourceUtil {
     /**
      * リソースパスを返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return リソースパス
      */
     public static String getResourcePath(Class clazz) {
@@ -80,7 +80,7 @@ public class ResourceUtil {
     /**
      * リソースを返します。
      * 
-     * @param path
+     * @param path path
      * @return リソース
      * @see #getResource(String, String)
      */
@@ -91,8 +91,8 @@ public class ResourceUtil {
     /**
      * リソースを返します。
      * 
-     * @param path
-     * @param extension
+     * @param path path
+     * @param extension extension
      * @return リソース
      * @throws ResourceNotFoundRuntimeException
      *             リソースが見つからなかった場合
@@ -111,7 +111,7 @@ public class ResourceUtil {
     /**
      * リソースを返します。見つからなかった場合は<code>null</code>を返します。
      * 
-     * @param path
+     * @param path path
      * @return リソース
      * @see #getResourceNoException(String, String)
      */
@@ -122,8 +122,8 @@ public class ResourceUtil {
     /**
      * リソースを返します。見つからなかった場合は<code>null</code>を返します。
      * 
-     * @param path
-     * @param extension
+     * @param path path
+     * @param extension extension
      * @return リソース
      * @see #getResourceNoException(String, String, ClassLoader)
      */
@@ -135,9 +135,9 @@ public class ResourceUtil {
     /**
      * リソースを返します。見つからなかった場合は<code>null</code>を返します。
      * 
-     * @param path
-     * @param extension
-     * @param loader
+     * @param path path
+     * @param extension extension
+     * @param loader loader
      * @return リソース
      * @see #getResourcePath(String, String)
      */
@@ -153,7 +153,7 @@ public class ResourceUtil {
     /**
      * リソースをストリームとして返します。
      * 
-     * @param path
+     * @param path path
      * @return ストリーム
      * @see #getResourceAsStream(String, String)
      */
@@ -164,8 +164,8 @@ public class ResourceUtil {
     /**
      * リソースをストリームとして返します。
      * 
-     * @param path
-     * @param extension
+     * @param path path
+     * @param extension extension
      * @return ストリーム
      * @see #getResource(String, String)
      */
@@ -177,7 +177,7 @@ public class ResourceUtil {
     /**
      * リソースをストリームとして返します。リソースが見つからなかった場合は<code>null</code>を返します。
      * 
-     * @param path
+     * @param path path
      * @return ストリーム
      * @see #getResourceAsStreamNoException(String, String)
      */
@@ -188,8 +188,8 @@ public class ResourceUtil {
     /**
      * リソースをストリームとして返します。リソースが見つからなかった場合は<code>null</code>を返します。
      * 
-     * @param path
-     * @param extension
+     * @param path path
+     * @param extension extension
      * @return ストリーム
      * @see #getResourceNoException(String, String)
      */
@@ -209,7 +209,7 @@ public class ResourceUtil {
     /**
      * リソースが存在するかどうかを返します。
      * 
-     * @param path
+     * @param path path
      * @return リソースが存在するかどうか
      * @see #getResourceNoException(String)
      */
@@ -220,7 +220,7 @@ public class ResourceUtil {
     /**
      * プロパティファイルを返します。
      * 
-     * @param path
+     * @param path path
      * @return プロパティファイル
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
@@ -242,7 +242,7 @@ public class ResourceUtil {
     /**
      * 拡張子を返します。
      * 
-     * @param path
+     * @param path path
      * @return 拡張子
      */
     public static String getExtension(String path) {
@@ -256,7 +256,7 @@ public class ResourceUtil {
     /**
      * 拡張子を取り除きます。
      * 
-     * @param path
+     * @param path path
      * @return 取り除いた後の結果
      */
     public static String removeExtension(String path) {
@@ -270,7 +270,7 @@ public class ResourceUtil {
     /**
      * クラスファイルが置かれているルートディレクトリを返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return ルートディレクトリ
      * @see #getBuildDir(String)
      */
@@ -281,7 +281,7 @@ public class ResourceUtil {
     /**
      * クラスファイルが置かれているルートディレクトリを返します。
      * 
-     * @param path
+     * @param path path
      * @return ルートディレクトリ
      */
     public static File getBuildDir(String path) {
@@ -301,7 +301,7 @@ public class ResourceUtil {
     /**
      * 外部形式に変換します。
      * 
-     * @param url
+     * @param url url
      * @return 外部形式
      */
     public static String toExternalForm(URL url) {
@@ -312,7 +312,7 @@ public class ResourceUtil {
     /**
      * ファイル名を返します。
      * 
-     * @param url
+     * @param url url
      * @return ファイル名
      */
     public static String getFileName(URL url) {
@@ -323,7 +323,7 @@ public class ResourceUtil {
     /**
      * ファイルを返します。
      * 
-     * @param url
+     * @param url url
      * @return ファイル
      */
     public static File getFile(URL url) {
@@ -337,7 +337,7 @@ public class ResourceUtil {
     /**
      * リソースをファイルとして返します。
      * 
-     * @param path
+     * @param path path
      * @return ファイル
      * @see #getResourceAsFile(String, String)
      */
@@ -348,8 +348,8 @@ public class ResourceUtil {
     /**
      * リソースをファイルとして返します。
      * 
-     * @param path
-     * @param extension
+     * @param path path
+     * @param extension extension
      * @return ファイル
      * @see #getFile(URL)
      */
@@ -360,7 +360,7 @@ public class ResourceUtil {
     /**
      * リソースをファイルとして返します。リソースが見つからない場合は<code>null</code>を返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return ファイル
      * @see #getResourceAsFileNoException(String)
      */
@@ -371,7 +371,7 @@ public class ResourceUtil {
     /**
      * リソースをファイルとして返します。リソースが見つからない場合は<code>null</code>を返します。
      * 
-     * @param path
+     * @param path path
      * @return ファイル
      * @see #getResourceNoException(String)
      */
@@ -402,8 +402,8 @@ public class ResourceUtil {
     /**
      * パスを変換します。
      * 
-     * @param path
-     * @param clazz
+     * @param path path
+     * @param clazz class
      * @return 変換された結果
      */
     public static String convertPath(String path, Class clazz) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2015 the Seasar Foundation and the Others.
+ * Copyright 2004-2015 the Seasar Foundatiovn and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,14 +30,14 @@ public interface BeanDesc {
     /**
      * Beanのクラスを返します。
      * 
-     * @return
+     * @return bean class
      */
     Class getBeanClass();
 
     /**
      * {@link PropertyDesc}を持っているかどうかを返します。
      * 
-     * @param propertyName
+     * @param propertyName propertyName
      * @return {@link PropertyDesc}を持っているかどうか
      */
     boolean hasPropertyDesc(String propertyName);
@@ -45,7 +45,7 @@ public interface BeanDesc {
     /**
      * {@link PropertyDesc}を返します。
      * 
-     * @param propertyName
+     * @param propertyName propertyName
      * @return {@link PropertyDesc}
      * @throws PropertyNotFoundRuntimeException
      *             {@link PropertyDesc}が見つからない場合
@@ -56,7 +56,7 @@ public interface BeanDesc {
     /**
      * {@link PropertyDesc}を返します。
      * 
-     * @param index
+     * @param index index
      * @return {@link PropertyDesc}
      */
     PropertyDesc getPropertyDesc(int index);
@@ -64,14 +64,14 @@ public interface BeanDesc {
     /**
      * {@link PropertyDesc}の数を返します。
      * 
-     * @return
+     * @return int
      */
     int getPropertyDescSize();
 
     /**
      * {@link Field}を持っているかどうかを返します。
      * 
-     * @param fieldName
+     * @param fieldName fieldName
      * @return {@link Field}を持っているかどうか
      */
     boolean hasField(String fieldName);
@@ -79,16 +79,16 @@ public interface BeanDesc {
     /**
      * {@link Field}を返します。
      * 
-     * @param fieldName
+     * @param fieldName fieldName
      * @return {@link Field}
-     * @throws FieldNotFoundRuntimeException
+     * @throws FieldNotFoundRuntimeException {@link FieldNotFoundRuntimeException}
      */
     Field getField(String fieldName) throws FieldNotFoundRuntimeException;
 
     /**
      * {@link Field}を返します。
      * 
-     * @param index
+     * @param index index
      * @return {@link Field}
      */
     Field getField(int index);
@@ -96,8 +96,8 @@ public interface BeanDesc {
     /**
      * {@link Field}の値を返します。
      * 
-     * @param fieldName
-     * @param target
+     * @param fieldName fieldName
+     * @param target target
      * @return {@link Field}の値
      * @throws FieldNotFoundRuntimeException
      *             {@link Field}が見つからない場合
@@ -115,9 +115,9 @@ public interface BeanDesc {
     /**
      * 新しいインスタンスを作成します。
      * 
-     * @param args
+     * @param args args
      * @return 新しいインスタンス
-     * @throws ConstructorNotFoundRuntimeException
+     * @throws ConstructorNotFoundRuntimeException {@link ConstructorNotFoundRuntimeException}
      */
     Object newInstance(Object[] args)
             throws ConstructorNotFoundRuntimeException;
@@ -125,9 +125,9 @@ public interface BeanDesc {
     /**
      * 引数に応じた{@link Constructor}を返します。
      * 
-     * @param args
+     * @param args args
      * @return 引数に応じた{@link Constructor}
-     * @throws ConstructorNotFoundRuntimeException
+     * @throws ConstructorNotFoundRuntimeException {@link ConstructorNotFoundRuntimeException}
      */
     Constructor getSuitableConstructor(Object[] args)
             throws ConstructorNotFoundRuntimeException;
@@ -135,7 +135,7 @@ public interface BeanDesc {
     /**
      * 型に応じた{@link Constructor}を返します。
      * 
-     * @param paramTypes
+     * @param paramTypes paramTypes
      * @return 型に応じた{@link Constructor}
      */
     Constructor getConstructor(Class[] paramTypes);
@@ -143,7 +143,7 @@ public interface BeanDesc {
     /**
      * Diiguでエンハンスした{@link Constructor}のパラメータ名の配列を返します。
      * 
-     * @param paramTypes
+     * @param paramTypes paramTypes
      * @return パラメータ名の配列
      */
     String[] getConstructorParameterNames(final Class[] paramTypes);
@@ -151,7 +151,7 @@ public interface BeanDesc {
     /**
      * Diiguでエンハンスした{@link Constructor}のパラメータ名の配列を返します。
      * 
-     * @param constructor
+     * @param constructor constructor
      * @return パラメータ名の配列
      */
     String[] getConstructorParameterNames(Constructor constructor);
@@ -159,9 +159,9 @@ public interface BeanDesc {
     /**
      * ターゲットのメソッドを呼び出します。
      * 
-     * @param target
-     * @param methodName
-     * @param args
+     * @param target target
+     * @param methodName methodName
+     * @param args args
      * @return 戻り値
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
@@ -172,7 +172,7 @@ public interface BeanDesc {
     /**
      * {@link Method}を返します。
      * 
-     * @param methodName
+     * @param methodName methodName
      * @return {@link Method}
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
@@ -182,8 +182,8 @@ public interface BeanDesc {
     /**
      * {@link Method}を返します。
      * 
-     * @param methodName
-     * @param paramTypes
+     * @param methodName methodName
+     * @param paramTypes paramTypes
      * @return {@link Method}
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
@@ -194,7 +194,7 @@ public interface BeanDesc {
     /**
      * {@link Method}を返します。見つからない場合は、nullを返します。
      * 
-     * @param methodName
+     * @param methodName methodName
      * @return {@link Method}
      */
     Method getMethodNoException(String methodName);
@@ -202,8 +202,8 @@ public interface BeanDesc {
     /**
      * {@link Method}を返します。見つからない場合は、nullを返します。
      * 
-     * @param methodName
-     * @param paramTypes
+     * @param methodName methodName
+     * @param paramTypes paramTypes
      * @return {@link Method}
      */
     Method getMethodNoException(String methodName, Class[] paramTypes);
@@ -211,8 +211,8 @@ public interface BeanDesc {
     /**
      * {@link Method}の配列を返します。
      * 
-     * @param methodName
-     * @return
+     * @param methodName methodName
+     * @return array of Methods
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
      */
@@ -222,7 +222,7 @@ public interface BeanDesc {
     /**
      * {@link Method}があるかどうか返します。
      * 
-     * @param methodName
+     * @param methodName methodName
      * @return {@link Method}があるかどうか
      */
     boolean hasMethod(String methodName);
@@ -230,15 +230,15 @@ public interface BeanDesc {
     /**
      * メソッド名の配列を返します。
      * 
-     * @return
+     * @return array of method names
      */
     String[] getMethodNames();
 
     /**
      * {@link Method}のパラメータ名の配列を返します。
      * 
-     * @param methodName
-     * @param paramTypes
+     * @param methodName methodName
+     * @param paramTypes paramTypes
      * @return {@link Method}のパラメータ名の配列
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
@@ -251,8 +251,8 @@ public interface BeanDesc {
     /**
      * {@link Method}のパラメータ名の配列を返します。
      * 
-     * @param methodName
-     * @param paramTypes
+     * @param methodName methodName
+     * @param paramTypes paramTypes
      * @return {@link Method}のパラメータ名の配列
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
@@ -263,7 +263,7 @@ public interface BeanDesc {
     /**
      * {@link Method}のパラメータ名の配列を返します。
      * 
-     * @param method
+     * @param method method
      * @return {@link Method}のパラメータ名の配列
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
@@ -276,7 +276,7 @@ public interface BeanDesc {
     /**
      * {@link Method}のパラメータ名の配列を返します。
      * 
-     * @param method
+     * @param method method
      * @return {@link Method}のパラメータ名の配列
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。

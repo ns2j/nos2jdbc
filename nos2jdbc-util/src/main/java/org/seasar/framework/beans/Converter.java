@@ -44,8 +44,8 @@ public interface Converter {
     /**
      * 対象の型かどうかを返します。 対象のプロパティを指定しない場合に呼び出されます。
      * 
-     * @param clazz
-     * @return
+     * @param clazz clazz
+     * @return boolean
      */
     boolean isTarget(Class clazz);
 }

@@ -33,7 +33,7 @@ public class InputStreamUtil {
     /**
      * {@link InputStream}を閉じます。
      * 
-     * @param is
+     * @param is is
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
      * @see InputStream#close()
@@ -52,7 +52,7 @@ public class InputStreamUtil {
     /**
      * {@link InputStream}を閉じます。
      * 
-     * @param is
+     * @param is is
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
      * @see InputStream#close()
@@ -70,7 +70,7 @@ public class InputStreamUtil {
     /**
      * {@link InputStream}からbyteの配列を取得します。
      * 
-     * @param is
+     * @param is is
      * @return byteの配列
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
@@ -99,8 +99,8 @@ public class InputStreamUtil {
     /**
      * {@link InputStream}の内容を {@link OutputStream}にコピーします。
      * 
-     * @param is
-     * @param os
+     * @param is is
+     * @param os os
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
      */
@@ -120,7 +120,7 @@ public class InputStreamUtil {
     /**
      * {@link InputStream#available()}の例外処理をラップしたメソッドです。
      * 
-     * @param is
+     * @param is is
      * @return 可能なサイズ
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
@@ -136,7 +136,7 @@ public class InputStreamUtil {
     /**
      * {@link InputStream}をリセットします。
      * 
-     * @param is
+     * @param is is
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
      * @see InputStream#reset()
