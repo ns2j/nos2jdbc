@@ -34,7 +34,7 @@ public class IntegerConversionUtil {
     /**
      * {@link Integer}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Integer}
      */
     public static Integer toInteger(Object o) {
@@ -44,8 +44,8 @@ public class IntegerConversionUtil {
     /**
      * {@link Integer}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link Integer}
      */
     public static Integer toInteger(Object o, String pattern) {
@@ -80,7 +80,7 @@ public class IntegerConversionUtil {
     /**
      * intに変換します。
      * 
-     * @param o
+     * @param o o
      * @return int
      */
     public static int toPrimitiveInt(Object o) {
@@ -90,8 +90,8 @@ public class IntegerConversionUtil {
     /**
      * intに変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return int
      */
     public static int toPrimitiveInt(Object o, String pattern) {

@@ -36,7 +36,7 @@ public class SXAException extends XAException {
     /**
      * {@link SXAException}を作成します。
      * 
-     * @param t
+     * @param t cause
      */
     public SXAException(Throwable t) {
         this("ESSR0017", new Object[] { t }, t);
@@ -45,8 +45,8 @@ public class SXAException extends XAException {
     /**
      * {@link SXAException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SXAException(String messageCode, Object[] args) {
         this(messageCode, args, null);
@@ -55,9 +55,9 @@ public class SXAException extends XAException {
     /**
      * {@link SXAException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param t
+     * @param messageCode message code
+     * @param args args
+     * @param t cause
      */
     public SXAException(String messageCode, Object[] args, Throwable t) {
         super(MessageFormatter.getMessage(messageCode, args));

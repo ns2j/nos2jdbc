@@ -117,10 +117,6 @@ public class FileUtil {
      *            ファイルのパス
      * @param data
      *            バイトの配列
-     * @param offset
-     *            オフセット
-     * @param length
-     *            配列の長さ
      * @throws NullPointerException
      *             pathやdataがnullの場合。
      */

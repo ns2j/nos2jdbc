@@ -39,9 +39,9 @@ public class MethodNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link MethodNotFoundRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param methodName
-     * @param methodArgs
+     * @param targetClass targetClass
+     * @param methodName methodName
+     * @param methodArgs methodArgs
      */
     public MethodNotFoundRuntimeException(Class targetClass, String methodName,
             Object[] methodArgs) {
@@ -64,9 +64,9 @@ public class MethodNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link MethodNotFoundRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param methodName
-     * @param methodArgClasses
+     * @param targetClass targetClass
+     * @param methodName methodName
+     * @param methodArgClasses methodArgClasses
      */
     public MethodNotFoundRuntimeException(Class targetClass, String methodName,
             Class[] methodArgClasses) {

@@ -39,8 +39,8 @@ public class ArrayUtil {
     /**
      * 配列にオブジェクトを追加します。
      * 
-     * @param array
-     * @param obj
+     * @param array array
+     * @param obj obj
      * @return オブジェクトが追加された結果の配列
      */
     public static Object[] add(Object[] array, Object obj) {
@@ -57,8 +57,8 @@ public class ArrayUtil {
     /**
      * intの配列にintを追加します。
      * 
-     * @param array
-     * @param value
+     * @param array array
+     * @param value value
      * @return オブジェクトが追加された結果の配列
      */
     public static int[] add(int[] array, int value) {
@@ -74,8 +74,8 @@ public class ArrayUtil {
     /**
      * 配列に配列を追加します。
      * 
-     * @param a
-     * @param b
+     * @param a a
+     * @param b h
      * @return 配列が追加された結果の配列
      */
     public static Object[] add(final Object[] a, final Object[] b) {
@@ -101,8 +101,8 @@ public class ArrayUtil {
     /**
      * 配列中のオブジェクトのindexを返します。
      * 
-     * @param array
-     * @param obj
+     * @param array array
+     * @param obj obj
      * @return 配列中のオブジェクトのindex
      */
     public static int indexOf(Object[] array, Object obj) {
@@ -125,8 +125,8 @@ public class ArrayUtil {
     /**
      * 配列中のcharのindexを返します。
      * 
-     * @param array
-     * @param ch
+     * @param array array
+     * @param ch ch
      * @return 配列中のcharのindex
      */
     public static int indexOf(char[] array, char ch) {
@@ -144,8 +144,8 @@ public class ArrayUtil {
     /**
      * 配列中から対象のオブジェクトを削除します。
      * 
-     * @param array
-     * @param obj
+     * @param array array
+     * @param obj obj
      * @return 削除後の配列
      */
     public static Object[] remove(Object[] array, Object obj) {
@@ -168,7 +168,7 @@ public class ArrayUtil {
     /**
      * 配列が空かどうかを返します。
      * 
-     * @param arrays
+     * @param arrays arrays
      * @return 配列が空かどうか
      */
     public static boolean isEmpty(Object[] arrays) {
@@ -178,8 +178,8 @@ public class ArrayUtil {
     /**
      * 配列にオブジェクトが含まれているかどうかを返します。
      * 
-     * @param array
-     * @param obj
+     * @param array array
+     * @param obj obj
      * @return 配列にオブジェクトが含まれているかどうか
      */
     public static boolean contains(Object[] array, Object obj) {
@@ -189,8 +189,8 @@ public class ArrayUtil {
     /**
      * 配列にcharが含まれているかどうかを返します。
      * 
-     * @param array
-     * @param ch
+     * @param array array
+     * @param ch ch
      * @return 配列にcharが含まれているかどうか
      */
     public static boolean contains(char[] array, char ch) {
@@ -200,8 +200,8 @@ public class ArrayUtil {
     /**
      * 順番は無視して2つの配列が等しいかどうかを返します。
      * 
-     * @param array1
-     * @param array2
+     * @param array1 array1
+     * @param array2 array2
      * @return 順番は無視して2つの配列が等しいかどうか
      */
     public static boolean equalsIgnoreSequence(Object[] array1, Object[] array2) {
@@ -226,7 +226,7 @@ public class ArrayUtil {
     /**
      * 配列を文字列に変換します。
      * 
-     * @param array
+     * @param array array
      * @return 配列の文字列表現
      */
     public static String toString(Object[] array) {
@@ -252,10 +252,10 @@ public class ArrayUtil {
     /**
      * <code>primitive</code>型を考慮して配列に値を設定します。
      * 
-     * @param array
-     * @param valueType
-     * @param value
-     * @param index
+     * @param array array
+     * @param valueType value type
+     * @param value value
+     * @param index index
      */
     public static void setArrayValue(Object array, Class valueType,
             Object value, int index) {
@@ -289,7 +289,7 @@ public class ArrayUtil {
     /**
      * 配列をオブジェクトの配列に変換します。
      * 
-     * @param obj
+     * @param obj obj
      * @return オブジェクトの配列
      */
     public static Object[] toObjectArray(Object obj) {

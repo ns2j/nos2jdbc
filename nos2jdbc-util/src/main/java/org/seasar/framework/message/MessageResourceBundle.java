@@ -25,7 +25,7 @@ public interface MessageResourceBundle {
     /**
      * キーに対応するメッセージを返します。
      * 
-     * @param key
+     * @param key key
      * @return キーに対応するメッセージ
      */
     public String get(String key);
@@ -40,7 +40,7 @@ public interface MessageResourceBundle {
     /**
      * 親を設定します。
      * 
-     * @param parent
+     * @param parent parent
      */
     public void setParent(MessageResourceBundle parent);
 

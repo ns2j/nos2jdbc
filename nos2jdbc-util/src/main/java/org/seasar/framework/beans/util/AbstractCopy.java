@@ -222,8 +222,8 @@ public abstract class AbstractCopy<S extends AbstractCopy<S>> {
     /**
      * コンバータを設定します。
      * 
-     * @param converter
-     * @param propertyNames
+     * @param converter converter
+     * @param propertyNames propertyNames
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")

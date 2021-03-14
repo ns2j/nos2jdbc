@@ -43,10 +43,10 @@ public class SerializeUtil {
     /**
      * オブジェクトをシリアライズできるかテストします。
      * 
-     * @param o
-     * @return
-     * @throws IORuntimeException
-     * @throws ClassNotFoundRuntimeException
+     * @param o o
+     * @return Object
+     * @throws IORuntimeException {@link IORuntimeException}
+     * @throws ClassNotFoundRuntimeException {@link ClassNotFoundRuntimeException}
      */
     public static Object serialize(final Object o) throws IORuntimeException,
             ClassNotFoundRuntimeException {
@@ -58,8 +58,8 @@ public class SerializeUtil {
     /**
      * オブジェクトをbyteの配列に変換します。
      * 
-     * @param o
-     * @return
+     * @param o o
+     * @return byte[]
      */
     public static byte[] fromObjectToBinary(Object o) {
 
@@ -81,8 +81,8 @@ public class SerializeUtil {
     /**
      * byteの配列をオブジェクトに変換します。
      * 
-     * @param binary
-     * @return
+     * @param binary binary
+     * @return Object
      */
     public static Object fromBinaryToObject(byte[] binary) {
         try {

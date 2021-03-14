@@ -30,7 +30,7 @@ public class ParseRuntimeException extends SRuntimeException {
     /**
      * {@link ParseRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public ParseRuntimeException(ParseException cause) {
         super("ESSR0050", new Object[] { cause }, cause);

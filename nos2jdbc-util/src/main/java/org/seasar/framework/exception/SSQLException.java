@@ -38,8 +38,8 @@ public class SSQLException extends SQLException {
     /**
      * {@link SSQLException}を作成します。
      * 
-     * @param messageCode
-     * @param args
+     * @param messageCode message code
+     * @param args args
      */
     public SSQLException(String messageCode, Object[] args) {
         this(messageCode, args, null, 0, null);
@@ -48,9 +48,9 @@ public class SSQLException extends SQLException {
     /**
      * {@link SSQLException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param cause
+     * @param messageCode message code
+     * @param args args
+     * @param cause cause of exception
      */
     public SSQLException(String messageCode, Object[] args, Throwable cause) {
         this(messageCode, args, null, 0, cause);
@@ -59,9 +59,9 @@ public class SSQLException extends SQLException {
     /**
      * {@link SSQLException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param sqlState
+     * @param messageCode message code
+     * @param args args
+     * @param sqlState String of sql state
      */
     public SSQLException(String messageCode, Object[] args, String sqlState) {
         this(messageCode, args, sqlState, 0, null);
@@ -70,10 +70,10 @@ public class SSQLException extends SQLException {
     /**
      * {@link SSQLException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param sqlState
-     * @param cause
+     * @param messageCode message code
+     * @param args args
+     * @param sqlState String of sql state      
+     * @param cause cause of exception
      */
     public SSQLException(String messageCode, Object[] args, String sqlState,
             Throwable cause) {
@@ -83,10 +83,10 @@ public class SSQLException extends SQLException {
     /**
      * {@link SSQLException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param sqlState
-     * @param vendorCode
+     * @param messageCode message code
+     * @param args args
+     * @param sqlState String of sql state
+     * @param vendorCode vendor code
      */
     public SSQLException(String messageCode, Object[] args, String sqlState,
             int vendorCode) {
@@ -96,11 +96,11 @@ public class SSQLException extends SQLException {
     /**
      * {@link SSQLException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param sqlState
-     * @param vendorCode
-     * @param cause
+     * @param messageCode message code
+     * @param args args
+     * @param sqlState String of sql state
+     * @param vendorCode vendor code
+     * @param cause cause of exception
      */
     public SSQLException(String messageCode, Object[] args, String sqlState,
             int vendorCode, Throwable cause) {
@@ -110,12 +110,12 @@ public class SSQLException extends SQLException {
     /**
      * {@link SSQLException}を作成します。
      * 
-     * @param messageCode
-     * @param args
-     * @param sqlState
-     * @param vendorCode
-     * @param cause
-     * @param sql
+     * @param messageCode message code
+     * @param args args
+     * @param sqlState String of sql state
+     * @param vendorCode vendor code
+     * @param cause cause of exception
+     * @param sql sql
      */
     public SSQLException(String messageCode, Object[] args, String sqlState,
             int vendorCode, Throwable cause, String sql) {

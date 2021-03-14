@@ -30,7 +30,7 @@ public class ClassNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link ClassNotFoundRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public ClassNotFoundRuntimeException(ClassNotFoundException cause) {
         this(null, cause);
@@ -39,8 +39,8 @@ public class ClassNotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link ClassNotFoundRuntimeException}を作成します。
      * 
-     * @param className
-     * @param cause
+     * @param className class name
+     * @param cause cause of exception
      */
     public ClassNotFoundRuntimeException(String className,
             ClassNotFoundException cause) {
@@ -51,7 +51,7 @@ public class ClassNotFoundRuntimeException extends SRuntimeException {
     /**
      * クラス名を返します。
      * 
-     * @return
+     * @return class name
      */
     public String getClassName() {
         return className;

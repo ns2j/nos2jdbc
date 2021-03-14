@@ -30,7 +30,7 @@ public class SystemRuntimeException extends SRuntimeException {
     /**
      * {@link SystemRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public SystemRuntimeException(SystemException cause) {
         super("ESSR0061", new Object[] { cause }, cause);

@@ -40,8 +40,8 @@ public class OgnlUtil {
     /**
      * 値を返します。
      * 
-     * @param exp
-     * @param root
+     * @param exp exp
+     * @param root root
      * @return 値
      * @see #getValue(Object, Map, Object, String, int)
      */
@@ -52,10 +52,10 @@ public class OgnlUtil {
     /**
      * 値を返します。
      * 
-     * @param exp
-     * @param root
-     * @param path
-     * @param lineNumber
+     * @param exp exp
+     * @param root root
+     * @param path path
+     * @param lineNumber lineNumber
      * @return 値
      * @see #getValue(Object, Map, Object, String, int)
      */
@@ -67,9 +67,9 @@ public class OgnlUtil {
     /**
      * 値を返します。
      * 
-     * @param exp
-     * @param ctx
-     * @param root
+     * @param exp exp
+     * @param ctx ctx
+     * @param root root
      * @return 値
      * @see #getValue(Object, Map, Object, String, int)
      */
@@ -80,11 +80,11 @@ public class OgnlUtil {
     /**
      * 値を返します。
      * 
-     * @param exp
-     * @param ctx
-     * @param root
-     * @param path
-     * @param lineNumber
+     * @param exp exp
+     * @param ctx ctx
+     * @param root root
+     * @param path path
+     * @param lineNumber lineNumber
      * @return 値
      * @throws OgnlRuntimeException
      *             OgnlExceptionが発生した場合
@@ -112,7 +112,7 @@ public class OgnlUtil {
     /**
      * 式を解析します。
      * 
-     * @param expression
+     * @param expression expression
      * @return 解析した結果
      * @see #parseExpression(String, String, int)
      */
@@ -123,9 +123,9 @@ public class OgnlUtil {
     /**
      * 式を解析します。
      * 
-     * @param expression
-     * @param path
-     * @param lineNumber
+     * @param expression expression
+     * @param path path
+     * @param lineNumber lineNumber
      * @return 解析した結果
      * @throws OgnlRuntimeException
      *             OgnlExceptionが発生した場合
@@ -173,7 +173,7 @@ public class OgnlUtil {
         /**
          * インスタンスを作成します。
          * 
-         * @param classLoader
+         * @param classLoader classLoader
          */
         public ClassResolverImpl(ClassLoader classLoader) {
             this.classLoader = classLoader;

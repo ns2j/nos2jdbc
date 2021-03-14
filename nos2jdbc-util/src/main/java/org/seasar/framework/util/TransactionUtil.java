@@ -56,8 +56,8 @@ public class TransactionUtil {
     /**
      * トランザクションに参加します。
      * 
-     * @param tx
-     * @param xaResource
+     * @param tx tx
+     * @param xaResource xaResource
      */
     public static void enlistResource(Transaction tx, XAResource xaResource) {
         try {
@@ -72,8 +72,8 @@ public class TransactionUtil {
     /**
      * {@link Synchronization}を登録します。
      * 
-     * @param tx
-     * @param sync
+     * @param tx tx
+     * @param sync sync
      */
     public static void registerSynchronization(Transaction tx,
             Synchronization sync) {

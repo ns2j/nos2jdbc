@@ -40,9 +40,9 @@ public class ReaderUtil {
     /**
      * テキストを読み込みます。
      * 
-     * @param reader
+     * @param reader reader
      * @return テキスト
-     * @throws IORuntimeException
+     * @throws IORuntimeException {@link IORuntimeException}
      */
     public static String readText(Reader reader) throws IORuntimeException {
         BufferedReader in = new BufferedReader(reader);

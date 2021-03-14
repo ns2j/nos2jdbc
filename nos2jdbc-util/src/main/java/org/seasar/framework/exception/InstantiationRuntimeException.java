@@ -30,8 +30,8 @@ public class InstantiationRuntimeException extends SRuntimeException {
     /**
      * {@link InstantiationRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param cause
+     * @param targetClass target class
+     * @param cause cause of exception
      */
     public InstantiationRuntimeException(Class targetClass,
             InstantiationException cause) {
@@ -43,7 +43,7 @@ public class InstantiationRuntimeException extends SRuntimeException {
     /**
      * ターゲットのクラスを返します。
      * 
-     * @return
+     * @return target class
      */
     public Class getTargetClass() {
         return targetClass;

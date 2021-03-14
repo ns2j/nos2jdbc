@@ -30,7 +30,7 @@ public class OutputStreamUtil {
     /**
      * {@link OutputStream}を閉じます。
      * 
-     * @param out
+     * @param out ot
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
      */
@@ -48,7 +48,7 @@ public class OutputStreamUtil {
     /**
      * {@link OutputStream}をflushします。
      * 
-     * @param out
+     * @param out out
      */
     public static void flush(OutputStream out) {
         if (out == null) {

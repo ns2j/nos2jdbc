@@ -58,10 +58,11 @@ public class ResourcesUtil {
 
     private static final Logger logger = Logger.getLogger(ResourcesUtil.class);
 
-    /** URLのプロトコルをキー、{@link ResourceTypeFactory}を値とするマッピングです。 */
+    /** URLのプロトコルをキー、{@link ResourcesFactory}を値とするマッピングです。 */
     protected static final Map resourcesTypeFactories = new HashMap();
     static {
         addResourcesFactory("file", new ResourcesFactory() {
+            @Override
             public Resources create(final URL url, final String rootPackage,
                     final String rootDir) {
                 return new FileSystemResources(getBaseDir(url, rootDir),
@@ -69,12 +70,14 @@ public class ResourcesUtil {
             }
         });
         addResourcesFactory("jar", new ResourcesFactory() {
+            @Override
             public Resources create(final URL url, final String rootPackage,
                     final String rootDir) {
                 return new JarFileResources(url, rootPackage, rootDir);
             }
         });
         addResourcesFactory("zip", new ResourcesFactory() {
+            @Override
             public Resources create(final URL url, final String rootPackage,
                     final String rootDir) {
                 return new JarFileResources(JarFileUtil.create(new File(
@@ -82,6 +85,7 @@ public class ResourcesUtil {
             }
         });
         addResourcesFactory("code-source", new ResourcesFactory() {
+            @Override
             public Resources create(final URL url, final String rootPackage,
                     final String rootDir) {
                 return new JarFileResources(URLUtil.create("jar:file:"
@@ -89,6 +93,7 @@ public class ResourcesUtil {
             }
         });
         addResourcesFactory("vfszip", new ResourcesFactory() {
+            @Override
             public Resources create(final URL url, final String rootPackage,
                     final String rootDir) {
                 return new VfsZipResources(url, rootPackage, rootDir);
@@ -134,11 +139,11 @@ public class ResourcesUtil {
     }
 
     /**
-     * 指定のディレクトリを基点とするリソースの集まりを扱う{@link ResourceType}を返します。
+     * 指定のディレクトリを基点とするリソースの集まりを扱う{@link Resources}を返します。
      * 
      * @param rootDir
      *            ルートディレクトリ
-     * @return 指定のディレクトリを基点とするリソースの集まりを扱う{@link ResourceType}
+     * @return 指定のディレクトリを基点とするリソースの集まりを扱う{@link Resources}
      */
     public static Resources getResourcesType(final String rootDir) {
         final URL url = ResourceUtil
@@ -147,11 +152,11 @@ public class ResourcesUtil {
     }
 
     /**
-     * 指定のルートパッケージを基点とするリソースの集まりを扱う{@link ResourceType}の配列を返します。
+     * 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列を返します。
      * 
      * @param rootPackage
      *            ルートパッケージ
-     * @return 指定のルートパッケージを基点とするリソースの集まりを扱う{@link ResourceType}の配列
+     * @return 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列
      */
     public static Resources[] getResourcesTypes(final String rootPackage) {
         if (StringUtil.isEmpty(rootPackage)) {
@@ -364,20 +369,24 @@ public class ResourcesUtil {
             this(URLUtil.toFile(url), rootPackage, rootDir);
         }
 
+        @Override
         public boolean isExistClass(final String className) {
             final File file = new File(baseDir, toClassFile(ClassUtil
                     .concatName(rootPackage, className)));
             return file.exists();
         }
 
+        @Override
         public void forEach(final ClassHandler handler) {
             ClassTraversal.forEach(baseDir, rootPackage, handler);
         }
 
+        @Override
         public void forEach(final ResourceHandler handler) {
             ResourceTraversal.forEach(baseDir, rootDir, handler);
         }
 
+        @Override
         public void close() {
         }
 
@@ -431,13 +440,16 @@ public class ResourcesUtil {
             this(JarFileUtil.toJarFile(url), rootPackage, rootDir);
         }
 
+        @Override
         public boolean isExistClass(final String className) {
             return jarFile.getEntry(toClassFile(ClassUtil.concatName(
                     rootPackage, className))) != null;
         }
 
+        @Override
         public void forEach(final ClassHandler handler) {
             ClassTraversal.forEach(jarFile, new ClassHandler() {
+                @Override
                 public void processClass(String packageName,
                         String shortClassName) {
                     if (rootPackage == null
@@ -449,8 +461,10 @@ public class ResourcesUtil {
             });
         }
 
+        @Override
         public void forEach(final ResourceHandler handler) {
             ResourceTraversal.forEach(jarFile, new ResourceHandler() {
+                @Override
                 public void processResource(String path, InputStream is) {
                     if (rootDir == null || path.startsWith(rootDir)) {
                         handler.processResource(path, is);
@@ -459,6 +473,7 @@ public class ResourcesUtil {
             });
         }
 
+        @Override
         public void close() {
             JarFileUtil.close(jarFile);
         }
@@ -544,17 +559,20 @@ public class ResourcesUtil {
             }
         }
 
+        @Override
         public boolean isExistClass(final String className) {
             final String entryName = prefix
                     + toClassFile(ClassUtil.concatName(rootPackage, className));
             return entryNames.contains(entryName);
         }
 
+        @Override
         public void forEach(final ClassHandler handler) {
             final ZipInputStream zis = new ZipInputStream(URLUtil
                     .openStream(zipUrl));
             try {
                 ClassTraversal.forEach(zis, prefix, new ClassHandler() {
+                    @Override
                     public void processClass(String packageName,
                             String shortClassName) {
                         if (rootPackage == null
@@ -569,11 +587,13 @@ public class ResourcesUtil {
             }
         }
 
+        @Override
         public void forEach(final ResourceHandler handler) {
             final ZipInputStream zis = new ZipInputStream(URLUtil
                     .openStream(zipUrl));
             try {
                 ResourceTraversal.forEach(zis, prefix, new ResourceHandler() {
+                    @Override
                     public void processResource(String path, InputStream is) {
                         if (rootDir == null || path.startsWith(rootDir)) {
                             handler.processResource(path, is);
@@ -585,6 +605,7 @@ public class ResourcesUtil {
             }
         }
 
+        @Override
         public void close() {
         }
 

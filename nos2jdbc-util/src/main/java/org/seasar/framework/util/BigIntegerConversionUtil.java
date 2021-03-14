@@ -34,7 +34,7 @@ public class BigIntegerConversionUtil {
     /**
      * {@link BigInteger}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link BigInteger}
      */
     public static BigInteger toBigInteger(Object o) {
@@ -44,8 +44,8 @@ public class BigIntegerConversionUtil {
     /**
      * {@link BigInteger}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link BigInteger}
      */
     public static BigInteger toBigInteger(Object o, String pattern) {

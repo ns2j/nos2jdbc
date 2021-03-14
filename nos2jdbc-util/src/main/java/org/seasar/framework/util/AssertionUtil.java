@@ -33,8 +33,8 @@ public class AssertionUtil {
     /**
      * <code>null</code>でないことを表明します。
      * 
-     * @param message
-     * @param obj
+     * @param message message
+     * @param obj obj
      * @throws NullPointerException
      *             <code>null</code>の場合。
      */
@@ -48,8 +48,8 @@ public class AssertionUtil {
     /**
      * 文字列が空あるいは<code>null</code>でないことを表明します。
      * 
-     * @param message
-     * @param s
+     * @param message message
+     * @param s s
      * @throws EmptyRuntimeException
      *             文字列が空あるいは<code>null</code>の場合。
      */
@@ -63,8 +63,8 @@ public class AssertionUtil {
     /**
      * <code>int</code>が負でないことを表明します。
      * 
-     * @param message
-     * @param num
+     * @param message message
+     * @param num num
      * @throws IllegalArgumentException
      *             <code>int</code>が負の場合。
      */

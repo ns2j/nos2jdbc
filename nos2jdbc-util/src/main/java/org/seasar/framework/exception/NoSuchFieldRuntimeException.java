@@ -32,9 +32,9 @@ public class NoSuchFieldRuntimeException extends SRuntimeException {
     /**
      * {@link NoSuchFieldRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param fieldName
-     * @param cause
+     * @param targetClass target class
+     * @param fieldName field name
+     * @param cause cause of exception
      */
     public NoSuchFieldRuntimeException(Class targetClass, String fieldName,
             NoSuchFieldException cause) {

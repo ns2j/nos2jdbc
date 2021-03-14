@@ -47,7 +47,7 @@ public class DecimalFormatSymbolsUtil {
     /**
      * {@link DecimalFormatSymbols}を返します。
      * 
-     * @param locale
+     * @param locale locale
      * @return {@link DecimalFormatSymbols}
      */
     public static DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {

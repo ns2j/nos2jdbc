@@ -32,16 +32,18 @@ public class ArrayIterator implements Iterator {
     /**
      * {@link ArrayIterator}を作成します。
      * 
-     * @param items
+     * @param items items
      */
     public ArrayIterator(Object items[]) {
         items_ = items;
     }
 
+    @Override
     public boolean hasNext() {
         return index_ < items_.length;
     }
 
+    @Override
     public Object next() {
         try {
             Object o = items_[index_];
@@ -52,6 +54,7 @@ public class ArrayIterator implements Iterator {
         }
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove");
     }

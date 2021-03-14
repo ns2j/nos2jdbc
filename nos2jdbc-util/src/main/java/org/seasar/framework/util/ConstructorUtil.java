@@ -39,9 +39,9 @@ public class ConstructorUtil {
     /**
      * 新しいインスタンスを作成します。
      * 
-     * @param constructor
-     * @param args
-     * @return
+     * @param constructor constructor
+     * @param args args
+     * @return Object
      * @throws InstantiationRuntimeException
      *             {@link InstantiationException}が起こった場合
      * @throws IllegalAccessRuntimeException

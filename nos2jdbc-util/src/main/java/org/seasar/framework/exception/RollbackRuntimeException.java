@@ -30,7 +30,7 @@ public class RollbackRuntimeException extends SRuntimeException {
     /**
      * {@link RollbackRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public RollbackRuntimeException(RollbackException cause) {
         super("ESSR0063", new Object[] { cause }, cause);

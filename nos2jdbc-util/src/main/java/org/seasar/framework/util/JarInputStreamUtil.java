@@ -38,7 +38,7 @@ public class JarInputStreamUtil {
     /**
      * {@link JarInputStream}を作成します。
      * 
-     * @param is
+     * @param is is
      * @return {@link JarInputStream}
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合
@@ -56,7 +56,7 @@ public class JarInputStreamUtil {
     /**
      * {@link JarInputStream#getNextJarEntry()}の例外処理をラップするメソッドです。
      * 
-     * @param is
+     * @param is is
      * @return {@link JarEntry}
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合

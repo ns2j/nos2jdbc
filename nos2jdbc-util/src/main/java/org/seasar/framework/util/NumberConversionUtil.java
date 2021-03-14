@@ -37,8 +37,8 @@ public class NumberConversionUtil {
     /**
      * 適切な {@link Number}に変換します。
      * 
-     * @param type
-     * @param o
+     * @param type type
+     * @param o o
      * @return 適切な {@link Number}
      */
     public static Object convertNumber(Class type, Object o) {
@@ -65,8 +65,8 @@ public class NumberConversionUtil {
     /**
      * Wrapperを返します。
      * 
-     * @param type
-     * @param o
+     * @param type type
+     * @param o o
      * @return Wrapper
      */
     public static Object convertPrimitiveWrapper(Class type, Object o) {
@@ -119,8 +119,8 @@ public class NumberConversionUtil {
     /**
      * デリミタを削除します。
      * 
-     * @param value
-     * @param locale
+     * @param value value
+     * @param locale locale
      * @return デリミタを削除した結果
      */
     public static String removeDelimeter(String value, Locale locale) {
@@ -134,7 +134,7 @@ public class NumberConversionUtil {
     /**
      * グルーピング用のセパレータを探します。
      * 
-     * @param locale
+     * @param locale locale
      * @return グルーピング用のセパレータ
      */
     public static String findGroupingSeparator(Locale locale) {
@@ -145,7 +145,7 @@ public class NumberConversionUtil {
     /**
      * 数値のセパレータを返します。
      * 
-     * @param locale
+     * @param locale locale
      * @return 数値のセパレータ
      */
     public static String findDecimalSeparator(Locale locale) {

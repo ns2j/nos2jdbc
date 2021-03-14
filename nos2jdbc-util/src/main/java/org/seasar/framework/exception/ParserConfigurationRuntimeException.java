@@ -31,7 +31,7 @@ public class ParserConfigurationRuntimeException extends
     /**
      * {@link ParserConfigurationRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public ParserConfigurationRuntimeException(
             ParserConfigurationException cause) {

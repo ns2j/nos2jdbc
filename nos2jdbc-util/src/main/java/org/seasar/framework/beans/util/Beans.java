@@ -45,7 +45,7 @@ public class Beans {
     /**
      * JavaBeansやMapを作成しプロパティをコピーするオブジェクトを作成します。
      * 
-     * @param <T>
+     * @param <T> T
      * 
      * @param destClass
      *            作成対象クラス

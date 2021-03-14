@@ -28,7 +28,7 @@ public class NotFoundRuntimeException extends SRuntimeException {
     /**
      * {@link NotFoundRuntimeException}を作成します。
      * 
-     * @param cause
+     * @param cause cause of exception
      */
     public NotFoundRuntimeException(final NotFoundException cause) {
         super("ESSR0017", new Object[] { cause }, cause);

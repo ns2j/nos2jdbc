@@ -84,7 +84,7 @@ public class ClassUtil {
     /**
      * {@link Class}を返します。
      * 
-     * @param className
+     * @param className class name
      * @return {@link Class}
      * @throws ClassNotFoundRuntimeException
      *             {@link ClassNotFoundException}がおきた場合
@@ -104,7 +104,7 @@ public class ClassUtil {
     /**
      * プリミティブクラスの場合は、ラッパークラスに変換して返します。
      * 
-     * @param className
+     * @param className class name
      * @return {@link Class}
      * @throws ClassNotFoundRuntimeException
      *             {@link ClassNotFoundException}がおきた場合
@@ -122,7 +122,7 @@ public class ClassUtil {
     /**
      * 新しいインスタンスを作成します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return 新しいインスタンス
      * @throws InstantiationRuntimeException
      *             {@link InstantiationException}がおきた場合
@@ -145,7 +145,7 @@ public class ClassUtil {
     /**
      * 新しいインスタンスを作成します。
      * 
-     * @param className
+     * @param className class name
      * @return 新しいインスタンス
      * @throws ClassNotFoundRuntimeException
      *             {@link ClassNotFoundException}がおきた場合
@@ -165,8 +165,8 @@ public class ClassUtil {
     /**
      * 代入可能かどうかを返します。
      * 
-     * @param toClass
-     * @param fromClass
+     * @param toClass toClaas
+     * @param fromClass fromClass
      * @return 代入可能かどうか
      * @see Class#isAssignableFrom(Class)
      */
@@ -183,7 +183,7 @@ public class ClassUtil {
     /**
      * ラッパークラスをプリミティブクラスに変換します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return プリミティブクラス
      */
     public static Class getPrimitiveClass(Class clazz) {
@@ -193,7 +193,7 @@ public class ClassUtil {
     /**
      * ラッパークラスならプリミティブクラスに、 そうでなければそのままクラスを返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return {@link Class}
      */
     public static Class getPrimitiveClassIfWrapper(Class clazz) {
@@ -207,7 +207,7 @@ public class ClassUtil {
     /**
      * プリミティブクラスをラッパークラスに変換します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return {@link Class}
      */
     public static Class getWrapperClass(Class clazz) {
@@ -217,7 +217,7 @@ public class ClassUtil {
     /**
      * プリミティブの場合はラッパークラス、そうでない場合はもとのクラスを返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return {@link Class}
      */
     public static Class getWrapperClassIfPrimitive(Class clazz) {
@@ -231,8 +231,8 @@ public class ClassUtil {
     /**
      * {@link Constructor}を返します。
      * 
-     * @param clazz
-     * @param argTypes
+     * @param clazz class
+     * @param argTypes array of argTypes
      * @return {@link Constructor}
      * @throws NoSuchConstructorRuntimeException
      *             {@link NoSuchMethodException}がおきた場合
@@ -250,8 +250,8 @@ public class ClassUtil {
     /**
      * そのクラスに宣言されている {@link Constructor}を返します。
      * 
-     * @param clazz
-     * @param argTypes
+     * @param clazz class
+     * @param argTypes array of argType
      * @return {@link Constructor}
      * @throws NoSuchConstructorRuntimeException
      *             {@link NoSuchMethodException}がおきた場合
@@ -269,9 +269,9 @@ public class ClassUtil {
     /**
      * {@link Method}を返します。
      * 
-     * @param clazz
-     * @param methodName
-     * @param argTypes
+     * @param clazz class
+     * @param methodName method name
+     * @param argTypes array of argType
      * @return {@link Method}
      * @throws NoSuchMethodRuntimeException
      *             {@link NoSuchMethodException}がおきた場合
@@ -291,9 +291,9 @@ public class ClassUtil {
     /**
      * そのクラスに宣言されている {@link Method}を返します。
      * 
-     * @param clazz
-     * @param methodName
-     * @param argTypes
+     * @param clazz class
+     * @param methodName method name
+     * @param argTypes array of argType
      * @return {@link Method}
      * @throws NoSuchMethodRuntimeException
      *             {@link NoSuchMethodException}がおきた場合
@@ -313,8 +313,8 @@ public class ClassUtil {
     /**
      * {@link Field}を返します。
      * 
-     * @param clazz
-     * @param fieldName
+     * @param clazz class
+     * @param fieldName field name
      * @return {@link Field}
      * @throws NoSuchFieldRuntimeException
      *             {@link NoSuchFieldException}がおきた場合
@@ -332,8 +332,8 @@ public class ClassUtil {
     /**
      * そのクラスに宣言されている {@link Field}を返します。
      * 
-     * @param clazz
-     * @param fieldName
+     * @param clazz class
+     * @param fieldName field name
      * @return {@link Field}
      * @throws NoSuchFieldRuntimeException
      *             {@link NoSuchFieldException}がおきた場合
@@ -374,7 +374,7 @@ public class ClassUtil {
     /**
      * パッケージ名を返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return パッケージ名
      */
     public static String getPackageName(Class clazz) {
@@ -389,7 +389,7 @@ public class ClassUtil {
     /**
      * FQCNからパッケージ名を除いた名前を返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return FQCNからパッケージ名を除いた名前
      * @see #getShortClassName(String)
      */
@@ -400,7 +400,7 @@ public class ClassUtil {
     /**
      * FQCNからパッケージ名を除いた名前を返します。
      * 
-     * @param className
+     * @param className class name
      * @return FQCNからパッケージ名を除いた名前
      */
     public static String getShortClassName(String className) {
@@ -414,7 +414,7 @@ public class ClassUtil {
     /**
      * FQCNをパッケージ名とFQCNからパッケージ名を除いた名前に分けます。
      * 
-     * @param className
+     * @param className class name
      * @return パッケージ名とFQCNからパッケージ名を除いた名前
      */
     public static String[] splitPackageAndShortClassName(String className) {
@@ -432,7 +432,7 @@ public class ClassUtil {
     /**
      * 配列の場合は要素のクラス名、それ以外はクラス名そのものを返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return クラス名
      */
     public static String getSimpleClassName(final Class clazz) {
@@ -445,7 +445,7 @@ public class ClassUtil {
     /**
      * クラス名をリソースパスとして表現します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return リソースパス
      * @see #getResourcePath(String)
      */
@@ -456,7 +456,7 @@ public class ClassUtil {
     /**
      * クラス名をリソースパスとして表現します。
      * 
-     * @param className
+     * @param className class name
      * @return リソースパス
      */
     public static String getResourcePath(String className) {
@@ -466,8 +466,8 @@ public class ClassUtil {
     /**
      * クラス名の要素を結合します。
      * 
-     * @param s1
-     * @param s2
+     * @param s1 s1
+     * @param s2 s2
      * @return 結合された名前
      */
     public static String concatName(String s1, String s2) {

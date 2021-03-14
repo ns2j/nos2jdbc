@@ -31,7 +31,7 @@ public class ZipInputStreamUtil {
     /**
      * {@link ZipInputStream#getNextEntry()}の例外処理をラップするメソッドです。
      * 
-     * @param zis
+     * @param zis zis
      * @return {@link ZipEntry}
      * @see ZipInputStream#getNextEntry()
      */
@@ -46,7 +46,7 @@ public class ZipInputStreamUtil {
     /**
      * {@link ZipInputStream#reset()}の例外処理をラップするメソッドです。
      * 
-     * @param zis
+     * @param zis zis
      * @see ZipInputStream#reset()
      */
     public static void reset(final ZipInputStream zis) {
@@ -60,7 +60,7 @@ public class ZipInputStreamUtil {
     /**
      * {@link ZipInputStream#closeEntry()}の例外処理をラップするメソッドです。
      * 
-     * @param zis
+     * @param zis zis
      * @see ZipInputStream#closeEntry()
      */
     public static void closeEntry(final ZipInputStream zis) {

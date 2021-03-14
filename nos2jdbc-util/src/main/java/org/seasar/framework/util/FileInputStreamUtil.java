@@ -38,7 +38,7 @@ public class FileInputStreamUtil {
     /**
      * {@link FileInputStream}を作成します。
      * 
-     * @param file
+     * @param file file
      * @return {@link FileInputStream}
      * @throws IORuntimeException
      *             {@link IOException}が発生した場合

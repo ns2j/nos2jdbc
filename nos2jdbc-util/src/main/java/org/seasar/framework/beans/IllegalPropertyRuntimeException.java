@@ -34,9 +34,9 @@ public class IllegalPropertyRuntimeException extends SRuntimeException {
     /**
      * {@link IllegalPropertyRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param propertyName
-     * @param cause
+     * @param targetClass targetClass
+     * @param propertyName propertyName
+     * @param cause cause
      */
     public IllegalPropertyRuntimeException(Class targetClass,
             String propertyName, Throwable cause) {

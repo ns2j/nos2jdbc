@@ -31,7 +31,7 @@ public class MessageResourceBundleImpl implements MessageResourceBundle {
     /**
      * {@link MessageResourceBundleImpl}を作成します。
      * 
-     * @param prop
+     * @param prop prop
      */
     public MessageResourceBundleImpl(Properties prop) {
         this.prop = prop;
@@ -40,8 +40,8 @@ public class MessageResourceBundleImpl implements MessageResourceBundle {
     /**
      * {@link MessageResourceBundleImpl}を作成します。
      * 
-     * @param prop
-     * @param parent
+     * @param prop porp
+     * @param parent parent
      */
     public MessageResourceBundleImpl(Properties prop,
             MessageResourceBundle parent) {
@@ -49,6 +49,7 @@ public class MessageResourceBundleImpl implements MessageResourceBundle {
         setParent(parent);
     }
 
+    @Override
     public String get(String key) {
         if (key == null) {
             return null;
@@ -59,10 +60,12 @@ public class MessageResourceBundleImpl implements MessageResourceBundle {
         return (parent != null) ? parent.get(key) : null;
     }
 
+    @Override
     public MessageResourceBundle getParent() {
         return parent;
     }
 
+    @Override
     public void setParent(MessageResourceBundle parent) {
         this.parent = parent;
     }

@@ -123,8 +123,8 @@ public class Tokenizer {
      * 
      * @param ctype2
      *            文字のタイプの配列
-     * @param low
-     * @param hi
+     * @param low low
+     * @param hi hi
      */
     protected static void wordChars(byte[] ctype2, int low, int hi) {
         if (low < 0) {

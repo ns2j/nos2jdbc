@@ -35,7 +35,7 @@ public class MapUtil {
      * スレッドセーフな{@link java.util.HashMap}を作成して返します。
      * <p>
      * 実行環境がJava5の場合は{@link java.util.concurrent.ConcurrentHashMap}を、それ以外の場合は
-     * {@link java.util.CollectionUtil#synchronizedMap}でラップされた{@link java.util.HashMap}を
+     * {@link java.util.Collections#synchronizedMap}でラップされた{@link java.util.HashMap}を
      * 返します。
      * </p>
      * 
@@ -49,7 +49,7 @@ public class MapUtil {
      * スレッドセーフな{@link java.util.HashMap}を作成して返します。
      * <p>
      * 実行環境がJava5の場合は{@link java.util.concurrent.ConcurrentHashMap}を、それ以外の場合は
-     * {@link java.util.CollectionUtil#synchronizedMap}でラップされた{@link java.util.HashMap}を
+     * {@link java.util.Collections#synchronizedMap}でラップされた{@link java.util.HashMap}を
      * 返します。
      * </p>
      * 
@@ -65,7 +65,7 @@ public class MapUtil {
      * スレッドセーフな{@link java.util.HashMap}を作成して返します。
      * <p>
      * 実行環境がJava5の場合は{@link java.util.concurrent.ConcurrentHashMap}を、それ以外の場合は
-     * {@link java.util.CollectionUtil#synchronizedMap}でラップされた{@link java.util.HashMap}を
+     * {@link java.util.Collections#synchronizedMap}でラップされた{@link java.util.HashMap}を
      * 返します。
      * </p>
      * 
@@ -129,7 +129,7 @@ public class MapUtil {
     }
 
     /**
-     * {@link java.util.CollectionUtil#synchronizedMap}でラップされた{@link java.util.HashMap}を
+     * {@link java.util.Collections#synchronizedMap}でラップされた{@link java.util.HashMap}を
      * 作成するファクトリの実装です。
      * 
      * @author koichik

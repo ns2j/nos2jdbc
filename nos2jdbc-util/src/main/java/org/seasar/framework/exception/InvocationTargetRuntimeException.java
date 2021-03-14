@@ -32,8 +32,8 @@ public class InvocationTargetRuntimeException extends SRuntimeException {
     /**
      * {@link InvocationTargetRuntimeException}を作成します。
      * 
-     * @param targetClass
-     * @param cause
+     * @param targetClass target class
+     * @param cause cause of exception
      */
     public InvocationTargetRuntimeException(Class targetClass,
             InvocationTargetException cause) {
@@ -46,7 +46,7 @@ public class InvocationTargetRuntimeException extends SRuntimeException {
     /**
      * ターゲットのクラスを返します。
      * 
-     * @return
+     * @return target class
      */
     public Class getTargetClass() {
         return targetClass;

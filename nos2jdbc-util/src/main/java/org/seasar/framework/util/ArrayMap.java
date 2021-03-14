@@ -62,7 +62,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * {@link ArrayMap}を作成します。
      * 
-     * @param initialCapacity
+     * @param initialCapacity initialCapacity
      */
     public ArrayMap(int initialCapacity) {
         if (initialCapacity <= 0) {
@@ -76,21 +76,24 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * {@link ArrayMap}を作成します。
      * 
-     * @param map
+     * @param map map
      */
     public ArrayMap(Map map) {
         this((int) (map.size() / LOAD_FACTOR) + 1);
         putAll(map);
     }
 
+    @Override
     public final int size() {
         return size;
     }
 
+    @Override
     public final boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public final boolean containsValue(Object value) {
         return indexOf(value) >= 0;
     }
@@ -98,7 +101,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * 値に対するインデックスを返します。
      * 
-     * @param value
+     * @param value value
      * @return 値に対するインデックス
      */
     public final int indexOf(Object value) {
@@ -118,6 +121,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         return -1;
     }
 
+    @Override
     public boolean containsKey(final Object key) {
         Entry[] tbl = mapTable;
         if (key != null) {
@@ -138,6 +142,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         return false;
     }
 
+    @Override
     public Object get(final Object key) {
         Entry[] tbl = mapTable;
         if (key != null) {
@@ -161,7 +166,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * indexに対応する値を返します。
      * 
-     * @param index
+     * @param index index
      * @return indexに対応する値
      */
     public final Object get(final int index) {
@@ -171,7 +176,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * indexに対応するキーを返します。
      * 
-     * @param index
+     * @param index index
      * @return indexに対応するキー
      */
     public final Object getKey(final int index) {
@@ -181,7 +186,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * indexに対応する {@link java.util.Map.Entry}を返します。
      * 
-     * @param index
+     * @param index index
      * @return indexに対応する {@link java.util.Map.Entry}
      */
     public final Entry getEntry(final int index) {
@@ -192,6 +197,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         return listTable[index];
     }
 
+    @Override
     public Object put(final Object key, final Object value) {
         int hashCode = 0;
         int index = 0;
@@ -222,13 +228,14 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * indexに対応する値を設定します。
      * 
-     * @param index
-     * @param value
+     * @param index index
+     * @param value value
      */
     public final void set(final int index, final Object value) {
         getEntry(index).setValue(value);
     }
 
+    @Override
     public Object remove(final Object key) {
         Entry e = removeMap(key);
         if (e != null) {
@@ -243,7 +250,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * indexに対応する値を削除します。
      * 
-     * @param index
+     * @param index index
      * @return indexに対応する値
      */
     public final Object remove(int index) {
@@ -254,6 +261,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         return value;
     }
 
+    @Override
     public void putAll(Map map) {
         for (Iterator i = map.entrySet().iterator(); i.hasNext();) {
             Map.Entry e = (Map.Entry) i.next();
@@ -261,6 +269,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         }
     }
 
+    @Override
     public final void clear() {
         for (int i = 0; i < mapTable.length; i++) {
             mapTable[i] = null;
@@ -287,7 +296,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
     /**
      * 配列に変換します。
      * 
-     * @param proto
+     * @param proto proto
      * @return 配列
      */
     public final Object[] toArray(final Object proto[]) {
@@ -305,6 +314,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         return array;
     }
 
+    @Override
     public final boolean equals(Object o) {
         if (!getClass().isInstance(o)) {
             return false;
@@ -321,13 +331,16 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         return true;
     }
 
+    @Override
     public final Set entrySet() {
         if (entrySet == null) {
             entrySet = new AbstractSet() {
+                @Override
                 public Iterator iterator() {
                     return new ArrayMapIterator();
                 }
 
+                @Override
                 public boolean contains(Object o) {
                     if (!(o instanceof Entry)) {
                         return false;
@@ -342,6 +355,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
                     return false;
                 }
 
+                @Override
                 public boolean remove(Object o) {
                     if (!(o instanceof Entry)) {
                         return false;
@@ -350,10 +364,12 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
                     return ArrayMap.this.remove(entry.key) != null;
                 }
 
+                @Override
                 public int size() {
                     return size;
                 }
 
+                @Override
                 public void clear() {
                     ArrayMap.this.clear();
                 }
@@ -362,6 +378,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         return entrySet;
     }
 
+    @Override
     public final void writeExternal(final ObjectOutput out) throws IOException {
         out.writeInt(listTable.length);
         out.writeInt(size);
@@ -371,6 +388,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         }
     }
 
+    @Override
     public final void readExternal(final ObjectInput in) throws IOException,
             ClassNotFoundException {
 
@@ -386,6 +404,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         }
     }
 
+    @Override
     public Object clone() {
         ArrayMap copy = new ArrayMap();
         copy.threshold = threshold;
@@ -479,10 +498,12 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
 
         private int last = -1;
 
+        @Override
         public boolean hasNext() {
             return current != size;
         }
 
+        @Override
         public Object next() {
             try {
                 Object n = listTable[current];
@@ -493,6 +514,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
             }
         }
 
+        @Override
         public void remove() {
             if (last == -1) {
                 throw new IllegalStateException();
@@ -520,10 +542,10 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
         /**
          * {@link Entry}を作成します。
          * 
-         * @param hashCode
-         * @param key
-         * @param value
-         * @param next
+         * @param hashCode hashCode
+         * @param key key
+         * @param value value
+         * @param next next
          */
         public Entry(final int hashCode, final Object key, final Object value,
                 final Entry next) {
@@ -534,14 +556,17 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
             this.next = next;
         }
 
+        @Override
         public Object getKey() {
             return key;
         }
 
+        @Override
         public Object getValue() {
             return value;
         }
 
+        @Override
         public Object setValue(final Object value) {
             Object oldValue = value;
             this.value = value;
@@ -557,6 +582,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
             next = null;
         }
 
+        @Override
         public boolean equals(final Object o) {
             if (this == o) {
                 return true;
@@ -566,14 +592,17 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
                     && (value != null ? value.equals(e.value) : e.value == null);
         }
 
+        @Override
         public int hashCode() {
             return hashCode;
         }
 
+        @Override
         public String toString() {
             return key + "=" + value;
         }
 
+        @Override
         public void writeExternal(final ObjectOutput s) throws IOException {
             s.writeInt(hashCode);
             s.writeObject(key);
@@ -581,6 +610,7 @@ public class ArrayMap extends AbstractMap implements Map, Cloneable,
             s.writeObject(next);
         }
 
+        @Override
         public void readExternal(final ObjectInput s) throws IOException,
                 ClassNotFoundException {
 

@@ -38,7 +38,7 @@ public class PreparedStatementUtil {
     /**
      * クエリを実行します。
      * 
-     * @param ps
+     * @param ps ps
      * @return {@link ResultSet}
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
@@ -55,7 +55,7 @@ public class PreparedStatementUtil {
     /**
      * 更新を実行します。
      * 
-     * @param ps
+     * @param ps ps
      * @return 更新した結果の行数
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
@@ -72,7 +72,7 @@ public class PreparedStatementUtil {
     /**
      * 実行します。
      * 
-     * @param ps
+     * @param ps ps
      * @return 結果セットを返すかどうか
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
@@ -90,7 +90,7 @@ public class PreparedStatementUtil {
     /**
      * バッチ更新を行ないます。
      * 
-     * @param ps
+     * @param ps ps
      * @return 更新した結果の行数の配列
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
@@ -107,7 +107,7 @@ public class PreparedStatementUtil {
     /**
      * バッチを追加します。
      * 
-     * @param ps
+     * @param ps ps
      * @throws SQLRuntimeException
      *             {@link SQLException}が発生した場合
      */

@@ -36,7 +36,7 @@ public class TimestampConversionUtil {
     /**
      * {@link Timestamp}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Timestamp}
      */
     public static Timestamp toTimestamp(Object o) {
@@ -46,8 +46,8 @@ public class TimestampConversionUtil {
     /**
      * {@link Timestamp}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link Timestamp}
      */
     public static Timestamp toTimestamp(Object o, String pattern) {
@@ -64,7 +64,7 @@ public class TimestampConversionUtil {
     /**
      * 日付パターンを返します。
      * 
-     * @param locale
+     * @param locale locale
      * @return 日付パターン
      */
     public static String getPattern(Locale locale) {

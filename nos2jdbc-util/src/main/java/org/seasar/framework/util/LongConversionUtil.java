@@ -34,7 +34,7 @@ public class LongConversionUtil {
     /**
      * {@link Long}に変換します。
      * 
-     * @param o
+     * @param o o
      * @return {@link Long}
      */
     public static Long toLong(Object o) {
@@ -44,8 +44,8 @@ public class LongConversionUtil {
     /**
      * {@link Long}に変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return {@link Long}
      */
     public static Long toLong(Object o, String pattern) {
@@ -54,16 +54,16 @@ public class LongConversionUtil {
         } else if (o instanceof Long) {
             return (Long) o;
         } else if (o instanceof Number) {
-            return new Long(((Number) o).longValue());
+            return Long.valueOf(((Number) o).longValue());
         } else if (o instanceof String) {
             return toLong((String) o);
         } else if (o instanceof java.util.Date) {
             if (pattern != null) {
-                return new Long(new SimpleDateFormat(pattern).format(o));
+                return Long.valueOf(new SimpleDateFormat(pattern).format(o));
             }
-            return new Long(((java.util.Date) o).getTime());
+            return Long.valueOf(((java.util.Date) o).getTime());
         } else if (o instanceof Boolean) {
-            return ((Boolean) o).booleanValue() ? new Long(1) : new Long(0);
+            return ((Boolean) o).booleanValue() ? Long.valueOf(1) : Long.valueOf(0);
         } else {
             return toLong(o.toString());
         }
@@ -73,13 +73,13 @@ public class LongConversionUtil {
         if (StringUtil.isEmpty(s)) {
             return null;
         }
-        return new Long(DecimalFormatUtil.normalize(s));
+        return Long.valueOf(DecimalFormatUtil.normalize(s));
     }
 
     /**
      * longに変換します。
      * 
-     * @param o
+     * @param o o
      * @return long
      */
     public static long toPrimitiveLong(Object o) {
@@ -89,8 +89,8 @@ public class LongConversionUtil {
     /**
      * longに変換します。
      * 
-     * @param o
-     * @param pattern
+     * @param o o
+     * @param pattern pattern
      * @return long
      */
     public static long toPrimitiveLong(Object o, String pattern) {

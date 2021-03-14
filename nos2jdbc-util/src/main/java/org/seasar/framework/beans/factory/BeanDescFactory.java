@@ -48,7 +48,7 @@ public class BeanDescFactory {
     /**
      * {@link BeanDesc}を返します。
      * 
-     * @param clazz
+     * @param clazz class
      * @return {@link BeanDesc}
      */
     public static BeanDesc getBeanDesc(Class clazz) {
@@ -68,6 +68,7 @@ public class BeanDescFactory {
      */
     public static void initialize() {
         DisposableUtil.add(new Disposable() {
+            @Override
             public void dispose() {
                 clear();
             }
