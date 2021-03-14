@@ -19,19 +19,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.seasar.extension.jdbc.DbmsDialect;
-import org.seasar.extension.jdbc.EntityMapper;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.MappingContext;
-import org.seasar.extension.jdbc.ResultSetHandler;
-import org.seasar.extension.jdbc.ValueType;
 
-/**
- * 問い合わせ結果を反復するSQL自動生成用の{@link ResultSetHandler}です。
- * 
- * @author koichik
- */
 @SuppressWarnings("unchecked")
 public class BeanIterationNonAutoResultSetHandler extends
         AbstractBeanNonAutoResultSetHandler {
@@ -65,6 +57,7 @@ public class BeanIterationNonAutoResultSetHandler extends
         this.callback = callback;
     }
 
+    @Override
     public Object handle(final ResultSet rs) throws SQLException {
 	if (entityMapper == null)
 	    prepare(rs.getMetaData());
