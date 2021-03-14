@@ -21,8 +21,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.OffsetDateTime;
 
 import javax.persistence.GenerationType;
 
@@ -37,6 +37,7 @@ import org.seasar.extension.jdbc.gen.internal.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.FloatType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.IntegerType;
+import org.seasar.extension.jdbc.gen.internal.sqltype.Jdbc42TimestampWithTimezoneType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.VarcharType;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
@@ -86,6 +87,7 @@ public class PostgreGenDialect extends StandardGenDialect {
             }
 
         });
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new Jdbc42TimestampWithTimezoneType());
 
         columnTypeMap.put("bigint", PostgreColumnType.BIGINT);
         columnTypeMap.put("bigserial", PostgreColumnType.BIGSERIAL);
@@ -270,7 +272,7 @@ public class PostgreGenDialect extends StandardGenDialect {
                 "timetz", Time.class);
 
         private static PostgreColumnType TIMESTAMPTZ = new PostgreColumnType(
-                "timestamptz", Timestamp.class);
+                "timestamptz", OffsetDateTime.class);
 
         private static PostgreColumnType VARBIT = new PostgreColumnType(
                 "varbit", byte[].class);
@@ -326,12 +328,14 @@ public class PostgreGenDialect extends StandardGenDialect {
         /** ブロックの内側の場合{@code true} */
         protected boolean inSqlBlock;
 
+        @Override
         public void addKeyword(String keyword) {
             if ("$$".equals(keyword)) {
                 inSqlBlock = !inSqlBlock;
             }
         }
 
+        @Override
         public boolean isInSqlBlock() {
             return inSqlBlock;
         }
@@ -357,6 +361,7 @@ public class PostgreGenDialect extends StandardGenDialect {
             super(dataType);
         }
 
+        @Override
         public void bindValue(PreparedStatement ps, int index, String value)
                 throws SQLException {
             if (value == null) {
@@ -369,6 +374,7 @@ public class PostgreGenDialect extends StandardGenDialect {
             }
         }
 
+        @Override
         public String getValue(ResultSet resultSet, int index)
                 throws SQLException {
             Blob blob = resultSet.getBlob(index);

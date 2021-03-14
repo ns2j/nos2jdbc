@@ -18,6 +18,10 @@ package org.seasar.extension.jdbc.types;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -27,56 +31,59 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.impl.ResultSetWrapper;
 
-/**
- * 
- */
 class ValueTypesTest {
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testGetValueType() throws Exception {
+    void testGetValueType()  {
         assertEquals(ValueTypes.TIMESTAMP, ValueTypes
                 .getValueType(GregorianCalendar.class));
 
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testGetValueType_unknownClass() throws Exception {
+    void testGetValueType_unknownClass()  {
         assertEquals(ValueTypes.OBJECT, ValueTypes.getValueType(getClass()));
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testUserDefineType() throws Exception {
+    void testUserDefineType() throws SQLException  {
         ValueType valueType = ValueTypes.getValueType(Authority.class);
         assertNotNull(valueType);
         assertTrue(valueType instanceof UserDefineType);
         final ResultSet resultSet = new MockResultSet() {
+            @Override
             public Object getObject(int columnIndex) throws SQLException {
-                return new Integer(2);
+                return Integer.valueOf(2);
             }
         };
         final Authority value = (Authority) valueType.getValue(resultSet, 0);
         assertEquals(2, value.value());
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testIsSimpleType() throws Exception {
+    void testIsSimpleType()  {
         assertFalse(ValueTypes.isSimpleType(HashMap.class));
         assertTrue(ValueTypes.isSimpleType(byte[].class));
         assertTrue(ValueTypes.isSimpleType(InputStream.class));
     }
-
+    
+    @Test
+    void testGetValueType_LocalDate()  {
+        assertEquals(ValueTypes.LOCALDATE, ValueTypes.getValueType(LocalDate.class));
+    }
+    @Test
+    void testGetValueType_LocalTime()  {
+        assertEquals(ValueTypes.LOCALTIME, ValueTypes.getValueType(LocalTime.class));
+    }
+    @Test
+    void testGetValueType_LocalDateTime()  {
+        assertEquals(ValueTypes.LOCALDATETIME, ValueTypes.getValueType(LocalDateTime.class));
+    }
+    @Test
+    void testGetValueType_OffsetDateTime()  {
+        assertEquals(ValueTypes.TIMESTAMP_WITH_TIMEZONE, ValueTypes.getValueType(OffsetDateTime.class));
+    }
+    
     private static class MockResultSet extends ResultSetWrapper {
         MockResultSet() {
             super(null);

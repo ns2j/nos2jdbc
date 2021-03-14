@@ -19,6 +19,10 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +80,9 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.util.tiger.CollectionsUtil;
 import org.seasar.framework.util.tiger.ReflectionUtil;
 
+import nos2jdbc.annotation.CreateAt;
+import nos2jdbc.annotation.UpdateAt;
+
 /**
  * {@link PropertyMetaFactory}の実装クラスです。
  * 
@@ -125,6 +132,10 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
         valueTypes.put(java.sql.Date.class, ValueTypes.SQLDATE);
         valueTypes.put(java.sql.Time.class, ValueTypes.TIME);
         valueTypes.put(java.sql.Timestamp.class, ValueTypes.TIMESTAMP);
+        valueTypes.put(LocalDate.class, ValueTypes.LOCALDATE);
+        valueTypes.put(LocalTime.class, ValueTypes.LOCALTIME);
+        valueTypes.put(LocalDateTime.class, ValueTypes.LOCALDATETIME);
+        valueTypes.put(OffsetDateTime.class, ValueTypes.TIMESTAMP_WITH_TIMEZONE);
     }
 
     /**
@@ -137,6 +148,7 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      */
     protected PersistenceConvention persistenceConvention;
 
+    @Override
     public PropertyMeta createPropertyMeta(Field field, EntityMeta entityMeta) {
         PropertyMeta propertyMeta = new PropertyMeta();
         doField(propertyMeta, field, entityMeta);
@@ -152,6 +164,8 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
                 doEnum(propertyMeta, field, entityMeta);
                 doVersion(propertyMeta, field, entityMeta);
                 doLob(propertyMeta, field, entityMeta);
+                doCreateAt(propertyMeta, field, entityMeta);
+                doUpdateAt(propertyMeta, field, entityMeta);
                 doValueType(propertyMeta, entityMeta);
             } else {
                 doRelationship(propertyMeta, field, entityMeta,
@@ -463,6 +477,15 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
     protected void doLob(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
         propertyMeta.setLob(field.getAnnotation(Lob.class) != null);
+    }
+
+    protected void doCreateAt(PropertyMeta propertyMeta, Field field,
+            @SuppressWarnings("unused") EntityMeta entityMeta) {
+        propertyMeta.setCreateAt(field.getAnnotation(CreateAt.class) != null);
+    }
+    protected void doUpdateAt(PropertyMeta propertyMeta, Field field,
+            @SuppressWarnings("unused") EntityMeta entityMeta) {
+        propertyMeta.setUpdateAt(field.getAnnotation(UpdateAt.class) != null);
     }
 
     /**

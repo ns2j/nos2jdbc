@@ -17,6 +17,10 @@ package org.seasar.extension.jdbc.dialect;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,46 +60,57 @@ public class StandardDialect implements DbmsDialect {
     protected static final Set<String> entityExistsExceptionStateCode = CollectionsUtil
             .newHashSet(Arrays.asList("23", "27", "44"));
 
+    @Override
     public String getName() {
         return null;
     }
 
+    @Override
     public boolean supportsLimit() {
         return false;
     }
 
+    @Override
     public boolean supportsOffset() {
         return supportsLimit();
     }
 
+    @Override
     public boolean supportsOffsetWithoutLimit() {
         return supportsOffset();
     }
 
+    @Override
     public boolean supportsCursor() {
         return true;
     }
 
+    @Override
     public boolean needsParameterForResultSet() {
         return false;
     }
 
+    @Override
     public String convertLimitSql(String sql, int offset, int limit) {
         return sql;
     }
 
+    @Override
     public String convertGetCountSql(String sql) {
         return "select count(*) from ( " + sql + " ) COUNT_";
     }
 
+    @Override
     public String getCountSqlSelectList(List<PropertyMeta> idPropertyMeta) {
         return "count(*)";
     }
 
+    @Override
     public ValueType getValueType(PropertyMeta propertyMeta) {
         return propertyMeta.getValueType();
     }
 
+    @Override
     public ValueType getValueType(Class<?> clazz, boolean lob,
             TemporalType temporalType) {
         if (lob) {
@@ -133,6 +148,20 @@ public class StandardDialect implements DbmsDialect {
             }
         }
 
+        if (LocalDate.class == clazz) {
+            return ValueTypes.LOCALDATE;
+        }
+        if (LocalTime.class == clazz) {
+            return ValueTypes.LOCALTIME;
+        }
+        if (LocalDateTime.class == clazz) {
+            return ValueTypes.LOCALDATETIME;
+        }
+        if (OffsetDateTime.class == clazz) {
+            return ValueTypes.TIMESTAMP_WITH_TIMEZONE;
+        }
+
+        
         ValueType valueType = getValueTypeInternal(clazz);
         if (valueType == null) {
             valueType = ValueTypes.getValueType(clazz);
@@ -156,6 +185,7 @@ public class StandardDialect implements DbmsDialect {
         return null;
     }
 
+    @Override
     public void setupJoin(FromClause fromClause, WhereClause whereClause,
             JoinType joinType, String tableName, String tableAlias,
             String fkTableAlias, String pkTableAlias,
@@ -166,40 +196,49 @@ public class StandardDialect implements DbmsDialect {
 
     }
 
+    @Override
     public GenerationType getDefaultGenerationType() {
         return GenerationType.TABLE;
     }
 
+    @Override
     public boolean supportsIdentity() {
         return false;
     }
 
+    @Override
     public boolean isInsertIdentityColumn() {
         return false;
     }
 
+    @Override
     public boolean supportsGetGeneratedKeys() {
         return false;
     }
 
+    @Override
     public String getIdentitySelectString(final String tableName,
             final String columnName) {
         return null;
     }
 
+    @Override
     public boolean supportsSequence() {
         return false;
     }
 
+    @Override
     public String getSequenceNextValString(final String sequenceName,
             final int allocationSize) {
         return null;
     }
 
+    @Override
     public int getDefaultBatchSize() {
         return 0;
     }
 
+    @Override
     public boolean supportsBatchUpdateResults() {
         return true;
     }
@@ -281,6 +320,7 @@ public class StandardDialect implements DbmsDialect {
         return sb.toString();
     }
 
+    @Override
     public boolean isUniqueConstraintViolation(Throwable t) {
         final String state = getSQLState(t);
         if (state != null && state.length() >= 2) {
@@ -352,33 +392,40 @@ public class StandardDialect implements DbmsDialect {
         return cause;
     }
 
+    @Override
     public boolean supportsForUpdate(final SelectForUpdateType type,
             boolean withTarget) {
         return type == SelectForUpdateType.NORMAL && !withTarget;
     }
 
+    @Override
     public String getForUpdateString(final SelectForUpdateType type,
             final int waitSeconds, final Pair<String, String>... aliases) {
         return " for update";
     }
 
+    @Override
     public boolean supportsLockHint() {
         return false;
     }
 
+    @Override
     public String getLockHintString(final SelectForUpdateType type,
             final int waitSeconds) {
         return "";
     }
 
+    @Override
     public boolean supportsInnerJoinForUpdate() {
         return true;
     }
 
+    @Override
     public boolean supportsOuterJoinForUpdate() {
         return true;
     }
 
+    @Override
     public String getHintComment(String hint) {
         return "";
     }

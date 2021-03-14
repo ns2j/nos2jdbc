@@ -26,6 +26,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -158,6 +162,18 @@ public class ValueTypes {
      */
     public final static ValueType CALENDAR_TIMESTAMP = new CalendarTimestampType();
 
+    public final static ValueType LOCALDATE = new LocalDateType();
+    public final static ValueType LOCALTIME = new LocalTimeType();
+    public final static ValueType LOCALDATETIME = new LocalDateTimeType();
+    public final static ValueType TIMESTAMP_WITH_TIMEZONE = new OffsetDateTimeType();
+
+    public final static ValueType JDBC42LOCALDATE = new Jdbc42LocalDateType();
+    public final static ValueType JDBC42LOCALTIME = new Jdbc42LocalTimeType();
+    public final static ValueType JDBC42LOCALDATETIME = new Jdbc42LocalDateTimeType();
+    public final static ValueType JDBC42OFFSETDATETIME = new Jdbc42OffsetDateTimeType();
+    
+    public final static ValueType MYSQLOFFSETDATETIME = new MysqlOffsetDateTimeType();
+    
     /**
      * Binary用の値タイプです。
      */
@@ -262,6 +278,10 @@ public class ValueTypes {
         registerValueType(boolean.class, BOOLEAN);
         registerValueType(Boolean.class, BOOLEAN);
         // registerValueType(Object.class, OBJECT);
+        registerValueType(LocalDate.class, LOCALDATE);
+        registerValueType(LocalTime.class, LOCALTIME);
+        registerValueType(LocalDateTime.class, LOCALDATETIME);
+        registerValueType(OffsetDateTime.class, TIMESTAMP_WITH_TIMEZONE);
         try {
             isEnumMethod = Class.class.getMethod("isEnum", null);
             setEnumDefaultValueType(Class
@@ -289,6 +309,7 @@ public class ValueTypes {
      */
     public static void initialize() {
         DisposableUtil.add(new Disposable() {
+            @Override
             public void dispose() {
                 clear();
             }
@@ -611,50 +632,60 @@ public class ValueTypes {
 
     private static class NullType implements ValueType {
 
+        @Override
         public void bindValue(CallableStatement cs, String parameterName,
                 Object value) throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public void bindValue(PreparedStatement ps, int index, Object value)
                 throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public Object getValue(CallableStatement cs, int index)
                 throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public Object getValue(CallableStatement cs, String parameterName)
                 throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public Object getValue(ResultSet resultSet, int index)
                 throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public Object getValue(ResultSet resultSet, String columnName)
                 throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public void registerOutParameter(CallableStatement cs, int index)
                 throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public void registerOutParameter(CallableStatement cs,
                 String parameterName) throws SQLException {
             throw new SQLException("not supported");
         }
 
+        @Override
         public String toText(Object value) {
             throw new UnsupportedOperationException("toText");
         }
 
+        @Override
         public int getSqlType() {
             return Types.NULL;
         }

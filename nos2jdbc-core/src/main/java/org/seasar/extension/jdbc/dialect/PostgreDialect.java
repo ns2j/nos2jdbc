@@ -37,6 +37,10 @@ import org.seasar.extension.jdbc.types.BytesType;
 import org.seasar.extension.jdbc.types.SerializableType;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.extension.jdbc.types.BytesType.Trait;
+import org.seasar.extension.jdbc.types.LocalDateTimeType;
+import org.seasar.extension.jdbc.types.LocalDateType;
+import org.seasar.extension.jdbc.types.LocalTimeType;
+import org.seasar.extension.jdbc.types.OffsetDateTimeType;
 import org.seasar.framework.util.tiger.Pair;
 
 /**
@@ -110,7 +114,17 @@ public class PostgreDialect extends StandardDialect {
         if (valueType != null) {
             return valueType;
         }
-        return super.getValueType(propertyMeta);
+
+        ValueType vt = super.getValueType(propertyMeta);
+        if (vt.getClass() == LocalDateType.class)
+            return ValueTypes.JDBC42LOCALDATE;
+        if (vt.getClass() == LocalTimeType.class)
+            return ValueTypes.JDBC42LOCALTIME;
+        if (vt.getClass() == LocalDateTimeType.class)
+            return ValueTypes.JDBC42LOCALDATETIME;
+        if (vt.getClass() == OffsetDateTimeType.class)
+            return ValueTypes.JDBC42OFFSETDATETIME;
+        return vt;
     }
 
     @Override
@@ -125,7 +139,17 @@ public class PostgreDialect extends StandardDialect {
                 return SERIALIZABLE_BLOB_TYPE;
             }
         }
-        return super.getValueType(clazz, lob, temporalType);
+
+        ValueType vt = super.getValueType(clazz, lob, temporalType);
+        if (vt.getClass() == LocalDateType.class)
+            return ValueTypes.JDBC42LOCALDATE;
+        if (vt.getClass() == LocalTimeType.class)
+            return ValueTypes.JDBC42LOCALTIME;
+        if (vt.getClass() == LocalDateTimeType.class)
+            return ValueTypes.JDBC42LOCALDATETIME;
+        if (vt.getClass() == OffsetDateTimeType.class)
+            return ValueTypes.JDBC42OFFSETDATETIME;
+        return vt;
     }
 
     @Override

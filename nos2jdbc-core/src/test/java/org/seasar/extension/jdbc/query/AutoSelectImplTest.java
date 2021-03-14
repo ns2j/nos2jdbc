@@ -1600,6 +1600,7 @@ class AutoSelectImplTest {
         ResultSetHandler handler = query
                 .createIterateResultSetHandler(new IterationCallback<Aaa, Object>() {
 
+                    @Override
                     public Object iterate(Aaa entity, IterationContext context) {
                         return null;
                     }
@@ -1714,7 +1715,7 @@ class AutoSelectImplTest {
         query.version(2);
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.LAST_UPDATED as C6_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.CREATE_AT as C6_, T1_.UPDATE_AT as C7_, T1_.LAST_UPDATED as C8_ "
                         + "from EEE T1_ "
                         + "where T1_.ID = ? and T1_.VERSION = ?",
                 query.executedSql);
@@ -1730,7 +1731,7 @@ class AutoSelectImplTest {
                 Parameter.date(new Date()));
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.LAST_UPDATED as C6_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.CREATE_AT as C6_, T1_.UPDATE_AT as C7_, T1_.LAST_UPDATED as C8_ "
                         + "from EEE T1_ "
                         + "where T1_.ID = ? and T1_.VERSION = ? and (T1_.LAST_UPDATED = ?)",
                 query.executedSql);
@@ -1749,7 +1750,7 @@ class AutoSelectImplTest {
                 .where("lastUpdated = ?", Parameter.date(new Date()));
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.LAST_UPDATED as C6_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.CREATE_AT as C6_, T1_.UPDATE_AT as C7_, T1_.LAST_UPDATED as C8_ "
                         + "from EEE T1_ left outer join FFF T2_ on T1_.FFF_ID = T2_.ID and T2_.ID = 100 "
                         + "where T1_.ID = ? and T1_.VERSION = ? and (T1_.LAST_UPDATED = ?)",
                 query.executedSql);
@@ -3157,16 +3158,19 @@ class AutoSelectImplTest {
         }
 
         
+        @Override
         protected List<E> getResultListInternal() {
             return Collections.emptyList();
         }
 
         
+        @Override
         protected E getSingleResultInternal() {
             return null;
         }
 
         
+        @Override
         public long getCount() {
             try {
                 return super.getCount();

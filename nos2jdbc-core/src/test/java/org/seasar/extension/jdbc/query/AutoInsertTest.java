@@ -185,7 +185,7 @@ class AutoInsertTest {
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepareTargetProperties();
-        assertEquals(5, query.targetProperties.size());
+        assertEquals(7, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("name", query.targetProperties.get(1).getName());
         assertEquals("longText", query.targetProperties.get(2).getName());
@@ -341,7 +341,7 @@ class AutoInsertTest {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.excludes("name");
         query.prepareTargetProperties();
-        assertEquals(4, query.targetProperties.size());
+        assertEquals(6, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
@@ -393,7 +393,7 @@ class AutoInsertTest {
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
-        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, VERSION)",
+        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT)",
                 query.intoClause.toSql());
     }
 
@@ -437,6 +437,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -458,6 +459,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -478,7 +480,7 @@ class AutoInsertTest {
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
-        assertEquals(" values (?, ?, ?, ?, ?)", query.valuesClause.toSql());
+        assertEquals(" values (?, ?, ?, ?, ?, ?, ?)", query.valuesClause.toSql());
     }
 
     /**
@@ -521,6 +523,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -542,6 +545,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -561,7 +565,7 @@ class AutoInsertTest {
         eee.name = "hoge";
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
-        assertEquals(5, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals(new Integer(100), query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
         assertNull(query.getParam(2).value);
@@ -616,6 +620,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -640,6 +645,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -682,7 +688,7 @@ class AutoInsertTest {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION) values (?, ?, ?, ?, ?)",
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (?, ?, ?, ?, ?, ?, ?)",
                 query.executedSql);
     }
 
@@ -728,6 +734,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -750,6 +757,7 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 10L;
             }
@@ -788,12 +796,14 @@ class AutoInsertTest {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -804,9 +814,10 @@ class AutoInsertTest {
         };
         assertEquals(1, query.execute());
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
+        String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION) values (100, 'hoge', null, null, 1)",
-                sqlLog.getCompleteSql());
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (100, 'hoge', null, null, 1, '" + DateTimeStr.REPLACE + "', null)",
+                actual);
 
         try {
             query.execute();
@@ -827,12 +838,14 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertTrue(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -841,6 +854,7 @@ class AutoInsertTest {
             }
 
             
+            @Override
             protected void postExecute(PreparedStatement ps) {
             }
 
@@ -863,12 +877,14 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -877,6 +893,7 @@ class AutoInsertTest {
             }
 
             
+            @Override
             protected void postExecute(PreparedStatement ps) {
             }
 
@@ -900,12 +917,14 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -914,6 +933,7 @@ class AutoInsertTest {
             }
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 100L;
             }
@@ -938,12 +958,14 @@ class AutoInsertTest {
         AutoInsertImpl<Fff> query = new AutoInsertImpl<Fff>(manager, fff) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -952,6 +974,7 @@ class AutoInsertTest {
             }
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta) {
                 return 100L;
             }
@@ -976,12 +999,14 @@ class AutoInsertTest {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }

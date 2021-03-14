@@ -16,6 +16,10 @@
 package org.seasar.extension.jdbc.dialect;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,71 +42,55 @@ class OracleDialectTest {
 
     private OracleDialect dialect = new OracleDialect();
 
-    /** */
     public String stringField;
 
-    /** */
     public boolean booleanField;
 
-    /** */
     public List<?> listField;
 
-    /** */
     public ArrayList<?> arrayListField;
 
-    /** */
     public Date utilDateField;
 
-    /** */
     public Calendar utilCalendarField;
 
-    /** */
     public java.sql.Date sqlDateField;
 
-    /** */
     public java.sql.Time sqlTimeField;
 
-    /** */
     public java.sql.Timestamp sqlTimestampField;
 
-    /**
-     * @throws Exception
-     */
+    public LocalDate localDateField;
+    public LocalTime localTimeField;
+    public LocalDateTime localDateTimeField;
+    public OffsetDateTime offsetDateTimeField;
+    
     @Test
-    void testConvertLimitSql_limitOnly() throws Exception {
+    void testConvertLimitSql_limitOnly()  {
         String sql = "select * from emp order by id for update";
         String expected = "select * from ( select temp_.*, rownum rownumber_ from ( select * from emp order by id ) temp_ ) where rownumber_ <= 5 for update";
         assertEquals(expected, dialect.convertLimitSql(sql, 0, 5));
 
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testConvertLimitSql_offsetLimit() throws Exception {
+    void testConvertLimitSql_offsetLimit()  {
         String sql = "select e.* from emp e order by id for update";
         String expected = "select * from ( select temp_.*, rownum rownumber_ from ( select e.* from emp e order by id ) temp_ ) where rownumber_ > 5 and rownumber_ <= 15 for update";
         assertEquals(expected, dialect.convertLimitSql(sql, 5, 10));
 
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testConvertLimitSql_offsetOnly() throws Exception {
+    void testConvertLimitSql_offsetOnly()  {
         String sql = "select e.* from emp e order by id for update";
         String expected = "select * from ( select temp_.*, rownum rownumber_ from ( select e.* from emp e order by id ) temp_ ) where rownumber_ > 5 for update";
         assertEquals(expected, dialect.convertLimitSql(sql, 5, 0));
 
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testGetValueType() throws Exception {
+    void testGetValueType()  {
         assertEquals(ValueTypes.WAVE_DASH_STRING,
                 dialect.getValueType(String.class, false, null));
         assertEquals(ValueTypes.BOOLEAN_INTEGER,
@@ -134,13 +122,22 @@ class OracleDialectTest {
                 dialect.getValueType(java.sql.Time.class, false, null));
         assertEquals(ValueTypes.TIMESTAMP,
                 dialect.getValueType(java.sql.Timestamp.class, false, null));
+        assertEquals(ValueTypes.JDBC42LOCALDATE,
+                dialect.getValueType(LocalDate.class, false, null));
+        assertEquals(ValueTypes.JDBC42LOCALTIME,
+                dialect.getValueType(LocalTime.class, false, null));
+        assertEquals(ValueTypes.JDBC42LOCALDATETIME,
+                dialect.getValueType(LocalDateTime.class, false, null));
+        assertEquals(ValueTypes.JDBC42OFFSETDATETIME,
+                dialect.getValueType(OffsetDateTime.class, false, null));
     }
 
     /**
-     * @throws Exception
+     * @throws SecurityException 
+     * @throws NoSuchFieldException 
      */
     @Test
-    void testGetValueType_propertyMeta() throws Exception {
+    void testGetValueType_propertyMeta() throws NoSuchFieldException, SecurityException  {
         PropertyMeta pm = new PropertyMeta();
         pm.setField(getClass().getField("stringField"));
         pm.setValueType(ValueTypes.STRING);
@@ -205,21 +202,35 @@ class OracleDialectTest {
         pm.setTemporalType(null);
         pm.setValueType(ValueTypes.TIMESTAMP);
         assertEquals(ValueTypes.TIMESTAMP, dialect.getValueType(pm));
-    }
 
-    /**
-     * @throws Exception
-     */
+        pm.setField(getClass().getField("localDateField"));
+        //pm.setTemporalType(TemporalType.DATE);
+        pm.setValueType(ValueTypes.LOCALDATE);
+        assertEquals(ValueTypes.JDBC42LOCALDATE, dialect.getValueType(pm));
+
+        pm.setField(getClass().getField("localTimeField"));
+        //pm.setTemporalType(TemporalType.DATE);
+        pm.setValueType(ValueTypes.LOCALTIME);
+        assertEquals(ValueTypes.JDBC42LOCALTIME, dialect.getValueType(pm));
+
+        pm.setField(getClass().getField("localDateTimeField"));
+        //pm.setTemporalType(TemporalType.DATE);
+        pm.setValueType(ValueTypes.LOCALDATETIME);
+        assertEquals(ValueTypes.JDBC42LOCALDATETIME, dialect.getValueType(pm));
+
+        pm.setField(getClass().getField("offsetDateTimeField"));
+        //pm.setTemporalType(TemporalType.DATE);
+        pm.setValueType(ValueTypes.TIMESTAMP_WITH_TIMEZONE);
+        assertEquals(ValueTypes.JDBC42OFFSETDATETIME, dialect.getValueType(pm));
+}
+
     @Test
-    void testNeedsParameterForResultSet() throws Exception {
+    void testNeedsParameterForResultSet()  {
         assertTrue(dialect.needsParameterForResultSet());
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
-    void testIsUniqueConstraintViolation() throws Exception {
+    void testIsUniqueConstraintViolation()  {
         assertTrue(dialect
                 .isUniqueConstraintViolation(new Exception(
                         new SQLRuntimeException(SQLException.class

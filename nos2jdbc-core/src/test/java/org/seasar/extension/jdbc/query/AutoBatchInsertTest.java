@@ -192,7 +192,7 @@ class AutoBatchInsertTest {
         AutoBatchInsertImpl<Eee> query = new AutoBatchInsertImpl<Eee>(manager,
                 entities);
         query.prepareTargetProperties();
-        assertEquals(5, query.targetProperties.size());
+        assertEquals(7, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("name", query.targetProperties.get(1).getName());
         assertEquals("longText", query.targetProperties.get(2).getName());
@@ -261,7 +261,7 @@ class AutoBatchInsertTest {
                 entities);
         query.excludes("name");
         query.prepareTargetProperties();
-        assertEquals(4, query.targetProperties.size());
+        assertEquals(6, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
@@ -294,7 +294,7 @@ class AutoBatchInsertTest {
         AutoBatchInsertImpl<Eee> query = new AutoBatchInsertImpl<Eee>(manager,
                 entities);
         query.prepare("execute");
-        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, VERSION)",
+        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT)",
                 query.intoClause.toSql());
     }
 
@@ -308,7 +308,7 @@ class AutoBatchInsertTest {
         AutoBatchInsertImpl<Eee> query = new AutoBatchInsertImpl<Eee>(manager,
                 entities);
         query.prepare("execute");
-        assertEquals(" values (?, ?, ?, ?, ?)", query.valuesClause.toSql());
+        assertEquals(" values (?, ?, ?, ?, ?, ?, ?)", query.valuesClause.toSql());
     }
 
     /**
@@ -322,7 +322,7 @@ class AutoBatchInsertTest {
                 entities);
         query.prepare("execute");
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION) values (?, ?, ?, ?, ?)",
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (?, ?, ?, ?, ?, ?, ?)",
                 query.executedSql);
     }
 
@@ -338,7 +338,7 @@ class AutoBatchInsertTest {
         query.prepare("execute");
 
         query.prepareParams(entities.get(0));
-        assertEquals(5, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals(new Integer(1), query.getParam(0).value);
         assertEquals("foo", query.getParam(1).value);
         assertNull(query.getParam(2).value);
@@ -349,7 +349,7 @@ class AutoBatchInsertTest {
         query.resetParams();
 
         query.prepareParams(entities.get(1));
-        assertEquals(5, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals(new Integer(2), query.getParam(0).value);
         assertEquals("bar", query.getParam(1).value);
         assertNull(query.getParam(2).value);
@@ -360,7 +360,7 @@ class AutoBatchInsertTest {
         query.resetParams();
 
         query.prepareParams(entities.get(2));
-        assertEquals(5, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals(new Integer(3), query.getParam(0).value);
         assertEquals("baz", query.getParam(1).value);
         assertNull(query.getParam(2).value);
@@ -381,17 +381,20 @@ class AutoBatchInsertTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -404,9 +407,10 @@ class AutoBatchInsertTest {
         assertEquals(3, addBatchCalled);
         assertEquals(3, result.length);
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
+        String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION) values (3, 'baz', null, null, 1)",
-                sqlLog.getCompleteSql());
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (3, 'baz', null, null, 1, '" + DateTimeStr.REPLACE + "', null)",
+                actual);
 
         try {
             query.execute();
@@ -427,17 +431,20 @@ class AutoBatchInsertTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertTrue(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -446,11 +453,13 @@ class AutoBatchInsertTest {
             }
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta, Fff entity) {
                 return null;
             }
 
             
+            @Override
             protected void postExecute(PreparedStatement ps, Fff entity) {
             }
 
@@ -475,17 +484,20 @@ class AutoBatchInsertTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -494,11 +506,13 @@ class AutoBatchInsertTest {
             }
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta, Fff entity) {
                 return null;
             }
 
             
+            @Override
             protected void postExecute(PreparedStatement ps, Fff entity) {
             }
 
@@ -524,17 +538,20 @@ class AutoBatchInsertTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -543,11 +560,13 @@ class AutoBatchInsertTest {
             }
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta, Fff entity) {
                 return 10L;
             }
 
             
+            @Override
             protected void postExecute(PreparedStatement ps, Fff entity) {
             }
 
@@ -573,17 +592,20 @@ class AutoBatchInsertTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement createPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertFalse(useGetGeneratedKeys);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -592,11 +614,13 @@ class AutoBatchInsertTest {
             }
 
             
+            @Override
             protected Object getIdValue(PropertyMeta propertyMeta, Fff entity) {
                 return 10L;
             }
 
             
+            @Override
             protected void postExecute(PreparedStatement ps, Fff entity) {
             }
 

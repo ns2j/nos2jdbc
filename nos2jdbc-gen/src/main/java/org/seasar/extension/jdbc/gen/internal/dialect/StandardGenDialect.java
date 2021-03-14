@@ -23,6 +23,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,7 @@ import org.seasar.extension.jdbc.gen.internal.sqltype.IntegerType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.SmallIntType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.TimeType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.TimestampType;
+import org.seasar.extension.jdbc.gen.internal.sqltype.TimestampWithTimezoneType;
 import org.seasar.extension.jdbc.gen.internal.sqltype.VarcharType;
 import org.seasar.extension.jdbc.gen.internal.util.ColumnUtil;
 import org.seasar.extension.jdbc.gen.internal.util.TableUtil;
@@ -100,6 +102,7 @@ public class StandardGenDialect implements GenDialect {
         sqlTypeMap.put(Types.TIME, new TimeType());
         sqlTypeMap.put(Types.TIMESTAMP, new TimestampType());
         sqlTypeMap.put(Types.VARCHAR, new VarcharType());
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new TimestampWithTimezoneType());
 
         columnTypeMap.put("bigint", StandardColumnType.BIGINT);
         columnTypeMap.put("binary", StandardColumnType.BINARY);
@@ -123,6 +126,7 @@ public class StandardGenDialect implements GenDialect {
         columnTypeMap.put("tinyint", StandardColumnType.TINYINT);
         columnTypeMap.put("varbinary", StandardColumnType.VARBINARY);
         columnTypeMap.put("varchar", StandardColumnType.VARCHAR);
+        columnTypeMap.put("timestamp with time zone", StandardColumnType.TIMESTAMPWITHTIMEZONE);
 
         fallbackColumnTypeMap.put(Types.BIGINT, StandardColumnType.BIGINT);
         fallbackColumnTypeMap.put(Types.BINARY, StandardColumnType.BINARY);
@@ -150,20 +154,25 @@ public class StandardGenDialect implements GenDialect {
         fallbackColumnTypeMap
                 .put(Types.VARBINARY, StandardColumnType.VARBINARY);
         fallbackColumnTypeMap.put(Types.VARCHAR, StandardColumnType.VARCHAR);
-    }
+        fallbackColumnTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, StandardColumnType.TIMESTAMPWITHTIMEZONE);
+        }
 
+    @Override
     public String getName() {
         return null;
     }
 
+    @Override
     public String getDefaultSchemaName(String userName) {
         return userName;
     }
 
+    @Override
     public SqlType getSqlType(int sqlType) {
         return getSqlTypeInternal(sqlType);
     }
 
+    @Override
     public SqlType getSqlType(ValueTypeProvider valueTypeProvider,
             PropertyMeta propertyMeta) {
         ValueType valueType = valueTypeProvider.provide(propertyMeta);
@@ -185,24 +194,29 @@ public class StandardGenDialect implements GenDialect {
         throw new UnsupportedSqlTypeRuntimeException(sqlType);
     }
 
+    @Override
     public ColumnType getColumnType(String typeName, int sqlType) {
         ColumnType columnType = columnTypeMap.get(typeName);
         return columnType != null ? columnType : fallbackColumnTypeMap
                 .get(sqlType);
     }
 
+    @Override
     public GenerationType getDefaultGenerationType() {
         return GenerationType.TABLE;
     }
 
+    @Override
     public String getOpenQuote() {
         return "\"";
     }
 
+    @Override
     public String getCloseQuote() {
         return "\"";
     }
 
+    @Override
     public String quote(String value) {
         if (value == null) {
             return null;
@@ -210,117 +224,144 @@ public class StandardGenDialect implements GenDialect {
         return getOpenQuote() + value + getCloseQuote();
     }
 
+    @Override
     public String unquote(String value) {
         String s = StringUtil.ltrim(value, getOpenQuote());
         return StringUtil.rtrim(s, getCloseQuote());
     }
 
+    @Override
     public boolean supportsSequence() {
         return false;
     }
 
+    @Override
     public boolean supportsGetIndexInfo(String catalogName, String schemaName,
             String tableName) {
         return true;
     }
 
+    @Override
     public String getSequenceDefinitionFragment(String dataType,
             long initialValue, int allocationSize) {
         throw new UnsupportedOperationException("getSequenceDefinitionFragment");
     }
 
+    @Override
     public String getSqlBlockDelimiter() {
         return null;
     }
 
+    @Override
     public String getIdentityColumnDefinition() {
         throw new UnsupportedOperationException("getIdentityDefinition");
     }
 
+    @Override
     public String getDropForeignKeySyntax() {
         return "drop constraint";
     }
 
+    @Override
     public String getDropUniqueKeySyntax() {
         return "drop constraint";
     }
 
+    @Override
     public boolean isTableNotFound(Throwable throwable) {
         return false;
     }
 
+    @Override
     public boolean isColumnNotFound(Throwable throwable) {
         return false;
     }
 
+    @Override
     public boolean isSequenceNotFound(Throwable throwable) {
         return false;
     }
 
+    @Override
     public SqlBlockContext createSqlBlockContext() {
         return new StandardSqlBlockContext();
     }
 
+    @Override
     public boolean supportsIdentityInsert() {
         return false;
     }
 
+    @Override
     public boolean supportsIdentityInsertControlStatement() {
         return false;
     }
 
+    @Override
     public String getIdentityInsertEnableStatement(String tableName) {
         throw new UnsupportedOperationException("getIdentityInsertOnStatement");
     }
 
+    @Override
     public String getIdentityInsertDisableStatement(String tableName) {
         throw new UnsupportedOperationException("getIdentityInsertOffStatement");
     }
 
+    @Override
     public boolean supportsNullableUnique() {
         return true;
     }
 
+    @Override
     public boolean supportsIdentity() {
         return false;
     }
 
+    @Override
     public String getSequenceNextValString(final String sequenceName,
             final int allocationSize) {
         throw new UnsupportedOperationException("getSequenceNextValString");
     }
 
+    @Override
     public boolean supportsCommentInCreateTable() {
         return false;
     }
 
+    @Override
     public boolean supportsCommentOn() {
         return false;
     }
 
+    @Override
     public boolean isJdbcCommentAvailable() {
         return true;
     }
 
+    @Override
     public String getTableComment(Connection connection, String catalogName,
             String schemaName, String tableName) throws SQLException {
         throw new UnsupportedOperationException("getTableComment");
     }
 
+    @Override
     public Map<String, String> getColumnCommentMap(Connection connection,
             String catalogName, String schemaName, String tableName)
             throws SQLException {
         throw new UnsupportedOperationException("getColumnCommentMap");
     }
 
+    @Override
     public boolean supportsReferentialDeleteRule() {
         return true;
     }
 
+    @Override
     public boolean supportsReferentialUpdateRule() {
         return true;
     }
 
+    @Override
     public boolean isAutoIncrement(Connection connection, String catalogName,
             String schemaName, String tableName, String columnName)
             throws SQLException {
@@ -481,6 +522,9 @@ public class StandardGenDialect implements GenDialect {
         private static StandardColumnType VARCHAR = new StandardColumnType(
                 "varchar($l)", String.class);
 
+        private static StandardColumnType TIMESTAMPWITHTIMEZONE = new StandardColumnType(
+                "timestamp with time zone", OffsetDateTime.class);
+
         /** カラム定義 */
         protected String dataType;
 
@@ -540,6 +584,7 @@ public class StandardGenDialect implements GenDialect {
             this.temporalType = temporalType;
         }
 
+        @Override
         public String getColumnDefinition(int length, int precision, int scale,
                 String defaultValue) {
             String completeDataType = ColumnUtil.formatDataType(dataType,
@@ -564,14 +609,17 @@ public class StandardGenDialect implements GenDialect {
             return completeDataType + " default " + defaultValue;
         }
 
+        @Override
         public Class<?> getAttributeClass(int length, int precision, int scale) {
             return attributeClass;
         }
 
+        @Override
         public boolean isLob() {
             return lob;
         }
 
+        @Override
         public TemporalType getTemporalType() {
             return temporalType;
         }
@@ -594,6 +642,7 @@ public class StandardGenDialect implements GenDialect {
         /** SQLブロックの内側の場合{@code true} */
         protected boolean inSqlBlock;
 
+        @Override
         public void addKeyword(String keyword) {
             if (!inSqlBlock) {
                 keywords.add(keyword);
@@ -623,6 +672,7 @@ public class StandardGenDialect implements GenDialect {
             }
         }
 
+        @Override
         public boolean isInSqlBlock() {
             return inSqlBlock;
         }

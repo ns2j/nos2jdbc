@@ -16,6 +16,7 @@
 package org.seasar.extension.jdbc.entity;
 
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,9 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
+
+import nos2jdbc.annotation.CreateAt;
+import nos2jdbc.annotation.UpdateAt;
 
 /**
  * @author koichik
@@ -63,6 +67,11 @@ public class Eee {
      */
     @Version
     public Long version = 0L;
+    
+    @CreateAt
+    public OffsetDateTime createAt;
+    @UpdateAt
+    public OffsetDateTime updateAt;
 
     /**
      * 
@@ -96,5 +105,5 @@ public class Eee {
         this.name = name;
         this.longText = longText;
     }
-
+    
 }
