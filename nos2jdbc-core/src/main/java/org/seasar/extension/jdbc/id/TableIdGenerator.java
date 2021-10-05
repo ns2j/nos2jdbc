@@ -17,7 +17,6 @@ package org.seasar.extension.jdbc.id;
 
 import javax.persistence.TableGenerator;
 import javax.sql.DataSource;
-
 import javax.transaction.TransactionManager;
 
 import org.seasar.extension.jdbc.EntityMeta;
@@ -116,6 +115,7 @@ public class TableIdGenerator extends AbstractPreAllocateIdGenerator {
         	final Object result = txAdapter
                     .requiresNew(new TransactionCallback() {
 
+                        @Override
                         public Object execute(
                                 final TransactionManagerAdapter adapter)
                                 throws Throwable {

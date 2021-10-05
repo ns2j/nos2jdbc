@@ -86,7 +86,7 @@ class AbsAutoUpdateTest {
     @Test
     void testEntityExistsException() {
         Eee entity = new Eee();
-        entity.version = new Long(1);
+        entity.version = Long.valueOf(1);
         MyUpdate<Eee> query = new MyUpdate<Eee>(manager, entity);
         try {
             query.execute();

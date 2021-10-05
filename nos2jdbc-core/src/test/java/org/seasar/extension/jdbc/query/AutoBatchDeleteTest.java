@@ -208,19 +208,19 @@ class AutoBatchDeleteTest {
         query.prepareParams(entities.get(0));
         assertEquals(2, query.getParamSize());
         assertEquals(Integer.valueOf(1), query.getParam(0).value);
-        assertEquals(new Long(0L), query.getParam(1).value);
+        assertEquals(Long.valueOf(0L), query.getParam(1).value);
         query.resetParams();
 
         query.prepareParams(entities.get(1));
         assertEquals(2, query.getParamSize());
         assertEquals(Integer.valueOf(2), query.getParam(0).value);
-        assertEquals(new Long(0L), query.getParam(1).value);
+        assertEquals(Long.valueOf(0L), query.getParam(1).value);
         query.resetParams();
 
         query.prepareParams(entities.get(2));
         assertEquals(2, query.getParamSize());
         assertEquals(Integer.valueOf(3), query.getParam(0).value);
-        assertEquals(new Long(0L), query.getParam(1).value);
+        assertEquals(Long.valueOf(0L), query.getParam(1).value);
     }
 
     /**
