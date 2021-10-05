@@ -16,15 +16,8 @@
 package org.seasar.extension.jdbc.dialect;
 
 import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
 
-import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SelectForUpdateType;
-import org.seasar.extension.jdbc.ValueType;
-import org.seasar.extension.jdbc.types.LocalDateTimeType;
-import org.seasar.extension.jdbc.types.LocalDateType;
-import org.seasar.extension.jdbc.types.OffsetDateTimeType;
-import org.seasar.extension.jdbc.types.ValueTypes;
 
 /**
  * HSQLDB用の方言をあつかうクラスです。
@@ -115,27 +108,7 @@ public class HsqlDialect extends StandardDialect {
     }
 
     @Override
-    public ValueType getValueType(PropertyMeta propertyMeta) {
-        ValueType vt = super.getValueType(propertyMeta);
-        if (vt.getClass() == LocalDateType.class)
-            return ValueTypes.JDBC42LOCALDATE;
-        if (vt.getClass() == LocalDateTimeType.class)
-            return ValueTypes.JDBC42LOCALDATETIME;
-        if (vt.getClass() == OffsetDateTimeType.class)
-            return ValueTypes.JDBC42OFFSETDATETIME;
-        return vt;
-    }
-
-    @Override
-    public ValueType getValueType(Class<?> clazz, boolean lob,
-            TemporalType temporalType) {
-        ValueType vt = super.getValueType(clazz, lob, temporalType);
-        if (vt.getClass() == LocalDateType.class)
-            return ValueTypes.JDBC42LOCALDATE;
-        if (vt.getClass() == LocalDateTimeType.class)
-            return ValueTypes.JDBC42LOCALDATETIME;
-        if (vt.getClass() == OffsetDateTimeType.class)
-            return ValueTypes.JDBC42OFFSETDATETIME;
-        return vt;
+    public boolean supportsJdbc42AtJsr310() {
+        return true;
     }
 }

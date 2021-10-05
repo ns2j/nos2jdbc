@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityExistsException;
@@ -60,6 +61,16 @@ public class StandardDialect implements DbmsDialect {
     protected static final Set<String> entityExistsExceptionStateCode = CollectionsUtil
             .newHashSet(Arrays.asList("23", "27", "44"));
 
+    protected Map<Boolean, Map<Class<?>, ValueType>> jsr310Map = Map.of(
+            false, Map.of(LocalDate.class, ValueTypes.LOCALDATE,
+                    LocalTime.class, ValueTypes.LOCALTIME,
+                    LocalDateTime.class, ValueTypes.LOCALDATETIME,
+                    OffsetDateTime.class, ValueTypes.TIMESTAMP_WITH_TIMEZONE),
+            true, Map.of(LocalDate.class, ValueTypes.JDBC42LOCALDATE,
+                    LocalTime.class, ValueTypes.JDBC42LOCALTIME,
+                    LocalDateTime.class, ValueTypes.JDBC42LOCALDATETIME,
+                    OffsetDateTime.class, ValueTypes.JDBC42OFFSETDATETIME));
+    
     @Override
     public String getName() {
         return null;
@@ -106,7 +117,15 @@ public class StandardDialect implements DbmsDialect {
     }
 
     @Override
+    public boolean supportsJdbc42AtJsr310() {
+        return false;
+    }
+    
+    @Override
     public ValueType getValueType(PropertyMeta propertyMeta) {
+        ValueType vt = jsr310Map.get(supportsJdbc42AtJsr310()).get(propertyMeta.getPropertyClass());
+        if (vt != null)
+            return vt;
         return propertyMeta.getValueType();
     }
 
@@ -148,19 +167,9 @@ public class StandardDialect implements DbmsDialect {
             }
         }
 
-        if (LocalDate.class == clazz) {
-            return ValueTypes.LOCALDATE;
-        }
-        if (LocalTime.class == clazz) {
-            return ValueTypes.LOCALTIME;
-        }
-        if (LocalDateTime.class == clazz) {
-            return ValueTypes.LOCALDATETIME;
-        }
-        if (OffsetDateTime.class == clazz) {
-            return ValueTypes.TIMESTAMP_WITH_TIMEZONE;
-        }
-
+        ValueType vt = jsr310Map.get(supportsJdbc42AtJsr310()).get(clazz);
+        if (vt != null)
+            return vt;
         
         ValueType valueType = getValueTypeInternal(clazz);
         if (valueType == null) {
