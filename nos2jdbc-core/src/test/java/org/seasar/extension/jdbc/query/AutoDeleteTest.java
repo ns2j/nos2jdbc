@@ -165,7 +165,7 @@ class AutoDeleteTest {
         query.prepare("execute");
         assertEquals(2, query.getParamSize());
         assertEquals(Integer.valueOf(100), query.getParam(0).value);
-        assertEquals(new Long(1L), query.getParam(1).value);
+        assertEquals(Long.valueOf(1L), query.getParam(1).value);
     }
 
     /**

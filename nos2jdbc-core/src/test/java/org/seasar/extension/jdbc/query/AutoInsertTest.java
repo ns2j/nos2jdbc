@@ -571,8 +571,8 @@ class AutoInsertTest {
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(new Long(1L), query.getParam(4).value);
-        assertEquals(new Long(1), eee.version);
+        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1), eee.version);
     }
 
     /**
@@ -588,7 +588,7 @@ class AutoInsertTest {
         query.prepare("execute");
         assertEquals(2, query.getParamSize());
         assertEquals("hoge", query.getParam(0).value);
-        assertEquals(new Long(1L), query.getParam(1).value);
+        assertEquals(Long.valueOf(1L), query.getParam(1).value);
     }
 
     /**
@@ -605,7 +605,7 @@ class AutoInsertTest {
         assertEquals(3, query.getParamSize());
         assertNull(query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
-        assertEquals(new Long(1L), query.getParam(2).value);
+        assertEquals(Long.valueOf(1L), query.getParam(2).value);
     }
 
     /**
@@ -628,9 +628,9 @@ class AutoInsertTest {
         };
         query.prepare("execute");
         assertEquals(3, query.getParamSize());
-        assertEquals(new Long(10), query.getParam(0).value);
+        assertEquals(Long.valueOf(10), query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
-        assertEquals(new Long(1L), query.getParam(2).value);
+        assertEquals(Long.valueOf(1L), query.getParam(2).value);
     }
 
     /**
@@ -653,9 +653,9 @@ class AutoInsertTest {
         };
         query.prepare("execute");
         assertEquals(3, query.getParamSize());
-        assertEquals(new Long(10), query.getParam(0).value);
+        assertEquals(Long.valueOf(10), query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
-        assertEquals(new Long(1L), query.getParam(2).value);
+        assertEquals(Long.valueOf(1L), query.getParam(2).value);
     }
 
     /**
@@ -673,7 +673,7 @@ class AutoInsertTest {
         assertEquals(3, query.getParamSize());
         assertEquals(Integer.valueOf(100), query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
-        assertEquals(new Long(1L), query.getParam(2).value);
+        assertEquals(Long.valueOf(1L), query.getParam(2).value);
     }
 
     /**

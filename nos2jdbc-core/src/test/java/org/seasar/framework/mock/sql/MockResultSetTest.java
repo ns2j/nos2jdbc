@@ -245,7 +245,7 @@ class MockResultSetTest {
     void testGetLong() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
-        Long value = new Long(0);
+        Long value = Long.valueOf(0);
         rowData.put("hoge", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());

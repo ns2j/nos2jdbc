@@ -344,8 +344,8 @@ class AutoBatchInsertTest {
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(new Long(1L), query.getParam(4).value);
-        assertEquals(new Long(1L), entities.get(0).version);
+        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1L), entities.get(0).version);
         query.resetParams();
 
         query.prepareParams(entities.get(1));
@@ -355,8 +355,8 @@ class AutoBatchInsertTest {
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(new Long(1L), query.getParam(4).value);
-        assertEquals(new Long(1L), entities.get(1).version);
+        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1L), entities.get(1).version);
         query.resetParams();
 
         query.prepareParams(entities.get(2));
@@ -366,8 +366,8 @@ class AutoBatchInsertTest {
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(new Long(1L), query.getParam(4).value);
-        assertEquals(new Long(1L), entities.get(1).version);
+        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1L), entities.get(1).version);
     }
 
     /**
