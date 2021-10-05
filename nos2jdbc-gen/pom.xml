@@ -18,7 +18,7 @@
     <dependency>
       <groupId>com.github.ns2j</groupId>
       <artifactId>nos2jdbc-core</artifactId>
-      <version>1.8.0</version>
+      <version>1.8.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
