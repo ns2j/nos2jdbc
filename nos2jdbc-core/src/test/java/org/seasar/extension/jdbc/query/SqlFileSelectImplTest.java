@@ -482,9 +482,9 @@ class SqlFileSelectImplTest {
         List<Aaa> ret = query.getResultList();
         assertEquals(1, ret.size());
         Aaa aaa = ret.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("AAA", aaa.name);
-        assertEquals(new Integer(2), aaa.bbbId);
+        assertEquals(Integer.valueOf(2), aaa.bbbId);
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         assertEquals("select * from aaa where id = 1 limit 10 offset 5", sqlLog
                 .getCompleteSql());
@@ -537,9 +537,9 @@ class SqlFileSelectImplTest {
 
         };
         Aaa aaa = query.getSingleResult();
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("AAA", aaa.name);
-        assertEquals(new Integer(2), aaa.bbbId);
+        assertEquals(Integer.valueOf(2), aaa.bbbId);
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         assertEquals("select * from aaa where id = 1 limit 10 offset 5", sqlLog
                 .getCompleteSql());

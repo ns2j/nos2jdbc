@@ -47,15 +47,15 @@ class ObjectListResultSetHandlerTest {
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
         ArrayMap data = new ArrayMap();
-        data.put("AAA", new Integer(5));
+        data.put("AAA", Integer.valueOf(5));
         rs.addRowData(data);
         data = new ArrayMap();
-        data.put("AAA", new Integer(6));
+        data.put("AAA", Integer.valueOf(6));
         rs.addRowData(data);
         List ret = (List) handler.handle(rs);
         assertEquals(2, ret.size());
-        assertEquals(new Integer(5), ret.get(0));
-        assertEquals(new Integer(6), ret.get(1));
+        assertEquals(Integer.valueOf(5), ret.get(0));
+        assertEquals(Integer.valueOf(6), ret.get(1));
     }
 
     /**
@@ -73,14 +73,14 @@ class ObjectListResultSetHandlerTest {
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
         ArrayMap data = new ArrayMap();
-        data.put("AAA", new Integer(5));
+        data.put("AAA", Integer.valueOf(5));
         rs.addRowData(data);
         data = new ArrayMap();
-        data.put("AAA", new Integer(6));
+        data.put("AAA", Integer.valueOf(6));
         rs.addRowData(data);
         List ret = (List) handler.handle(rs);
         assertEquals(1, ret.size());
-        assertEquals(new Integer(5), ret.get(0));
+        assertEquals(Integer.valueOf(5), ret.get(0));
     }
 
 }

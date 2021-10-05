@@ -48,9 +48,9 @@ class ObjectResultSetHandlerTest {
 		rsMeta.addColumnMetaData(columnMeta);
 		MockResultSet rs = new MockResultSet(rsMeta);
 		ArrayMap data = new ArrayMap();
-		data.put("CNT", new Integer(5));
+		data.put("CNT", Integer.valueOf(5));
 		rs.addRowData(data);
-		assertEquals(new Integer(5), handler.handle(rs));
+		assertEquals(Integer.valueOf(5), handler.handle(rs));
 	}
 
 	/**
@@ -66,7 +66,7 @@ class ObjectResultSetHandlerTest {
 		rsMeta.addColumnMetaData(columnMeta);
 		MockResultSet rs = new MockResultSet(rsMeta);
 		ArrayMap data = new ArrayMap();
-		data.put("CNT", new Integer(5));
+		data.put("CNT", Integer.valueOf(5));
 		rs.addRowData(data);
 		rs.addRowData(data);
 		try {

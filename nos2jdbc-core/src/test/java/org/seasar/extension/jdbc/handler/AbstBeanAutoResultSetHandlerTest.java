@@ -66,13 +66,13 @@ class AbstBeanAutoResultSetHandlerTest {
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
         ArrayMap data = new ArrayMap();
-        data.put("ID", new Integer(1));
+        data.put("ID", Integer.valueOf(1));
         data.put("NAME", "SCOTT");
         rs.addRowData(data);
         rs.next();
         MappingContext mappingContext = new MappingContext(10);
         Aaa aaa = (Aaa) handler.createEntity(rs, mappingContext);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("SCOTT", aaa.name);
     }
 

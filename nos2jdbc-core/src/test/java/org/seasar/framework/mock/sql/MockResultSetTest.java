@@ -39,7 +39,7 @@ class MockResultSetTest {
     void testAddAndGetRowData() {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
-        rowData.put("id", new Integer(1));
+        rowData.put("id", Integer.valueOf(1));
         rs.addRowData(rowData);
         assertSame(rowData, rs.getRowData(1));
     }
@@ -52,7 +52,7 @@ class MockResultSetTest {
     void testGetColumnData() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
-        Integer value = new Integer(1);
+        Integer value = Integer.valueOf(1);
         rowData.put("id", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());
@@ -68,7 +68,7 @@ class MockResultSetTest {
     void testNext() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
-        Integer value = new Integer(1);
+        Integer value = Integer.valueOf(1);
         rowData.put("id", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());
@@ -94,7 +94,7 @@ class MockResultSetTest {
         }
         rs.setType(ResultSet.TYPE_SCROLL_INSENSITIVE);
         ArrayMap rowData = new ArrayMap();
-        Integer value = new Integer(1);
+        Integer value = Integer.valueOf(1);
         rowData.put("id", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());
@@ -229,7 +229,7 @@ class MockResultSetTest {
     void testGetInt() throws Exception {
         MockResultSet rs = new MockResultSet();
         ArrayMap rowData = new ArrayMap();
-        Integer value = new Integer(0);
+        Integer value = Integer.valueOf(0);
         rowData.put("hoge", value);
         rs.addRowData(rowData);
         assertTrue(rs.next());

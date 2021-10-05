@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.seasar.extension.jdbc.AutoSelect;
 import org.seasar.extension.jdbc.ColumnMeta;
@@ -249,113 +249,137 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         super(jdbcManager, baseClass);
     }
 
+    @Override
     public AutoSelect<T> includes(final CharSequence... propertyNames) {
         includesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoSelect<T> excludes(final CharSequence... propertyNames) {
         excludesProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name) {
         return join(name, JoinType.INNER);
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name, String condition,
             Object... params) {
         return join(name, JoinType.INNER, condition, params);
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name, Where condition) {
         return join(name, JoinType.INNER, condition);
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name, Where... conditions) {
         return join(name, JoinType.INNER, conditions);
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name, boolean fetch) {
         return join(name, JoinType.INNER, fetch);
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name, boolean fetch,
             String condition, Object... params) {
         return join(name, JoinType.INNER, fetch, condition, params);
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name, boolean fetch,
             Where condition) {
         return join(name, JoinType.INNER, fetch, condition);
     }
 
+    @Override
     public AutoSelect<T> innerJoin(CharSequence name, boolean fetch,
             Where... conditions) {
         return join(name, JoinType.INNER, fetch, conditions);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name) {
         return join(name, JoinType.LEFT_OUTER);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name, String condition,
             Object... params) {
         return join(name, JoinType.LEFT_OUTER, condition, params);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name, Where condition) {
         return join(name, JoinType.LEFT_OUTER, condition);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name, Where... conditions) {
         return join(name, JoinType.LEFT_OUTER, conditions);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch) {
         return join(name, JoinType.LEFT_OUTER, fetch);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch,
             String condition, Object... params) {
         return join(name, JoinType.LEFT_OUTER, fetch, condition, params);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch,
             Where condition) {
         return join(name, JoinType.LEFT_OUTER, fetch, condition);
     }
 
+    @Override
     public AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch,
             Where... conditions) {
         return join(name, JoinType.LEFT_OUTER, fetch, conditions);
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType) {
         return join(name, joinType, true);
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType,
             String condition, Object... params) {
         return join(name, joinType, true, condition, params);
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType,
             Where condition) {
         return join(name, joinType, true, condition);
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType,
             Where... conditions) {
         return join(name, joinType, true, conditions);
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType,
             boolean fetch) {
         joinMetaList.add(new JoinMeta(name.toString(), joinType, fetch));
         return this;
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType,
             boolean fetch, String condition, Object... params) {
         joinMetaList.add(new JoinMeta(name.toString(), joinType, fetch,
@@ -363,6 +387,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType,
             boolean fetch, Where condition) {
         joinMetaList.add(new JoinMeta(name.toString(), joinType, fetch,
@@ -371,6 +396,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> join(CharSequence name, JoinType joinType,
             boolean fetch, Where... conditions) {
         if (conditions == null) {
@@ -490,7 +516,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
                 propertyMapperList.add(new PropertyMapperImpl(pm.getField(),
                         selectListIndex));
                 if (pm.isId()) {
-                    idIndexList.add(new Integer(selectListIndex));
+                    idIndexList.add(Integer.valueOf(selectListIndex));
                 }
                 ++selectListIndex;
             }
@@ -972,6 +998,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
                 whereClause.toSql()).append(orderByClause.toSql()).toString();
     }
 
+    @Override
     public AutoSelect<T> where(String criteria, Object... params) {
         if (criteria == null) {
             throw new NullPointerException("criteria");
@@ -986,6 +1013,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> where(Where where) {
         if (where == null) {
             throw new NullPointerException("where");
@@ -1000,6 +1028,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> where(Where... wheres) {
         if (wheres == null) {
             throw new NullPointerException("whereList");
@@ -1020,6 +1049,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> where(Map<String, ? extends Object> conditions) {
         if (conditions == null) {
             throw new NullPointerException("conditions");
@@ -1028,6 +1058,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> id(final Object... idProperties) {
         if (idProperties == null) {
             throw new NullPointerException("idProperties");
@@ -1043,6 +1074,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> version(final Object versionProperty) {
         if (versionProperty == null) {
             throw new NullPointerException("versionProperty");
@@ -1254,6 +1286,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return (EntityMapper) getEntityMapper(null);
     }
 
+    @Override
     public AutoSelect<T> orderBy(String orderBy) {
         if (orderBy == null) {
             throw new NullPointerException("orderBy");
@@ -1262,6 +1295,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> orderBy(final OrderByItem... orderByItems) {
         if (orderByItems == null) {
             throw new NullPointerException("orderByItems");
@@ -1370,6 +1404,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return new String(buf);
     }
 
+    @Override
     public AutoSelect<T> forUpdate() {
         final DbmsDialect dialect = getJdbcManager().getDialect();
         if (!dialect.supportsForUpdate(SelectForUpdateType.NORMAL, false)) {
@@ -1384,6 +1419,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> forUpdate(final CharSequence... propertyNames) {
         if (propertyNames == null) {
             throw new NullPointerException("properties");
@@ -1408,6 +1444,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> forUpdateNowait() {
         final DbmsDialect dialect = getJdbcManager().getDialect();
         if (!dialect.supportsForUpdate(SelectForUpdateType.NOWAIT, false)) {
@@ -1422,6 +1459,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> forUpdateNowait(final CharSequence... propertyNames) {
         if (propertyNames == null) {
             throw new NullPointerException("properties");
@@ -1444,6 +1482,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> forUpdateWait(final int seconds) {
         final DbmsDialect dialect = getJdbcManager().getDialect();
         if (!dialect.supportsForUpdate(SelectForUpdateType.WAIT, false)) {
@@ -1459,6 +1498,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> forUpdateWait(final int seconds,
             final CharSequence... propertyNames) {
         if (propertyNames == null) {
@@ -1483,11 +1523,13 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         return this;
     }
 
+    @Override
     public AutoSelect<T> eager(CharSequence... propertyNames) {
         eagerProperties.addAll(Arrays.asList(toStringArray(propertyNames)));
         return this;
     }
 
+    @Override
     public AutoSelect<T> hint(final String hint) {
         this.hint = hint;
         return this;

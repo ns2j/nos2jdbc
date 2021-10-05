@@ -66,14 +66,14 @@ class BeanListAutoResultSetHandlerTest {
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
         ArrayMap data = new ArrayMap();
-        data.put("ID", new Integer(1));
+        data.put("ID", Integer.valueOf(1));
         data.put("NAME", "SCOTT");
         rs.addRowData(data);
         rs.addRowData(data);
         List list = (List) handler.handle(rs);
         assertEquals(1, list.size());
         Aaa aaa = (Aaa) list.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("SCOTT", aaa.name);
     }
 
@@ -105,18 +105,18 @@ class BeanListAutoResultSetHandlerTest {
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
         ArrayMap data = new ArrayMap();
-        data.put("ID", new Integer(1));
+        data.put("ID", Integer.valueOf(1));
         data.put("NAME", "SCOTT");
         rs.addRowData(data);
         rs.addRowData(data);
         data = new ArrayMap();
-        data.put("ID", new Integer(2));
+        data.put("ID", Integer.valueOf(2));
         data.put("NAME", "SCOTT2");
         rs.addRowData(data);
         List list = (List) handler.handle(rs);
         assertEquals(1, list.size());
         Aaa aaa = (Aaa) list.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("SCOTT", aaa.name);
     }
 

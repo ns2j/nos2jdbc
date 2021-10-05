@@ -99,7 +99,7 @@ class SqlParserImplTest {
         SqlParser parser = new SqlParserImpl(sql);
         SqlContext ctx = new SqlContextImpl();
         String job = "CLERK";
-        Integer deptno = new Integer(20);
+        Integer deptno = Integer.valueOf(20);
         ctx.addArg("job", job, job.getClass());
         ctx.addArg("deptno", deptno, deptno.getClass());
         Node root = parser.parse();
@@ -152,15 +152,15 @@ class SqlParserImplTest {
         SqlParser parser = new SqlParserImpl(sql);
         Node root = parser.parse();
         SqlContext ctx = new SqlContextImpl();
-        ctx.addArg("$1", new Integer(0), Integer.class);
-        ctx.addArg("$2", new Integer(1000), Integer.class);
+        ctx.addArg("$1", Integer.valueOf(0), Integer.class);
+        ctx.addArg("$2", Integer.valueOf(1000), Integer.class);
         root.accept(ctx);
         System.out.println(ctx.getSql());
         assertEquals("BETWEEN sal ? AND ?", ctx.getSql());
         Object[] vars = ctx.getBindVariables();
         assertEquals(2, vars.length, "2");
-        assertEquals(new Integer(0), vars[0], "3");
-        assertEquals(new Integer(1000), vars[1], "4");
+        assertEquals(Integer.valueOf(0), vars[0], "3");
+        assertEquals(Integer.valueOf(1000), vars[1], "4");
     }
 
     /**
@@ -172,7 +172,7 @@ class SqlParserImplTest {
         SqlParser parser = new SqlParserImpl(sql);
         SqlContext ctx = new SqlContextImpl();
         String job = "CLERK";
-        Integer deptno = new Integer(20);
+        Integer deptno = Integer.valueOf(20);
         ctx.addArg("job", job, job.getClass());
         ctx.addArg("deptno", deptno, deptno.getClass());
         Node root = parser.parse();
@@ -204,7 +204,7 @@ class SqlParserImplTest {
         String sql3 = " AND 1 = 1";
         SqlParser parser = new SqlParserImpl(sql);
         SqlContext ctx = new SqlContextImpl();
-        Integer empno = new Integer(7788);
+        Integer empno = Integer.valueOf(7788);
         ctx.addArg("empno", empno, empno.getClass());
         Node root = parser.parse();
         root.accept(ctx);
@@ -379,7 +379,7 @@ class SqlParserImplTest {
         String sql = "/*IF false*/aaa--ELSE bbb = /*bbb*/123/*END*/";
         SqlParser parser = new SqlParserImpl(sql);
         SqlContext ctx = new SqlContextImpl();
-        Integer bbb = new Integer(123);
+        Integer bbb = Integer.valueOf(123);
         ctx.addArg("bbb", bbb, bbb.getClass());
         Node root = parser.parse();
         root.accept(ctx);
@@ -443,12 +443,12 @@ class SqlParserImplTest {
         assertEquals(sql3, ctx2.getSql(), "2");
         SqlContext ctx3 = new SqlContextImpl();
         ctx3.addArg("job", "CLERK", String.class);
-        ctx3.addArg("deptno", new Integer(20), Integer.class);
+        ctx3.addArg("deptno", Integer.valueOf(20), Integer.class);
         root.accept(ctx3);
         System.out.println(ctx3.getSql());
         assertEquals(sql4, ctx3.getSql(), "3");
         SqlContext ctx4 = new SqlContextImpl();
-        ctx4.addArg("deptno", new Integer(20), Integer.class);
+        ctx4.addArg("deptno", Integer.valueOf(20), Integer.class);
         ctx4.addArg("job", null, String.class);
         root.accept(ctx4);
         System.out.println(ctx4.getSql());
@@ -511,16 +511,16 @@ class SqlParserImplTest {
         Node root = parser.parse();
         SqlContext ctx = new SqlContextImpl();
         List deptnoList = new ArrayList();
-        deptnoList.add(new Integer(10));
-        deptnoList.add(new Integer(20));
+        deptnoList.add(Integer.valueOf(10));
+        deptnoList.add(Integer.valueOf(20));
         ctx.addArg("deptnoList", deptnoList, List.class);
         root.accept(ctx);
         System.out.println(ctx.getSql());
         assertEquals(sql2, ctx.getSql(), "1");
         Object[] vars = ctx.getBindVariables();
         assertEquals(2, vars.length, "2");
-        assertEquals(new Integer(10), vars[0], "3");
-        assertEquals(new Integer(20), vars[1], "4");
+        assertEquals(Integer.valueOf(10), vars[0], "3");
+        assertEquals(Integer.valueOf(20), vars[1], "4");
     }
 
     /**
@@ -540,8 +540,8 @@ class SqlParserImplTest {
         assertEquals(sql2, ctx.getSql(), "1");
         Object[] vars = ctx.getBindVariables();
         assertEquals(2, vars.length, "2");
-        assertEquals(new Integer(10), vars[0], "3");
-        assertEquals(new Integer(20), vars[1], "4");
+        assertEquals(Integer.valueOf(10), vars[0], "3");
+        assertEquals(Integer.valueOf(20), vars[1], "4");
     }
 
     /**
@@ -593,8 +593,8 @@ class SqlParserImplTest {
         SqlParser parser = new SqlParserImpl(sql);
         Node root = parser.parse();
         SqlContext ctx = new SqlContextImpl();
-        ctx.addArg("id", new Integer(0), Integer.class);
-        ctx.addArg("num", new Integer(1), Integer.class);
+        ctx.addArg("id", Integer.valueOf(0), Integer.class);
+        ctx.addArg("num", Integer.valueOf(1), Integer.class);
         root.accept(ctx);
         System.out.println(ctx.getSql());
         assertEquals(true, ctx.getSql().endsWith(")"), "1");
@@ -609,7 +609,7 @@ class SqlParserImplTest {
         SqlParser parser = new SqlParserImpl(sql);
         Node root = parser.parse();
         SqlContext ctx = new SqlContextImpl();
-        ctx.addArg("aaa", new Integer(0), Integer.class);
+        ctx.addArg("aaa", Integer.valueOf(0), Integer.class);
         root.accept(ctx);
         System.out.println(ctx.getSql());
         assertEquals("0", ctx.getSql(), "1");

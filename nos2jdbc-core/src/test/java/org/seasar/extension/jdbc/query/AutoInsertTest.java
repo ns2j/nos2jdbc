@@ -566,7 +566,7 @@ class AutoInsertTest {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
         assertEquals(7, query.getParamSize());
-        assertEquals(new Integer(100), query.getParam(0).value);
+        assertEquals(Integer.valueOf(100), query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
@@ -671,7 +671,7 @@ class AutoInsertTest {
         query.excludesNull();
         query.prepare("execute");
         assertEquals(3, query.getParamSize());
-        assertEquals(new Integer(100), query.getParam(0).value);
+        assertEquals(Integer.valueOf(100), query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
         assertEquals(new Long(1L), query.getParam(2).value);
     }

@@ -76,7 +76,7 @@ class ParameterTest {
         Map<String, Object> map = params("a", 1).$("b", new BigDecimal("2")).$(
                 "c", "3").$();
         assertEquals(3, map.size());
-        assertEquals(new Integer(1), map.get("a"));
+        assertEquals(Integer.valueOf(1), map.get("a"));
         assertEquals(new BigDecimal("2"), map.get("b"));
         assertEquals("3", map.get("c"));
     }
