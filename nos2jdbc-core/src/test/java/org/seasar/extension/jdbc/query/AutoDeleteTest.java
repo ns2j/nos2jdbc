@@ -164,7 +164,7 @@ class AutoDeleteTest {
         AutoDeleteImpl<Eee> query = new AutoDeleteImpl<Eee>(manager, eee);
         query.prepare("execute");
         assertEquals(2, query.getParamSize());
-        assertEquals(new Integer(100), query.getParam(0).value);
+        assertEquals(Integer.valueOf(100), query.getParam(0).value);
         assertEquals(new Long(1L), query.getParam(1).value);
     }
 
@@ -181,7 +181,7 @@ class AutoDeleteTest {
         query.ignoreVersion();
         query.prepare("execute");
         assertEquals(1, query.getParamSize());
-        assertEquals(new Integer(100), query.getParam(0).value);
+        assertEquals(Integer.valueOf(100), query.getParam(0).value);
     }
 
     /**

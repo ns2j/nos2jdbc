@@ -90,7 +90,7 @@ class AbstEntityMapperTest {
         Object key = mapper.getKey(values);
         Aaa aaa = (Aaa) mapper.getEntity(values, ctx, key);
         assertNotNull(aaa);
-        assertEquals(new Integer(11), aaa.id);
+        assertEquals(Integer.valueOf(11), aaa.id);
         assertEquals("SCOTT", aaa.name);
         assertSame(aaa, mapper.getEntity(values, ctx, key));
     }
@@ -131,7 +131,7 @@ class AbstEntityMapperTest {
         Object key = mapper.getKey(values);
         Aaa aaa = (Aaa) mapper.getEntity(values, ctx, key);
         assertNotNull(aaa);
-        assertEquals(new Integer(11), aaa.id);
+        assertEquals(Integer.valueOf(11), aaa.id);
         assertEquals("SCOTT", aaa.name);
         assertNotSame(aaa, mapper.getEntity(values, ctx, key));
     }
@@ -151,7 +151,7 @@ class AbstEntityMapperTest {
         Object[] values = new Object[] { 11, "SCOTT" };
         Aaa aaa = (Aaa) mapper.createEntity(values, new MappingContext(), 11);
         assertNotNull(aaa);
-        assertEquals(new Integer(11), aaa.id);
+        assertEquals(Integer.valueOf(11), aaa.id);
         assertEquals("SCOTT", aaa.name);
     }
 

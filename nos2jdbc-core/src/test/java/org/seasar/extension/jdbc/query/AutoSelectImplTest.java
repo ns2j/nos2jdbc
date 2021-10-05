@@ -15,6 +15,15 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.seasar.extension.jdbc.parameter.Parameter.timestamp;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,22 +40,22 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.JoinMeta;
 import org.seasar.extension.jdbc.JoinType;
 import org.seasar.extension.jdbc.OrderByItem;
+import org.seasar.extension.jdbc.OrderByItem.OrderingSpec;
 import org.seasar.extension.jdbc.PropertyMapper;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ResultSetHandler;
 import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
 import org.seasar.extension.jdbc.ValueType;
-import org.seasar.extension.jdbc.OrderByItem.OrderingSpec;
 import org.seasar.extension.jdbc.dialect.Db2Dialect;
 import org.seasar.extension.jdbc.dialect.HsqlDialect;
 import org.seasar.extension.jdbc.dialect.MssqlDialect;
@@ -91,8 +100,6 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.util.DisposableUtil;
-
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author higa
@@ -1620,7 +1627,7 @@ class AutoSelectImplTest {
         assertEquals(" where T1_.ID = ?", query.whereClause.toSql());
         Object[] variables = query.getParamValues();
         assertEquals(1, variables.length);
-        assertEquals(new Integer(1), variables[0]);
+        assertEquals(Integer.valueOf(1), variables[0]);
         Class<?>[] variableClasses = query.getParamClasses();
         assertEquals(1, variableClasses.length);
         assertEquals(Integer.class, variableClasses[0]);
@@ -1667,8 +1674,8 @@ class AutoSelectImplTest {
                 .toSql());
         Object[] variables = query.getParamValues();
         assertEquals(2, variables.length);
-        assertEquals(new Integer(1), variables[0]);
-        assertEquals(new Integer(2), variables[1]);
+        assertEquals(Integer.valueOf(1), variables[0]);
+        assertEquals(Integer.valueOf(2), variables[1]);
         Class<?>[] variableClasses = query.getParamClasses();
         assertEquals(2, variableClasses.length);
         assertEquals(Integer.class, variableClasses[0]);
@@ -1735,8 +1742,8 @@ class AutoSelectImplTest {
                         + "from EEE T1_ "
                         + "where T1_.ID = ? and T1_.VERSION = ? and (T1_.LAST_UPDATED = ?)",
                 query.executedSql);
-        assertEquals(new Integer(1), query.paramList.get(0).value);
-        assertEquals(new Integer(2), query.paramList.get(1).value);
+        assertEquals(Integer.valueOf(1), query.paramList.get(0).value);
+        assertEquals(Integer.valueOf(2), query.paramList.get(1).value);
         assertTrue(query.paramList.get(2).value instanceof Date);
     }
 

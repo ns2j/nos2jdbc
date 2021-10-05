@@ -73,11 +73,11 @@ class EntityMapperImplTest {
         Object[] values = new Object[] { 1, "AAA", 11, "BBB", 111, "DDD" };
         Aaa aaa = (Aaa) entityMapper.map(values, mappingContext);
         assertNotNull(aaa);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("AAA", aaa.name);
         Bbb bbb = aaa.bbb;
         assertNotNull(bbb);
-        assertEquals(new Integer(11), bbb.id);
+        assertEquals(Integer.valueOf(11), bbb.id);
         assertEquals("BBB", bbb.name);
         assertSame(aaa, bbb.aaa);
         List<Ddd> ddds = bbb.ddds;
@@ -85,7 +85,7 @@ class EntityMapperImplTest {
         assertEquals(1, ddds.size());
         Ddd ddd = ddds.get(0);
         assertNotNull(ddd);
-        assertEquals(new Integer(111), ddd.id);
+        assertEquals(Integer.valueOf(111), ddd.id);
         assertEquals("DDD", ddd.name);
         assertSame(bbb, ddd.bbb);
 
@@ -95,18 +95,18 @@ class EntityMapperImplTest {
         assertSame(ddd, ddds.get(0));
         Ddd ddd2 = ddds.get(1);
         assertNotNull(ddd2);
-        assertEquals(new Integer(222), ddd2.id);
+        assertEquals(Integer.valueOf(222), ddd2.id);
         assertEquals("DDD2", ddd2.name);
         assertSame(bbb, ddd2.bbb);
 
         Object[] values3 = new Object[] { 2, "AAA2", 22, "BBB2", 333, "DDD3" };
         Aaa aaa2 = (Aaa) entityMapper.map(values3, mappingContext);
         assertNotNull(aaa2);
-        assertEquals(new Integer(2), aaa2.id);
+        assertEquals(Integer.valueOf(2), aaa2.id);
         assertEquals("AAA2", aaa2.name);
         Bbb bbb2 = aaa2.bbb;
         assertNotNull(bbb2);
-        assertEquals(new Integer(22), bbb2.id);
+        assertEquals(Integer.valueOf(22), bbb2.id);
         assertEquals("BBB2", bbb2.name);
         assertSame(aaa2, bbb2.aaa);
         List<Ddd> ddds2 = bbb2.ddds;
@@ -114,7 +114,7 @@ class EntityMapperImplTest {
         assertEquals(1, ddds2.size());
         Ddd ddd3 = ddds2.get(0);
         assertNotNull(ddd3);
-        assertEquals(new Integer(333), ddd3.id);
+        assertEquals(Integer.valueOf(333), ddd3.id);
         assertEquals("DDD3", ddd3.name);
         assertSame(bbb2, ddd3.bbb);
 

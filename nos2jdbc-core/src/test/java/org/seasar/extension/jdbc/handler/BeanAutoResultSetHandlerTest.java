@@ -66,11 +66,11 @@ class BeanAutoResultSetHandlerTest {
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
         ArrayMap data = new ArrayMap();
-        data.put("ID", new Integer(1));
+        data.put("ID", Integer.valueOf(1));
         data.put("NAME", "SCOTT");
         rs.addRowData(data);
         Aaa aaa = (Aaa) handler.handle(rs);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("SCOTT", aaa.name);
     }
 
@@ -102,15 +102,15 @@ class BeanAutoResultSetHandlerTest {
         MockResultSet rs = new MockResultSet(rsMeta);
         rs.setType(ResultSet.TYPE_SCROLL_INSENSITIVE);
         ArrayMap data1 = new ArrayMap();
-        data1.put("ID", new Integer(1));
+        data1.put("ID", Integer.valueOf(1));
         data1.put("NAME", "SCOTT");
         rs.addRowData(data1);
         ArrayMap data2 = new ArrayMap();
-        data2.put("ID", new Integer(1));
+        data2.put("ID", Integer.valueOf(1));
         data2.put("NAME", "SCOTT");
         rs.addRowData(data2);
         Aaa aaa = (Aaa) handler.handle(rs);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("SCOTT", aaa.name);
     }
 
@@ -142,11 +142,11 @@ class BeanAutoResultSetHandlerTest {
         MockResultSet rs = new MockResultSet(rsMeta);
         rs.setType(ResultSet.TYPE_SCROLL_INSENSITIVE);
         ArrayMap data1 = new ArrayMap();
-        data1.put("ID", new Integer(1));
+        data1.put("ID", Integer.valueOf(1));
         data1.put("NAME", "SCOTT");
         rs.addRowData(data1);
         ArrayMap data2 = new ArrayMap();
-        data2.put("ID", new Integer(2));
+        data2.put("ID", Integer.valueOf(2));
         data2.put("NAME", "TIGER");
         rs.addRowData(data2);
         try {

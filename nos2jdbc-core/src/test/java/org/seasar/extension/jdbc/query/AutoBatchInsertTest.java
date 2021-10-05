@@ -339,7 +339,7 @@ class AutoBatchInsertTest {
 
         query.prepareParams(entities.get(0));
         assertEquals(7, query.getParamSize());
-        assertEquals(new Integer(1), query.getParam(0).value);
+        assertEquals(Integer.valueOf(1), query.getParam(0).value);
         assertEquals("foo", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
@@ -350,7 +350,7 @@ class AutoBatchInsertTest {
 
         query.prepareParams(entities.get(1));
         assertEquals(7, query.getParamSize());
-        assertEquals(new Integer(2), query.getParam(0).value);
+        assertEquals(Integer.valueOf(2), query.getParam(0).value);
         assertEquals("bar", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
@@ -361,7 +361,7 @@ class AutoBatchInsertTest {
 
         query.prepareParams(entities.get(2));
         assertEquals(7, query.getParamSize());
-        assertEquals(new Integer(3), query.getParam(0).value);
+        assertEquals(Integer.valueOf(3), query.getParam(0).value);
         assertEquals("baz", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);

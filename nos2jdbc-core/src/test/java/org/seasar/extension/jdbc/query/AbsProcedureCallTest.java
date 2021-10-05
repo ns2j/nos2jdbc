@@ -225,7 +225,7 @@ class AbsProcedureCallTest {
         assertNotNull(dto.aaaList_OUT);
         assertEquals(1, dto.aaaList_OUT.size());
         Aaa aaa = dto.aaaList_OUT.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("aaa", aaa.name);
     }
 
@@ -267,7 +267,7 @@ class AbsProcedureCallTest {
         assertNotNull(dto.aaaList_OUT);
         assertEquals(1, dto.aaaList_OUT.size());
         Aaa aaa = dto.aaaList_OUT.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("aaa", aaa.name);
     }
 

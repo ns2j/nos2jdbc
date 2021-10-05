@@ -87,7 +87,7 @@ class AbsQueryTest {
         assertEquals(sql, log.getRawSql());
         assertEquals(completeSql, log.getCompleteSql());
         assertEquals(1, log.getBindArgs().length);
-        assertEquals(new Integer(1), log.getBindArgs()[0]);
+        assertEquals(Integer.valueOf(1), log.getBindArgs()[0]);
         assertEquals(1, log.getBindArgTypes().length);
         assertEquals(Integer.class, log.getBindArgTypes()[0]);
     }
@@ -107,7 +107,7 @@ class AbsQueryTest {
         assertEquals(sql, log.getRawSql());
         assertEquals(completeSql, log.getCompleteSql());
         assertEquals(1, log.getBindArgs().length);
-        assertEquals(new Integer(1), log.getBindArgs()[0]);
+        assertEquals(Integer.valueOf(1), log.getBindArgs()[0]);
         assertEquals(1, log.getBindArgTypes().length);
         assertEquals(Integer.class, log.getBindArgTypes()[0]);
     }

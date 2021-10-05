@@ -37,7 +37,7 @@ class PropertyMapperImplTest {
 		Field field = Aaa.class.getDeclaredField("id");
 		PropertyMapperImpl mapper = new PropertyMapperImpl(field, 0);
 		Aaa aaa = new Aaa();
-		mapper.map(aaa, new Object[] { new Integer(1) });
-		assertEquals(new Integer(1), aaa.id);
+		mapper.map(aaa, new Object[] { Integer.valueOf(1) });
+		assertEquals(Integer.valueOf(1), aaa.id);
 	}
 }

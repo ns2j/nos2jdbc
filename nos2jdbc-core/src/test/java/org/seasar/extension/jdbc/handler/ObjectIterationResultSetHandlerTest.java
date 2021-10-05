@@ -59,13 +59,13 @@ class ObjectIterationResultSetHandlerTest {
                 });
         MockResultSet rs = createResultSet();
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(4), count);
+        assertEquals(Integer.valueOf(4), count);
         assertEquals(4, list.size());
 
-        assertEquals(new Integer(1), list.get(0));
-        assertEquals(new Integer(2), list.get(1));
-        assertEquals(new Integer(3), list.get(2));
-        assertEquals(new Integer(4), list.get(3));
+        assertEquals(Integer.valueOf(1), list.get(0));
+        assertEquals(Integer.valueOf(2), list.get(1));
+        assertEquals(Integer.valueOf(3), list.get(2));
+        assertEquals(Integer.valueOf(4), list.get(3));
     }
 
     /**
@@ -88,11 +88,11 @@ class ObjectIterationResultSetHandlerTest {
                 });
         MockResultSet rs = createResultSet();
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(2), count);
+        assertEquals(Integer.valueOf(2), count);
         assertEquals(2, list.size());
 
-        assertEquals(new Integer(1), list.get(0));
-        assertEquals(new Integer(2), list.get(1));
+        assertEquals(Integer.valueOf(1), list.get(0));
+        assertEquals(Integer.valueOf(2), list.get(1));
     }
 
     /**
@@ -118,11 +118,11 @@ class ObjectIterationResultSetHandlerTest {
                 });
         MockResultSet rs = createResultSet();
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(2), count);
+        assertEquals(Integer.valueOf(2), count);
         assertEquals(2, list.size());
 
-        assertEquals(new Integer(1), list.get(0));
-        assertEquals(new Integer(2), list.get(1));
+        assertEquals(Integer.valueOf(1), list.get(0));
+        assertEquals(Integer.valueOf(2), list.get(1));
     }
 
     /**
@@ -136,19 +136,19 @@ class ObjectIterationResultSetHandlerTest {
         MockResultSet rs = new MockResultSet(rsMeta);
 
         ArrayMap data = new ArrayMap();
-        data.put("AAA", new Integer(1));
+        data.put("AAA", Integer.valueOf(1));
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("AAA", new Integer(2));
+        data.put("AAA", Integer.valueOf(2));
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("AAA", new Integer(3));
+        data.put("AAA", Integer.valueOf(3));
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("AAA", new Integer(4));
+        data.put("AAA", Integer.valueOf(4));
         rs.addRowData(data);
         return rs;
     }

@@ -97,23 +97,28 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         xaConnection_.addConnectionEventListener(this);
     }
 
+    @Override
     public Connection getPhysicalConnection() {
         return physicalConnection_;
     }
 
+    @Override
     public XAResource getXAResource() {
         return xaResource_;
     }
 
+    @Override
     public XAConnection getXAConnection() {
         return xaConnection_;
     }
 
+    @Override
     public void init(final Transaction tx) {
         closed_ = false;
         tx_ = tx;
     }
 
+    @Override
     public void cleanup() {
         xaConnection_.removeConnectionEventListener(this);
         closed_ = true;
@@ -122,6 +127,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         tx_ = null;
     }
 
+    @Override
     public void closeReally() {
         if (xaConnection_ == null) {
             return;
@@ -167,15 +173,18 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void release() throws SQLException {
         if (!closed_) {
             connectionPool_.release(this);
         }
     }
 
+    @Override
     public void connectionClosed(final ConnectionEvent event) {
     }
 
+    @Override
     public void connectionErrorOccurred(final ConnectionEvent event) {
         try {
             release();
@@ -183,6 +192,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public Statement createStatement() throws SQLException {
         assertOpened();
         try {
@@ -193,6 +203,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public PreparedStatement prepareStatement(final String sql)
             throws SQLException {
         assertOpened();
@@ -205,6 +216,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public CallableStatement prepareCall(final String sql) throws SQLException {
         assertOpened();
         try {
@@ -215,6 +227,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public String nativeSQL(final String sql) throws SQLException {
         assertOpened();
         try {
@@ -225,10 +238,12 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public boolean isClosed() throws SQLException {
         return closed_;
     }
 
+    @Override
     public DatabaseMetaData getMetaData() throws SQLException {
         assertOpened();
         try {
@@ -239,6 +254,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void setReadOnly(final boolean readOnly) throws SQLException {
         assertOpened();
         try {
@@ -249,6 +265,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public boolean isReadOnly() throws SQLException {
         assertOpened();
         try {
@@ -259,6 +276,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void setCatalog(final String catalog) throws SQLException {
         assertOpened();
         try {
@@ -269,6 +287,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public String getCatalog() throws SQLException {
         assertOpened();
         try {
@@ -279,6 +298,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void close() throws SQLException {
         if (closed_) {
             return;
@@ -293,6 +313,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void setTransactionIsolation(final int level) throws SQLException {
         assertOpened();
         try {
@@ -303,6 +324,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public int getTransactionIsolation() throws SQLException {
         assertOpened();
         try {
@@ -313,6 +335,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public SQLWarning getWarnings() throws SQLException {
         assertOpened();
         try {
@@ -323,6 +346,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void clearWarnings() throws SQLException {
         assertOpened();
         try {
@@ -333,6 +357,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void commit() throws SQLException {
         assertOpened();
         assertLocalTx();
@@ -344,6 +369,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void rollback() throws SQLException {
         assertOpened();
         assertLocalTx();
@@ -355,6 +381,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void setAutoCommit(final boolean autoCommit) throws SQLException {
         assertOpened();
         if (autoCommit) {
@@ -368,6 +395,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public boolean getAutoCommit() throws SQLException {
         assertOpened();
         try {
@@ -378,6 +406,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public Statement createStatement(final int resultSetType,
             final int resultSetConcurrency) throws SQLException {
 
@@ -391,6 +420,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public Map getTypeMap() throws SQLException {
         assertOpened();
         try {
@@ -401,6 +431,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void setTypeMap(final Map map) throws SQLException {
         assertOpened();
         try {
@@ -411,6 +442,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public PreparedStatement prepareStatement(final String sql,
             final int resultSetType, final int resultSetConcurrency)
             throws SQLException {
@@ -426,6 +458,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public CallableStatement prepareCall(final String sql,
             final int resultSetType, final int resultSetConcurrency)
             throws SQLException {
@@ -440,6 +473,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void setHoldability(final int holdability) throws SQLException {
         assertOpened();
         try {
@@ -450,6 +484,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public int getHoldability() throws SQLException {
         assertOpened();
         try {
@@ -460,6 +495,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public Savepoint setSavepoint() throws SQLException {
         assertOpened();
         assertLocalTx();
@@ -471,6 +507,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public Savepoint setSavepoint(final String name) throws SQLException {
         assertOpened();
         assertLocalTx();
@@ -482,6 +519,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void rollback(final Savepoint savepoint) throws SQLException {
         assertOpened();
         assertLocalTx();
@@ -493,6 +531,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public void releaseSavepoint(final Savepoint savepoint) throws SQLException {
         assertOpened();
         assertLocalTx();
@@ -504,6 +543,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public Statement createStatement(final int resultSetType,
             final int resultSetConcurrency, final int resultSetHoldability)
             throws SQLException {
@@ -518,6 +558,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public PreparedStatement prepareStatement(final String sql,
             final int resultSetType, final int resultSetConcurrency,
             final int resultSetHoldability) throws SQLException {
@@ -533,6 +574,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public CallableStatement prepareCall(final String sql,
             final int resultSetType, final int resultSetConcurrency,
             final int resultSetHoldability) throws SQLException {
@@ -547,6 +589,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public PreparedStatement prepareStatement(final String sql,
             final int autoGeneratedKeys) throws SQLException {
 
@@ -560,6 +603,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public PreparedStatement prepareStatement(final String sql,
             final int[] columnIndexes) throws SQLException {
 
@@ -573,6 +617,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
         }
     }
 
+    @Override
     public PreparedStatement prepareStatement(final String sql,
             final String[] columnNames) throws SQLException {
 
@@ -589,10 +634,11 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
     private SQLException wrapException(final SQLException e, final String sql) {
         return new SSQLException("ESSR0072",
                 new Object[] { sql, e.getMessage(),
-                        new Integer(e.getErrorCode()), e.getSQLState() }, e
+                        Integer.valueOf(e.getErrorCode()), e.getSQLState() }, e
                         .getSQLState(), e.getErrorCode(), e, sql);
     }
 
+    @Override
     public void abort(Executor arg0) throws SQLException {
 	assertOpened();
 	try {
@@ -603,6 +649,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public Clob createClob() throws SQLException {
 	assertOpened();
 	try {
@@ -613,6 +660,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public Blob createBlob() throws SQLException {
 	assertOpened();
 	try {
@@ -623,6 +671,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public NClob createNClob() throws SQLException {
 	assertOpened();
 	try {
@@ -633,6 +682,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public SQLXML createSQLXML() throws SQLException {
 	assertOpened();
 	try {
@@ -643,6 +693,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public boolean isValid(int timeout) throws SQLException {
 	assertOpened();
 	try {
@@ -653,16 +704,19 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public void setClientInfo(String name, String value)
 	    throws SQLClientInfoException {
 	physicalConnection_.setClientInfo(name, value);
     }
 
+    @Override
     public void setClientInfo(Properties properties)
 	    throws SQLClientInfoException {
 	physicalConnection_.setClientInfo(properties);
     }
 
+    @Override
     public String getClientInfo(String name) throws SQLException {
 	assertOpened();
 	try {
@@ -673,6 +727,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public Properties getClientInfo() throws SQLException {
 	assertOpened();
 	try {
@@ -683,6 +738,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public Array createArrayOf(String typeName, Object[] elements)
 	    throws SQLException {
 	assertOpened();
@@ -694,6 +750,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public Struct createStruct(String typeName, Object[] attributes)
 	    throws SQLException {
 	assertOpened();
@@ -705,6 +762,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public void setSchema(String schema) throws SQLException {
 	assertOpened();
 	try {
@@ -715,6 +773,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public String getSchema() throws SQLException {
 	assertOpened();
 	try {
@@ -725,6 +784,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public void setNetworkTimeout(Executor executor, int milliseconds)
 	    throws SQLException {
 	assertOpened();
@@ -736,6 +796,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public int getNetworkTimeout() throws SQLException {
 	assertOpened();
 	try {
@@ -746,6 +807,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
 	assertOpened();
 	try {
@@ -756,6 +818,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
 	}
     }
 
+    @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
 	assertOpened();
 	try {

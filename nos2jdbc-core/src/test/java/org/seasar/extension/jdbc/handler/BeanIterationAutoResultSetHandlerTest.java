@@ -68,23 +68,23 @@ class BeanIterationAutoResultSetHandlerTest {
         MockResultSet rs = createResultSet();
 
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(4), count);
+        assertEquals(Integer.valueOf(4), count);
         assertEquals(4, list.size());
 
         Aaa aaa = list.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("AAA", aaa.name);
 
         aaa = list.get(1);
-        assertEquals(new Integer(2), aaa.id);
+        assertEquals(Integer.valueOf(2), aaa.id);
         assertEquals("BBB", aaa.name);
 
         aaa = list.get(2);
-        assertEquals(new Integer(3), aaa.id);
+        assertEquals(Integer.valueOf(3), aaa.id);
         assertEquals("CCC", aaa.name);
 
         aaa = list.get(3);
-        assertEquals(new Integer(4), aaa.id);
+        assertEquals(Integer.valueOf(4), aaa.id);
         assertEquals("DDD", aaa.name);
     }
 
@@ -111,15 +111,15 @@ class BeanIterationAutoResultSetHandlerTest {
         MockResultSet rs = createResultSet();
 
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(2), count);
+        assertEquals(Integer.valueOf(2), count);
         assertEquals(2, list.size());
 
         Aaa aaa = list.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("AAA", aaa.name);
 
         aaa = list.get(1);
-        assertEquals(new Integer(2), aaa.id);
+        assertEquals(Integer.valueOf(2), aaa.id);
         assertEquals("BBB", aaa.name);
     }
 
@@ -149,15 +149,15 @@ class BeanIterationAutoResultSetHandlerTest {
         MockResultSet rs = createResultSet();
 
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(2), count);
+        assertEquals(Integer.valueOf(2), count);
         assertEquals(2, list.size());
 
         Aaa aaa = list.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("AAA", aaa.name);
 
         aaa = list.get(1);
-        assertEquals(new Integer(2), aaa.id);
+        assertEquals(Integer.valueOf(2), aaa.id);
         assertEquals("BBB", aaa.name);
     }
 
@@ -184,19 +184,19 @@ class BeanIterationAutoResultSetHandlerTest {
         MockResultSet rs = createResultSet2();
 
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(3), count);
+        assertEquals(Integer.valueOf(3), count);
         assertEquals(3, list.size());
 
         Aaa aaa = list.get(0);
-        assertEquals(new Integer(1), aaa.id);
+        assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("AAA", aaa.name);
 
         aaa = list.get(1);
-        assertEquals(new Integer(3), aaa.id);
+        assertEquals(Integer.valueOf(3), aaa.id);
         assertEquals("CCC", aaa.name);
 
         aaa = list.get(2);
-        assertEquals(new Integer(4), aaa.id);
+        assertEquals(Integer.valueOf(4), aaa.id);
         assertEquals("DDD", aaa.name);
     }
 
@@ -222,22 +222,22 @@ class BeanIterationAutoResultSetHandlerTest {
         MockResultSet rs = new MockResultSet(rsMeta);
 
         ArrayMap data = new ArrayMap();
-        data.put("ID", new Integer(1));
+        data.put("ID", Integer.valueOf(1));
         data.put("NAME", "AAA");
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("ID", new Integer(2));
+        data.put("ID", Integer.valueOf(2));
         data.put("NAME", "BBB");
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("ID", new Integer(3));
+        data.put("ID", Integer.valueOf(3));
         data.put("NAME", "CCC");
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("ID", new Integer(4));
+        data.put("ID", Integer.valueOf(4));
         data.put("NAME", "DDD");
         rs.addRowData(data);
         return rs;
@@ -254,27 +254,27 @@ class BeanIterationAutoResultSetHandlerTest {
         MockResultSet rs = new MockResultSet(rsMeta);
 
         ArrayMap data = new ArrayMap();
-        data.put("ID", new Integer(1));
+        data.put("ID", Integer.valueOf(1));
         data.put("NAME", "AAA");
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("ID", new Integer(1));
+        data.put("ID", Integer.valueOf(1));
         data.put("NAME", "AAA");
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("ID", new Integer(3));
+        data.put("ID", Integer.valueOf(3));
         data.put("NAME", "CCC");
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("ID", new Integer(4));
+        data.put("ID", Integer.valueOf(4));
         data.put("NAME", "DDD");
         rs.addRowData(data);
 
         data = new ArrayMap();
-        data.put("ID", new Integer(4));
+        data.put("ID", Integer.valueOf(4));
         data.put("NAME", "DDD");
         rs.addRowData(data);
 

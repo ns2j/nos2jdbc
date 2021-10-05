@@ -61,7 +61,7 @@ class MapIterationResultSetHandlerTest {
                 });
         MockResultSet rs = createResultSet();
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(4), count);
+        assertEquals(Integer.valueOf(4), count);
         assertEquals(4, list.size());
 
         Map<String, String> map = list.get(0);
@@ -101,7 +101,7 @@ class MapIterationResultSetHandlerTest {
                 });
         MockResultSet rs = createResultSet();
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(2), count);
+        assertEquals(Integer.valueOf(2), count);
         assertEquals(2, list.size());
 
         Map<String, String> map = list.get(0);
@@ -136,7 +136,7 @@ class MapIterationResultSetHandlerTest {
                 });
         MockResultSet rs = createResultSet();
         Integer count = (Integer) handler.handle(rs);
-        assertEquals(new Integer(2), count);
+        assertEquals(Integer.valueOf(2), count);
         assertEquals(2, list.size());
 
         Map<String, String> map = list.get(0);

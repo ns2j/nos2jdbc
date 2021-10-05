@@ -57,7 +57,7 @@ class OneToManyEntityMapperImplTest {
         assertNotNull(ddds);
         assertEquals(1, ddds.size());
         Ddd ddd = ddds.get(0);
-        assertEquals(new Integer(1), ddd.id);
+        assertEquals(Integer.valueOf(1), ddd.id);
         assertEquals("DDD", ddd.name);
         assertSame(bbb, ddd.bbb);
 
@@ -68,7 +68,7 @@ class OneToManyEntityMapperImplTest {
         assertEquals(2, ddds2.size());
         assertSame(ddd, ddds2.get(0));
         Ddd ddd2 = ddds2.get(1);
-        assertEquals(new Integer(2), ddd2.id);
+        assertEquals(Integer.valueOf(2), ddd2.id);
         assertEquals("DDD2", ddd2.name);
         assertSame(bbb, ddd2.bbb);
 
