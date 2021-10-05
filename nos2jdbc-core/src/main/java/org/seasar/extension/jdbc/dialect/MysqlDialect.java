@@ -15,6 +15,7 @@
  */
 package org.seasar.extension.jdbc.dialect;
 
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -23,10 +24,7 @@ import javax.persistence.TemporalType;
 
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
-import org.seasar.extension.jdbc.types.OffsetDateTimeType;
 import org.seasar.extension.jdbc.types.ValueTypes;
-import org.seasar.extension.jdbc.types.LocalDateTimeType;
-import org.seasar.extension.jdbc.types.LocalDateType;
 import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**
@@ -101,28 +99,23 @@ public class MysqlDialect extends StandardDialect {
     }
     
     @Override
+    public boolean supportsJdbc42AtJsr310() {
+        return true;
+    }
+
+    @Override
     public ValueType getValueType(PropertyMeta propertyMeta) {
-        ValueType vt = super.getValueType(propertyMeta);
-        if (vt.getClass() == LocalDateType.class)
-            return ValueTypes.JDBC42LOCALDATE;
-        if (vt.getClass() == LocalDateTimeType.class)
-            return ValueTypes.JDBC42LOCALDATETIME;
-        if (vt.getClass() == OffsetDateTimeType.class) {
+        if (propertyMeta.getPropertyClass() == OffsetDateTime.class) {
             return ValueTypes.MYSQLOFFSETDATETIME;
         }
-        return vt;
+        return super.getValueType(propertyMeta);
     }
     @Override
     public ValueType getValueType(Class<?> clazz, boolean lob,
             TemporalType temporalType) {
-        ValueType vt = super.getValueType(clazz, lob, temporalType);
-        if (vt.getClass() == LocalDateType.class)
-            return ValueTypes.JDBC42LOCALDATE;
-        if (vt.getClass() == LocalDateTimeType.class)
-            return ValueTypes.JDBC42LOCALDATETIME;
-        if (vt.getClass() == OffsetDateTimeType.class) {
+        if (clazz == OffsetDateTime.class) {
             return ValueTypes.MYSQLOFFSETDATETIME;
         }
-        return vt;
+        return super.getValueType(clazz, lob, temporalType);
     }
 }

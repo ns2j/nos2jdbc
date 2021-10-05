@@ -67,6 +67,8 @@ public interface DbmsDialect {
      */
     boolean supportsCursor();
 
+    boolean supportsJdbc42AtJsr310();
+    
     /**
      * プロシージャの呼び出しで結果セットに対してパラメータが必要かどうかを返します。
      * 
