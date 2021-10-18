@@ -47,7 +47,8 @@ public abstract class ClassLoaderUtil {
     private static Method getFindLoadedClassMethod() {
         final Method method = ClassUtil.getDeclaredMethod(ClassLoader.class,
                 "findLoadedClass", new Class[] { String.class });
-        method.setAccessible(true);
+        if (method.trySetAccessible())
+            method.setAccessible(true);
         return method;
     }
 
@@ -55,7 +56,8 @@ public abstract class ClassLoaderUtil {
         final Method method = ClassUtil.getDeclaredMethod(ClassLoader.class,
                 "defineClass", new Class[] { String.class, byte[].class,
                         int.class, int.class });
-        method.setAccessible(true);
+        if (method.trySetAccessible())
+            method.setAccessible(true);
         return method;
     }
 
@@ -64,7 +66,8 @@ public abstract class ClassLoaderUtil {
                 "definePackage", new Class[] { String.class, String.class,
                         String.class, String.class, String.class, String.class,
                         String.class, URL.class });
-        method.setAccessible(true);
+        if (method.trySetAccessible())
+            method.setAccessible(true);
         return method;
     }
 
