@@ -35,7 +35,7 @@ import static ${importName};
 </#if>
  */
 <#if componentType == "cdi" || componentType == "ejb">
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 </#if>
 <#if componentType == "spring">
 @SpringBootTest
