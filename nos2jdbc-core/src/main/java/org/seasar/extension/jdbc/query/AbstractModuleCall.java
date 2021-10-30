@@ -100,12 +100,14 @@ public abstract class AbstractModuleCall<S extends ModuleCall<S>> extends
         this.functionCall = functionCall;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S maxRows(final int maxRows) {
         this.maxRows = maxRows;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S fetchSize(final int fetchSize) {
         this.fetchSize = fetchSize;
@@ -258,8 +260,7 @@ public abstract class AbstractModuleCall<S extends ModuleCall<S>> extends
                     break;
                 }
                 final Param param = nonParamList.get(i);
-                final Object value = handleResultSet(param.field, cs
-                        .getResultSet());
+                final Object value = handleResultSet(param.field, rs);
                 FieldUtil.set(param.field, parameter, value);
                 cs.getMoreResults();
             }
@@ -455,6 +456,7 @@ public abstract class AbstractModuleCall<S extends ModuleCall<S>> extends
         }
         DisposableUtil.add(new Disposable() {
 
+            @Override
             public void dispose() {
                 paramDescCache.clear();
                 initialized = false;
