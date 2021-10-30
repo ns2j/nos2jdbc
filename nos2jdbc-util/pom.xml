@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.github.ns2j</groupId>
     <artifactId>nos2jdbc</artifactId>
-    <version>1.8.2</version>
+    <version>1.8.3-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -18,13 +18,13 @@
     <dependency>
       <groupId>ognl</groupId>
       <artifactId>ognl</artifactId>
-      <version>3.2.18</version>
+      <version>3.2.21</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.30</version>
+      <version>1.7.32</version>
       <scope>provided</scope>
     </dependency>
 
