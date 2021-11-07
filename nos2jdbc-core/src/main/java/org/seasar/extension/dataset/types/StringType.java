@@ -16,7 +16,7 @@
 package org.seasar.extension.dataset.types;
 
 import org.seasar.extension.dataset.ColumnType;
-import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

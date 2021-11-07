@@ -18,7 +18,7 @@ package org.seasar.extension.jdbc.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 
 /**
  * Oracle用の {@link ResultSet}です。 WAVE DASH(U+301C)をFULLWIDTH

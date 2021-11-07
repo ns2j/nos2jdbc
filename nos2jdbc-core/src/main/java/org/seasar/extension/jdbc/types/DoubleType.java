@@ -23,7 +23,7 @@ import java.sql.Types;
 
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.util.BindVariableUtil;
-import org.seasar.framework.util.DoubleConversionUtil;
+import org.seasar.framework.conversion.DoubleConversionUtil;
 
 /**
  * Double用の {@link ValueType}です。

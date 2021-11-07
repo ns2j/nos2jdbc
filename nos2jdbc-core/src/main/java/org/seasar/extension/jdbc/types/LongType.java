@@ -23,7 +23,7 @@ import java.sql.Types;
 
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.util.BindVariableUtil;
-import org.seasar.framework.util.LongConversionUtil;
+import org.seasar.framework.conversion.LongConversionUtil;
 
 /**
  * Long用の {@link ValueType}です。

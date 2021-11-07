@@ -31,9 +31,9 @@ import org.seasar.extension.jdbc.ValuesClause;
 import org.seasar.extension.jdbc.exception.IdPropertyNotAssignedRuntimeException;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.TimestampUtil;
+import org.seasar.framework.conversion.NumberConversionUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**

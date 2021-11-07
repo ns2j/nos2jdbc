@@ -23,7 +23,7 @@ import java.sql.Types;
 
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.util.BindVariableUtil;
-import org.seasar.framework.util.ByteConversionUtil;
+import org.seasar.framework.conversion.ByteConversionUtil;
 
 /**
  * Byte用の {@link ValueType}です。

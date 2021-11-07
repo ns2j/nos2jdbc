@@ -18,7 +18,7 @@ package org.seasar.extension.jdbc.types;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 
 /**
  * <p>

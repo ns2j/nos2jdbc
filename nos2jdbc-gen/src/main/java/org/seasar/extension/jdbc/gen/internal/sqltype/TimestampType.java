@@ -22,8 +22,8 @@ import java.sql.Timestamp;
 import java.sql.Types;
 
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
-import org.seasar.framework.util.IntegerConversionUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
+import org.seasar.framework.conversion.IntegerConversionUtil;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 
 /**
  * {@link Types#TIMESTAMP}に対応する{@link SqlType}です。

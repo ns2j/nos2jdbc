@@ -26,8 +26,8 @@ import java.sql.Types;
 
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.util.BindVariableUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 import org.seasar.framework.util.ReaderUtil;
-import org.seasar.framework.util.StringConversionUtil;
 
 /**
  * ClobをStringとして扱うための {@link ValueType}です。

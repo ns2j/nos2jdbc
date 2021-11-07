@@ -39,19 +39,19 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import org.seasar.framework.conversion.BigDecimalConversionUtil;
+import org.seasar.framework.conversion.BooleanConversionUtil;
+import org.seasar.framework.conversion.ByteConversionUtil;
+import org.seasar.framework.conversion.DoubleConversionUtil;
+import org.seasar.framework.conversion.FloatConversionUtil;
+import org.seasar.framework.conversion.IntegerConversionUtil;
+import org.seasar.framework.conversion.LongConversionUtil;
+import org.seasar.framework.conversion.ShortConversionUtil;
+import org.seasar.framework.conversion.SqlDateConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
+import org.seasar.framework.conversion.TimeConversionUtil;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 import org.seasar.framework.util.ArrayMap;
-import org.seasar.framework.util.BigDecimalConversionUtil;
-import org.seasar.framework.util.BooleanConversionUtil;
-import org.seasar.framework.util.ByteConversionUtil;
-import org.seasar.framework.util.DoubleConversionUtil;
-import org.seasar.framework.util.FloatConversionUtil;
-import org.seasar.framework.util.IntegerConversionUtil;
-import org.seasar.framework.util.LongConversionUtil;
-import org.seasar.framework.util.ShortConversionUtil;
-import org.seasar.framework.util.SqlDateConversionUtil;
-import org.seasar.framework.util.StringConversionUtil;
-import org.seasar.framework.util.TimeConversionUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
 
 /**
  * {@link ResultSet}用のモッククラスです。

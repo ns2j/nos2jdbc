@@ -34,12 +34,12 @@ import org.seasar.extension.dataset.DataSet;
 import org.seasar.extension.dataset.DataSetConstants;
 import org.seasar.extension.dataset.DataTable;
 import org.seasar.extension.dataset.types.ColumnTypes;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.Base64Util;
 import org.seasar.framework.util.FileInputStreamUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

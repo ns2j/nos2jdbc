@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.seasar.framework.exception.ParseRuntimeException;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * {@link Date}用の変換ユーティリティです。

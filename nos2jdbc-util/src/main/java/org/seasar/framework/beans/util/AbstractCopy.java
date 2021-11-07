@@ -33,9 +33,9 @@ import org.seasar.framework.beans.converter.SqlDateConverter;
 import org.seasar.framework.beans.converter.TimeConverter;
 import org.seasar.framework.beans.converter.TimestampConverter;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.util.DateConversionUtil;
-import org.seasar.framework.util.TimeConversionUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
+import org.seasar.framework.conversion.DateConversionUtil;
+import org.seasar.framework.conversion.TimeConversionUtil;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 
 /**
  * JavaBeansやMapに対して操作を行う抽象クラスです。

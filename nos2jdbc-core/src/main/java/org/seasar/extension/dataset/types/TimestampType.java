@@ -19,11 +19,11 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import org.seasar.extension.dataset.ColumnType;
-import org.seasar.framework.util.CalendarConversionUtil;
-import org.seasar.framework.util.DateConversionUtil;
-import org.seasar.framework.util.SqlDateConversionUtil;
-import org.seasar.framework.util.TimeConversionUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
+import org.seasar.framework.conversion.CalendarConversionUtil;
+import org.seasar.framework.conversion.DateConversionUtil;
+import org.seasar.framework.conversion.SqlDateConversionUtil;
+import org.seasar.framework.conversion.TimeConversionUtil;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

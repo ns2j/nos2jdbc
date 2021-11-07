@@ -21,8 +21,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
-import org.seasar.framework.util.FloatConversionUtil;
-import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.framework.conversion.FloatConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 
 /**
  * {@link Types#FLOAT}に対応する{@link SqlType}です。

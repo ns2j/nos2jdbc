@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import org.seasar.extension.jdbc.ValueType;
-import org.seasar.framework.util.CalendarConversionUtil;
+import org.seasar.framework.conversion.CalendarConversionUtil;
 
 /**
  * {@link Timestamp}と互換性をもつ{@link Calendar}用の{@link ValueType}です。

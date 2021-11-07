@@ -13,38 +13,49 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
+
+import java.sql.Date;
 
 /**
- * byte配列用の変換ユーティリティです。
+ * {@link Date}用の変換ユーティリティです。
  * 
  * @author higa
  * 
  */
-public class BinaryConversionUtil {
+public class SqlDateConversionUtil {
 
     /**
      * インスタンスを構築します。
      */
-    protected BinaryConversionUtil() {
+    protected SqlDateConversionUtil() {
     }
 
     /**
-     * byteの配列に変換します。
+     * {@link Date}に変換します。
      * 
      * @param o o
-     * @return byteの配列
+     * @return {@link Date}
      */
-    public static byte[] toBinary(Object o) {
-        if (o instanceof byte[]) {
-            return (byte[]) o;
-        } else if (o == null) {
-            return null;
-        } else {
-            if (o instanceof String) {
-                return ((String) o).getBytes();
-            }
-            throw new IllegalArgumentException(o.getClass().toString());
+    public static Date toDate(Object o) {
+        return toDate(o, null);
+    }
+
+    /**
+     * {@link Date}に変換します。
+     * 
+     * @param o o
+     * @param pattern pattern
+     * @return {@link Date}
+     */
+    public static Date toDate(Object o, String pattern) {
+        if (o instanceof Date) {
+            return (Date) o;
         }
+        java.util.Date date = DateConversionUtil.toDate(o, pattern);
+        if (date != null) {
+            return new Date(date.getTime());
+        }
+        return null;
     }
 }

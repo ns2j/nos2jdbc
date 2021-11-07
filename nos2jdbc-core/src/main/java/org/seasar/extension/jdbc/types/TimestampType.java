@@ -27,9 +27,9 @@ import java.util.Locale;
 
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.util.BindVariableUtil;
+import org.seasar.framework.conversion.DateConversionUtil;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 import org.seasar.framework.exception.ParseRuntimeException;
-import org.seasar.framework.util.DateConversionUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
 
 /**
  * Timestamp用の {@link ValueType}です。

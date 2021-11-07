@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import org.seasar.framework.exception.ParseRuntimeException;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * タイム用の変換ユーティリティです。

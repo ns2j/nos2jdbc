@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jdbc.gen.internal.argtype;
 
-import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 import org.seasar.framework.util.StringUtil;
 
 /**

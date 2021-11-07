@@ -32,8 +32,8 @@ import org.seasar.extension.sql.context.SqlContextImpl;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.conversion.IntegerConversionUtil;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
-import org.seasar.framework.util.IntegerConversionUtil;
 
 /**
  * {@link SqlFileSelect}の実装クラスです。

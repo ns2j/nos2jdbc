@@ -24,8 +24,8 @@ import java.sql.Types;
 
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.util.BindVariableUtil;
-import org.seasar.framework.util.BigDecimalConversionUtil;
-import org.seasar.framework.util.BigIntegerConversionUtil;
+import org.seasar.framework.conversion.BigDecimalConversionUtil;
+import org.seasar.framework.conversion.BigIntegerConversionUtil;
 
 /**
  * BigInteger用の {@link ValueType}です。

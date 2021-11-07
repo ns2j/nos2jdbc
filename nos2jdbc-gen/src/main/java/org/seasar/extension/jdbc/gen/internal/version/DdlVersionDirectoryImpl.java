@@ -20,7 +20,7 @@ import java.io.File;
 import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectory;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
-import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 
 /**
  * {@link DdlVersionDirectory}の実装クラスです。

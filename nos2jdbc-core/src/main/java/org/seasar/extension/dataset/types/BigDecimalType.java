@@ -18,8 +18,8 @@ package org.seasar.extension.dataset.types;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.seasar.framework.util.BigDecimalConversionUtil;
-import org.seasar.framework.util.NumberConversionUtil;
+import org.seasar.framework.conversion.BigDecimalConversionUtil;
+import org.seasar.framework.conversion.NumberConversionUtil;
 
 /**
  * 数値用の型です。

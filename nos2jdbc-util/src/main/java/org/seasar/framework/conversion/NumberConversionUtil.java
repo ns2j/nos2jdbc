@@ -13,12 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+
+import org.seasar.framework.util.DecimalFormatSymbolsUtil;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * {@link Number}用の変換ユーティリティです。

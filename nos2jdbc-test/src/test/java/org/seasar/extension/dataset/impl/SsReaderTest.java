@@ -28,9 +28,9 @@ import org.seasar.extension.dataset.DataRow;
 import org.seasar.extension.dataset.DataSet;
 import org.seasar.extension.dataset.DataTable;
 import org.seasar.extension.dataset.types.ColumnTypes;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 import org.seasar.framework.util.Base64Util;
 import org.seasar.framework.util.ResourceUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
 
 import static nos2jdbc.unit.DataSetAssertions.*;
 class SsReaderTest {

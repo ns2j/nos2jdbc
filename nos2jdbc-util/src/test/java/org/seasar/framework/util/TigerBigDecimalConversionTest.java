@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.jupiter.api.*;
+import org.seasar.framework.conversion.BigDecimalConversionUtil;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

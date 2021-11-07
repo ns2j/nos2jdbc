@@ -13,11 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
 
 import java.math.BigDecimal;
 
-import org.seasar.framework.util.BigDecimalConversionUtil.BigDecimalNormalizer;
+import org.seasar.framework.conversion.BigDecimalConversionUtil.BigDecimalNormalizer;
 
 /**
  * @author koichik

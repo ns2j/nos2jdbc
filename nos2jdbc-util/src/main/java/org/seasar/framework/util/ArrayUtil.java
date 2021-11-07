@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.seasar.framework.conversion.BooleanConversionUtil;
+import org.seasar.framework.conversion.DoubleConversionUtil;
+import org.seasar.framework.conversion.FloatConversionUtil;
+import org.seasar.framework.conversion.IntegerConversionUtil;
+import org.seasar.framework.conversion.LongConversionUtil;
+import org.seasar.framework.conversion.ShortConversionUtil;
 import org.seasar.framework.exception.EmptyRuntimeException;
 
 /**

@@ -24,10 +24,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.seasar.extension.jdbc.ValueType;
+import org.seasar.framework.conversion.DateConversionUtil;
+import org.seasar.framework.conversion.TimeConversionUtil;
+import org.seasar.framework.conversion.TimestampConversionUtil;
 import org.seasar.framework.exception.ParseRuntimeException;
-import org.seasar.framework.util.DateConversionUtil;
-import org.seasar.framework.util.TimeConversionUtil;
-import org.seasar.framework.util.TimestampConversionUtil;
 
 /**
  * {@link Time}と互換性をもつ{@link Date}用の{@link ValueType}です。

@@ -28,9 +28,9 @@ import org.seasar.extension.jdbc.SetClause;
 import org.seasar.extension.jdbc.WhereClause;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.TimestampUtil;
+import org.seasar.framework.conversion.IntegerConversionUtil;
+import org.seasar.framework.conversion.LongConversionUtil;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.IntegerConversionUtil;
-import org.seasar.framework.util.LongConversionUtil;
 import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**

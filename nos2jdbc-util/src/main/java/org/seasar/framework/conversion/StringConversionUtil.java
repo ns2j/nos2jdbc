@@ -13,10 +13,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+
+import org.seasar.framework.util.Base64Util;
 
 /**
  * {@link String}用の変換ユーティリティです。

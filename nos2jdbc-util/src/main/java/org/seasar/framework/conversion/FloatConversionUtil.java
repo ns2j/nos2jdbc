@@ -13,109 +13,109 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
 
 import java.text.SimpleDateFormat;
 
+import org.seasar.framework.util.DecimalFormatUtil;
+import org.seasar.framework.util.StringUtil;
+
 /**
- * {@link Long}用の変換ユーティリティです。
+ * {@link Float}用の変換ユーティリティです。
  * 
  * @author higa
  * 
  */
-public class LongConversionUtil {
+public class FloatConversionUtil {
 
     /**
      * インスタンスを構築します。
      */
-    protected LongConversionUtil() {
+    protected FloatConversionUtil() {
     }
 
     /**
-     * {@link Long}に変換します。
+     * {@link Float}に変換します。
      * 
      * @param o o
-     * @return {@link Long}
+     * @return {@link Float}
      */
-    public static Long toLong(Object o) {
-        return toLong(o, null);
+    public static Float toFloat(Object o) {
+        return toFloat(o, null);
     }
 
     /**
-     * {@link Long}に変換します。
+     * {@link Float}に変換します。
      * 
      * @param o o
      * @param pattern pattern
-     * @return {@link Long}
+     * @return {@link Float}
      */
-    public static Long toLong(Object o, String pattern) {
+    public static Float toFloat(Object o, String pattern) {
         if (o == null) {
             return null;
-        } else if (o instanceof Long) {
-            return (Long) o;
+        } else if (o instanceof Float) {
+            return (Float) o;
         } else if (o instanceof Number) {
-            return Long.valueOf(((Number) o).longValue());
+            return Float.valueOf(((Number) o).floatValue());
         } else if (o instanceof String) {
-            return toLong((String) o);
+            return toFloat((String) o);
         } else if (o instanceof java.util.Date) {
             if (pattern != null) {
-                return Long.valueOf(new SimpleDateFormat(pattern).format(o));
+                return Float.valueOf(new SimpleDateFormat(pattern).format(o));
             }
-            return Long.valueOf(((java.util.Date) o).getTime());
-        } else if (o instanceof Boolean) {
-            return ((Boolean) o).booleanValue() ? Long.valueOf(1) : Long.valueOf(0);
+            return Float.valueOf(((java.util.Date) o).getTime());
         } else {
-            return toLong(o.toString());
+            return toFloat(o.toString());
         }
     }
 
-    private static Long toLong(String s) {
+    private static Float toFloat(String s) {
         if (StringUtil.isEmpty(s)) {
             return null;
         }
-        return Long.valueOf(DecimalFormatUtil.normalize(s));
+        return Float.valueOf(DecimalFormatUtil.normalize(s));
     }
 
     /**
-     * longに変換します。
+     * floatに変換します。
      * 
      * @param o o
-     * @return long
+     * @return float
      */
-    public static long toPrimitiveLong(Object o) {
-        return toPrimitiveLong(o, null);
+    public static float toPrimitiveFloat(Object o) {
+        return toPrimitiveFloat(o, null);
     }
 
     /**
-     * longに変換します。
+     * floatに変換します。
      * 
      * @param o o
      * @param pattern pattern
-     * @return long
+     * @return float
      */
-    public static long toPrimitiveLong(Object o, String pattern) {
+    public static float toPrimitiveFloat(Object o, String pattern) {
         if (o == null) {
             return 0;
         } else if (o instanceof Number) {
-            return ((Number) o).longValue();
+            return ((Number) o).floatValue();
         } else if (o instanceof String) {
-            return toPrimitiveLong((String) o);
+            return toPrimitiveFloat((String) o);
         } else if (o instanceof java.util.Date) {
             if (pattern != null) {
-                return Long.parseLong(new SimpleDateFormat(pattern).format(o));
+                return Float
+                        .parseFloat(new SimpleDateFormat(pattern).format(o));
             }
             return ((java.util.Date) o).getTime();
-        } else if (o instanceof Boolean) {
-            return ((Boolean) o).booleanValue() ? 1 : 0;
         } else {
-            return toPrimitiveLong(o.toString());
+            return toPrimitiveFloat(o.toString());
         }
     }
 
-    private static long toPrimitiveLong(String s) {
+    private static float toPrimitiveFloat(String s) {
         if (StringUtil.isEmpty(s)) {
             return 0;
         }
-        return Long.parseLong(DecimalFormatUtil.normalize(s));
+        return Float.parseFloat(DecimalFormatUtil.normalize(s));
     }
 }

@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
-import org.seasar.framework.util.BooleanConversionUtil;
+import org.seasar.framework.conversion.BooleanConversionUtil;
 
 /**
  * {@link Types#BOOLEAN}に対応する{@link SqlType}です。

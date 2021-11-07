@@ -17,7 +17,7 @@ package org.seasar.extension.dataset.types;
 
 import java.util.Arrays;
 
-import org.seasar.framework.util.BinaryConversionUtil;
+import org.seasar.framework.conversion.BinaryConversionUtil;
 
 /**
  * バイナリ用の型です。

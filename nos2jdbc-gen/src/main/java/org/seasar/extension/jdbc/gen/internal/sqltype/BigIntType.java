@@ -22,9 +22,9 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
-import org.seasar.framework.util.BigDecimalConversionUtil;
-import org.seasar.framework.util.BigIntegerConversionUtil;
-import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.framework.conversion.BigDecimalConversionUtil;
+import org.seasar.framework.conversion.BigIntegerConversionUtil;
+import org.seasar.framework.conversion.StringConversionUtil;
 
 /**
  * {@link Types#BIGINT}に対応する{@link SqlType}です。

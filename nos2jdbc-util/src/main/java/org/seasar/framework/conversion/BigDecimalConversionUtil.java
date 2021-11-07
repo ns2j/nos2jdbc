@@ -13,10 +13,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.framework.util;
+package org.seasar.framework.conversion;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+
+import org.seasar.framework.util.ConstructorUtil;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * {@link BigDecimal}用の変換ユーティリティです。
@@ -29,7 +32,7 @@ public class BigDecimalConversionUtil {
     /**
      * Tiger用のNormalizerのクラス名です。
      */
-    protected static final String TIGER_NORMALIZER_CLASS_NAME = "org.seasar.framework.util.TigerBigDecimalConversion";
+    protected static final String TIGER_NORMALIZER_CLASS_NAME = "org.seasar.framework.conversion.TigerBigDecimalConversion";
 
     /**
      * デフォルトのNormalizerです。
