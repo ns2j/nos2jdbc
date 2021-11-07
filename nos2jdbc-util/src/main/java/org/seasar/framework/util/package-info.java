@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 /**
- * Java5固有の機能を利用してS2-Frameworkの{@code org.seasar.framework.util}パッケージを補完するユーティリティを提供します。
+ * org.seasar.frameworkに対するユーティリティ機能を提供します。
  */
 package org.seasar.framework.util;
 
