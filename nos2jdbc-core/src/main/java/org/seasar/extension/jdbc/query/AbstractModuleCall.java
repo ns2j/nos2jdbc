@@ -46,13 +46,13 @@ import org.seasar.extension.jdbc.query.AbstractModuleCall.ParamDesc.ParameterTyp
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.exception.SQLRuntimeException;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.Disposable;
 import org.seasar.framework.util.DisposableUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.ModifierUtil;
+import org.seasar.framework.util.ReflectionUtil;
 import org.seasar.framework.util.StatementUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
-import org.seasar.framework.util.tiger.ReflectionUtil;
 
 /**
  * 永続格納モジュール(ストアドプロシージャまたはストアドファンクション)を呼び出す抽象クラスです。

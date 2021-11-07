@@ -15,8 +15,8 @@
  */
 package org.seasar.extension.jdbc.gen.internal.argtype;
 
+import org.seasar.framework.util.ReflectionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.ReflectionUtil;
 
 /**
  * {@link Class}を扱う{@link ArgumentType}の実装クラスです。

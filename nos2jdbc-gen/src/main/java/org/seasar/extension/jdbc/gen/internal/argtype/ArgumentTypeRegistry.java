@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.util.ClassUtil;
-import org.seasar.framework.util.tiger.ReflectionUtil;
+import org.seasar.framework.util.ReflectionUtil;
 
 /**
  * {@link ArgumentType}を管理するクラスです。

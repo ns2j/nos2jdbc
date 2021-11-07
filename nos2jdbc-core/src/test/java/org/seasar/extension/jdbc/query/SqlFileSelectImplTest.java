@@ -52,7 +52,7 @@ import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockResultSet;
 import org.seasar.framework.mock.sql.MockResultSetMetaData;
 import org.seasar.framework.util.ArrayMap;
-import org.seasar.framework.util.tiger.CollectionsUtil;
+import org.seasar.framework.util.CollectionsUtil;
 
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 

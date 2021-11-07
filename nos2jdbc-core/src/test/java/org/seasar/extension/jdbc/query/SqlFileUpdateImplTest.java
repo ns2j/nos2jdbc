@@ -44,7 +44,7 @@ import org.seasar.extension.sql.cache.NodeCache;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
-import org.seasar.framework.util.tiger.CollectionsUtil;
+import org.seasar.framework.util.CollectionsUtil;
 
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 

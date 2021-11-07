@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.seasar.extension.jdbc.Where;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**
  * 入力された項目をANDやORでつなげていくような検索条件を組み立てるクラスです。

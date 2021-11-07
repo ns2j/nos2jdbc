@@ -69,9 +69,9 @@ import org.seasar.extension.jdbc.where.ComplexWhere;
 import org.seasar.extension.jdbc.where.SimpleWhere;
 import org.seasar.framework.exception.EmptyRuntimeException;
 import org.seasar.framework.message.MessageFormatter;
+import org.seasar.framework.util.CollectionsUtil;
+import org.seasar.framework.util.Pair;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
-import org.seasar.framework.util.tiger.Pair;
 
 /**
  * {@link AutoSelect}の実装クラスです。

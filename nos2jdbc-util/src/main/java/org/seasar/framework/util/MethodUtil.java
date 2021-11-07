@@ -39,7 +39,7 @@ public class MethodUtil {
     /**
      * ReflectUtilのクラス名です。
      */
-    protected static final String REFLECTION_UTIL_CLASS_NAME = "org.seasar.framework.util.tiger.ReflectionUtil";
+    protected static final String REFLECTION_UTIL_CLASS_NAME = "org.seasar.framework.util.ReflectionUtil";
 
     /**
      * {@link #getElementTypeOfCollectionFromParameterType(Method, int)}への定数参照です

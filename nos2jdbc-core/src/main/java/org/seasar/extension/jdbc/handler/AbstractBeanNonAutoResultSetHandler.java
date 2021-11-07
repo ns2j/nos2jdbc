@@ -38,7 +38,7 @@ import org.seasar.extension.jdbc.mapper.ManyToOneEntityMapperImpl;
 import org.seasar.extension.jdbc.mapper.OneToManyEntityMapperImpl;
 import org.seasar.extension.jdbc.mapper.OneToOneEntityMapperImpl;
 import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
-import org.seasar.framework.util.tiger.Pair;
+import org.seasar.framework.util.Pair;
 
 public abstract class AbstractBeanNonAutoResultSetHandler extends AbstractBeanAutoResultSetHandler {
     protected Class<?> beanClass;

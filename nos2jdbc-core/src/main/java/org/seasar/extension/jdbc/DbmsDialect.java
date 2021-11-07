@@ -22,7 +22,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.TemporalType;
 
-import org.seasar.framework.util.tiger.Pair;
+import org.seasar.framework.util.Pair;
 
 /**
  * データベースごとの方言をあつかうインターフェースです。

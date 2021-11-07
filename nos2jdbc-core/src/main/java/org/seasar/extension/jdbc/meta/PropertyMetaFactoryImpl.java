@@ -75,10 +75,10 @@ import org.seasar.extension.jdbc.types.ValueTypes;
 //i import org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.ModifierUtil;
+import org.seasar.framework.util.ReflectionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
-import org.seasar.framework.util.tiger.ReflectionUtil;
 
 import nos2jdbc.annotation.CreateAt;
 import nos2jdbc.annotation.UpdateAt;

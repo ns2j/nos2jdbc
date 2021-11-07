@@ -29,7 +29,8 @@ import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
 import org.seasar.extension.jdbc.types.ValueTypes;
-import org.seasar.framework.util.tiger.ReflectionUtil;
+import org.seasar.framework.util.ReflectionUtil;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

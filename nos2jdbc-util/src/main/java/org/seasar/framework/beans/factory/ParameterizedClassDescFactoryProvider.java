@@ -15,6 +15,8 @@
  */
 package org.seasar.framework.beans.factory;
 
+import static org.seasar.framework.util.GenericUtil.*;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -24,8 +26,6 @@ import java.util.Map;
 import org.seasar.framework.beans.ParameterizedClassDesc;
 import org.seasar.framework.beans.factory.ParameterizedClassDescFactory.Provider;
 import org.seasar.framework.beans.impl.ParameterizedClassDescImpl;
-
-import static org.seasar.framework.util.tiger.GenericUtil.*;
 
 /**
  * {@link Provider}の機能を提供する実装クラスです。

@@ -33,8 +33,8 @@ import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.conversion.NumberConversionUtil;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**
  * {@link AutoInsert}の実装クラスです。

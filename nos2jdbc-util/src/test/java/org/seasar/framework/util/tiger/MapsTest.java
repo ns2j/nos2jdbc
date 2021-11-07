@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.seasar.framework.util.tiger.Maps.*;
+import static org.seasar.framework.util.Maps.*;
 
 /**
  * @author koichik

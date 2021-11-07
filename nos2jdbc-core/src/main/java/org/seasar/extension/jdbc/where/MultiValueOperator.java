@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.seasar.extension.jdbc.ConditionType;
-import org.seasar.framework.util.tiger.CollectionsUtil;
+import org.seasar.framework.util.CollectionsUtil;
 
 /**
  * 複数の値を対象とする2項演算子です。

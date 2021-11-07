@@ -33,7 +33,7 @@ public class FieldUtil {
     /**
      * ReflectUtilのクラス名です。
      */
-    protected static final String REFLECTION_UTIL_CLASS_NAME = "org.seasar.framework.util.tiger.ReflectionUtil";
+    protected static final String REFLECTION_UTIL_CLASS_NAME = "org.seasar.framework.util.ReflectionUtil";
 
     /**
      * {@link #getElementTypeOfCollectionFromFieldType(Field)}への定数参照です

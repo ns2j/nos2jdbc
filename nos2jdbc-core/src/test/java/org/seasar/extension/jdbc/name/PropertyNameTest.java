@@ -17,9 +17,9 @@ package org.seasar.extension.jdbc.name;
 
 import java.util.Map;
 
-import org.seasar.framework.util.tiger.CollectionsUtil;
-
 import org.junit.jupiter.api.*;
+import org.seasar.framework.util.CollectionsUtil;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

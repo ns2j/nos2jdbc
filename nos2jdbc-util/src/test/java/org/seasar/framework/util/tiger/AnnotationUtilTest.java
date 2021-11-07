@@ -22,6 +22,7 @@ import java.util.Map;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.seasar.framework.util.AnnotationUtil;
 import org.seasar.framework.util.ClassUtil;
 
 /**

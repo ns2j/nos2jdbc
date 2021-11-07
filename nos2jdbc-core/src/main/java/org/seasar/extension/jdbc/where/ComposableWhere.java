@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.seasar.extension.jdbc.Where;
-import org.seasar.framework.util.tiger.CollectionsUtil;
+import org.seasar.framework.util.CollectionsUtil;
 
 /**
  * 複数の構成要素からなる条件を組み立てるための抽象クラスです。

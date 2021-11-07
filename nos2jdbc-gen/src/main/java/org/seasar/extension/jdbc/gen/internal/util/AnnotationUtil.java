@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.seasar.extension.jdbc.annotation.ReferentialConstraint;
-import org.seasar.framework.util.tiger.ReflectionUtil;
+import org.seasar.framework.util.ReflectionUtil;
 
 /**
  * アノテーションに関するユーティリティクラスです。

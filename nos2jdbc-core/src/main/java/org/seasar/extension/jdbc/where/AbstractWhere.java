@@ -22,8 +22,8 @@ import java.util.List;
 import org.seasar.extension.jdbc.ConditionType;
 import org.seasar.extension.jdbc.Where;
 import org.seasar.extension.jdbc.util.LikeUtil;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**
  * 検索条件を組み立てる抽象クラスです。

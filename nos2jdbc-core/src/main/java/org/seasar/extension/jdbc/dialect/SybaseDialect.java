@@ -18,7 +18,7 @@ package org.seasar.extension.jdbc.dialect;
 import javax.persistence.GenerationType;
 
 import org.seasar.extension.jdbc.SelectForUpdateType;
-import org.seasar.framework.util.tiger.Pair;
+import org.seasar.framework.util.Pair;
 
 /**
  * Sybase用の方言をあつかうクラスです。

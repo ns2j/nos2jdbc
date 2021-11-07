@@ -26,7 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.util.tiger.Maps;
+import org.seasar.framework.util.Maps;
 
 /**
  * 値をラップし特別な意味を持たせるクラスです。

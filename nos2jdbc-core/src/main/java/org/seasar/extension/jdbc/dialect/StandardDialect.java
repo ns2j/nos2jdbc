@@ -43,9 +43,9 @@ import org.seasar.extension.jdbc.WhereClause;
 import org.seasar.extension.jdbc.exception.OrderByNotFoundRuntimeException;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.extension.jdbc.util.QueryTokenizer;
+import org.seasar.framework.util.CollectionsUtil;
+import org.seasar.framework.util.Pair;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
-import org.seasar.framework.util.tiger.Pair;
 
 /**
  * 標準的な方言をあつかうクラスです

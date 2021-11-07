@@ -23,7 +23,7 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SqlLogger;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-import org.seasar.framework.util.tiger.CollectionsUtil;
+import org.seasar.framework.util.CollectionsUtil;
 
 /**
  * INSERT前に識別子を自動生成するIDジェネレータの抽象クラスです。

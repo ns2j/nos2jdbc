@@ -43,7 +43,7 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
-import org.seasar.framework.util.tiger.CollectionsUtil;
+import org.seasar.framework.util.CollectionsUtil;
 
 /**
  * @author koichik

@@ -28,7 +28,7 @@ import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.types.OracleDateCalendarType;
 import org.seasar.extension.jdbc.types.OracleDateType;
 import org.seasar.extension.jdbc.types.ValueTypes;
-import org.seasar.framework.util.tiger.Pair;
+import org.seasar.framework.util.Pair;
 
 /**
  * Oracle用の方言をあつかうクラスです。

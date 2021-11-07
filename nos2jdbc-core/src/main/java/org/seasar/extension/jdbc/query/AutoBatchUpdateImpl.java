@@ -29,8 +29,8 @@ import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.conversion.IntegerConversionUtil;
 import org.seasar.framework.conversion.LongConversionUtil;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.FieldUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**
  * {@link AutoBatchUpdate}の実装クラスです。

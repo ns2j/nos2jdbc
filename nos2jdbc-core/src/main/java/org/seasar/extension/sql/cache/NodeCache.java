@@ -15,6 +15,8 @@
  */
 package org.seasar.extension.sql.cache;
 
+import static org.seasar.framework.util.CollectionsUtil.*;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,8 +29,6 @@ import org.seasar.framework.util.DisposableUtil;
 import org.seasar.framework.util.InputStreamReaderUtil;
 import org.seasar.framework.util.ReaderUtil;
 import org.seasar.framework.util.ResourceUtil;
-
-import static org.seasar.framework.util.tiger.CollectionsUtil.*;
 
 /**
  * @author higa

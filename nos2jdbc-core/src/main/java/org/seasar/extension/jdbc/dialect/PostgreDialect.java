@@ -35,9 +35,9 @@ import org.seasar.extension.jdbc.SelectForUpdateType;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.types.BytesType;
 import org.seasar.extension.jdbc.types.BytesType.Trait;
+import org.seasar.framework.util.Pair;
 import org.seasar.extension.jdbc.types.SerializableType;
 import org.seasar.extension.jdbc.types.ValueTypes;
-import org.seasar.framework.util.tiger.Pair;
 
 /**
  * PostgreSQL用の方言をあつかうクラスです。

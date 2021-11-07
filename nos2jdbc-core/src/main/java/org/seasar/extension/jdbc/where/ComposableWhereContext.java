@@ -19,8 +19,8 @@ import java.util.List;
 
 import org.seasar.extension.jdbc.ConditionType;
 import org.seasar.extension.jdbc.Where;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
 
 /**
  * 複数の構成要素からなる条件を組み立てるためのコンテキストです。
