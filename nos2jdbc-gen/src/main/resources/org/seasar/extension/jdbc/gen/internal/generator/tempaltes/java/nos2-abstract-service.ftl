@@ -38,7 +38,7 @@ import org.seasar.extension.jdbc.SqlFileUpdate;
 import org.seasar.extension.jdbc.parameter.Parameter;
 import org.seasar.framework.beans.util.BeanMap;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.GenericUtil;
+import org.seasar.framework.util.GenericUtil;
 
 /**
  * サービスの抽象クラスです。
