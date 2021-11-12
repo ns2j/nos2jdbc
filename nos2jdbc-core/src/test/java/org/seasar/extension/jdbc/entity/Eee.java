@@ -25,8 +25,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
-import nos2jdbc.annotation.CreateAt;
-import nos2jdbc.annotation.UpdateAt;
+import nos2jdbc.annotation.CreatedAt;
+import nos2jdbc.annotation.UpdatedAt;
 
 /**
  * @author koichik
@@ -68,9 +68,9 @@ public class Eee {
     @Version
     public Long version = 0L;
     
-    @CreateAt
+    @CreatedAt
     public OffsetDateTime createAt;
-    @UpdateAt
+    @UpdatedAt
     public OffsetDateTime updateAt;
 
     /**

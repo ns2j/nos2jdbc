@@ -80,8 +80,8 @@ import org.seasar.framework.util.ModifierUtil;
 import org.seasar.framework.util.ReflectionUtil;
 import org.seasar.framework.util.StringUtil;
 
-import nos2jdbc.annotation.CreateAt;
-import nos2jdbc.annotation.UpdateAt;
+import nos2jdbc.annotation.CreatedAt;
+import nos2jdbc.annotation.UpdatedAt;
 
 /**
  * {@link PropertyMetaFactory}の実装クラスです。
@@ -481,11 +481,11 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
 
     protected void doCreateAt(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setCreateAt(field.getAnnotation(CreateAt.class) != null);
+        propertyMeta.setCreateAt(field.getAnnotation(CreatedAt.class) != null);
     }
     protected void doUpdateAt(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setUpdateAt(field.getAnnotation(UpdateAt.class) != null);
+        propertyMeta.setUpdateAt(field.getAnnotation(UpdatedAt.class) != null);
     }
 
     /**
