@@ -18,11 +18,13 @@ package org.seasar.extension.jdbc.gen.task;
 import java.io.File;
 import java.util.StringTokenizer;
 
+import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.event.GenDdlListener;
 import org.seasar.extension.jdbc.gen.internal.command.GenerateDdlCommand;
+import org.seasar.extension.jdbc.gen.internal.factory.Factory;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 

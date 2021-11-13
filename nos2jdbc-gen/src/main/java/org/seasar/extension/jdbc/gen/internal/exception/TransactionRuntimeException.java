@@ -27,7 +27,7 @@ public class TransactionRuntimeException extends SRuntimeException {
 
     /**
      * 
-     * @param cause
+     * @param cause Exception
      */
     public TransactionRuntimeException(Exception cause) {
         super("ES2JDBCGen0021", new Object[] { cause }, cause);

@@ -31,8 +31,10 @@ import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassTraversal;
-import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ClassTraversal.ClassHandler;
+import org.seasar.framework.util.ClassUtil;
+
+import com.sun.javadoc.Doclet;
 
 import nos2jdbc.annotation.NonAuto;
 
@@ -47,7 +49,7 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
     protected static Logger logger = Logger
             .getLogger(EntityMetaReaderImpl.class);
 
-    /** {@link Doclet}が使用可能な場合{@code true} */
+    /** Docletが使用可能な場合{@code true} */
     protected static boolean docletAvailable;
     static {
         try {

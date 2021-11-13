@@ -24,12 +24,12 @@ import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
+import org.seasar.extension.jdbc.gen.model.ClassModel;
+import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModel;
 import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
-import org.seasar.extension.jdbc.gen.model.ClassModel;
-import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceModel;
 import org.seasar.extension.jdbc.gen.model.ServiceModelFactory;
 import org.seasar.framework.log.Logger;
@@ -42,13 +42,11 @@ import org.seasar.framework.util.ClassUtil;
  * コマンドを実行するにはエンティティクラスを参照できるようにエンティティクラスが格納されたディレクトリをあらかじめクラスパスに設定しておく必要があります 。
  * また、そのディレクトリは、プロパティ{@link #classpathDir}に設定しておく必要があります。
  * </p>
- * <p>
  * このコマンドは、次のクラスの2種類のjavaコードを生成します。
  * <ul>
  * <li>エンティティクラスに対応するサービスクラス</li>
  * <li>上記サービスクラスの親クラスとなる抽象サービスクラス</li>
  * </ul>
- * </p>
  * 
  * @author taedium
  */

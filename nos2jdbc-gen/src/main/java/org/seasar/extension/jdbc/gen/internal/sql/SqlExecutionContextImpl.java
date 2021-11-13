@@ -90,14 +90,17 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
         openConnection();
     }
 
+    @Override
     public boolean isHaltOnError() {
         return haltOnError;
     }
 
+    @Override
     public void setHaltOnError(boolean haltOnError) {
         this.haltOnError = haltOnError;
     }
 
+    @Override
     public Statement getStatement() {
         assertBegun();
         assertConnectionNotNull();
@@ -105,6 +108,7 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
         return statement;
     }
 
+    @Override
     public PreparedStatement getPreparedStatement(String sql) {
         assertBegun();
         assertConnectionNotNull();
@@ -112,10 +116,12 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
         return preparedStatement;
     }
 
+    @Override
     public List<RuntimeException> getExceptionList() {
         return Collections.unmodifiableList(exceptionList);
     }
 
+    @Override
     public void addException(RuntimeException exception) {
         assertBegun();
         assertConnectionNotNull();
@@ -127,18 +133,21 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
         exceptionList.add(exception);
     }
 
+    @Override
     public void notifyException() {
         assertBegun();
         assertConnectionNotNull();
         failed = true;
     }
 
+    @Override
     public void destroy() {
         assertNotBegun();
         exceptionList.clear();
         closeConnection();
     }
 
+    @Override
     public void begin() {
         assertNotBegun();
         begun = true;
@@ -152,6 +161,7 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
         }
     }
 
+    @Override
     public void end() {
         assertBegun();
         begun = false;
@@ -189,6 +199,7 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
         failed = false;
     }
 
+    @Override
     public void commitLocalTx() {
         if (localTx) {
             try {
@@ -202,7 +213,7 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
     /**
      * 内部的にローカルトランザクションをロールバックします。
      * 
-     * @throws SQLException
+     * @throws SQLException SQLExceptiion
      */
     protected void rollbackLocalTxInternal() throws SQLException {
         if (!connection.isClosed()) {
@@ -213,7 +224,7 @@ public class SqlExecutionContextImpl implements SqlExecutionContext {
     /**
      * 内部的にローカルトランザクションをコミットします。
      * 
-     * @throws SQLException
+     * @throws SQLException SQLException
      */
     protected void commitLocalTxInternal() throws SQLException {
         if (!connection.isClosed()) {

@@ -140,7 +140,7 @@ public class FileUtil {
      *            接頭辞文字列。3 文字以上の長さが必要である
      * @param suffix
      *            接尾辞文字列。null も指定でき、その場合は、接尾辞 ".tmp" が使用される
-     * @return
+     * @return File
      */
     public static File createTempFile(String prefix, String suffix) {
         try {
@@ -228,7 +228,7 @@ public class FileUtil {
         /**
          * 処理します。
          * 
-         * @param file
+         * @param file File
          */
         void handle(File file);
     }

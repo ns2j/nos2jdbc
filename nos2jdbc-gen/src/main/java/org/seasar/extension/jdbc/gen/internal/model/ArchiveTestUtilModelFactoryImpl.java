@@ -41,14 +41,13 @@ public class ArchiveTestUtilModelFactoryImpl implements ArchiveTestUtilModelFact
      * 
      * @param packageName
      *            パッケージ名
-     * @param serviceClassNameSuffix
-     *            サービスクラス名のサフィックス
      */
     public ArchiveTestUtilModelFactoryImpl(String packageName) {
         this.packageName = packageName;
 
     }
 
+    @Override
     public ArchiveTestUtilModel getArchiveTestUtilModel() {
         ArchiveTestUtilModel archiveTestUtilModel = new ArchiveTestUtilModel();
         archiveTestUtilModel.setPackageName(packageName);

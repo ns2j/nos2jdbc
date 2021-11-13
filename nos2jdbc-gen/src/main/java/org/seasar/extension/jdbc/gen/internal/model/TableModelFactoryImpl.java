@@ -123,6 +123,7 @@ public class TableModelFactoryImpl implements TableModelFactory {
         this.useComment = useComment;
     }
 
+    @Override
     public TableModel getTableModel(TableDesc tableDesc) {
         TableModel tableModel = new TableModel();
         tableModel.setCanonicalTableName(tableDesc.getCanonicalName());
@@ -220,7 +221,7 @@ public class TableModelFactoryImpl implements TableModelFactory {
     /**
      * 参照動作の名前に変換します。
      * 
-     * @param actionType
+     * @param actionType ReferentialActionType
      * @return 参照動作の名前
      */
     protected String toActionName(ReferentialActionType actionType) {

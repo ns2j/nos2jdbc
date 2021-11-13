@@ -58,7 +58,7 @@ public class ArgumentsParser {
     /**
      * 解析します。
      * 
-     * @param args
+     * @param args String[]
      */
     public void parse(String[] args) {
         for (String arg : args) {

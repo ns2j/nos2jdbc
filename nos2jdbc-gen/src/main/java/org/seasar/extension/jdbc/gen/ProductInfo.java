@@ -44,9 +44,9 @@ public class ProductInfo {
     /**
      * インスタンスを構築します。
      * 
-     * @param version
-     * @param groupId
-     * @param artifactId
+     * @param version String
+     * @param groupId String
+     * @param artifactId String
      */
     protected ProductInfo(String version, String groupId, String artifactId) {
         this.version = version != null ? version : UNKNOWN;
@@ -57,7 +57,7 @@ public class ProductInfo {
     /**
      * 名前を返します。
      * 
-     * @return
+     * @return String
      */
     public String getName() {
         return PRODUCT_NAME;
@@ -66,7 +66,7 @@ public class ProductInfo {
     /**
      * バージョンを返します。
      * 
-     * @return
+     * @return String
      */
     public String getVersion() {
         return version;
@@ -75,7 +75,7 @@ public class ProductInfo {
     /**
      * groupIdを返します。
      * 
-     * @return
+     * @return String
      */
     public String getGroupId() {
         return groupId;
@@ -84,7 +84,7 @@ public class ProductInfo {
     /**
      * artifactIdを返します。
      * 
-     * @return
+     * @return String
      */
     public String getArtifactId() {
         return artifactId;
@@ -102,7 +102,7 @@ public class ProductInfo {
     /**
      * プロダクト情報を標準出力へ出力します。
      * 
-     * @param args
+     * @param args String
      */
     public static void main(String[] args) {
         ProductInfo info = ProductInfoHolder.productInfo;

@@ -148,6 +148,7 @@ public abstract class AbstractCommand implements Command {
         this.factoryClassName = factoryClassName;
     }
 
+    @Override
     public final void execute() {
         ProductInfo info = ProductInfo.getInstance();
         getLogger().log("IS2JDBCGen0008",
@@ -216,7 +217,7 @@ public abstract class AbstractCommand implements Command {
     /**
      * RDBMSとRDBMSに対する方言をログ出力します。
      * 
-     * @param dialect
+     * @param dialect GenDialect
      */
     protected void logRdbmsAndGenDialect(GenDialect dialect) {
         getLogger().log("DS2JDBCGen0005",
@@ -266,8 +267,7 @@ public abstract class AbstractCommand implements Command {
 
     /**
      * サブクラスで実行します。
-     * 
-     * @throws Throwable
+     * @throws Throwable Throwable 
      */
     protected abstract void doExecute() throws Throwable;
 

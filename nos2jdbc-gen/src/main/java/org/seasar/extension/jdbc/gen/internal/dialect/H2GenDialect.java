@@ -132,7 +132,7 @@ public class H2GenDialect extends StandardGenDialect {
     }
 
     /**
-     * H2用の{@link ColumType}の実装です。
+     * H2用の{@link ColumnType}の実装です。
      * 
      * @author taedium
      */

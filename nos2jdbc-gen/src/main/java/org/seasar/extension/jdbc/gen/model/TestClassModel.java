@@ -42,9 +42,7 @@ public class TestClassModel extends ClassModel {
 
     /**
      * S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}を設定します。
-     * 
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
+     * @return String
      */
 //i    public void setUseS2junit4(boolean useS2junit4) {
 //i        this.useS2junit4 = useS2junit4;

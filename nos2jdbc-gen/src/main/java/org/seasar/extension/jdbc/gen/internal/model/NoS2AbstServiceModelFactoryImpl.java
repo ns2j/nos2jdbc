@@ -49,6 +49,7 @@ public class NoS2AbstServiceModelFactoryImpl implements NoS2AbstServiceModelFact
      *            パッケージ名
      * @param serviceClassNameSuffix
      *            サービスクラス名のサフィックス
+     * @param componentType String
      */
     public NoS2AbstServiceModelFactoryImpl(String packageName,
             String serviceClassNameSuffix, String componentType) {
@@ -61,6 +62,7 @@ public class NoS2AbstServiceModelFactoryImpl implements NoS2AbstServiceModelFact
 
     }
 
+    @Override
     public NoS2AbstServiceModel getAbstServiceModel() {
         NoS2AbstServiceModel noS2AbstServiceModel = new NoS2AbstServiceModel();
         noS2AbstServiceModel.setPackageName(packageName);

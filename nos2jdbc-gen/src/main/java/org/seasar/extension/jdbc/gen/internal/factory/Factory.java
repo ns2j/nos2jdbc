@@ -40,14 +40,14 @@ import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
-import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
-import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
 import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
+import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantNamingRule;
@@ -174,7 +174,7 @@ public interface Factory {
      *            対象としないテーブル名の正規表現
      * @param readComment
      *            コメントを読む場合{@code true}
-     * @return
+     * @return DbTableMetaReader
      */
     DbTableMetaReader createDbTableMetaReader(Command command,
             DataSource dataSource, GenDialect dialect, String schemaName,
@@ -385,6 +385,7 @@ public interface Factory {
      *            名前クラスを使用する場合{@code true}
      * @param jdbcManagerName
      *            {@link JdbcManager}のコンポーネント名
+     * @param componentType String
      * @return {@link ServiceModelFactory}の実装
      */
     ServiceModelFactory createServiceModelFactory(Command command,
@@ -403,10 +404,8 @@ public interface Factory {
      *            サービスクラス名のサフィックス
      * @param testClassNameSuffix
      *            テストクラス名のサフィックス
-     * @param configPath
-     *            設定ファイルのパス
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
+     * @param rootPackageName String
+     * @param componentType String
      * @return {@link ServiceTestModelFactory}の実装
      */
     ServiceTestModelFactory createServiceTestModelFactory(Command command,
@@ -442,8 +441,6 @@ public interface Factory {
      * 
      * @param command
      *            呼び出し元のコマンド
-     * @param configPath
-     *            設定ファイルのパス
      * @param jdbcManagerName
      *            {@link JdbcManager}のコンポーネント名
      * @param testClassNameSuffix
@@ -452,8 +449,8 @@ public interface Factory {
      *            名前モデルのファクトリ
      * @param useNamesClass
      *            名前クラスを使用する場合{@code true}
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
+     * @param rootPackageName String
+     * @param componentType String
      * @return {@link EntityTestModelFactory}の実装
      */
     EntityTestModelFactory createEntityTestModelFactory(Command command,
@@ -543,6 +540,7 @@ public interface Factory {
      *            バッチサイズ
      * @param delete
      *            ロードの前に存在するデータを削除する場合{@code true}、削除しない場合{@code false}を設定します。
+     * @param testDb boolean
      * @return {@link Loader}の実装
      */
     //i

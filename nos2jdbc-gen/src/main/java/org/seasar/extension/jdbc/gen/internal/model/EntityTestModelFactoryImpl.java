@@ -75,8 +75,6 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
     /**
      * インスタンスを構築します。
      * 
-     * @param configPath
-     *            設定ファイルのパス
      * @param jdbcManagerName
      *            {@link JdbcManager}のコンポーネント名
      * @param testClassNameSuffix
@@ -85,8 +83,8 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
      *            名前モデルのファクトリ
      * @param useNamesClass
      *            名前クラスを使用する場合{@code true}
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
+     * @param rootPackageName String
+     * @param componentType String
      */
     public EntityTestModelFactoryImpl(String jdbcManagerName, String testClassNameSuffix,
             NamesModelFactory namesModelFactory, boolean useNamesClass,
@@ -118,6 +116,7 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
         this.componentType = componentType;
     }
 
+    @Override
     public EntityTestModel getEntityTestModel(EntityMeta entityMeta) {
         EntityTestModel entityTestModel = new EntityTestModel();
 //i        entityTestModel.setConfigPath(configPath);

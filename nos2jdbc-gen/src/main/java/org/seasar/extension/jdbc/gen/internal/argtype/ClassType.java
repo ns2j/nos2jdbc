@@ -22,11 +22,10 @@ import org.seasar.framework.util.StringUtil;
  * {@link Class}を扱う{@link ArgumentType}の実装クラスです。
  * 
  * @author taedium
- * @param <T>
- *            クラスの型
  */
 public class ClassType implements ArgumentType<Class<?>> {
 
+    @Override
     public Class<?> toObject(String value) {
         if (StringUtil.isEmpty(value)) {
             return null;
@@ -34,6 +33,7 @@ public class ClassType implements ArgumentType<Class<?>> {
         return ReflectionUtil.forName(value);
     }
 
+    @Override
     public String toText(Class<?> value) {
         if (value == null) {
             return "";

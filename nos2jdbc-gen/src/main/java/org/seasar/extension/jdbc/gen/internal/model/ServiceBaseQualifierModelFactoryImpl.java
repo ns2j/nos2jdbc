@@ -49,6 +49,7 @@ public class ServiceBaseQualifierModelFactoryImpl implements ServiceBaseQualifie
      *            パッケージ名
      * @param serviceClassNameSuffix
      *            サービスクラス名のサフィックス
+     * @param componentType String
      */
     public ServiceBaseQualifierModelFactoryImpl(String packageName,
             String serviceClassNameSuffix, String componentType) {
@@ -61,6 +62,7 @@ public class ServiceBaseQualifierModelFactoryImpl implements ServiceBaseQualifie
 
     }
 
+    @Override
     public ServiceBaseQualifierModel getServiceBaseQualifierModel() {
         ServiceBaseQualifierModel serviceBaseQualifierModel = new ServiceBaseQualifierModel();
         serviceBaseQualifierModel.setPackageName(packageName);

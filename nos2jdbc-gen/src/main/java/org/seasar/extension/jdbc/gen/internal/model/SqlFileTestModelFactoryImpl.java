@@ -64,16 +64,14 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
      *            クラスパスのディレクトリ
      * @param sqlFileSet
      *            SQLファイルのセット
-     * @param configPath
-     *            設定ファイルのパス
      * @param jdbcManagerName
      *            {@link JdbcManager}のコンポーネント名
      * @param packageName
      *            パッケージ名
      * @param shortClassName
      *            テストクラスの単純名
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
+     * @param rootPackageName String
+     * @param componentType String
      */
     public SqlFileTestModelFactoryImpl(File classpathDir, Set<File> sqlFileSet,
             String jdbcManagerName, String packageName,
@@ -90,18 +88,16 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
      *            クラスパスのディレクトリ
      * @param sqlFileSet
      *            SQLファイルのセット
-     * @param configPath
-     *            設定ファイルのパス
      * @param jdbcManagerName
      *            {@link JdbcManager}のコンポーネント名
      * @param packageName
      *            パッケージ名
      * @param shortClassName
      *            テストクラスの単純名
-     * @param useS2junit4
-     *            S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
      * @param sqlFileSupport
      *            SQLファイルのサポート
+     * @param rootPackageName String
+     * @param componentType String
      */
     protected SqlFileTestModelFactoryImpl(File classpathDir,
             Set<File> sqlFileSet, String jdbcManagerName,
@@ -155,6 +151,7 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
         return sqlFileSupport.createSqlFilePathList(classpathDir, sqlFileSet);
     }
 
+    @Override
     public SqlFileTestModel getSqlFileTestModel() {
         SqlFileTestModel model = new SqlFileTestModel();
 //i        model.setConfigPath(configPath);

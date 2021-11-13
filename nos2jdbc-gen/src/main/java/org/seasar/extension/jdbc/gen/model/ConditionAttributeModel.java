@@ -94,7 +94,7 @@ public class ConditionAttributeModel {
     /**
      * パラメタ化されている場合{@code true}を返します。
      * 
-     * @return
+     * @return boolean
      */
     public boolean isParameterized() {
         return parameterized;

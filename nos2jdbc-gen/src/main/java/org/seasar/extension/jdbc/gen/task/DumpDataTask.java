@@ -22,6 +22,7 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.command.DumpDataCommand;
+import org.seasar.extension.jdbc.gen.internal.factory.Factory;
 
 /**
  * エンティティに対応するデータベースのデータをテキストファイルにダンプする{@link Task}です。

@@ -162,7 +162,7 @@ public interface GenDialect {
      *            初期値
      * @param allocationSize
      *            割り当てサイズ
-     * @return
+     * @return String
      */
     String getSequenceDefinitionFragment(String dataType, long initialValue,
             int allocationSize);
@@ -399,7 +399,7 @@ public interface GenDialect {
      * カラム型です。
      * <p>
      * データベースのメタデータが返すカラムの型名に対応します。
-     * <p>
+     * </p>
      * <p>
      * データベースのメタデータからJavaコードを生成する場合に使用できます。
      * </p>

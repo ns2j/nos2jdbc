@@ -20,7 +20,6 @@ import java.io.BufferedWriter;
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringBufferInputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
@@ -42,10 +41,6 @@ import javax.lang.model.util.ElementFilter;
 import javax.persistence.MappedSuperclass;
 import javax.tools.Diagnostic.Kind;
 
-import jdk.javadoc.doclet.Doclet;
-import jdk.javadoc.doclet.DocletEnvironment;
-import jdk.javadoc.doclet.Reporter;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.internal.util.EntityMetaUtil;
@@ -54,6 +49,10 @@ import org.seasar.framework.log.Logger;
 
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.util.DocTrees;
+
+import jdk.javadoc.doclet.Doclet;
+import jdk.javadoc.doclet.DocletEnvironment;
+import jdk.javadoc.doclet.Reporter;
 
 
 /**
@@ -123,7 +122,7 @@ public class CommentDoclet implements Doclet {
     /**
      * エンティティクラスのコメントを処理します。
      * 
-     * @param classDoc
+     * @param classDoc TypeElement
      * @param entityMeta
      *            エンティティメタデータ
      */
@@ -143,7 +142,7 @@ public class CommentDoclet implements Doclet {
     /**
      * プロパティのコメントを処理します。
      * 
-     * @param fieldDoc
+     * @param fieldDoc VariableElement
      * @param propertyMeta
      *            プロパティメタデータ
      */
@@ -155,7 +154,7 @@ public class CommentDoclet implements Doclet {
     /**
      * フィールド名をキー、 {@link VariableElement}を値とするマップを返します。
      * 
-     * @param classDoc
+     * @param classDoc TypeElement
      * @return フィールド名をキー、 {@link VariableElement}を値とするマップ
      */
     protected Map<String, VariableElement> getFieldDocMap(TypeElement classDoc) {
@@ -180,7 +179,7 @@ public class CommentDoclet implements Doclet {
     /**
      * {@link MappedSuperclass}を表す場合{@code true}を返します。
      * 
-     * @param classDoc
+     * @param classDoc TypeElement
      * @return {@link MappedSuperclass}を表す場合{@code true}
      */
     protected boolean isMappedSuperclass(TypeElement classDoc) {
@@ -281,7 +280,8 @@ public class CommentDoclet implements Doclet {
     		encoder = cs.newEncoder();
     	}
 
-    	public int read(char[] buf, int off, int len) throws IOException {
+    	@Override
+        public int read(char[] buf, int off, int len) throws IOException {
     		int numChars = 0;        // how many characters have been read
     		int retChars = 0;        // how many characters we'll return
 
@@ -364,13 +364,14 @@ public class CommentDoclet implements Doclet {
     		return retChars;
     	}
 
-    	public int read() throws IOException {
+    	@Override
+        public int read() throws IOException {
     		char[] buf = new char[1];
 
     		if (read(buf, 0, 1) == -1)
     			return -1;
     		else
-    			return (int) buf[0];
+    			return buf[0];
     	}
     }
 

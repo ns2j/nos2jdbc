@@ -17,10 +17,12 @@ package org.seasar.extension.jdbc.gen.task;
 
 import java.io.File;
 
+import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.command.LoadDataCommand;
+import org.seasar.extension.jdbc.gen.internal.factory.Factory;
 
 /**
  * ダンプファイルをロードする{@link Task}の実装クラスです。

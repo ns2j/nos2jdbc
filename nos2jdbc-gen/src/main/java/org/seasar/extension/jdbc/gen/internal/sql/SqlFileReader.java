@@ -160,7 +160,7 @@ public class SqlFileReader {
      * {@link #sqlFile}に対する{@link BufferedReader}を作成します。
      * 
      * @return {@link BufferedReader}
-     * @throws IOException
+     * @throws IOException IOException
      */
     protected BufferedReader createBufferedReader() throws IOException {
         InputStream is = new FileInputStream(sqlFile);
@@ -382,7 +382,7 @@ public class SqlFileReader {
         /**
          * SQLを返します。
          * 
-         * @return
+         * @return String
          */
         protected String getSql() {
             if (!completed) {

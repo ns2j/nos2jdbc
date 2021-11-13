@@ -79,6 +79,7 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
      *            名前クラスを使用する場合{@code true}
      * @param jdbcManagerName
      *            {@link JdbcManager}のコンポーネント名
+     * @param componentType String
      */
     public ServiceModelFactoryImpl(String packageName,
             String serviceClassNameSuffix, NamesModelFactory namesModelFactory,
@@ -100,6 +101,7 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
         this.componentType = componentType;
     }
 
+    @Override
     public ServiceModel getServiceModel(EntityMeta entityMeta) {
         ServiceModel serviceModel = new ServiceModel();
         serviceModel.setPackageName(packageName);

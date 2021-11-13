@@ -105,7 +105,7 @@ public class AssociationResolver {
      *            関連の所有者側のエンティティ記述
      * @param inverseEntityDesc
      *            関連の被所有者側のエンティティ記述
-     * @return
+     * @return AssociationDesc
      */
     protected AssociationDesc doOwnerAssociationDesc(DbForeignKeyMeta fkMeta,
             EntityDesc ownerEntityDesc, EntityDesc inverseEntityDesc) {

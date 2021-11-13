@@ -49,6 +49,7 @@ public class PrimaryKeyDescFactoryImpl implements PrimaryKeyDescFactory {
         this.dialect = dialect;
     }
 
+    @Override
     public PrimaryKeyDesc getPrimaryKeyDesc(EntityMeta entityMeta) {
         if (entityMeta.getIdPropertyMetaList().isEmpty()) {
             return null;
@@ -63,8 +64,6 @@ public class PrimaryKeyDescFactoryImpl implements PrimaryKeyDescFactory {
      * 
      * @param entityMeta
      *            エンティティメタデータ
-     * @param idPropertyMetaList
-     *            識別子のプロパティメタデータのリスト
      * @param primaryKeyDesc
      *            主キー記述
      */

@@ -18,10 +18,12 @@ package org.seasar.extension.jdbc.gen.task;
 import java.io.File;
 
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.internal.command.GenerateSqlFileTestCommand;
+import org.seasar.extension.jdbc.gen.internal.factory.Factory;
 
 /**
  * SQLファイルに対するテストクラスのJavaファイルを生成する{@link Task}です。

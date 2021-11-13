@@ -70,6 +70,7 @@ public class IdTableDescFactoryImpl implements IdTableDescFactory {
         this.uniqueKeyDescFactory = uniqueKeyDescFactory;
     }
 
+    @Override
     public TableDesc getTableDesc(EntityMeta entityMeta,
             PropertyMeta propertyMeta) {
         GenerationType generationType = propertyMeta.getGenerationType();
@@ -142,8 +143,6 @@ public class IdTableDescFactoryImpl implements IdTableDescFactory {
      * 
      * @param entityMeta
      *            エンティティメタデータ
-     * @param propertyMeta
-     *            プロパティメタデータ
      * @param tableDesc
      *            テーブル記述
      * @param generator
@@ -174,8 +173,6 @@ public class IdTableDescFactoryImpl implements IdTableDescFactory {
      * 
      * @param entityMeta
      *            エンティティメタデータ
-     * @param propertyMetaList
-     *            プロパティメタデータのリスト
      * @param tableDesc
      *            テーブル記述
      * @param generator

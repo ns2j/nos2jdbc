@@ -31,7 +31,7 @@ public class TemplateRuntimeException extends SRuntimeException {
     /**
      * {@link TemplateRuntimeException}を生成します。
      * 
-     * @param cause
+     * @param cause TemplateExceptioin
      */
     public TemplateRuntimeException(TemplateException cause) {
         super("ES2JDBCGen0002", new Object[] { cause }, cause);

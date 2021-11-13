@@ -65,7 +65,6 @@ import nos2jdbc.TransactionManagerRegistry;
  * ココマンドを実行するにはエンティティクラスを参照できるようにエンティティクラスが格納されたディレクトリをあらかじめクラスパスに設定しておく必要があります。
  * また、そのディレクトリは、プロパティ{@link #classpathDir}に設定しておく必要があります。
  * </p>
- * <p>
  * このコマンドは次の10種類のDDLを生成します。
  * <ul>
  * <li>テーブルを作成するDDL</li>
@@ -79,7 +78,6 @@ import nos2jdbc.TransactionManagerRegistry;
  * <li>補助的オブジェクトを作成するDDL</li>
  * <li>補助的ブジェクトを削除するDDL</li>
  * </ul>
- * </p>
  * <p>
  * このコマンドは、{@link #dump}が{@code true}の場合データベースのデータをテーブルごとにダンプします。
  * </p>
@@ -1226,8 +1224,6 @@ public class GenerateDdlCommand extends AbstractCommand {
      *            DDLのモデル
      * @param dir
      *            生成するファイルの出力先ディレクトリ
-     * @param fileName
-     *            ファイルの名前
      * @param templateName
      *            テンプレートファイルの名前
      * @return {@link GenerationContext}の実装
@@ -1368,6 +1364,7 @@ public class GenerateDdlCommand extends AbstractCommand {
         /** dropディレクトリ */
         protected ManagedFile dropDir;
 
+        @Override
         public void execute(DdlVersionDirectory versionDirectory) {
             createDir = versionDirectory.getCreateDirectory();
             dropDir = versionDirectory.getDropDirectory();
@@ -1386,6 +1383,7 @@ public class GenerateDdlCommand extends AbstractCommand {
             if (dump) {
                 sqlUnitExecutor.execute(new SqlUnitExecutor.Callback() {
 
+                    @Override
                     public void execute(SqlExecutionContext context) {
                         dumper.dump(context, databaseDesc, new File(createDir
                                 .asFile(), dumpDirName));
