@@ -68,6 +68,7 @@ public class DataSetOpe {
 
     /**
      * {@link DataSetOpe}を作成します。
+     * @param jdbcManager JdbcManager
      */
     public DataSetOpe(JdbcManager jdbcManager) {
         this.jdbcManager = (JdbcManagerImplementor)jdbcManager;
@@ -84,7 +85,6 @@ public class DataSetOpe {
 
     /**
      * データベースメタデータを返します。
-     * 
      * @return データベースメタデータ
      */
     public DatabaseMetaData getDatabaseMetaData() {
@@ -293,8 +293,8 @@ public class DataSetOpe {
     }
 
     /**
-     * @param table
-     * @return
+     * @param table DataTable
+     * @return DataTable
      */
     public DataTable reload(DataTable table) {
         return new SqlReloadTableReader(dataSource, table).read();
