@@ -32,12 +32,21 @@ import java.lang.annotation.Target;
 @Target( { ElementType.FIELD })
 public @interface ReferentialConstraint {
 
-    /** 制約を有効にする場合{@code true}、しない場合{@code false} */
+    /**
+     * 制約を有効にする場合{@code true}、しない場合{@code false} 
+     * @return boolean 
+     */
     boolean enable() default true;
 
-    /** 削除規則 */
+    /**
+     *  削除規則 
+     * @return ReferentialActionType 
+     */
     ReferentialActionType onDelete() default ReferentialActionType.NO_ACTION;
 
-    /** 更新規則 */
+    /**
+     *  更新規則
+     * @return ReferentialActionType 
+     */
     ReferentialActionType onUpdate() default ReferentialActionType.NO_ACTION;
 }

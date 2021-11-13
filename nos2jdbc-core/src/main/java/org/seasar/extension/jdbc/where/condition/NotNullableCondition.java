@@ -16,9 +16,6 @@
 package org.seasar.extension.jdbc.where.condition;
 
 import java.util.Collection;
-import java.util.List;
-
-import org.seasar.extension.jdbc.where.SimpleWhere;
 
 /**
  * Nullableでないプロパティの問い合わせ条件を表現するクラスです。
@@ -56,9 +53,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param value
      *            条件となる値
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#eq(String, Object)
      */
     public CONDITION eq(final VALUETYPE value) {
         condition.where.eq(condition.prefix + propertyName, value);
@@ -70,9 +65,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param value
      *            条件となる値
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#ne(String, Object)
      */
     public CONDITION ne(final VALUETYPE value) {
         condition.where.ne(condition.prefix + propertyName, value);
@@ -84,9 +77,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param value
      *            条件となる値
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#lt(String, Object)
      */
     public CONDITION lt(final VALUETYPE value) {
         condition.where.lt(condition.prefix + propertyName, value);
@@ -98,9 +89,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param value
      *            条件となる値
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#le(String, Object)
      */
     public CONDITION le(final VALUETYPE value) {
         condition.where.le(condition.prefix + propertyName, value);
@@ -112,9 +101,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param value
      *            条件となる値
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#gt(String, Object)
      */
     public CONDITION gt(final VALUETYPE value) {
         condition.where.gt(condition.prefix + propertyName, value);
@@ -126,9 +113,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param value
      *            条件となる値
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#ge(String, Object)
      */
     public CONDITION ge(final VALUETYPE value) {
         condition.where.ge(condition.prefix + propertyName, value);
@@ -140,9 +125,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param values
      *            条件となる値の並び
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#in(String, Object...)
      */
     public CONDITION in(final VALUETYPE... values) {
         condition.where.in(condition.prefix + propertyName, values);
@@ -154,9 +137,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param values
      *            条件となる値のコレクション
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#in(String, List)
      */
     public CONDITION in(final Collection<? extends VALUETYPE> values) {
         condition.where.in(condition.prefix + propertyName, values);
@@ -168,9 +149,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param values
      *            条件となる値の並び
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#notIn(String, Object...)
      */
     public CONDITION notIn(final VALUETYPE... values) {
         condition.where.notIn(condition.prefix + propertyName, values);
@@ -182,9 +161,7 @@ public class NotNullableCondition<CONDITION extends AbstractEntityCondition<COND
      * 
      * @param values
      *            条件となる値のコレクション
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#notIn(String, List)
      */
     public CONDITION notIn(final Collection<? extends VALUETYPE> values) {
         condition.where.notIn(condition.prefix + propertyName, values);

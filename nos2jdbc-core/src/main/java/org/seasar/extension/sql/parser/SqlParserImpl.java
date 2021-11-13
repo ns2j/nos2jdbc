@@ -51,7 +51,7 @@ public class SqlParserImpl implements SqlParser {
     /**
      * {@link SqlParserImpl}を作成します。
      * 
-     * @param sql
+     * @param sql String
      */
     public SqlParserImpl(String sql) {
         this(sql, true);
@@ -74,6 +74,7 @@ public class SqlParserImpl implements SqlParser {
         this.allowVariableSql = allowVariableSql;
     }
 
+    @Override
     public Node parse() {
         push(new ContainerNode());
         while (SqlTokenizer.EOF != tokenizer.next()) {

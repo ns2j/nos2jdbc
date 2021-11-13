@@ -676,7 +676,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
     /**
      * 識別子のインデックスのリストをintの配列に変換します。
      * 
-     * @param idIndexList
+     * @param idIndexList List&gt;Index&lt;
      * @return intの配列
      */
     protected int[] toIdIndexArray(List<Integer> idIndexList) {
@@ -1129,10 +1129,6 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
      *            プロパティ名
      * @param value
      *            プロパティの値
-     * @param valueList
-     *            値のリスト
-     * @param valueClassList
-     *            値のクラスのリスト
      */
     protected void prepareCondition(WhereClause whereTerm, String name,
             Object value) {

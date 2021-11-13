@@ -60,12 +60,11 @@ public class MultiValueOperator extends SingleValueOperator {
     }
 
     /**
-     * {@link #ignoreWhitespace()}が呼び出された場合で パラメータ値の要素が空文字列または空白のみの文字列なら
+     * パラメータ値の要素が空文字列または空白のみの文字列なら
      * <code>null</code>、 それ以外なら元の値からなる配列を返します。
      * 
-     * @param values
-     *            パラメータ値の配列
-     * @return {@link #ignoreWhitespace()}が呼び出された場合でパラメータ値の要素が空文字列または空白のみの文字列なら
+     * @param value Object
+     * @return パラメータ値の要素が空文字列または空白のみの文字列なら
      *         <code>null</code>、 それ以外なら元の値からなる配列
      */
     @Override

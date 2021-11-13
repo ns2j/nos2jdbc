@@ -17,6 +17,7 @@ package org.seasar.extension.jdbc;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import org.seasar.extension.jdbc.parameter.Parameter;
@@ -59,7 +60,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            内部結合する関連のプロパティ名
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> innerJoin(CharSequence name);
 
@@ -86,7 +87,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            </p>
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> innerJoin(CharSequence name, String condition,
             Object... params);
@@ -103,7 +104,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            付加的な結合条件
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> innerJoin(CharSequence name, Where condition);
 
@@ -119,7 +120,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            付加的な結合条件の配列
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> innerJoin(CharSequence name, Where... conditions);
 
@@ -131,7 +132,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param fetch
      *            関連するエンティティをフェッチするかどうか。
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> innerJoin(CharSequence name, boolean fetch);
 
@@ -156,7 +157,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            に定義されたメソッドによりパラメータをラージオブジェクトとして扱えます。
      *            </p>
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> innerJoin(CharSequence name, boolean fetch, String condition,
             Object... params);
@@ -171,7 +172,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param condition
      *            付加的な結合条件
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> innerJoin(CharSequence name, boolean fetch, Where condition);
 
@@ -185,7 +186,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param conditions
      *            付加的な結合条件の配列
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> innerJoin(CharSequence name, boolean fetch, Where... conditions);
 
@@ -199,7 +200,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            左外部結合する関連のプロパティ名
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name);
 
@@ -226,7 +227,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            </p>
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name, String condition,
             Object... params);
@@ -243,7 +244,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            付加的な結合条件
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name, Where condition);
 
@@ -259,7 +260,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            付加的な結合条件の配列
      * @return このインスタンス自身
      * @see JoinMeta
-     * @see #Join(CharSequence, JoinType)
+     * @see #join(CharSequence, JoinType)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name, Where... conditions);
 
@@ -271,7 +272,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param fetch
      *            関連するエンティティをフェッチするかどうか。
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch);
 
@@ -296,7 +297,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            に定義されたメソッドによりパラメータをラージオブジェクトとして扱えます。
      *            </p>
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch,
             String condition, Object... params);
@@ -311,7 +312,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param condition
      *            付加的な結合条件
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch,
             Where condition);
@@ -326,7 +327,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param conditions
      *            付加的な結合条件の配列
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> leftOuterJoin(CharSequence name, boolean fetch,
             Where... conditions);
@@ -342,7 +343,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param joinType
      *            結合タイプ
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> join(CharSequence name, JoinType joinType);
 
@@ -370,7 +371,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      *            に定義されたメソッドによりパラメータをラージオブジェクトとして扱えます。
      *            </p>
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> join(CharSequence name, JoinType joinType, String condition,
             Object... params);
@@ -388,7 +389,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param condition
      *            付加的な結合条件
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> join(CharSequence name, JoinType joinType, Where condition);
 
@@ -405,7 +406,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
      * @param conditions
      *            付加的な結合条件の配列
      * @return このインスタンス自身
-     * @see #Join(CharSequence, JoinType, boolean)
+     * @see #join(CharSequence, JoinType, boolean)
      */
     AutoSelect<T> join(CharSequence name, JoinType joinType, Where... conditions);
 
@@ -642,7 +643,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
     /**
      * ソート順を指定します。
      * 
-     * @param orderBy
+     * @param orderBy order by
      * @return このインスタンス自身
      */
     AutoSelect<T> orderBy(String orderBy);
@@ -650,7 +651,7 @@ public interface AutoSelect<T> extends Select<T, AutoSelect<T>> {
     /**
      * ソート順を指定します。
      * 
-     * @param orderByItems
+     * @param orderByItems OrderByItem
      * @return このインスタンス自身
      */
     AutoSelect<T> orderBy(OrderByItem... orderByItems);

@@ -33,12 +33,13 @@ public class SqlDeleteTableWriter extends SqlTableWriter {
     /**
      * {@link SqlDeleteTableWriter}を作成します。
      * 
-     * @param dataSource
+     * @param dataSource DataSource
      */
     public SqlDeleteTableWriter(DataSource dataSource) {
         super(dataSource);
     }
 
+    @Override
     protected void doWrite(DataTable table) {
         for (int i = 0; i < table.getRowSize(); ++i) {
             DataRow row = table.getRow(i);

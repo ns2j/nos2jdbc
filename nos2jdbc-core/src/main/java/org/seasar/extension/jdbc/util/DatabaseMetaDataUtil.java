@@ -95,10 +95,10 @@ public class DatabaseMetaDataUtil {
     /**
      * プライマリーキーの {@link Set}を返します。
      * 
-     * @param dbMetaData
-     * @param schema
-     * @param tableName
-     * @return
+     * @param dbMetaData DatabaseMetaData
+     * @param schema String
+     * @param tableName String
+     * @return Set
      */
     public static Set getPrimaryKeySet(DatabaseMetaData dbMetaData,
             String schema, String tableName) {

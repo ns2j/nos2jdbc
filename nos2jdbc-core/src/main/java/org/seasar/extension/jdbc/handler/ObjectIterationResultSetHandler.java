@@ -47,8 +47,6 @@ public class ObjectIterationResultSetHandler implements ResultSetHandler {
      *            値タイプ
      * @param limit
      *            リミット
-     * @param limit
-     *            リミット
      * @param callback
      *            反復コールバック
      */
@@ -59,6 +57,7 @@ public class ObjectIterationResultSetHandler implements ResultSetHandler {
         this.callback = callback;
     }
 
+    @Override
     public Object handle(final ResultSet rs) throws SQLException {
         final IterationContext iterationContext = new IterationContext();
         Object result = null;

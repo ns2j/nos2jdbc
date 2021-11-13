@@ -135,26 +135,31 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
      */
     protected boolean allowVariableSqlForBatchUpdate = true;
 
+    @Override
     public <T> AutoSelect<T> from(Class<T> baseClass) {
         return new AutoSelectImpl<T>(this, baseClass).maxRows(maxRows)
                 .fetchSize(fetchSize).queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> SqlSelect<T> selectBySql(Class<T> baseClass, String sql,
             Object... params) {
         return new SqlSelectImpl<T>(this, baseClass, sql, params).maxRows(
                 maxRows).fetchSize(fetchSize).queryTimeout(queryTimeout);
     }
 
+    @Override
     public long getCountBySql(String sql, Object... params) {
         return new SqlSelectImpl<Long>(this, Long.class, sql, params)
                 .getCount();
     }
 
+    @Override
     public <T> SqlFileSelect<T> selectBySqlFile(Class<T> baseClass, String path) {
         return selectBySqlFile(baseClass, path, null);
     }
 
+    @Override
     public <T> SqlFileSelect<T> selectBySqlFile(Class<T> baseClass,
             String path, Object parameter) {
         return new SqlFileSelectImpl<T>(this, baseClass, path, parameter)
@@ -162,30 +167,36 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
                         queryTimeout);
     }
 
+    @Override
     public long getCountBySqlFile(String path) {
         return new SqlFileSelectImpl<Long>(this, Long.class, path, null)
                 .getCount();
     }
 
+    @Override
     public long getCountBySqlFile(String path, Object parameter) {
         return new SqlFileSelectImpl<Long>(this, Long.class, path, parameter)
                 .getCount();
     }
 
+    @Override
     public <T> AutoInsert<T> insert(final T entity) {
         return new AutoInsertImpl<T>(this, entity).queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoBatchInsert<T> insertBatch(final T... entities) {
         return new AutoBatchInsertImpl<T>(this, Arrays.asList(entities))
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoBatchInsert<T> insertBatch(final List<T> entities) {
         return new AutoBatchInsertImpl<T>(this, entities)
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoUpdate<T> update(final T entity) {
         final EntityMeta entityMeta = entityMetaFactory.getEntityMeta(entity
                 .getClass());
@@ -196,6 +207,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
         return new AutoUpdateImpl<T>(this, entity).queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoBatchUpdate<T> updateBatch(final T... entities) {
         if (entities == null) {
             throw new NullPointerException("entities");
@@ -213,6 +225,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoBatchUpdate<T> updateBatch(final List<T> entities) {
         if (entities == null) {
             throw new NullPointerException("entities");
@@ -230,37 +243,44 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public SqlUpdate updateBySql(String sql, Class<?>... paramClasses) {
         return new SqlUpdateImpl(this, sql, paramClasses)
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public SqlBatchUpdate updateBatchBySql(String sql, Class<?>... paramClasses) {
         return new SqlBatchUpdateImpl(this, sql, paramClasses)
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public SqlFileUpdate updateBySqlFile(String path) {
         return new SqlFileUpdateImpl(this, path).queryTimeout(queryTimeout);
     }
 
+    @Override
     public SqlFileUpdate updateBySqlFile(String path, Object parameter) {
         return new SqlFileUpdateImpl(this, path, parameter)
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> SqlFileBatchUpdate<T> updateBatchBySqlFile(String path,
             List<T> params) {
         return new SqlFileBatchUpdateImpl<T>(this, path, params)
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> SqlFileBatchUpdate<T> updateBatchBySqlFile(String path,
             T... params) {
         return new SqlFileBatchUpdateImpl<T>(this, path, Arrays.asList(params))
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoDelete<T> delete(final T entity) {
         final EntityMeta entityMeta = entityMetaFactory.getEntityMeta(entity
                 .getClass());
@@ -271,6 +291,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
         return new AutoDeleteImpl<T>(this, entity).queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoBatchDelete<T> deleteBatch(final T... entities) {
         if (entities == null) {
             throw new NullPointerException("entities");
@@ -288,6 +309,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoBatchDelete<T> deleteBatch(final List<T> entities) {
         if (entities == null) {
             throw new NullPointerException("entities");
@@ -305,39 +327,47 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
                 .queryTimeout(queryTimeout);
     }
 
+    @Override
     public AutoProcedureCall call(String procedureName) {
         return call(procedureName, null);
     }
 
+    @Override
     public AutoProcedureCall call(String procedureName, Object parameter) {
         return new AutoProcedureCallImpl(this, procedureName, parameter)
                 .maxRows(maxRows).fetchSize(fetchSize).queryTimeout(
                         queryTimeout);
     }
 
+    @Override
     public SqlProcedureCall callBySql(String sql) {
         return callBySql(sql, null);
     }
 
+    @Override
     public SqlProcedureCall callBySql(String sql, Object parameter) {
         return new SqlProcedureCallImpl(this, sql, parameter).maxRows(maxRows)
                 .fetchSize(fetchSize).queryTimeout(queryTimeout);
     }
 
+    @Override
     public SqlFileProcedureCall callBySqlFile(String path) {
         return callBySqlFile(path, null);
     }
 
+    @Override
     public SqlFileProcedureCall callBySqlFile(String path, Object parameter) {
         return new SqlFileProcedureCallImpl(this, path, parameter).maxRows(
                 maxRows).fetchSize(fetchSize).queryTimeout(queryTimeout);
     }
 
+    @Override
     public <T> AutoFunctionCall<T> call(Class<T> resultClass,
             String functionName) {
         return call(resultClass, functionName, null);
     }
 
+    @Override
     public <T> AutoFunctionCall<T> call(Class<T> resultClass,
             String functionName, Object parameter) {
         return new AutoFunctionCallImpl<T>(this, resultClass, functionName,
@@ -345,10 +375,12 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
                 queryTimeout);
     }
 
+    @Override
     public <T> SqlFunctionCall<T> callBySql(Class<T> resultClass, String sql) {
         return callBySql(resultClass, sql, null);
     }
 
+    @Override
     public <T> SqlFunctionCall<T> callBySql(Class<T> resultClass, String sql,
             Object parameter) {
         return new SqlFunctionCallImpl<T>(this, resultClass, sql, parameter)
@@ -356,11 +388,13 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
                         queryTimeout);
     }
 
+    @Override
     public <T> SqlFileFunctionCall<T> callBySqlFile(Class<T> resultClass,
             String path) {
         return callBySqlFile(resultClass, path, null);
     }
 
+    @Override
     public <T> SqlFileFunctionCall<T> callBySqlFile(Class<T> resultClass,
             String path, Object parameter) {
         return new SqlFileFunctionCallImpl<T>(this, resultClass, path,
@@ -373,6 +407,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
      * 
      * @return JDBCコンテキスト
      */
+    @Override
     public JdbcContext getJdbcContext() {
         JdbcContext ctx = getTxBoundJdbcContext();
         if (ctx != null) {
@@ -388,6 +423,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
         return ctx;
     }
 
+    @Override
     public String getSelectableDataSourceName() {
         return getSelectableDataSourceNameInternal();
     }
@@ -503,6 +539,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
      * 
      * @return データソース
      */
+    @Override
     public DataSource getDataSource() {
         return dataSource;
     }
@@ -574,6 +611,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
         this.queryTimeout = queryTimeout;
     }
 
+    @Override
     public boolean isAllowVariableSqlForBatchUpdate() {
         return allowVariableSqlForBatchUpdate;
     }
@@ -601,7 +639,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
     /**
      * データソースファクトリを設定します。
      * 
-     * @param dataSourceFactory
+     * @param dataSourceFactory DataSourceFactory
      */
 //i    @Binding(bindingType = BindingType.MAY)
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
@@ -613,6 +651,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
      * 
      * @return データベースの方言
      */
+    @Override
     public DbmsDialect getDialect() {
         return dialect;
     }
@@ -632,6 +671,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
      * 
      * @return エンティティメタデータファクトリ
      */
+    @Override
     public EntityMetaFactory getEntityMetaFactory() {
         return entityMetaFactory;
     }
@@ -646,6 +686,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
         this.entityMetaFactory = entityMetaFactory;
     }
 
+    @Override
     public PersistenceConvention getPersistenceConvention() {
         return persistenceConvention;
     }
@@ -681,9 +722,11 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
             this.context = context;
         }
 
+        @Override
         public final void beforeCompletion() {
         }
 
+        @Override
         public void afterCompletion(final int status) {
             context.destroy();
         }

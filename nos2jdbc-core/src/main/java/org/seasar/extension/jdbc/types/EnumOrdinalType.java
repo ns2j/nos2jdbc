@@ -36,7 +36,7 @@ public class EnumOrdinalType extends AbstractValueType {
     /**
      * インスタンスを構築します。
      * 
-     * @param enumClass
+     * @param enumClass enum class
      */
     @SuppressWarnings("unchecked")
     public EnumOrdinalType(Class<? extends Enum> enumClass) {
@@ -44,6 +44,7 @@ public class EnumOrdinalType extends AbstractValueType {
         this.enumClass = enumClass;
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, int index) throws SQLException {
         final int ordinal = resultSet.getInt(index);
         if (ordinal == 0 && resultSet.wasNull()) {
@@ -52,6 +53,7 @@ public class EnumOrdinalType extends AbstractValueType {
         return toEnum(ordinal);
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, String columnName)
             throws SQLException {
         final int ordinal = resultSet.getInt(columnName);
@@ -61,6 +63,7 @@ public class EnumOrdinalType extends AbstractValueType {
         return toEnum(ordinal);
     }
 
+    @Override
     public Object getValue(CallableStatement cs, int index) throws SQLException {
         final int ordinal = cs.getInt(index);
         if (ordinal == 0 && cs.wasNull()) {
@@ -69,6 +72,7 @@ public class EnumOrdinalType extends AbstractValueType {
         return toEnum(ordinal);
     }
 
+    @Override
     public Object getValue(CallableStatement cs, String parameterName)
             throws SQLException {
         final int ordinal = cs.getInt(parameterName);
@@ -78,6 +82,7 @@ public class EnumOrdinalType extends AbstractValueType {
         return toEnum(ordinal);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void bindValue(PreparedStatement ps, int index, Object value)
             throws SQLException {
@@ -88,6 +93,7 @@ public class EnumOrdinalType extends AbstractValueType {
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void bindValue(CallableStatement cs, String parameterName,
             Object value) throws SQLException {
@@ -98,6 +104,7 @@ public class EnumOrdinalType extends AbstractValueType {
         }
     }
 
+    @Override
     public String toText(Object value) {
         if (value == null) {
             return BindVariableUtil.nullText();

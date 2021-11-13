@@ -17,6 +17,7 @@ package org.seasar.extension.jdbc;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.seasar.extension.jdbc.annotation.InOut;
@@ -295,7 +296,6 @@ public interface JdbcManager {
      *            </p>
      * @return SQLファイル更新
      * @see SqlFileUpdate
-     * @see
      */
     SqlFileUpdate updateBySqlFile(String path, Object parameter);
 
@@ -488,17 +488,15 @@ public interface JdbcManager {
      *            INパラメータが1つで値が<code>null</code>にならない場合は、数値や文字列などを直接指定します。
      *            それ以外は、JavaBeansを指定します。
      *            </p>
-     *            <p>
-     *            プロシージャを呼び出すパラメータの順番にJavaBeansのフィールドを定義します。<br />
+     *            プロシージャを呼び出すパラメータの順番にJavaBeansのフィールドを定義します。<br>
      *            <ul>
      *            <li>フィールド名が_OUTで終わっている場合<code>OUT</code>パラメータになります。</li>
      *            <li>フィールド名が_IN_OUTで終わっている場合<code>IN OUT</code>パラメータになります。</li>
      *            <li>フィールド名が_INで終わっている場合<code>IN</code>パラメータになります。</li>
      *            <li>フィールド名が_OUT、_IN_OUT、_INで終わっていない場合は、<code>IN</code>パラメータになります。</li>
      *            </ul>
-     *            </p>
      *            <p>
-     *            プロシージャが結果セットを返す場合、フィールドの型は<code>List<レコードの型></code>にします。
+     *            プロシージャが結果セットを返す場合、フィールドの型は<code>List&lt;レコードの型&gt;</code>にします。
      *            </p>
      *            <p>
      *            JavaBeansの場合、継承もとのクラスのフィールドは認識しません。

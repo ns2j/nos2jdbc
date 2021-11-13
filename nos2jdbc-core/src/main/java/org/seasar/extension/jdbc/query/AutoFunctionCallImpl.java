@@ -43,7 +43,6 @@ public class AutoFunctionCallImpl<T> extends
      *            戻り値のクラス
      * @param functionName
      *            呼び出すストアドファンクションの名前
-     * @see #AutoProcedureCallImpl(JdbcManagerImplementor, Object)
      */
     public AutoFunctionCallImpl(final JdbcManagerImplementor jdbcManager,
             final Class<T> resultClass, final String functionName) {
@@ -72,7 +71,7 @@ public class AutoFunctionCallImpl<T> extends
      *            いずれのアノテーションも付けられていない場合は、<code>IN</code>パラメータになります。
      *            </p>
      *            <p>
-     *            プロシージャが結果セットを返す場合、フィールドの型は<code>List&lt;レコードの型&gt;</code>にします。
+     *            プロシージャが結果セットを返す場合、フィールドの型は<code>List&gt;レコードの型&lt;</code>にします。
      *            </p>
      *            <p>
      *            継承もとのクラスのフィールドは認識しません。

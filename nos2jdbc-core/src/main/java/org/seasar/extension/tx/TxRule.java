@@ -63,8 +63,6 @@ public class TxRule {
      * 
      * @param adapter
      *            トランザクションマネージャへのアダプタ
-     * @throws Exception
-     *             トランザクション制御で例外が発生した場合にスローされます
      */
     public void complete(final TransactionManagerAdapter adapter) {
         if (!commit) {

@@ -61,8 +61,6 @@ public class TemporalParameter implements SqlArgWrapper {
      * 
      * @param value
      *            値
-     * @param clazz
-     *            時制のクラス
      * @param temporalType
      *            時制の種別
      */
@@ -80,6 +78,7 @@ public class TemporalParameter implements SqlArgWrapper {
      * 
      * @return 値
      */
+    @Override
     public Object getValue() {
         return value;
     }

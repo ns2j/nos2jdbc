@@ -42,6 +42,7 @@ public abstract class AbstractXAResource implements XAResource,
     public AbstractXAResource() {
     }
 
+    @Override
     public void start(Xid xid, int flags) throws XAException {
         switch (flags) {
         case TMNOFLAGS:
@@ -108,6 +109,7 @@ public abstract class AbstractXAResource implements XAResource,
      */
     protected abstract void doResume(Xid xid) throws XAException;
 
+    @Override
     public void end(Xid xid, int flags) throws XAException {
         assertCurrentXidSame(xid);
         assertStatusActive();
@@ -158,7 +160,7 @@ public abstract class AbstractXAResource implements XAResource,
      * 
      * @param xid
      *            トランザクション識別子
-     * @throws XAException
+     * @throws XAException XAEXception
      */
     protected abstract void doFail(Xid xid) throws XAException;
 
@@ -177,6 +179,7 @@ public abstract class AbstractXAResource implements XAResource,
      */
     protected abstract void doSuccess(Xid xid) throws XAException;
 
+    @Override
     public int prepare(Xid xid) throws XAException {
         assertCurrentXidSame(xid);
         assertStatusSuccess();
@@ -206,6 +209,7 @@ public abstract class AbstractXAResource implements XAResource,
      */
     protected abstract int doPrepare(Xid xid) throws XAException;
 
+    @Override
     public void commit(Xid xid, boolean onePhase) throws XAException {
         assertCurrentXidSame(xid);
         if (onePhase) {
@@ -241,6 +245,7 @@ public abstract class AbstractXAResource implements XAResource,
         status = RS_NONE;
     }
 
+    @Override
     public void forget(Xid xid) throws XAException {
         assertCurrentXidSame(xid);
         doForget(xid);
@@ -257,10 +262,12 @@ public abstract class AbstractXAResource implements XAResource,
      */
     protected abstract void doForget(Xid xid) throws XAException;
 
+    @Override
     public Xid[] recover(final int flag) throws XAException {
         return null;
     }
 
+    @Override
     public void rollback(final Xid xid) throws XAException {
         assertCurrentXidSame(xid);
         assertStatusSuccessOrFailOrPrepared();
@@ -289,14 +296,17 @@ public abstract class AbstractXAResource implements XAResource,
      */
     protected abstract void doRollback(Xid xid) throws XAException;
 
+    @Override
     public boolean isSameRM(XAResource xar) throws XAException {
         return false;
     }
 
+    @Override
     public int getTransactionTimeout() throws XAException {
         return timeout;
     }
 
+    @Override
     public boolean setTransactionTimeout(int timeout) throws XAException {
         this.timeout = timeout;
         return true;

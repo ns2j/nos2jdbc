@@ -328,8 +328,8 @@ public class ValueTypes {
     /**
      * クラスに対する{@link ValueType}を登録します。
      * 
-     * @param clazz
-     * @param valueType
+     * @param clazz Class
+     * @param valueType ValuType
      */
     public static void registerValueType(Class clazz, ValueType valueType) {
         types.put(clazz, valueType);
@@ -338,7 +338,7 @@ public class ValueTypes {
     /**
      * クラスに対する{@link ValueType}の登録を解除します。
      * 
-     * @param clazz
+     * @param clazz Class
      */
     public static void unregisterValueType(Class clazz) {
         types.remove(clazz);
@@ -389,7 +389,7 @@ public class ValueTypes {
     /**
      * {@link ValueType}を返します。
      * 
-     * @param obj
+     * @param obj Object
      * @return {@link ValueType}
      */
     public static ValueType getValueType(Object obj) {
@@ -402,7 +402,7 @@ public class ValueTypes {
     /**
      * {@link ValueType}を返します。
      * 
-     * @param clazz
+     * @param clazz Class
      * @return {@link ValueType}
      */
     public static ValueType getValueType(Class clazz) {
@@ -563,7 +563,7 @@ public class ValueTypes {
     /**
      * sqltypeに応じた {@link Class}を返します。
      * 
-     * @param sqltype
+     * @param sqltype int
      * @return {@link Class}
      */
     public static Class getType(int sqltype) {
@@ -609,7 +609,7 @@ public class ValueTypes {
     /**
      * {@link ValueType}を返します。
      * 
-     * @param sqltype
+     * @param sqltype int
      * @return {@link ValueType}
      */
     public static ValueType getValueType(int sqltype) {

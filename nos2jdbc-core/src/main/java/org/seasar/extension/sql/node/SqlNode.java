@@ -31,7 +31,7 @@ public class SqlNode extends AbstractNode {
     /**
      * <code>SqlNode</code>を作成します。
      * 
-     * @param sql
+     * @param sql String
      */
     public SqlNode(String sql) {
         this.sql = sql;
@@ -40,12 +40,13 @@ public class SqlNode extends AbstractNode {
     /**
      * SQLを返します。
      * 
-     * @return
+     * @return String
      */
     public String getSql() {
         return sql;
     }
 
+    @Override
     public void accept(SqlContext ctx) {
         ctx.addSql(sql);
     }

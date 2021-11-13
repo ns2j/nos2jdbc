@@ -36,19 +36,23 @@ import org.seasar.framework.exception.ParseRuntimeException;
  */
 public class DateTimestampType extends TimestampType {
 
+    @Override
     public Object getValue(ResultSet resultSet, int index) throws SQLException {
         return toDate(super.getValue(resultSet, index));
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, String columnName)
             throws SQLException {
         return toDate(super.getValue(resultSet, columnName));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, int index) throws SQLException {
         return toDate(super.getValue(cs, index));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, String parameterName)
             throws SQLException {
         return toDate(super.getValue(cs, parameterName));
@@ -80,6 +84,7 @@ public class DateTimestampType extends TimestampType {
      *            値
      * @return {@link Timestamp}
      */
+    @Override
     protected Timestamp toTimestamp(Object value) {
         return new Timestamp(toDate(value).getTime());
     }

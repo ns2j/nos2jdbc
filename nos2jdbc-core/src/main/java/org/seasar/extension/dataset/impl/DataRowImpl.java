@@ -53,7 +53,7 @@ public class DataRowImpl implements DataRow {
     /**
      * {@link DataRowImpl}を作成します。
      * 
-     * @param table
+     * @param table table
      */
     public DataRowImpl(DataTable table) {
         table_ = table;

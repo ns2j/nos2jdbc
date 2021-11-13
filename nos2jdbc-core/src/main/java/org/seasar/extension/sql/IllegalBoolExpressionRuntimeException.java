@@ -32,7 +32,7 @@ public class IllegalBoolExpressionRuntimeException extends SRuntimeException {
     /**
      * <code>IllegalBoolExpressionRuntimeException</code>を作成します。
      * 
-     * @param expression
+     * @param expression String
      */
     public IllegalBoolExpressionRuntimeException(String expression) {
         super("ESSR0084", new Object[] { expression });
@@ -42,7 +42,7 @@ public class IllegalBoolExpressionRuntimeException extends SRuntimeException {
     /**
      * OGNLの表現を返します。
      * 
-     * @return
+     * @return String
      */
     public String getExpression() {
         return expression;

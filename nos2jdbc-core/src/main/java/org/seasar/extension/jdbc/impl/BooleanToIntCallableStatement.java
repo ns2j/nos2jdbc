@@ -30,36 +30,42 @@ public class BooleanToIntCallableStatement extends CallableStatementWrapper {
     /**
      * {@link BooleanToIntCallableStatement}を作成します。
      * 
-     * @param original
+     * @param original CallableStatement
      */
     public BooleanToIntCallableStatement(CallableStatement original) {
         super(original);
     }
 
+    @Override
     public void setBoolean(int parameterIndex, boolean x) throws SQLException {
         setInt(parameterIndex, x ? 1 : 0);
     }
 
+    @Override
     public void setBoolean(String parameterName, boolean x) throws SQLException {
         setInt(parameterName, x ? 1 : 0);
     }
 
+    @Override
     public void setNull(int paramIndex, int sqlType, String typeName)
             throws SQLException {
 
         super.setNull(paramIndex, changeSqlTypeIfBoolean(sqlType), typeName);
     }
 
+    @Override
     public void setNull(int parameterIndex, int sqlType) throws SQLException {
         super.setNull(parameterIndex, changeSqlTypeIfBoolean(sqlType));
     }
 
+    @Override
     public void setNull(String parameterName, int sqlType, String typeName)
             throws SQLException {
 
         super.setNull(parameterName, changeSqlTypeIfBoolean(sqlType), typeName);
     }
 
+    @Override
     public void setNull(String parameterName, int sqlType) throws SQLException {
         super.setNull(parameterName, changeSqlTypeIfBoolean(sqlType));
     }

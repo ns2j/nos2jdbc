@@ -40,7 +40,7 @@ public class EmbeddedValueNode extends AbstractNode {
     /**
      * <code>EmbeddedValueNode</code>を作成します。
      * 
-     * @param expression
+     * @param expression String
      */
     public EmbeddedValueNode(String expression) {
         this.expression = expression;
@@ -54,12 +54,13 @@ public class EmbeddedValueNode extends AbstractNode {
     /**
      * 式を返します。
      * 
-     * @return
+     * @return String
      */
     public String getExpression() {
         return expression;
     }
 
+    @Override
     public void accept(SqlContext ctx) {
         Object value = ctx.getArg(baseName);
         Class clazz = ctx.getArgType(baseName);

@@ -41,7 +41,6 @@ public class SqlFunctionCallImpl<T> extends
      *            戻り値のクラス
      * @param sql
      *            SQL
-     * @see #SqlFunctionCallImpl(JdbcManagerImplementor, String, Object)
      */
     public SqlFunctionCallImpl(final JdbcManagerImplementor jdbcManager,
             final Class<T> resultClass, final String sql) {

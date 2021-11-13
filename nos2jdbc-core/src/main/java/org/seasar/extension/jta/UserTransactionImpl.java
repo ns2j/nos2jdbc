@@ -39,35 +39,41 @@ public class UserTransactionImpl implements UserTransaction {
     /**
      * {@link UserTransactionImpl}を作成します。
      * 
-     * @param tm
+     * @param tm TransactionManager
      */
     public UserTransactionImpl(final TransactionManager tm) {
         this.tm = tm;
     }
 
+    @Override
     public void begin() throws NotSupportedException, SystemException {
         tm.begin();
     }
 
+    @Override
     public void commit() throws HeuristicMixedException,
             HeuristicRollbackException, IllegalStateException,
             RollbackException, SecurityException, SystemException {
         tm.commit();
     }
 
+    @Override
     public int getStatus() throws SystemException {
         return tm.getStatus();
     }
 
+    @Override
     public void rollback() throws IllegalStateException, SecurityException,
             SystemException {
         tm.rollback();
     }
 
+    @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
         tm.setRollbackOnly();
     }
 
+    @Override
     public void setTransactionTimeout(final int timeout) throws SystemException {
         tm.setTransactionTimeout(timeout);
     }

@@ -20,9 +20,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-import oracle.sql.DATE;
-
 import org.seasar.extension.jdbc.ValueType;
+
+import oracle.sql.DATE;
 
 /**
  * {@link Date}型をOracle固有の{@literal DATE}型として扱う{@link ValueType}です。

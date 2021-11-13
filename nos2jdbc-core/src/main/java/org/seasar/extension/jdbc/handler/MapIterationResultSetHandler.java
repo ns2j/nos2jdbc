@@ -41,7 +41,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
     protected IterationCallback callback;
 
     /**
-     * {@link MapListSupportLimitResultSetHandler}を作成します。
+     * {@link MapIterationResultSetHandler}を作成します。
      * 
      * @param mapClass
      *            マップクラス
@@ -64,6 +64,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
         this.callback = callback;
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException {
         final PropertyType[] propertyTypes = createPropertyTypes(rs
                 .getMetaData());

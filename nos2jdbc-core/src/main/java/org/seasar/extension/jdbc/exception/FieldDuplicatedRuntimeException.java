@@ -33,7 +33,7 @@ public class FieldDuplicatedRuntimeException extends SRuntimeException {
     /**
      * インスタンスを構築します。
      * 
-     * @param field
+     * @param field field
      */
     public FieldDuplicatedRuntimeException(Field field) {
         super("ESSR0760", new Object[] { field.getDeclaringClass().getName(),

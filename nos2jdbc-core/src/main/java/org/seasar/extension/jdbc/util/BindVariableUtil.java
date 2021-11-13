@@ -20,6 +20,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import org.seasar.extension.jdbc.IllegalBindArgSizeRuntimeException;
 import org.seasar.extension.jdbc.ValueType;
 
@@ -207,7 +208,7 @@ public class BindVariableUtil {
     /**
      * <code>null</code>の文字列表現を返します。
      * 
-     * @return
+     * @return String
      */
     public static String nullText() {
         return NULL;
@@ -421,7 +422,7 @@ public class BindVariableUtil {
      * 
      * @param text
      *            文字列
-     * @return
+     * @return String
      */
     protected static String quote(String text) {
         return "'" + text + "'";

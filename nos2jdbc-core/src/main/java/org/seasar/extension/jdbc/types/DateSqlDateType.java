@@ -35,19 +35,23 @@ import org.seasar.framework.exception.ParseRuntimeException;
  */
 public class DateSqlDateType extends SqlDateType {
 
+    @Override
     public Object getValue(ResultSet resultSet, int index) throws SQLException {
         return toDate(super.getValue(resultSet, index));
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, String columnName)
             throws SQLException {
         return toDate(super.getValue(resultSet, columnName));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, int index) throws SQLException {
         return toDate(super.getValue(cs, index));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, String parameterName)
             throws SQLException {
         return toDate(super.getValue(cs, parameterName));
@@ -72,6 +76,7 @@ public class DateSqlDateType extends SqlDateType {
         }
     }
 
+    @Override
     protected java.sql.Date toSqlDate(Object value) {
         Calendar base = Calendar.getInstance();
         base.setTime(toDate(value));

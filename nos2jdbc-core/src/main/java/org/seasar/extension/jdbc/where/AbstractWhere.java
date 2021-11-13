@@ -44,7 +44,7 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     protected List<String> propertyNameList = new ArrayList<String>();
 
     /**
-     * {@link #eq(String, Object)}等で渡されたパラメータ値が空文字列または空白のみの文字列なら
+     * {@link #eq(CharSequence, Object)}等で渡されたパラメータ値が空文字列または空白のみの文字列なら
      * <code>null</code>として扱い、 条件に加えない場合は<code>true</code>
      */
     protected boolean excludesWhitespace;
@@ -56,7 +56,7 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     }
 
     /**
-     * {@link #eq(String, Object)}等で渡されたパラメータ値が空文字列または空白のみの文字列なら
+     * {@link #eq(CharSequence, Object)}等で渡されたパラメータ値が空文字列または空白のみの文字列なら
      * <code>null</code>として扱い、条件に加えないことを指定します。
      * 
      * @return このインスタンス自身
@@ -69,7 +69,7 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     }
 
     /**
-     * {@link #eq(String, Object)}等で渡されたパラメータ値が空文字列または空白のみの文字列なら
+     * {@link #eq(CharSequence, Object)}等で渡されたパラメータ値が空文字列または空白のみの文字列なら
      * <code>null</code>として扱い、条件に加えないことを指定します。
      * 
      * @return このインスタンス自身
@@ -83,8 +83,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>=</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -100,8 +100,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>&lt;&gt;</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -117,8 +117,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>&lt;</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -134,8 +134,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>&lt;=</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -151,8 +151,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>&gt;</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -168,8 +168,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>&gt;=</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -185,8 +185,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>in</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param values
+     * @param propertyName CharSequence
+     * @param values Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -202,8 +202,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>in</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param values
+     * @param propertyName CharSequence
+     * @param values Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -219,8 +219,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>not in</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param values
+     * @param propertyName CharSequence
+     * @param values Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -236,8 +236,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>not in</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param values
+     * @param propertyName CharSequence
+     * @param values Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -253,8 +253,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>like</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -271,9 +271,9 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>like</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
-     * @param escape
+     * @param propertyName CharSequence
+     * @param value Object
+     * @param escape char
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -291,8 +291,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>not like</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -309,9 +309,9 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>not like</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
-     * @param escape
+     * @param propertyName CharSequence
+     * @param value Object
+     * @param escape char
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -330,8 +330,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>like '?%'</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -353,8 +353,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>not like '?%'</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -376,8 +376,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>like '%?'</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -400,8 +400,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>not like '%?'</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -423,8 +423,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>like '%?%'</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -446,8 +446,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>not like '%?%'</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -469,8 +469,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>is null</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -485,8 +485,8 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
     /**
      * <code>is not null</code>の条件を追加します。
      * 
-     * @param propertyName
-     * @param value
+     * @param propertyName CharSequence
+     * @param value Object
      * @return このインスタンス自身
      */
     @SuppressWarnings("unchecked")
@@ -499,14 +499,17 @@ public class AbstractWhere<T extends AbstractWhere<T>> implements Where {
         return (T) this;
     }
 
+    @Override
     public String getCriteria() {
         return new String(criteriaSb);
     }
 
+    @Override
     public Object[] getParams() {
         return paramList.toArray();
     }
 
+    @Override
     public String[] getPropertyNames() {
         return propertyNameList.toArray(new String[propertyNameList.size()]);
     }

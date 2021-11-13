@@ -53,8 +53,8 @@ public class ConfigurableStatementFactory implements StatementFactory {
 
     /**
      * {@link ConfigurableStatementFactory}を作成します。
-     * 
-     * @param statementFactory
+     *
+     * @param statementFactory StatementFactory
      */
     public ConfigurableStatementFactory(StatementFactory statementFactory) {
         if (statementFactory == null) {
@@ -63,6 +63,7 @@ public class ConfigurableStatementFactory implements StatementFactory {
         this.statementFactory = statementFactory;
     }
 
+    @Override
     public PreparedStatement createPreparedStatement(Connection con, String sql) {
         PreparedStatement ps = statementFactory.createPreparedStatement(con,
                 sql);
@@ -70,6 +71,7 @@ public class ConfigurableStatementFactory implements StatementFactory {
         return ps;
     }
 
+    @Override
     public CallableStatement createCallableStatement(Connection con, String sql) {
         CallableStatement cs = statementFactory.createCallableStatement(con,
                 sql);
@@ -80,7 +82,7 @@ public class ConfigurableStatementFactory implements StatementFactory {
     /**
      * {@link PreparedStatement}をカスタマイズします。
      * 
-     * @param ps
+     * @param ps PreparedStatement
      */
     protected void configurePreparedStatement(PreparedStatement ps) {
         if (fetchSize != null) {
@@ -97,7 +99,7 @@ public class ConfigurableStatementFactory implements StatementFactory {
     /**
      * フェッチサイズを設定します。
      * 
-     * @param fetchSize
+     * @param fetchSize Integer
      */
     public void setFetchSize(Integer fetchSize) {
         this.fetchSize = fetchSize;
@@ -106,7 +108,7 @@ public class ConfigurableStatementFactory implements StatementFactory {
     /**
      * 最大行数を設定します。
      * 
-     * @param maxRows
+     * @param maxRows Integer
      */
     public void setMaxRows(Integer maxRows) {
         this.maxRows = maxRows;
@@ -115,7 +117,7 @@ public class ConfigurableStatementFactory implements StatementFactory {
     /**
      * クエリタイムアウトを設定します。
      * 
-     * @param queryTimeout
+     * @param queryTimeout Integer
      */
     public void setQueryTimeout(Integer queryTimeout) {
         this.queryTimeout = queryTimeout;

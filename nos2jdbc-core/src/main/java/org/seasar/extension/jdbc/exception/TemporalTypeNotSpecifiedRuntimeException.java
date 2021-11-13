@@ -16,6 +16,7 @@
 package org.seasar.extension.jdbc.exception;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.TemporalType;
 

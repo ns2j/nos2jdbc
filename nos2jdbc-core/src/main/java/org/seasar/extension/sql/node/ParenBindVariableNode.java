@@ -37,7 +37,7 @@ public class ParenBindVariableNode extends AbstractNode {
     /**
      * <code>ParenBindVariableNode</code>を作成します。
      * 
-     * @param expression
+     * @param expression String
      */
     public ParenBindVariableNode(String expression) {
         this.expression = expression;
@@ -47,12 +47,13 @@ public class ParenBindVariableNode extends AbstractNode {
     /**
      * 式を返します。
      * 
-     * @return
+     * @return String
      */
     public String getExpression() {
         return expression;
     }
 
+    @Override
     public void accept(SqlContext ctx) {
         Object var = OgnlUtil.getValue(parsedExpression, ctx);
         if (var instanceof List) {
@@ -68,8 +69,8 @@ public class ParenBindVariableNode extends AbstractNode {
     }
 
     /**
-     * @param ctx
-     * @param array
+     * @param ctx SqlContext
+     * @param array Object
      */
     protected void bindArray(SqlContext ctx, Object array) {
         int length = Array.getLength(array);

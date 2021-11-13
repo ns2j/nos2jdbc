@@ -143,7 +143,7 @@ public class Parameter {
      *            プロパティ記述
      * @param value
      *            値
-     * @return
+     * @return Object
      */
     public static Object wrapIfNecessary(PropertyDesc propertyDesc, Object value) {
         Field field = propertyDesc.getField();
@@ -186,7 +186,7 @@ public class Parameter {
      * </code>
      * <p>
      * 最初に{@link #params(String, Object)}を呼び出し、 続けて
-     * {@link Maps#$(String, Object)}でパラメータを追加し、 最後に
+     * {@link Maps#$(Object, Object)}でパラメータを追加し、 最後に
      * {@link Maps#$()}を呼び出すことで{@link Map}になります。
      * </p>
      * 

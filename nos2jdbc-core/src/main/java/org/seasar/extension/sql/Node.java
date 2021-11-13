@@ -33,22 +33,22 @@ public interface Node {
     /**
      * 指定されたインデックス番号<code>index</code>の<code>Node</code>を返します。
      * 
-     * @param index
-     * @return
+     * @param index int
+     * @return Node
      */
     Node getChild(int index);
 
     /**
      * 子供の<code>Node</code>を追加します。
      * 
-     * @param node
+     * @param node Node
      */
     void addChild(Node node);
 
     /**
      * <code>CommandContext</code>をこの<code>Node</code>に、 適用します。
      * 
-     * @param ctx
+     * @param ctx SqlContext
      */
     void accept(SqlContext ctx);
 }

@@ -51,56 +51,56 @@ public interface SqlTokenizer {
     /**
      * トークンを返します。
      * 
-     * @return
+     * @return String
      */
     String getToken();
 
     /**
      * SQLを返します。
      * 
-     * @return
+     * @return String
      */
     String getSql();
 
     /**
      * 現在解析しているポジションより前のSQLを返します。
      * 
-     * @return
+     * @return String
      */
     String getBefore();
 
     /**
      * 現在解析しているポジションより後ろのSQLを返します。
      * 
-     * @return
+     * @return String
      */
     String getAfter();
 
     /**
      * 現在解析しているポジションを返します。
      * 
-     * @return
+     * @return String
      */
     int getPosition();
 
     /**
      * 現在のトークン種別を返します。
      * 
-     * @return
+     * @return int
      */
     int getTokenType();
 
     /**
      * 次のトークン種別を返します。
      * 
-     * @return
+     * @return int
      */
     int getNextTokenType();
 
     /**
      * 次のトークンに進みます。
      * 
-     * @return
+     * @return int
      */
     int next();
 
@@ -114,7 +114,7 @@ public interface SqlTokenizer {
     /**
      * ホワイトスペースをスキップします。
      * 
-     * @return
+     * @return String
      */
     String skipWhitespace();
 }

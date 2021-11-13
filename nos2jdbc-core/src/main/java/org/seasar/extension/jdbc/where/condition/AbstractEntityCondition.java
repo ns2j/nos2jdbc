@@ -17,7 +17,6 @@ package org.seasar.extension.jdbc.where.condition;
 
 import org.seasar.extension.jdbc.Where;
 import org.seasar.extension.jdbc.where.ComplexWhere;
-import org.seasar.extension.jdbc.where.SimpleWhere;
 
 /**
  * エンティティ固有の問い合わせ条件を構築するための抽象クラスです。
@@ -59,7 +58,6 @@ public abstract class AbstractEntityCondition<CONDITION extends AbstractEntityCo
      * これまでに追加された条件とこれから追加される条件をORで結合します。
      * 
      * @return このインスタンス自身
-     * @see SimpleWhere#or()
      */
     @SuppressWarnings("unchecked")
     public CONDITION or() {
@@ -73,7 +71,6 @@ public abstract class AbstractEntityCondition<CONDITION extends AbstractEntityCo
      * @param factor
      *            ANDで結合される条件
      * @return このインスタンス自身
-     * @see SimpleWhere#and(Where)
      */
     @SuppressWarnings("unchecked")
     public CONDITION and(final Where factor) {
@@ -81,14 +78,17 @@ public abstract class AbstractEntityCondition<CONDITION extends AbstractEntityCo
         return (CONDITION) this;
     }
 
+    @Override
     public String getCriteria() {
         return where.getCriteria();
     }
 
+    @Override
     public Object[] getParams() {
         return where.getParams();
     }
 
+    @Override
     public String[] getPropertyNames() {
         return where.getPropertyNames();
     }

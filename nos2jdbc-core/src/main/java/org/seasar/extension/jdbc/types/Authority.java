@@ -28,15 +28,15 @@ public class Authority {
     }
 
     /**
-     * @param level
-     * @return
+     * @param level int
+     * @return Authority
      */
     public static Authority valueOf(int level) {
         return new Authority(level);
     }
 
     /**
-     * @return
+     * @return int
      */
     public int value() {
         return level;

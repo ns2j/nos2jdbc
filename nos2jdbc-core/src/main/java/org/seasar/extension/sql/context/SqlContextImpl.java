@@ -18,11 +18,11 @@ package org.seasar.extension.sql.context;
 import java.util.ArrayList;
 import java.util.List;
 
-import ognl.OgnlRuntime;
-
 import org.seasar.extension.sql.SqlContext;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CaseInsensitiveMap;
+
+import ognl.OgnlRuntime;
 
 /**
  * {@link SqlContext}の実装クラスです。
@@ -62,13 +62,14 @@ public class SqlContextImpl implements SqlContext {
     /**
      * <code>SqlContextImpl</code>を作成します。
      * 
-     * @param parent
+     * @param parent SqlContext
      */
     public SqlContextImpl(SqlContext parent) {
         this.parent = parent;
         enabled = false;
     }
 
+    @Override
     public Object getArg(String name) {
         if (args.containsKey(name)) {
             return args.get(name);
@@ -83,6 +84,7 @@ public class SqlContextImpl implements SqlContext {
         }
     }
 
+    @Override
     public boolean hasArg(String name) {
         if (args.containsKey(name)) {
             return true;
@@ -92,6 +94,7 @@ public class SqlContextImpl implements SqlContext {
         return false;
     }
 
+    @Override
     public Class getArgType(String name) {
         if (argTypes.containsKey(name)) {
             return (Class) argTypes.get(name);
@@ -106,29 +109,35 @@ public class SqlContextImpl implements SqlContext {
         }
     }
 
+    @Override
     public void addArg(String name, Object arg, Class argType) {
         args.put(name, arg);
         argTypes.put(name, argType);
     }
 
+    @Override
     public String getSql() {
         return sqlBuf.toString();
     }
 
+    @Override
     public Object[] getBindVariables() {
         return bindVariables.toArray(new Object[bindVariables.size()]);
     }
 
+    @Override
     public Class[] getBindVariableTypes() {
         return (Class[]) bindVariableTypes.toArray(new Class[bindVariableTypes
                 .size()]);
     }
 
+    @Override
     public SqlContext addSql(String sql) {
         sqlBuf.append(sql);
         return this;
     }
 
+    @Override
     public SqlContext addSql(String sql, Object bindVariable,
             Class bindVariableType) {
 
@@ -138,6 +147,7 @@ public class SqlContextImpl implements SqlContext {
         return this;
     }
 
+    @Override
     public SqlContext addSql(String sql, Object[] bindVariables,
             Class[] bindVariableTypes) {
 
@@ -149,10 +159,12 @@ public class SqlContextImpl implements SqlContext {
         return this;
     }
 
+    @Override
     public boolean isEnabled() {
         return enabled;
     }
 
+    @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }

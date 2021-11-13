@@ -15,8 +15,6 @@
  */
 package org.seasar.extension.jdbc.where.condition;
 
-import org.seasar.extension.jdbc.where.SimpleWhere;
-
 /**
  * Nullableなプロパティの問い合わせ条件を表現するクラスです。
  * 
@@ -44,9 +42,7 @@ public class NullableCondition<CONDITION extends AbstractEntityCondition<CONDITI
     /**
      * <code>is null</code>の条件を追加します。
      * 
-     * @return このインスタンス自身
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#isNull(String, Boolean)
      */
     public CONDITION isNull() {
         return isNull(true);
@@ -61,7 +57,6 @@ public class NullableCondition<CONDITION extends AbstractEntityCondition<CONDITI
      * @param value
      *            問い合わせ条件に加えることを示すフラグ
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#isNull(String, Boolean)
      */
     public CONDITION isNull(Boolean value) {
         condition.where.isNull(condition.prefix + propertyName, value);
@@ -72,7 +67,6 @@ public class NullableCondition<CONDITION extends AbstractEntityCondition<CONDITI
      * <code>is not null</code>の条件を追加します。
      * 
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#isNull(String, Boolean)
      */
     public CONDITION isNotNull() {
         return isNotNull(true);
@@ -87,7 +81,6 @@ public class NullableCondition<CONDITION extends AbstractEntityCondition<CONDITI
      * @param value
      *            問い合わせ条件に加えることを示すフラグ
      * @return このプロパティを持つエンティティの問い合わせ条件
-     * @see SimpleWhere#isNull(String, Boolean)
      */
     public CONDITION isNotNull(Boolean value) {
         condition.where.isNotNull(condition.prefix + propertyName, value);

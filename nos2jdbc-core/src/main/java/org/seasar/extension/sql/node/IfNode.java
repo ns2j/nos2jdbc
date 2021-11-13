@@ -37,7 +37,7 @@ public class IfNode extends ContainerNode {
     /**
      * <code>IfNode</code>を作成します。
      * 
-     * @param expression
+     * @param expression String
      */
     public IfNode(String expression) {
         this.expression = expression;
@@ -47,7 +47,7 @@ public class IfNode extends ContainerNode {
     /**
      * 式を返します。
      * 
-     * @return
+     * @return String
      */
     public String getExpression() {
         return expression;
@@ -56,7 +56,7 @@ public class IfNode extends ContainerNode {
     /**
      * {@link ElseNode}を返します。
      * 
-     * @return
+     * @return String
      */
     public ElseNode getElseNode() {
         return elseNode;
@@ -65,12 +65,13 @@ public class IfNode extends ContainerNode {
     /**
      * {@link ElseNode}を設定します。
      * 
-     * @param elseNode
+     * @param elseNode ElseNode
      */
     public void setElseNode(ElseNode elseNode) {
         this.elseNode = elseNode;
     }
 
+    @Override
     public void accept(SqlContext ctx) {
         Object result = OgnlUtil.getValue(parsedExpression, ctx);
         if (result instanceof Boolean) {

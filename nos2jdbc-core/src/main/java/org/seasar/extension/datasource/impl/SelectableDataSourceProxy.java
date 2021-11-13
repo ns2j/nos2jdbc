@@ -58,8 +58,6 @@ public class SelectableDataSourceProxy implements DataSource {
      * @return スレッドコンテキストに設定された名前を持つデータソース
      * @throws EmptyRuntimeException
      *             スレッドコンテキストにデータソース名が設定されていない場合にスローされます
-     * @throws org.seasar.framework.container.ComponentNotFoundException
-     *             <code>DataSourceFactory</code>に設定されたデータソース名を持つコンポーネントがS2コンテナに登録されていない場合にスローされます
      */
     public DataSource getDataSource() {
         String dataSourceName = dataSourceFactory.getSelectableDataSourceName();
@@ -75,11 +73,10 @@ public class SelectableDataSourceProxy implements DataSource {
      * @return スレッドコンテキストに設定された名前を持つデータソースから取得したコネクション
      * @throws EmptyRuntimeException
      *             スレッドコンテキストにデータソース名が設定されていない場合にスローされます
-     * @throws org.seasar.framework.container.ComponentNotFoundException
-     *             スレッドコンテキストに設定されたデータソース名を持つコンポーネントがS2コンテナに登録されていない場合にスローされます
      * @throws SQLException
      *             データソースで例外が発生した場合にスローされます
      */
+    @Override
     public Connection getConnection() throws SQLException {
         return getDataSource().getConnection();
     }
@@ -94,11 +91,10 @@ public class SelectableDataSourceProxy implements DataSource {
      * @return スレッドコンテキストに設定された名前を持つデータソースから取得したコネクション
      * @throws EmptyRuntimeException
      *             スレッドコンテキストにデータソース名が設定されていない場合にスローされます
-     * @throws org.seasar.framework.container.ComponentNotFoundException
-     *             スレッドコンテキストに設定されたデータソース名を持つコンポーネントがS2コンテナに登録されていない場合にスローされます
      * @throws SQLException
      *             データソースで例外が発生した場合にスローされます
      */
+    @Override
     public Connection getConnection(final String username, final String password)
             throws SQLException {
         return getDataSource().getConnection(username, password);
@@ -110,11 +106,10 @@ public class SelectableDataSourceProxy implements DataSource {
      * @return スレッドコンテキストに設定された名前を持つデータソースから取得したログライター
      * @throws EmptyRuntimeException
      *             スレッドコンテキストにデータソース名が設定されていない場合にスローされます
-     * @throws org.seasar.framework.container.ComponentNotFoundException
-     *             スレッドコンテキストに設定されたデータソース名を持つコンポーネントがS2コンテナに登録されていない場合にスローされます
      * @throws SQLException
      *             データソースで例外が発生した場合にスローされます
      */
+    @Override
     public PrintWriter getLogWriter() throws SQLException {
         return getDataSource().getLogWriter();
     }
@@ -126,11 +121,10 @@ public class SelectableDataSourceProxy implements DataSource {
      *            スレッドコンテキストに設定された名前を持つデータソースに設定するログライター
      * @throws EmptyRuntimeException
      *             スレッドコンテキストにデータソース名が設定されていない場合にスローされます
-     * @throws org.seasar.framework.container.ComponentNotFoundException
-     *             スレッドコンテキストに設定されたデータソース名を持つコンポーネントがS2コンテナに登録されていない場合にスローされます
      * @throws SQLException
      *             データソースで例外が発生した場合にスローされます
      */
+    @Override
     public void setLogWriter(final PrintWriter out) throws SQLException {
         getDataSource().setLogWriter(out);
     }
@@ -141,11 +135,10 @@ public class SelectableDataSourceProxy implements DataSource {
      * @return スレッドコンテキストに設定された名前を持つデータソースから取得したログインタイムアウト時間(秒）
      * @throws EmptyRuntimeException
      *             スレッドコンテキストにデータソース名が設定されていない場合にスローされます
-     * @throws org.seasar.framework.container.ComponentNotFoundException
-     *             スレッドコンテキストに設定されたデータソース名を持つコンポーネントがS2コンテナに登録されていない場合にスローされます
      * @throws SQLException
      *             データソースで例外が発生した場合にスローされます
      */
+    @Override
     public int getLoginTimeout() throws SQLException {
         return getDataSource().getLoginTimeout();
     }
@@ -157,23 +150,25 @@ public class SelectableDataSourceProxy implements DataSource {
      *            スレッドコンテキストに設定された名前を持つデータソースに設定するログインタイムアウト時間(秒）
      * @throws EmptyRuntimeException
      *             スレッドコンテキストにデータソース名が設定されていない場合にスローされます
-     * @throws org.seasar.framework.container.ComponentNotFoundException
-     *             スレッドコンテキストに設定されたデータソース名を持つコンポーネントがS2コンテナに登録されていない場合にスローされます
      * @throws SQLException
      *             データソースで例外が発生した場合にスローされます
      */
+    @Override
     public void setLoginTimeout(int seconds) throws SQLException {
         getDataSource().setLoginTimeout(seconds);
     }
 
+    @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
 	throw new SQLFeatureNotSupportedException();
     }
 
+    @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
 	throw new SQLFeatureNotSupportedException();
     }
 
+    @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
 	throw new SQLFeatureNotSupportedException();
     }

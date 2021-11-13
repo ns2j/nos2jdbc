@@ -93,7 +93,7 @@ public interface SqlContext {
     /**
      * <code>SQL</code>を追加します。
      * 
-     * @param sql
+     * @param sql String
      * @return コンテキスト自身
      */
     SqlContext addSql(String sql);
@@ -101,20 +101,20 @@ public interface SqlContext {
     /**
      * <code>SQL</code>とバインド変数を追加します。
      * 
-     * @param sql
-     * @param bindVariable
-     * @param bindVariableType
-     * @return
+     * @param sql String
+     * @param bindVariable Object
+     * @param bindVariableType Class
+     * @return SqlContext
      */
     SqlContext addSql(String sql, Object bindVariable, Class bindVariableType);
 
     /**
      * <code>SQL</code>とバインド変数の配列を追加します。
      * 
-     * @param sql
-     * @param bindVariables
-     * @param bindVariableTypes
-     * @return
+     * @param sql String
+     * @param bindVariables Object[]
+     * @param bindVariableTypes Class[]
+     * @return SqlContext
      */
     SqlContext addSql(String sql, Object[] bindVariables,
             Class[] bindVariableTypes);

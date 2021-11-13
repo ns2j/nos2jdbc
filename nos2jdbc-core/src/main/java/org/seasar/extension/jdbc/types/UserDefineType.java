@@ -41,9 +41,9 @@ public class UserDefineType implements ValueType {
     /**
      * {@link UserDefineType}を作成します。
      * 
-     * @param baseValueType
-     * @param valueOfMethod
-     * @param valueMethod
+     * @param baseValueType ValueType ValueType
+     * @param valueOfMethod Method Method
+     * @param valueMethod Method Method
      */
     public UserDefineType(ValueType baseValueType, Method valueOfMethod,
             Method valueMethod) {
@@ -52,44 +52,52 @@ public class UserDefineType implements ValueType {
         this.valueMethod = valueMethod;
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, int index) throws SQLException {
         return fromDbToJava(baseValueType.getValue(resultSet, index));
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, String columnName)
             throws SQLException {
 
         return fromDbToJava(baseValueType.getValue(resultSet, columnName));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, int index) throws SQLException {
         return fromDbToJava(baseValueType.getValue(cs, index));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, String parameterName)
             throws SQLException {
 
         return fromDbToJava(baseValueType.getValue(cs, parameterName));
     }
 
+    @Override
     public void bindValue(PreparedStatement ps, int index, Object value)
             throws SQLException {
 
         baseValueType.bindValue(ps, index, fromJavaToDb(value));
     }
 
+    @Override
     public void bindValue(CallableStatement cs, String parameterName,
             Object value) throws SQLException {
 
         baseValueType.bindValue(cs, parameterName, fromJavaToDb(value));
     }
 
+    @Override
     public void registerOutParameter(CallableStatement cs, int index)
             throws SQLException {
 
         baseValueType.registerOutParameter(cs, index);
     }
 
+    @Override
     public void registerOutParameter(CallableStatement cs, String parameterName)
             throws SQLException {
 
@@ -110,10 +118,12 @@ public class UserDefineType implements ValueType {
         return MethodUtil.invoke(valueMethod, value, null);
     }
 
+    @Override
     public String toText(Object value) {
         return baseValueType.toText(fromJavaToDb(value));
     }
 
+    @Override
     public int getSqlType() {
         return baseValueType.getSqlType();
     }

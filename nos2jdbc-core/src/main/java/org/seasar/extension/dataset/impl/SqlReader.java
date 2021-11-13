@@ -43,7 +43,7 @@ public class SqlReader implements DataReader {
     /**
      * {@link SqlReader}を作成します。
      * 
-     * @param dataSource
+     * @param dataSource DataSource
      */
     public SqlReader(DataSource dataSource) {
         this.dataSource = dataSource;

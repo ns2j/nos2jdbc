@@ -156,7 +156,7 @@ public class PropertyMeta {
     /**
      * 名前を設定します。
      * 
-     * @param name
+     * @param name name
      */
     public void setName(String name) {
         this.name = name;

@@ -37,14 +37,14 @@ public class BeanIterationNonAutoResultSetHandler extends
     /**
      * {@link BeanIterationNonAutoResultSetHandler}を作成します。
      * 
-     * @param valueTypes
-     *            値タイプの配列
-     * @param entityMapper
-     *            エンティティマッパー
+     * @param beanClass bean class
+     * @param entityMetaFactory EntityMetaFactoryy
+     * @param dailect DbmsDialect
      * @param sql
      *            SQL
      * @param limit
      *            リミット
+     * @param shouldSetInverseField boolean
      * @param callback
      *            反復コールバック
      */

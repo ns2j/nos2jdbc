@@ -786,8 +786,6 @@ public enum ConditionType {
      *            カラム名
      * @param operator
      *            演算子
-     * @param escape
-     *            エスケープ
      * @return 条件
      */
     protected String makeConditionForIsNull(String tableAlias,

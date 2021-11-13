@@ -16,6 +16,8 @@
 package org.seasar.extension.jdbc;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.seasar.extension.jdbc.parameter.Parameter;
 

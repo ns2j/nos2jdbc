@@ -65,43 +65,50 @@ public class RestrictedTransactionImpl implements Transaction {
     /**
      * トランザクションを開始します。
      * 
-     * @throws SystemException
-     * @throws NotSupportedException
+     * @throws NotSupportedException not supported
+     * @throws SystemException system exception
      * 
      */
     public void begin() throws NotSupportedException, SystemException {
         userTransaction.begin();
     }
 
+    @Override
     public void commit() throws HeuristicMixedException,
             HeuristicRollbackException, RollbackException, SecurityException,
             SystemException {
         userTransaction.commit();
     }
 
+    @Override
     public boolean delistResource(final XAResource xaRes, final int flag)
             throws IllegalStateException, SystemException {
         throw new UnsupportedOperationException("delistResource");
     }
 
+    @Override
     public boolean enlistResource(final XAResource xaRes)
             throws IllegalStateException, RollbackException, SystemException {
         throw new UnsupportedOperationException("enlistResource");
     }
 
+    @Override
     public int getStatus() throws SystemException {
         return userTransaction.getStatus();
     }
 
+    @Override
     public void registerSynchronization(final Synchronization sync)
             throws IllegalStateException, RollbackException, SystemException {
         synchronizationRegistry.registerInterposedSynchronization(sync);
     }
 
+    @Override
     public void rollback() throws IllegalStateException, SystemException {
         userTransaction.rollback();
     }
 
+    @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
         userTransaction.setRollbackOnly();
     }

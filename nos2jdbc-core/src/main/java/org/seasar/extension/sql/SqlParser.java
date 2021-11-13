@@ -26,7 +26,7 @@ public interface SqlParser {
     /**
      * SQLを解析して<code>Node</code>のツリーを返します。
      * 
-     * @return
+     * @return Node
      */
     Node parse();
 }

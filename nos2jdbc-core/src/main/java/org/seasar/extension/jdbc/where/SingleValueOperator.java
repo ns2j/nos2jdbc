@@ -61,7 +61,6 @@ public class SingleValueOperator extends ComposableWhere {
      * パラメータ値が空文字列または空白のみの文字列なら <code>null</code>として扱い、条件に加えないことを指定します。
      * 
      * @return このインスタンス自身
-     * @see #ignoreWhitespace()
      */
     public SingleValueOperator excludesWhitespace() {
         excludesWhitespace = true;
@@ -83,12 +82,12 @@ public class SingleValueOperator extends ComposableWhere {
     }
 
     /**
-     * {@link #ignoreWhitespace()}が呼び出された場合でパラメータ値が空文字列または空白のみの文字列なら
+     * パラメータ値が空文字列または空白のみの文字列なら
      * <code>null</code>を、 それ以外なら元の値をそのまま返します。
      * 
      * @param value
      *            パラメータ値
-     * @return {@link #ignoreWhitespace()}が呼び出された場合でパラメータ値が空文字列または空白のみの文字列なら
+     * @return パラメータ値が空文字列または空白のみの文字列なら
      *         <code>null</code>、 それ以外なら元の値
      */
     protected Object normalize(final Object value) {

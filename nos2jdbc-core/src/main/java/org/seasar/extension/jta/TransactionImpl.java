@@ -81,6 +81,7 @@ public class TransactionImpl implements ExtendedTransaction,
      * トランザクションを開始します。
      * 
      */
+    @Override
     public void begin() throws NotSupportedException, SystemException {
         status = Status.STATUS_ACTIVE;
         init();
@@ -92,9 +93,9 @@ public class TransactionImpl implements ExtendedTransaction,
     /**
      * トランザクションを中断します。
      * 
-     * @throws XAException
-     *             <code>XAResource</code>を中断できなかった場合にスローされます
+     * @throws SystemException system exception
      */
+    @Override
     public void suspend() throws SystemException {
         assertNotSuspended();
         assertActiveOrMarkedRollback();
@@ -161,9 +162,9 @@ public class TransactionImpl implements ExtendedTransaction,
     /**
      * トランザクションを再開します。
      * 
-     * @throws XAException
-     *             <code>XAResource</code>を再開できなかった場合にスローされます
+     * @throws SystemException system exceptiion
      */
+    @Override
     public void resume() throws SystemException {
         assertSuspended();
         assertActiveOrMarkedRollback();
@@ -184,6 +185,7 @@ public class TransactionImpl implements ExtendedTransaction,
         }
     }
 
+    @Override
     public void commit() throws RollbackException, HeuristicMixedException,
             HeuristicRollbackException, SecurityException,
             IllegalStateException, SystemException {
@@ -380,6 +382,7 @@ public class TransactionImpl implements ExtendedTransaction,
         return (Synchronization) interposedSynchronizations.get(index);
     }
 
+    @Override
     public void rollback() throws IllegalStateException, SecurityException,
             SystemException {
 
@@ -425,6 +428,7 @@ public class TransactionImpl implements ExtendedTransaction,
         }
     }
 
+    @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
 
         assertNotSuspended();
@@ -444,6 +448,7 @@ public class TransactionImpl implements ExtendedTransaction,
         }
     }
 
+    @Override
     public boolean enlistResource(XAResource xaResource)
             throws RollbackException, IllegalStateException, SystemException {
 
@@ -489,6 +494,7 @@ public class TransactionImpl implements ExtendedTransaction,
         return new XidImpl(xid, ++branchId);
     }
 
+    @Override
     public boolean delistResource(XAResource xaResource, int flag)
             throws IllegalStateException, SystemException {
 
@@ -510,10 +516,12 @@ public class TransactionImpl implements ExtendedTransaction,
         throw new SIllegalStateException("ESSR0313", null);
     }
 
+    @Override
     public int getStatus() {
         return status;
     }
 
+    @Override
     public void registerSynchronization(Synchronization sync)
             throws RollbackException, IllegalStateException, SystemException {
 
@@ -522,6 +530,7 @@ public class TransactionImpl implements ExtendedTransaction,
         synchronizations.add(sync);
     }
 
+    @Override
     public void registerInterposedSynchronization(Synchronization sync)
             throws IllegalStateException {
 
@@ -530,12 +539,14 @@ public class TransactionImpl implements ExtendedTransaction,
         interposedSynchronizations.add(sync);
     }
 
+    @Override
     public void putResource(Object key, Object value)
             throws IllegalStateException {
         assertNotSuspended();
         resourceMap.put(key, value);
     }
 
+    @Override
     public Object getResource(Object key) throws IllegalStateException {
         assertNotSuspended();
         return resourceMap.get(key);
@@ -572,6 +583,7 @@ public class TransactionImpl implements ExtendedTransaction,
         suspended = false;
     }
 
+    @Override
     public String toString() {
         return xid.toString();
     }
@@ -579,7 +591,7 @@ public class TransactionImpl implements ExtendedTransaction,
     /**
      * {@link Synchronization}のリストを返します。
      * 
-     * @return
+     * @return List
      */
     public List getSynchronizations() {
         return synchronizations;
@@ -588,7 +600,7 @@ public class TransactionImpl implements ExtendedTransaction,
     /**
      * {@link Synchronization}のリストを返します。
      * 
-     * @return
+     * @return List
      */
     public List getInterposedSynchronizations() {
         return interposedSynchronizations;

@@ -37,7 +37,7 @@ public class EnumType extends AbstractValueType {
     /**
      * <code>EnumType</code>を返します。
      * 
-     * @param enumClass
+     * @param enumClass enum class
      */
     @SuppressWarnings("unchecked")
     public EnumType(Class<? extends Enum> enumClass) {
@@ -45,6 +45,7 @@ public class EnumType extends AbstractValueType {
         this.enumClass = enumClass;
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, int index) throws SQLException {
         return toEnum(resultSet.getString(index));
     }
@@ -52,7 +53,7 @@ public class EnumType extends AbstractValueType {
     /**
      * {@link Enum}に変換します。
      * 
-     * @param name
+     * @param name name
      * @return {@link Enum}
      */
     @SuppressWarnings("unchecked")
@@ -63,22 +64,26 @@ public class EnumType extends AbstractValueType {
         return Enum.valueOf(enumClass, name);
     }
 
+    @Override
     public Object getValue(ResultSet resultSet, String columnName)
             throws SQLException {
 
         return toEnum(resultSet.getString(columnName));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, int index) throws SQLException {
         return toEnum(cs.getString(index));
     }
 
+    @Override
     public Object getValue(CallableStatement cs, String parameterName)
             throws SQLException {
 
         return toEnum(cs.getString(parameterName));
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void bindValue(PreparedStatement ps, int index, Object value)
             throws SQLException {
@@ -90,6 +95,7 @@ public class EnumType extends AbstractValueType {
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void bindValue(CallableStatement cs, String parameterName,
             Object value) throws SQLException {
@@ -101,6 +107,7 @@ public class EnumType extends AbstractValueType {
         }
     }
 
+    @Override
     public String toText(Object value) {
         if (value == null) {
             return BindVariableUtil.nullText();

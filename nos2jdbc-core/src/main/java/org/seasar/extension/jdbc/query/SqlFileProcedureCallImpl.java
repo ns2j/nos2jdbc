@@ -79,7 +79,7 @@ public class SqlFileProcedureCallImpl extends
      *            フィールド名が_OUT、_IN_OUT、_INで終わっていない場合は、<code>IN</code>パラメータになります。
      *            </p>
      *            <p>
-     *            プロシージャが結果セットを返す場合、フィールドの型は<code>List<レコードの型></code>にします。
+     *            プロシージャが結果セットを返す場合、フィールドの型は<code>List&gt;レコードの型&lt;</code>にします。
      *            </p>
      *            <p>
      *            継承もとのクラスのフィールドは認識しません。

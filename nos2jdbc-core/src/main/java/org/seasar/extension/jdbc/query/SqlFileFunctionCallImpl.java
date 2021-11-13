@@ -55,7 +55,6 @@ public class SqlFileFunctionCallImpl<T> extends
      *            戻り値のクラス
      * @param path
      *            SQLファイルのパス
-     * @see #SqlFileProcedureCallImpl(JdbcManagerImplementor, String, Object)
      */
     public SqlFileFunctionCallImpl(final JdbcManagerImplementor jdbcManager,
             final Class<T> resultClass, final String path) {

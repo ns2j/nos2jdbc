@@ -38,7 +38,6 @@ public class AutoProcedureCallImpl extends
      *            内部的なJDBCマネージャ
      * @param procedureName
      *            呼び出すストアドプロシージャの名前
-     * @see #AutoProcedureCallImpl(JdbcManagerImplementor, Object)
      */
     public AutoProcedureCallImpl(final JdbcManagerImplementor jdbcManager,
             final String procedureName) {

@@ -41,40 +41,48 @@ public class SqlTokenizerImpl implements SqlTokenizer {
     /**
      * <code>SqlTokenizerImpl</code>を作成します。
      * 
-     * @param sql
+     * @param sql String
      */
     public SqlTokenizerImpl(String sql) {
         this.sql = sql;
     }
 
+    @Override
     public String getSql() {
         return sql;
     }
 
+    @Override
     public int getPosition() {
         return position;
     }
 
+    @Override
     public String getToken() {
         return token;
     }
 
+    @Override
     public String getBefore() {
         return sql.substring(0, position);
     }
 
+    @Override
     public String getAfter() {
         return sql.substring(position);
     }
 
+    @Override
     public int getTokenType() {
         return tokenType;
     }
 
+    @Override
     public int getNextTokenType() {
         return nextTokenType;
     }
 
+    @Override
     public int next() {
         if (position >= sql.length()) {
             token = null;
@@ -235,6 +243,7 @@ public class SqlTokenizerImpl implements SqlTokenizer {
         return "$" + ++bindVariableNum;
     }
 
+    @Override
     public String skipToken() {
         int index = sql.length();
         char quote = position < sql.length() ? sql.charAt(position) : '\0';
@@ -272,6 +281,7 @@ public class SqlTokenizerImpl implements SqlTokenizer {
         return token;
     }
 
+    @Override
     public String skipWhitespace() {
         int index = skipWhitespace(position);
         token = sql.substring(position, index);

@@ -34,8 +34,8 @@ public class TokenNotClosedRuntimeException extends SRuntimeException {
     /**
      * <code>TokenNotClosedRuntimeException</code>を返します。
      * 
-     * @param token
-     * @param sql
+     * @param token String
+     * @param sql String
      */
     public TokenNotClosedRuntimeException(String token, String sql) {
         super("ESSR0087", new Object[] { token, sql });
@@ -46,7 +46,7 @@ public class TokenNotClosedRuntimeException extends SRuntimeException {
     /**
      * トークンを返します。
      * 
-     * @return
+     * @return String
      */
     public String getToken() {
         return token;
@@ -55,7 +55,7 @@ public class TokenNotClosedRuntimeException extends SRuntimeException {
     /**
      * SQLを返します。
      * 
-     * @return
+     * @return String
      */
     public String getSql() {
         return sql;

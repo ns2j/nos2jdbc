@@ -58,7 +58,7 @@ public class DataTableImpl implements DataTable {
     /**
      * {@link DataTableImpl}を作成します。
      * 
-     * @param tableName
+     * @param tableName table name
      */
     public DataTableImpl(String tableName) {
         setTableName(tableName);

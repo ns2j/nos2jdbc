@@ -37,7 +37,7 @@ public class BindVariableNode extends AbstractNode {
     /**
      * <code>BindVariableNode</code>を作成します。
      * 
-     * @param expression
+     * @param expression String
      */
     public BindVariableNode(String expression) {
         this.expression = expression;
@@ -47,12 +47,13 @@ public class BindVariableNode extends AbstractNode {
     /**
      * 式を返します。
      * 
-     * @return
+     * @return String
      */
     public String getExpression() {
         return expression;
     }
 
+    @Override
     public void accept(SqlContext ctx) {
         Object value = ctx.getArg(names[0]);
         Class clazz = ctx.getArgType(names[0]);

@@ -41,12 +41,13 @@ public class DataTableResultSetHandler implements ResultSetHandler {
     /**
      * {@link DataTableResultSetHandler}を作成します。
      * 
-     * @param tableName
+     * @param tableName table name
      */
     public DataTableResultSetHandler(String tableName) {
         this.tableName = tableName;
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException {
         ResultSetMetaData rsmd = rs.getMetaData();
         PropertyType[] propertyTypes = PropertyTypeUtil

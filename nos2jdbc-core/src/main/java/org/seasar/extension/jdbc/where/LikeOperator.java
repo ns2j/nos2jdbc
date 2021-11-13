@@ -96,12 +96,12 @@ public class LikeOperator extends SingleValueOperator {
     }
 
     /**
-     * {@link #ignoreWhitespace()}が呼び出された場合でパラメータ値が空文字列または空白のみの文字列なら
+     * パラメータ値が空文字列または空白のみの文字列なら
      * <code>null</code>を、 それ以外なら元の値をそのまま返します。
      * 
      * @param value
      *            パラメータ値
-     * @return {@link #ignoreWhitespace()}が呼び出された場合でパラメータ値が空文字列または空白のみの文字列なら
+     * @return パラメータ値が空文字列または空白のみの文字列なら
      *         <code>null</code>、 それ以外なら元の値
      */
     @Override

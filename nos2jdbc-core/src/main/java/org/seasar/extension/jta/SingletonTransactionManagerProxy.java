@@ -27,48 +27,55 @@ import javax.transaction.TransactionManager;
 //i import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 
 /**
- * {@link SingletonS2ContainerFactory}を利用したトランザクションマネージャのプロキシです。
- * 
  * @author koichik
  */
 public class SingletonTransactionManagerProxy implements TransactionManager {
 
+    @Override
     public void begin() throws NotSupportedException, SystemException {
         getTransactionManager().begin();
     }
 
+    @Override
     public void commit() throws HeuristicMixedException,
             HeuristicRollbackException, IllegalStateException,
             RollbackException, SecurityException, SystemException {
         getTransactionManager().commit();
     }
 
+    @Override
     public int getStatus() throws SystemException {
         return getTransactionManager().getStatus();
     }
 
+    @Override
     public Transaction getTransaction() throws SystemException {
         return getTransactionManager().getTransaction();
     }
 
+    @Override
     public void resume(final Transaction tx) throws IllegalStateException,
             InvalidTransactionException, SystemException {
         getTransactionManager().resume(tx);
     }
 
+    @Override
     public void rollback() throws IllegalStateException, SecurityException,
             SystemException {
         getTransactionManager().rollback();
     }
 
+    @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
         getTransactionManager().setRollbackOnly();
     }
 
+    @Override
     public void setTransactionTimeout(final int timeout) throws SystemException {
         getTransactionManager().setTransactionTimeout(timeout);
     }
 
+    @Override
     public Transaction suspend() throws SystemException {
         return getTransactionManager().suspend();
     }

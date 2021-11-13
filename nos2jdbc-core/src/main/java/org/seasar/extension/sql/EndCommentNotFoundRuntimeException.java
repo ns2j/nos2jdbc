@@ -32,7 +32,7 @@ public class EndCommentNotFoundRuntimeException extends SRuntimeException {
     /**
      * <code>EndCommentNotFoundRuntimeException</code>を作成します。
      * 
-     * @param sql
+     * @param sql String
      */
     public EndCommentNotFoundRuntimeException(String sql) {
         super("ESSR0085", new Object[] { sql });
@@ -42,7 +42,7 @@ public class EndCommentNotFoundRuntimeException extends SRuntimeException {
     /**
      * SQLを返します。
      * 
-     * @return
+     * @return String
      */
     public String getSql() {
         return sql;
