@@ -6,7 +6,7 @@
   <groupId>com.github.ns2j</groupId>
   <artifactId>nos2jdbc</artifactId>
   <packaging>pom</packaging>
-  <version>1.8.3</version>
+  <version>1.8.4-SNAPSHOT</version>
   <name>nos2jdbc</name>
   <description>No Seasar2 Container's s2jdbc</description>
   <url>https://github.com/ns2j/nos2jdbc/</url>
