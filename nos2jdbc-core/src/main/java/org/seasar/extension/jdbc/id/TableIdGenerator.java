@@ -49,7 +49,7 @@ public class TableIdGenerator extends AbstractPreAllocateIdGenerator {
     public static final String DEFAULT_PK_COLUMN_NAME = "PK";
 
     /** デフォルトの採番テーブルの値のカラム名 */
-    public static final String DEFAULT_VALUE_COLUMN_NAME = "VALUE";
+    public static final String DEFAULT_VALUE_COLUMN_NAME = "VALUE1";
 
     /** 識別子に付けられたアノテーション */
     protected TableGenerator tableGenerator;

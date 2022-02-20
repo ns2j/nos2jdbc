@@ -70,11 +70,6 @@ public class H2Dialect extends StandardDialect {
     }
 
     @Override
-    public boolean isInsertIdentityColumn() {
-        return true;
-    }
-
-    @Override
     public boolean supportsGetGeneratedKeys() {
         return true;
     }
