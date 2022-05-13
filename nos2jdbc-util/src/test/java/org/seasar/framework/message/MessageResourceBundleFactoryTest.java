@@ -118,7 +118,7 @@ class MessageResourceBundleFactoryTest {
         // 言語のみ
         String[] bundleNames = MessageResourceBundleFactory
                 .calcurateBundleNames(BASE_NAME, Locale.JAPANESE);
-        List expected = java.util.Arrays.asList( new String[]{BASE_NAME,
+        List<String> expected = java.util.Arrays.asList( new String[]{BASE_NAME,
                 BASE_NAME + "_ja"} );
         assertEquals( expected, java.util.Arrays.asList(bundleNames) );
 
