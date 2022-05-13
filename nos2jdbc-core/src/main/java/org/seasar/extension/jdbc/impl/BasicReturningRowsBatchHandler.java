@@ -119,7 +119,8 @@ public class BasicReturningRowsBatchHandler extends BasicHandler implements
         this.batchSize = batchSize;
     }
 
-    public int[] execute(final List list) throws SQLRuntimeException {
+    @Override
+    public int[] execute(final List<?> list) throws SQLRuntimeException {
         if (list.size() == 0) {
             return EMPTY_ARRAY;
         }
@@ -127,7 +128,8 @@ public class BasicReturningRowsBatchHandler extends BasicHandler implements
         return execute(list, getArgTypes(args));
     }
 
-    public int[] execute(final List list, final Class[] argTypes)
+    @Override
+    public int[] execute(final List<?> list, final Class<?>[] argTypes)
             throws SQLRuntimeException {
         final Connection connection = getConnection();
         try {
@@ -149,8 +151,8 @@ public class BasicReturningRowsBatchHandler extends BasicHandler implements
      * @return バッチ内のコマンドごとに 1 つの要素が格納されている更新カウントの配列。
      *         配列の要素はコマンドがバッチに追加された順序で並べられる
      */
-    protected int[] execute(final Connection connection, final List list,
-            final Class[] argTypes) {
+    protected int[] execute(final Connection connection, final List<?> list,
+            final Class<?>[] argTypes) {
         final int size = batchSize > 0 ? Math.min(batchSize, list.size())
                 : list.size();
         if (size == 0) {

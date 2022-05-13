@@ -55,6 +55,7 @@ public class ObjectType implements ColumnType {
      *            引数1
      * @return 等しいかどうか
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected boolean doEquals(Object arg1, Object arg2) {
         try {
             arg1 = convert(arg1, null);
@@ -73,7 +74,7 @@ public class ObjectType implements ColumnType {
     }
 
     @Override
-    public Class getType() {
+    public Class<?> getType() {
         return Object.class;
     }
 }

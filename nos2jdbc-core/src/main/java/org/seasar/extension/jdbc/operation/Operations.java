@@ -161,7 +161,7 @@ public class Operations {
      */
     public static <PropType, ParamType extends PropType> MultiValueOperator in(
             final PropertyName<PropType> propertyName,
-            final ParamType... params) {
+            @SuppressWarnings("unchecked") final ParamType... params) {
         return new MultiValueOperator(ConditionType.IN, propertyName, params);
     }
 
@@ -199,7 +199,7 @@ public class Operations {
      */
     public static <PropType, ParamType extends PropType> MultiValueOperator notIn(
             final PropertyName<PropType> propertyName,
-            final ParamType... params) {
+            @SuppressWarnings("unchecked") final ParamType... params) {
         return new MultiValueOperator(ConditionType.NOT_IN, propertyName,
                 params);
     }

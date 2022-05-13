@@ -78,7 +78,7 @@ public class InterbaseDialect extends StandardDialect {
 
     @Override
     public String getForUpdateString(final SelectForUpdateType type,
-            final int waitSeconds, final Pair<String, String>... aliases) {
+            final int waitSeconds, @SuppressWarnings("unchecked") final Pair<String, String>... aliases) {
         final StringBuilder buf = new StringBuilder(100);
         if (aliases.length > 0) {
             buf.append(" for update of ");

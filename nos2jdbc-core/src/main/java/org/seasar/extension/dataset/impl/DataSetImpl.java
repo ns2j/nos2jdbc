@@ -20,8 +20,6 @@ import org.seasar.extension.dataset.DataTable;
 import org.seasar.extension.dataset.TableNotFoundRuntimeException;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.CaseInsensitiveMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * {@link DataSet}の実装です。
@@ -30,8 +28,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class DataSetImpl implements DataSet {
-    final static private Logger logger = LoggerFactory.getLogger(DataSetImpl.class);
-
     private ArrayMap tables = new CaseInsensitiveMap();
 
     /**

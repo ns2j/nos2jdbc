@@ -24,8 +24,6 @@ import org.seasar.framework.conversion.DateConversionUtil;
 import org.seasar.framework.conversion.SqlDateConversionUtil;
 import org.seasar.framework.conversion.TimeConversionUtil;
 import org.seasar.framework.conversion.TimestampConversionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 日付用の {@link ColumnType}です。
@@ -34,8 +32,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class TimestampType extends ObjectType {
-    final static private Logger logger = LoggerFactory.getLogger(TimestampType.class);
-
     TimestampType() {
     }
 
@@ -70,7 +66,7 @@ public class TimestampType extends ObjectType {
     }
 
     @Override
-    public Class getType() {
+    public Class<Timestamp> getType() {
         return Timestamp.class;
     }
 }

@@ -68,7 +68,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         super(jdbcManager, baseClass);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected ResultSetHandler createResultListResultSetHandler() {
         DbmsDialect dialect = jdbcManager.getDialect();
@@ -95,7 +95,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
                 persistenceConvention, executedSql, limit);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected ResultSetHandler createSingleResultResultSetHandler() {
         DbmsDialect dialect = jdbcManager.getDialect();
@@ -119,10 +119,10 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
                 persistenceConvention, executedSql);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected ResultSetHandler createIterateResultSetHandler(
-            final IterationCallback<T, ?> callback) {
+            final IterationCallback callback) {
         final DbmsDialect dialect = jdbcManager.getDialect();
         final PersistenceConvention persistenceConvention = jdbcManager
                 .getPersistenceConvention();

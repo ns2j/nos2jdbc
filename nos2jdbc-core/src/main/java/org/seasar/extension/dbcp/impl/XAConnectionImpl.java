@@ -18,6 +18,7 @@ package org.seasar.extension.dbcp.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
 import javax.sql.ConnectionEventListener;
@@ -37,7 +38,7 @@ public class XAConnectionImpl implements XAConnection {
 
     private XAResource xaResource;
 
-    private List listeners = new ArrayList();
+    private List<EventListener> listeners = new ArrayList<>();
 
     /**
      * {@link XAConnectionImpl}を作成します。
@@ -50,14 +51,17 @@ public class XAConnectionImpl implements XAConnection {
         this.xaResource = new DBXAResourceImpl(connection);
     }
 
+    @Override
     public XAResource getXAResource() {
         return xaResource;
     }
 
+    @Override
     public Connection getConnection() throws SQLException {
         return connection;
     }
 
+    @Override
     public void close() throws SQLException {
         if (connection == null) {
             return;
@@ -68,20 +72,24 @@ public class XAConnectionImpl implements XAConnection {
         connection = null;
     }
 
+    @Override
     public synchronized void addConnectionEventListener(
             final ConnectionEventListener listener) {
         listeners.add(listener);
     }
 
+    @Override
     public synchronized void removeConnectionEventListener(
             final ConnectionEventListener listener) {
         listeners.remove(listener);
     }
 
+    @Override
     public void addStatementEventListener(StatementEventListener listener) {
         listeners.add(listener);
     }
 
+    @Override
     public void removeStatementEventListener(StatementEventListener listener) {
         listeners.remove(listener);
     }

@@ -37,7 +37,7 @@ import org.seasar.framework.util.StringUtil;
  */
 public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
 
-    private Class beanClass;
+    private Class<?> beanClass;
 
     private BeanDesc beanDesc;
 
@@ -47,7 +47,7 @@ public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
      * @param beanClass
      *            Beanクラス
      */
-    public AbstractBeanResultSetHandler(Class beanClass) {
+    public AbstractBeanResultSetHandler(Class<?> beanClass) {
         setBeanClass(beanClass);
 
     }
@@ -57,7 +57,7 @@ public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
      * 
      * @return Beanクラス
      */
-    public Class getBeanClass() {
+    public Class<?> getBeanClass() {
         return beanClass;
     }
 
@@ -67,7 +67,7 @@ public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
      * @param beanClass
      *            Beanクラス
      */
-    public void setBeanClass(Class beanClass) {
+    public void setBeanClass(Class<?> beanClass) {
         this.beanClass = beanClass;
         beanDesc = BeanDescFactory.getBeanDesc(beanClass);
     }

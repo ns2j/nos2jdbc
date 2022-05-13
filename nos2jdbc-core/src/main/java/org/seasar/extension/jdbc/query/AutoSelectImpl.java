@@ -1622,7 +1622,6 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
      *            プロパティ名
      * @return SELECT ～ FOR UPDATEの対象となるテーブルエイリアスとカラムエイリアスのペア
      */
-    @SuppressWarnings("unchecked")
     protected Pair<String, String> toAliasPair(final String baseName,
             final String propertyName) {
         final String tableAlias = getTableAlias(baseName);

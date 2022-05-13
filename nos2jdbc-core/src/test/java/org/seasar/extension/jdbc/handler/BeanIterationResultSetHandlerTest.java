@@ -45,7 +45,6 @@ class BeanIterationResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle() throws Exception {
         BeanIterationResultSetHandler handler = new BeanIterationResultSetHandler(
@@ -53,6 +52,7 @@ class BeanIterationResultSetHandlerTest {
                 new PersistenceConventionImpl(), "select * from aaa", 0,
                 new IterationCallback<AaaDto, Integer>() {
 
+                    @Override
                     public Integer iterate(AaaDto entity,
                             IterationContext context) {
                         ++count;
@@ -86,7 +86,6 @@ class BeanIterationResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithLimit() throws Exception {
         BeanIterationResultSetHandler handler = new BeanIterationResultSetHandler(
@@ -94,6 +93,7 @@ class BeanIterationResultSetHandlerTest {
                 new PersistenceConventionImpl(), "select * from aaa", 2,
                 new IterationCallback<AaaDto, Integer>() {
 
+                    @Override
                     public Integer iterate(AaaDto entity,
                             IterationContext context) {
                         ++count;
@@ -119,7 +119,6 @@ class BeanIterationResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithExit() throws Exception {
         BeanIterationResultSetHandler handler = new BeanIterationResultSetHandler(
@@ -127,6 +126,7 @@ class BeanIterationResultSetHandlerTest {
                 new PersistenceConventionImpl(), "select * from aaa", 0,
                 new IterationCallback<AaaDto, Integer>() {
 
+                    @Override
                     public Integer iterate(AaaDto entity,
                             IterationContext context) {
                         ++count;

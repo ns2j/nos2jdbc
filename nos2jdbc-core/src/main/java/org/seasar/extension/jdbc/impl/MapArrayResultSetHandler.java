@@ -36,8 +36,9 @@ public class MapArrayResultSetHandler extends MapListResultSetHandler {
     public MapArrayResultSetHandler() {
     }
 
+    @Override
     public Object handle(ResultSet resultSet) throws SQLException {
-        List list = (List) super.handle(resultSet);
+        List<?> list = (List<?>) super.handle(resultSet);
         return list.toArray(new Map[list.size()]);
     }
 }

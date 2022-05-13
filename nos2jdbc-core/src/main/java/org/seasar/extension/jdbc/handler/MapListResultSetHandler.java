@@ -50,8 +50,7 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
      * @param sql
      *            SQL
      */
-    @SuppressWarnings("unchecked")
-    public MapListResultSetHandler(Class<? extends Map> mapClass,
+    public MapListResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql) {
         this(mapClass, dialect, peristenceConvention, sql, 0);
@@ -71,14 +70,14 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
      * @param limit
      *            リミット
      */
-    @SuppressWarnings("unchecked")
-    public MapListResultSetHandler(Class<? extends Map> mapClass,
+    public MapListResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql, int limit) {
         super(mapClass, dialect, peristenceConvention, sql);
         this.limit = limit;
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException {
         PropertyType[] propertyTypes = createPropertyTypes(rs.getMetaData());
         List<Object> list = new ArrayList<Object>(100);

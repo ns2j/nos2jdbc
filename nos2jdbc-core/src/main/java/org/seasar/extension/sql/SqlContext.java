@@ -55,7 +55,7 @@ public interface SqlContext {
      *            引数名
      * @return 名前に応じた引数のクラスを返します。
      */
-    Class getArgType(String name);
+    Class<?> getArgType(String name);
 
     /**
      * 引数を追加します。
@@ -67,7 +67,7 @@ public interface SqlContext {
      * @param argType
      *            引数の型
      */
-    void addArg(String name, Object arg, Class argType);
+    void addArg(String name, Object arg, Class<?> argType);
 
     /**
      * 追加されたすべての<code>SQL</code>を返します。
@@ -88,7 +88,7 @@ public interface SqlContext {
      * 
      * @return バインド変数の型の配列
      */
-    Class[] getBindVariableTypes();
+    Class<?>[] getBindVariableTypes();
 
     /**
      * <code>SQL</code>を追加します。
@@ -106,7 +106,7 @@ public interface SqlContext {
      * @param bindVariableType Class
      * @return SqlContext
      */
-    SqlContext addSql(String sql, Object bindVariable, Class bindVariableType);
+    SqlContext addSql(String sql, Object bindVariable, Class<?> bindVariableType);
 
     /**
      * <code>SQL</code>とバインド変数の配列を追加します。
@@ -117,7 +117,7 @@ public interface SqlContext {
      * @return SqlContext
      */
     SqlContext addSql(String sql, Object[] bindVariables,
-            Class[] bindVariableTypes);
+            Class<?>[] bindVariableTypes);
 
     /**
      * <code>BEGIN</code>コメントと<code>END</code>コメントで、

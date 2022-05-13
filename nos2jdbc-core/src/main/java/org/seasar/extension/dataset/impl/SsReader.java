@@ -40,8 +40,6 @@ import org.seasar.framework.util.Base64Util;
 import org.seasar.framework.util.FileInputStreamUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Excel用の {@link DataReader}です。
@@ -51,8 +49,6 @@ import org.slf4j.LoggerFactory;
  * @author azusa
  */
 public class SsReader implements DataReader, DataSetConstants {
-    final private static Logger logger = LoggerFactory.getLogger(SsReader.class);
-
     /**
      * データセットです。
      */

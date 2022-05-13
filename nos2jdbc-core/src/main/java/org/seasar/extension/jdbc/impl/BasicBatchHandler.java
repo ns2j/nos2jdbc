@@ -113,7 +113,8 @@ public class BasicBatchHandler extends BasicHandler implements BatchHandler {
         this.batchSize = batchSize;
     }
 
-    public int execute(List list) throws SQLRuntimeException {
+    @Override
+    public int execute(List<?> list) throws SQLRuntimeException {
         if (list.size() == 0) {
             return 0;
         }
@@ -121,7 +122,8 @@ public class BasicBatchHandler extends BasicHandler implements BatchHandler {
         return execute(list, getArgTypes(args));
     }
 
-    public int execute(List list, Class[] argTypes) throws SQLRuntimeException {
+    @Override
+    public int execute(List<?> list, Class<?>[] argTypes) throws SQLRuntimeException {
         Connection connection = getConnection();
         try {
             return execute(connection, list, argTypes);
@@ -141,7 +143,7 @@ public class BasicBatchHandler extends BasicHandler implements BatchHandler {
      *            引数の型のリスト
      * @return 対象のデータの行数
      */
-    protected int execute(Connection connection, List list, Class[] argTypes) {
+    protected int execute(Connection connection, List<?> list, Class<?>[] argTypes) {
         PreparedStatement ps = prepareStatement(connection);
         int size = batchSize > 0 ? batchSize : list.size();
         try {

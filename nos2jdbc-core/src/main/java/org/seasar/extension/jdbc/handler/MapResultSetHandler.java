@@ -44,13 +44,13 @@ public class MapResultSetHandler extends AbstractMapResultSetHandler {
      * @param sql
      *            SQL
      */
-    @SuppressWarnings("unchecked")
-    public MapResultSetHandler(Class<? extends Map> mapClass,
+    public MapResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql) {
         super(mapClass, dialect, peristenceConvention, sql);
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException,
             SNonUniqueResultException {
         Object ret = null;

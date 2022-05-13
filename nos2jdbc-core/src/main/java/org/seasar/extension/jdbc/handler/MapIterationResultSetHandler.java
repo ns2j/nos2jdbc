@@ -31,13 +31,13 @@ import org.seasar.framework.convention.PersistenceConvention;
  * 
  * @author koichik
  */
-@SuppressWarnings("unchecked")
 public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
 
     /** リミット */
     protected int limit;
 
     /** 反復コールバック */
+    @SuppressWarnings("rawtypes")
     protected IterationCallback callback;
 
     /**
@@ -56,14 +56,15 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
      * @param callback
      *            反復コールバック
      */
-    public MapIterationResultSetHandler(Class<? extends Map> mapClass,
+    public MapIterationResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
-            String sql, int limit, final IterationCallback callback) {
+            String sql, int limit, @SuppressWarnings("rawtypes") final IterationCallback callback) {
         super(mapClass, dialect, peristenceConvention, sql);
         this.limit = limit;
         this.callback = callback;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Object handle(ResultSet rs) throws SQLException {
         final PropertyType[] propertyTypes = createPropertyTypes(rs

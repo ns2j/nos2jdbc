@@ -50,7 +50,7 @@ public class BasicHandler {
     /**
      * ログで使われるクラスです。
      */
-    protected Class loggerClass = BasicHandler.class;
+    protected Class<?> loggerClass = BasicHandler.class;
 
     /**
      * {@link BasicHandler}を作成します。
@@ -182,7 +182,7 @@ public class BasicHandler {
      *            引数のタイプ
      */
     protected void bindArgs(PreparedStatement ps, Object[] args,
-            Class[] argTypes) {
+            Class<?>[] argTypes) {
 
         if (args == null) {
             return;
@@ -204,11 +204,11 @@ public class BasicHandler {
      *            引数
      * @return 引数の型
      */
-    protected Class[] getArgTypes(Object[] args) {
+    protected Class<?>[] getArgTypes(Object[] args) {
         if (args == null) {
             return null;
         }
-        Class[] argTypes = new Class[args.length];
+        Class<?>[] argTypes = new Class[args.length];
         for (int i = 0; i < args.length; ++i) {
             Object arg = args[i];
             if (arg != null) {
@@ -247,7 +247,7 @@ public class BasicHandler {
      *            クラス
      * @return S2JDBC用の値の型
      */
-    protected ValueType getValueType(Class clazz) {
+    protected ValueType getValueType(Class<?> clazz) {
         return ValueTypes.getValueType(clazz);
     }
 
@@ -259,7 +259,7 @@ public class BasicHandler {
      * @param argTypes
      *            SQLにバインドされる値の型の配列
      */
-    protected void logSql(Object[] args, Class[] argTypes) {
+    protected void logSql(Object[] args, Class<?>[] argTypes) {
         Logger logger = Logger.getLogger(loggerClass);
         SqlLogRegistry sqlLogRegistry = SqlLogRegistryLocator.getInstance();
         if (logger.isDebugEnabled() || sqlLogRegistry != null) {
@@ -280,7 +280,7 @@ public class BasicHandler {
      * 
      * @return ログ用のクラス
      */
-    public Class getLoggerClass() {
+    public Class<?> getLoggerClass() {
         return loggerClass;
     }
 
@@ -290,7 +290,7 @@ public class BasicHandler {
      * @param loggerClass
      *            ログ用のクラス
      */
-    public void setLoggerClass(Class loggerClass) {
+    public void setLoggerClass(Class<?> loggerClass) {
         this.loggerClass = loggerClass;
     }
 }

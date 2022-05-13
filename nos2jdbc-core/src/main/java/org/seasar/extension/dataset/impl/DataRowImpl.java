@@ -32,8 +32,6 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.CaseInsensitiveMap;
 import org.seasar.framework.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * {@link DataRow}の実装クラスです。
@@ -42,8 +40,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class DataRowImpl implements DataRow {
-    final static private Logger logger = LoggerFactory.getLogger(DataRowImpl.class);
-
     private DataTable table_;
 
     private ArrayMap values_ = new CaseInsensitiveMap();
@@ -183,6 +179,7 @@ public class DataRowImpl implements DataRow {
     /**
      * @see org.seasar.extension.dataset.DataRow#copyFrom(java.lang.Object)
      */
+    @SuppressWarnings("rawtypes")
     @Override
     public void copyFrom(Object source) {
         if (source instanceof Map) {
@@ -195,8 +192,8 @@ public class DataRowImpl implements DataRow {
 
     }
 
-    private void copyFromMap(Map source) {
-        for (Iterator i = source.keySet().iterator(); i.hasNext();) {
+    private void copyFromMap(@SuppressWarnings("rawtypes") Map source) {
+        for (Iterator<?> i = source.keySet().iterator(); i.hasNext();) {
             String columnName = (String) i.next();
             if (table_.hasColumn(columnName)) {
                 Object value = source.get(columnName);

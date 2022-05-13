@@ -31,15 +31,17 @@ import org.seasar.extension.dataset.RowState;
  */
 public class CreatedState extends AbstractRowState {
 
+    @Override
     public String toString() {
         return "CREATED";
     }
 
+    @Override
     protected SqlContext getSqlContext(DataRow row) {
         DataTable table = row.getTable();
         StringBuffer buf = new StringBuffer(100);
-        List argList = new ArrayList();
-        List argTypeList = new ArrayList();
+        List<Object> argList = new ArrayList<>();
+        List<Class<?>> argTypeList = new ArrayList<>();
         buf.append("INSERT INTO ");
         buf.append(table.getTableName());
         buf.append(" (");
@@ -62,7 +64,7 @@ public class CreatedState extends AbstractRowState {
         buf.setLength(buf.length() - 2);
         buf.append(")");
         return new SqlContext(buf.toString(), argList.toArray(),
-                (Class[]) argTypeList.toArray(new Class[argTypeList.size()]));
+                argTypeList.toArray(new Class[argTypeList.size()]));
     }
     /*
      * protected String getSql(DataTable table) { String sql = (String)

@@ -24,7 +24,6 @@ import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.MappingContext;
 
-@SuppressWarnings("unchecked")
 public class BeanIterationNonAutoResultSetHandler extends
         AbstractBeanNonAutoResultSetHandler {
 
@@ -32,6 +31,7 @@ public class BeanIterationNonAutoResultSetHandler extends
     protected int limit;
 
     /** 反復コールバック */
+    @SuppressWarnings("rawtypes")
     protected IterationCallback callback;
 
     /**
@@ -51,12 +51,13 @@ public class BeanIterationNonAutoResultSetHandler extends
     public BeanIterationNonAutoResultSetHandler(Class<?> beanClass,
             final EntityMetaFactory entityMetaFactory, DbmsDialect dailect, final String sql, final int limit,
             boolean shouldSetInverseField, 
-            final IterationCallback callback) {
+            final IterationCallback<Object, IterationContext> callback) {
         super(beanClass, entityMetaFactory, dailect, sql, shouldSetInverseField);
         this.limit = limit;
         this.callback = callback;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Object handle(final ResultSet rs) throws SQLException {
 	if (entityMapper == null)

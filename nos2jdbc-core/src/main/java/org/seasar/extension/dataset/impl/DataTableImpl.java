@@ -47,9 +47,9 @@ public class DataTableImpl implements DataTable {
 
     private String tableName;
 
-    private List rows = new ArrayList();
+    private List<DataRow> rows = new ArrayList<>();
 
-    private List removedRows = new ArrayList();
+    private List<DataRow> removedRows = new ArrayList<>();
 
     private ArrayMap columns = new CaseInsensitiveMap();
 
@@ -93,7 +93,7 @@ public class DataTableImpl implements DataTable {
      */
     @Override
     public DataRow getRow(int index) {
-        return (DataRow) rows.get(index);
+        return rows.get(index);
     }
 
     /**
@@ -120,7 +120,7 @@ public class DataTableImpl implements DataTable {
      */
     @Override
     public DataRow getRemovedRow(int index) {
-        return (DataRow) removedRows.get(index);
+        return removedRows.get(index);
     }
 
     /**
@@ -137,7 +137,7 @@ public class DataTableImpl implements DataTable {
                 ++i;
             }
         }
-        return (DataRow[]) removedRows.toArray(new DataRow[removedRows.size()]);
+        return removedRows.toArray(new DataRow[removedRows.size()]);
     }
 
     /**
@@ -252,9 +252,9 @@ public class DataTableImpl implements DataTable {
      */
     @Override
     public void setupMetaData(DatabaseMetaData dbMetaData) {
-        Set primaryKeySet = DatabaseMetaDataUtil.getPrimaryKeySet(dbMetaData,
+        Set<?> primaryKeySet = DatabaseMetaDataUtil.getPrimaryKeySet(dbMetaData,
                 tableName);
-        Map columnMap = DatabaseMetaDataUtil
+        Map<?, ?> columnMap = DatabaseMetaDataUtil
                 .getColumnMap(dbMetaData, tableName);
         for (int i = 0; i < getColumnSize(); ++i) {
             DataColumn column = getColumn(i);
@@ -281,7 +281,7 @@ public class DataTableImpl implements DataTable {
      * @see org.seasar.extension.dataset.DataTable#setupColumns(java.lang.Class)
      */
     @Override
-    public void setupColumns(Class beanClass) {
+    public void setupColumns(Class<?> beanClass) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(beanClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
@@ -290,6 +290,7 @@ public class DataTableImpl implements DataTable {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public void copyFrom(Object source) {
         if (source instanceof List) {
@@ -300,7 +301,7 @@ public class DataTableImpl implements DataTable {
 
     }
 
-    private void copyFromList(List source) {
+    private void copyFromList(List<?> source) {
         for (int i = 0; i < source.size(); ++i) {
             DataRow row = addRow();
             row.copyFrom(source.get(i));

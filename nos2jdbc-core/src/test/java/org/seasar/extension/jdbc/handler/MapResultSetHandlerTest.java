@@ -38,7 +38,7 @@ class MapResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     @Test
     void testHandle() throws Exception {
         MapResultSetHandler handler = new MapResultSetHandler(Map.class,

@@ -33,6 +33,7 @@ public abstract class AbstractRowState implements RowState {
     AbstractRowState() {
     }
 
+    @Override
     public void update(DataSource dataSource, DataRow row) {
         SqlContext ctx = getSqlContext(row);
         UpdateHandler handler = new BasicUpdateHandler(dataSource, ctx.getSql());
@@ -59,7 +60,7 @@ public abstract class AbstractRowState implements RowState {
      *            引数の型
      */
     protected void execute(UpdateHandler handler, Object[] args,
-            Class[] argTypes) {
+            Class<?>[] argTypes) {
         handler.execute(args, argTypes);
     }
 }

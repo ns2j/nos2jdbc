@@ -193,7 +193,7 @@ public interface DataTable {
      * @param beanClass
      *            JavaBeansのクラス
      */
-    void setupColumns(Class beanClass);
+    void setupColumns(Class<?> beanClass);
 
     /**
      * 他のオブジェクトから値をコピーします。

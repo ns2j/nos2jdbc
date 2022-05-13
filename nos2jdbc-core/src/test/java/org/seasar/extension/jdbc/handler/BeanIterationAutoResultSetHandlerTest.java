@@ -48,7 +48,6 @@ class BeanIterationAutoResultSetHandlerTest {
     /**
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
@@ -59,6 +58,7 @@ class BeanIterationAutoResultSetHandlerTest {
                 valueTypes, entityMapper, "select * from aaa", 0,
                 new IterationCallback<Aaa, Integer>() {
 
+                    @Override
                     public Integer iterate(Aaa entity, IterationContext context) {
                         ++count;
                         list.add(entity);
@@ -91,7 +91,6 @@ class BeanIterationAutoResultSetHandlerTest {
     /**
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithLimit() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
@@ -102,6 +101,7 @@ class BeanIterationAutoResultSetHandlerTest {
                 valueTypes, entityMapper, "select * from aaa", 2,
                 new IterationCallback<Aaa, Integer>() {
 
+                    @Override
                     public Integer iterate(Aaa entity, IterationContext context) {
                         ++count;
                         list.add(entity);
@@ -126,7 +126,6 @@ class BeanIterationAutoResultSetHandlerTest {
     /**
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithExit() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
@@ -137,6 +136,7 @@ class BeanIterationAutoResultSetHandlerTest {
                 valueTypes, entityMapper, "select * from aaa", 0,
                 new IterationCallback<Aaa, Integer>() {
 
+                    @Override
                     public Integer iterate(Aaa entity, IterationContext context) {
                         ++count;
                         list.add(entity);
@@ -164,7 +164,6 @@ class BeanIterationAutoResultSetHandlerTest {
     /**
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithToMany() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
@@ -175,6 +174,7 @@ class BeanIterationAutoResultSetHandlerTest {
                 valueTypes, entityMapper, "select * from aaa", 0,
                 new IterationCallback<Aaa, Integer>() {
 
+                    @Override
                     public Integer iterate(Aaa entity, IterationContext context) {
                         ++count;
                         list.add(entity);

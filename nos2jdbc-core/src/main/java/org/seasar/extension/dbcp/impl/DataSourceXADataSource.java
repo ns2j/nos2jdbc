@@ -45,7 +45,7 @@ public class DataSourceXADataSource implements XADataSource {
     protected String dataSourceName;
 
     /** JNDIの{@link javax.naming.InitialContext 初期コンテキスト}を作成するための環境 */
-    protected Hashtable env = new Hashtable();
+    protected Hashtable<?, ?> env = new Hashtable<>();
 
     /** JNDIからルックアップしたデータソース */
     protected DataSource dataSource;
@@ -66,32 +66,39 @@ public class DataSourceXADataSource implements XADataSource {
      * @param env
      *            JNDIの初期コンテキストを作成するための環境
      */
-    public void setEnv(final Map env) {
+    @SuppressWarnings("unchecked")
+    public void setEnv(@SuppressWarnings("rawtypes") final Map env) {
         this.env.putAll(env);
     }
 
+    @Override
     public PrintWriter getLogWriter() throws SQLException {
         return null;
     }
 
+    @Override
     public int getLoginTimeout() throws SQLException {
         return 0;
     }
 
+    @Override
     public XAConnection getXAConnection() throws SQLException {
         final Connection con = getDataSource().getConnection();
         return new XAConnectionImpl(con);
     }
 
+    @Override
     public XAConnection getXAConnection(final String user, final String password)
             throws SQLException {
         final Connection con = getDataSource().getConnection(user, password);
         return new XAConnectionImpl(con);
     }
 
+    @Override
     public void setLogWriter(final PrintWriter out) throws SQLException {
     }
 
+    @Override
     public void setLoginTimeout(final int seconds) throws SQLException {
     }
 
@@ -110,6 +117,7 @@ public class DataSourceXADataSource implements XADataSource {
         return dataSource;
     }
 
+    @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
 	// TODO Auto-generated method stub
 	return null;

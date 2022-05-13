@@ -36,7 +36,6 @@ class ObjectListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle() throws Exception {
         ObjectListResultSetHandler handler = new ObjectListResultSetHandler(
@@ -52,6 +51,7 @@ class ObjectListResultSetHandlerTest {
         data = new ArrayMap();
         data.put("AAA", Integer.valueOf(6));
         rs.addRowData(data);
+        @SuppressWarnings("rawtypes")
         List ret = (List) handler.handle(rs);
         assertEquals(2, ret.size());
         assertEquals(Integer.valueOf(5), ret.get(0));
@@ -62,7 +62,6 @@ class ObjectListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandleWithLimit() throws Exception {
         ObjectListResultSetHandler handler = new ObjectListResultSetHandler(
@@ -78,6 +77,7 @@ class ObjectListResultSetHandlerTest {
         data = new ArrayMap();
         data.put("AAA", Integer.valueOf(6));
         rs.addRowData(data);
+        @SuppressWarnings("rawtypes")
         List ret = (List) handler.handle(rs);
         assertEquals(1, ret.size());
         assertEquals(Integer.valueOf(5), ret.get(0));

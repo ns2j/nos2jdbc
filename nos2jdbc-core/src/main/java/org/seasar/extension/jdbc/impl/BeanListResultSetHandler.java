@@ -37,13 +37,14 @@ public class BeanListResultSetHandler extends AbstractBeanResultSetHandler {
      * @param beanClass
      *            Beanクラス
      */
-    public BeanListResultSetHandler(Class beanClass) {
+    public BeanListResultSetHandler(Class<?> beanClass) {
         super(beanClass);
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException {
         PropertyType[] propertyTypes = createPropertyTypes(rs.getMetaData());
-        List list = new ArrayList();
+        List<Object> list = new ArrayList<>();
         while (rs.next()) {
             Object row = createRow(rs, propertyTypes);
             list.add(row);

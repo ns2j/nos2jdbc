@@ -31,13 +31,13 @@ import org.seasar.framework.convention.PersistenceConvention;
  * 
  * @author koichik
  */
-@SuppressWarnings("unchecked")
 public class BeanIterationResultSetHandler extends AbstractBeanResultSetHandler {
 
     /** リミット */
     protected int limit;
 
     /** 反復コールバック */
+    @SuppressWarnings("rawtypes")
     protected IterationCallback callback;
 
     /**
@@ -59,12 +59,14 @@ public class BeanIterationResultSetHandler extends AbstractBeanResultSetHandler 
     public BeanIterationResultSetHandler(final Class<?> beanClass,
             final DbmsDialect dialect,
             final PersistenceConvention persistenceConvention,
-            final String sql, final int limit, final IterationCallback callback) {
+            final String sql, final int limit, @SuppressWarnings("rawtypes") final IterationCallback callback) {
         super(beanClass, dialect, persistenceConvention, sql);
         this.limit = limit;
         this.callback = callback;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
     public Object handle(final ResultSet rs) throws SQLException,
             SNonUniqueResultException {
         final PropertyType[] propertyTypes = createPropertyTypes(rs

@@ -38,7 +38,6 @@ class BeanListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle() throws Exception {
         BeanListResultSetHandler handler = new BeanListResultSetHandler(
@@ -56,6 +55,7 @@ class BeanListResultSetHandlerTest {
         data.put("FOO2", "111");
         data.put("AAA_BBB", "222");
         rs.addRowData(data);
+        @SuppressWarnings("rawtypes")
         List list = (List) handler.handle(rs);
         assertEquals(1, list.size());
         AaaDto dto = (AaaDto) list.get(0);
@@ -67,7 +67,6 @@ class BeanListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandleWithLimit() throws Exception {
         BeanListResultSetHandler handler = new BeanListResultSetHandler(
@@ -86,6 +85,7 @@ class BeanListResultSetHandlerTest {
         data.put("AAA_BBB", "222");
         rs.addRowData(data);
         rs.addRowData(data);
+        @SuppressWarnings("rawtypes")
         List list = (List) handler.handle(rs);
         assertEquals(1, list.size());
         AaaDto dto = (AaaDto) list.get(0);

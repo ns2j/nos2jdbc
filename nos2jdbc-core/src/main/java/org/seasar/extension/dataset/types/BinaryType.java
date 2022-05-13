@@ -27,15 +27,17 @@ import org.seasar.framework.conversion.BinaryConversionUtil;
  */
 public class BinaryType extends ObjectType {
 
-    private static final Class TYPE = new byte[0].getClass();
+    private static final Class<? extends byte[]> TYPE = new byte[0].getClass();
 
     BinaryType() {
     }
 
+    @Override
     public Object convert(Object value, String formatPattern) {
         return BinaryConversionUtil.toBinary(value);
     }
 
+    @Override
     protected boolean doEquals(Object arg1, Object arg2) {
         if (arg1 instanceof byte[] && arg2 instanceof byte[]) {
             return Arrays.equals((byte[]) arg1, (byte[]) arg2);
@@ -43,7 +45,8 @@ public class BinaryType extends ObjectType {
         return false;
     }
 
-    public Class getType() {
+    @Override
+    public Class<? extends byte[]> getType() {
         return TYPE;
     }
 }

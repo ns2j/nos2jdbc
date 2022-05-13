@@ -56,7 +56,7 @@ public class BindVariableNode extends AbstractNode {
     @Override
     public void accept(SqlContext ctx) {
         Object value = ctx.getArg(names[0]);
-        Class clazz = ctx.getArgType(names[0]);
+        Class<?> clazz = ctx.getArgType(names[0]);
         for (int pos = 1; pos < names.length; pos++) {
             BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
             PropertyDesc pd = beanDesc.getPropertyDesc(names[pos]);

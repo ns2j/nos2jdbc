@@ -234,21 +234,22 @@ public class ValueTypes {
 
     private static final ValueType NULL = new NullType();
 
-    private static final Class BYTE_ARRAY_CLASS = new byte[0].getClass();
+    private static final Class<?> BYTE_ARRAY_CLASS = new byte[0].getClass();
 
-    private static Map types = new HashMap();
+    private static Map<Class<?>, ValueType> types = new HashMap<>();
 
     private static Method isEnumMethod;
 
-    private static Constructor enumDefaultValueTypeConstructor;
+    private static Constructor<?> enumDefaultValueTypeConstructor;
 
-    private static Constructor enumOrdinalValueTypeConstructor;
+    private static Constructor<?> enumOrdinalValueTypeConstructor;
 
-    private static Constructor enumStringValueTypeConstructor;
+    private static Constructor<?> enumStringValueTypeConstructor;
 
     private static volatile boolean initialized;
 
-    private static Map valueTypeCache = MapUtil.createHashMap(50);
+    @SuppressWarnings("unchecked")
+    private static Map<String, ValueType> valueTypeCache = MapUtil.createHashMap(50);
 
     static {
         registerValueType(String.class, STRING);
@@ -331,7 +332,7 @@ public class ValueTypes {
      * @param clazz Class
      * @param valueType ValuType
      */
-    public static void registerValueType(Class clazz, ValueType valueType) {
+    public static void registerValueType(Class<?> clazz, ValueType valueType) {
         types.put(clazz, valueType);
     }
 
@@ -340,7 +341,7 @@ public class ValueTypes {
      * 
      * @param clazz Class
      */
-    public static void unregisterValueType(Class clazz) {
+    public static void unregisterValueType(Class<?> clazz) {
         types.remove(clazz);
     }
 
@@ -352,7 +353,7 @@ public class ValueTypes {
      * @throws NoSuchMethodException
      *             指定のクラスにClassを唯一の引数とするコンストラクタがない場合
      */
-    public static void setEnumDefaultValueType(Class enumDefaultValueTypeClass)
+    public static void setEnumDefaultValueType(Class<?> enumDefaultValueTypeClass)
             throws NoSuchMethodException {
         enumDefaultValueTypeConstructor = enumDefaultValueTypeClass
                 .getConstructor(new Class[] { Class.class });
@@ -366,7 +367,7 @@ public class ValueTypes {
      * @throws NoSuchMethodException
      *             指定のクラスにClassを唯一の引数とするコンストラクタがない場合
      */
-    public static void setEnumOrdinalValueType(Class enumOrdinalValueTypeClass)
+    public static void setEnumOrdinalValueType(Class<?> enumOrdinalValueTypeClass)
             throws NoSuchMethodException {
         enumOrdinalValueTypeConstructor = enumOrdinalValueTypeClass
                 .getConstructor(new Class[] { Class.class });
@@ -380,7 +381,7 @@ public class ValueTypes {
      * @throws NoSuchMethodException
      *             指定のクラスにClassを唯一の引数とするコンストラクタがない場合
      */
-    public static void setEnumStringValueType(Class enumStringValueTypeClass)
+    public static void setEnumStringValueType(Class<?> enumStringValueTypeClass)
             throws NoSuchMethodException {
         enumStringValueTypeConstructor = enumStringValueTypeClass
                 .getConstructor(new Class[] { Class.class });
@@ -405,11 +406,11 @@ public class ValueTypes {
      * @param clazz Class
      * @return {@link ValueType}
      */
-    public static ValueType getValueType(Class clazz) {
+    public static ValueType getValueType(Class<?> clazz) {
         if (clazz == null) {
             return OBJECT;
         }
-        for (Class c = clazz; c != null && c != Object.class; c = c
+        for (Class<?> c = clazz; c != null && c != Object.class; c = c
                 .getSuperclass()) {
             ValueType valueType = getValueType0(c);
             if (valueType != null) {
@@ -423,29 +424,29 @@ public class ValueTypes {
         return OBJECT;
     }
 
-    private static ValueType getValueType0(Class clazz) {
-        return (ValueType) types.get(clazz);
+    private static ValueType getValueType0(Class<?> clazz) {
+        return types.get(clazz);
     }
 
-    private static boolean hasCachedValueType(Class clazz) {
+    private static boolean hasCachedValueType(Class<?> clazz) {
         return getCachedValueType(clazz) != null;
     }
 
-    private static ValueType getCachedValueType(Class clazz) {
+    private static ValueType getCachedValueType(Class<?> clazz) {
         if (!initialized) {
             initialize();
         }
         if (Map.class.isAssignableFrom(clazz)) {
             return null;
         }
-        ValueType valueType = (ValueType) valueTypeCache.get(clazz.getName());
+        ValueType valueType = valueTypeCache.get(clazz.getName());
         if (valueType == NULL) {
             return null;
         }
         if (valueType != null) {
             return valueType;
         }
-        Class normalizedEnumClass = normalizeEnum(clazz);
+        Class<?> normalizedEnumClass = normalizeEnum(clazz);
         if (normalizedEnumClass != null) {
             valueType = getEnumDefaultValueType(normalizedEnumClass);
             valueTypeCache.put(normalizedEnumClass.getName(), valueType);
@@ -460,11 +461,11 @@ public class ValueTypes {
         return null;
     }
 
-    private static Class normalizeEnum(Class clazz) {
+    private static Class<?> normalizeEnum(Class<?> clazz) {
         if (isEnumMethod == null || enumStringValueTypeConstructor == null) {
             return null;
         }
-        for (Class c = clazz; c != null; c = c.getSuperclass()) {
+        for (Class<?> c = clazz; c != null; c = c.getSuperclass()) {
             if (MethodUtil.invoke(isEnumMethod, c, null).equals(Boolean.TRUE)) {
                 return c;
             }
@@ -479,7 +480,7 @@ public class ValueTypes {
      *            enum型のクラス
      * @return enum型用の{@link ValueType}
      */
-    public static ValueType getEnumDefaultValueType(Class clazz) {
+    public static ValueType getEnumDefaultValueType(Class<?> clazz) {
         return (ValueType) ConstructorUtil.newInstance(
                 enumDefaultValueTypeConstructor, new Class[] { clazz });
     }
@@ -491,7 +492,7 @@ public class ValueTypes {
      *            enum型のクラス
      * @return enum型の{@link Enum#name() 名前}用の{@link ValueType}
      */
-    public static ValueType getEnumStringValueType(Class clazz) {
+    public static ValueType getEnumStringValueType(Class<?> clazz) {
         return (ValueType) ConstructorUtil.newInstance(
                 enumStringValueTypeConstructor, new Class[] { clazz });
     }
@@ -503,7 +504,7 @@ public class ValueTypes {
      *            enum型のクラス
      * @return enum型の{@link Enum#ordinal() 序数}用の{@link ValueType}
      */
-    public static ValueType getEnumOrdinalValueType(Class clazz) {
+    public static ValueType getEnumOrdinalValueType(Class<?> clazz) {
         return (ValueType) ConstructorUtil.newInstance(
                 enumOrdinalValueTypeConstructor, new Class[] { clazz });
     }
@@ -518,8 +519,8 @@ public class ValueTypes {
      *            ユーザ定義型
      * @return ユーザ定義型用の{@link ValueType}
      */
-    public static ValueType createUserDefineValueType(Class clazz) {
-        List valueOfMethods = new ArrayList();
+    public static ValueType createUserDefineValueType(Class<?> clazz) {
+        List<Method> valueOfMethods = new ArrayList<>();
         Method valueMethod = null;
         Method[] methods = clazz.getMethods();
         for (int i = 0; i < methods.length; ++i) {
@@ -545,10 +546,10 @@ public class ValueTypes {
             return null;
         }
         for (int i = 0; i < valueOfMethods.size(); ++i) {
-            Method valueOfMethod = (Method) valueOfMethods.get(i);
+            Method valueOfMethod = valueOfMethods.get(i);
             if (valueOfMethod.getParameterTypes()[0] == valueMethod
                     .getReturnType()) {
-                Class baseClass = valueMethod.getReturnType();
+                Class<?> baseClass = valueMethod.getReturnType();
                 ValueType baseValueType = getValueType0(baseClass);
                 if (baseValueType == null) {
                     return null;
@@ -566,7 +567,7 @@ public class ValueTypes {
      * @param sqltype int
      * @return {@link Class}
      */
-    public static Class getType(int sqltype) {
+    public static Class<?> getType(int sqltype) {
         switch (sqltype) {
         case Types.TINYINT:
             return Byte.class;
@@ -623,7 +624,7 @@ public class ValueTypes {
      *            クラス
      * @return 単純な型かどうか
      */
-    public static boolean isSimpleType(Class clazz) {
+    public static boolean isSimpleType(Class<?> clazz) {
         if (clazz == null) {
             throw new NullPointerException("clazz");
         }

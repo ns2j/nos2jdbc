@@ -38,7 +38,7 @@ class MapListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     @Test
     void testHandle() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
@@ -67,7 +67,7 @@ class MapListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     @Test
     void testHandleWithLimit() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(

@@ -53,7 +53,7 @@ public class BigDecimalType extends ObjectType {
     }
 
     @Override
-    public Class getType() {
+    public Class<BigDecimal> getType() {
         return BigDecimal.class;
     }
 }

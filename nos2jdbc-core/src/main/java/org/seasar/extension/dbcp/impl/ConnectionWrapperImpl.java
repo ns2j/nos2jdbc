@@ -421,7 +421,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
     }
 
     @Override
-    public Map getTypeMap() throws SQLException {
+    public Map<String, Class<?>> getTypeMap() throws SQLException {
         assertOpened();
         try {
             return physicalConnection_.getTypeMap();
@@ -432,7 +432,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper,
     }
 
     @Override
-    public void setTypeMap(final Map map) throws SQLException {
+    public void setTypeMap(final Map<String, Class<?>> map) throws SQLException {
         assertOpened();
         try {
             physicalConnection_.setTypeMap(map);

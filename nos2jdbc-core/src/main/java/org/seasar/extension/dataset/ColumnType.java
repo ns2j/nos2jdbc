@@ -52,5 +52,5 @@ public interface ColumnType {
      * 
      * @return 型
      */
-    Class getType();
+    Class<?> getType();
 }

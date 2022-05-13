@@ -34,10 +34,11 @@ public class BeanResultSetHandler extends AbstractBeanResultSetHandler {
      * @param beanClass
      *            Beanクラス
      */
-    public BeanResultSetHandler(Class beanClass) {
+    public BeanResultSetHandler(Class<?> beanClass) {
         super(beanClass);
     }
 
+    @Override
     public Object handle(ResultSet rs) throws SQLException {
         if (rs.next()) {
             return createRow(rs, createPropertyTypes(rs.getMetaData()));

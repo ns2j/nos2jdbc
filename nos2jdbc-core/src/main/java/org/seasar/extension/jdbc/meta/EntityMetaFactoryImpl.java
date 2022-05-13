@@ -85,6 +85,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      */
     protected PersistenceConvention persistenceConvention;
 
+    @Override
     public EntityMeta getEntityMeta(Class<?> entityClass) {
         if (entityClass == null) {
             throw new NullPointerException("entityClass");
@@ -437,6 +438,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
     public void initialize() {
         DisposableUtil.add(new Disposable() {
 
+            @Override
             public void dispose() {
                 clear();
             }

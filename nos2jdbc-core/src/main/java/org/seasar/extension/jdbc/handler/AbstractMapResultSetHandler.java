@@ -43,13 +43,13 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
     /**
      * デフォルトのマップの実装クラスです。
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     protected static final Class<? extends Map> DEFAULT_MAP_CLASS = BeanMap.class;
 
     /**
      * マップクラスです。
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     protected Class<? extends Map> mapClass = DEFAULT_MAP_CLASS;
 
     /**
@@ -79,8 +79,7 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
      * @param sql
      *            SQL
      */
-    @SuppressWarnings("unchecked")
-    public AbstractMapResultSetHandler(Class<? extends Map> mapClass,
+    public AbstractMapResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention persistenceConvention,
             String sql) {
         if (!ModifierUtil.isAbstract(mapClass)) {
@@ -131,7 +130,7 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
     @SuppressWarnings("unchecked")
     protected Object createRow(ResultSet rs, PropertyType[] propertyTypes)
             throws SQLException {
-
+        @SuppressWarnings("rawtypes")
         Map row = (Map) ClassUtil.newInstance(mapClass);
         for (int i = 0; i < propertyTypes.length; ++i) {
             PropertyType pt = propertyTypes[i];

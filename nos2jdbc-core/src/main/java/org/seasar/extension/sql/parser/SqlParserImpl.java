@@ -44,7 +44,7 @@ public class SqlParserImpl implements SqlParser {
 
     private SqlTokenizer tokenizer;
 
-    private Stack nodeStack = new Stack();
+    private Stack<Node> nodeStack = new Stack<>();
 
     private boolean allowVariableSql = true;
 
@@ -248,7 +248,7 @@ public class SqlParserImpl implements SqlParser {
      * @return 一番上のノード
      */
     protected Node pop() {
-        return (Node) nodeStack.pop();
+        return nodeStack.pop();
     }
 
     /**
@@ -257,7 +257,7 @@ public class SqlParserImpl implements SqlParser {
      * @return 一番上のノード
      */
     protected Node peek() {
-        return (Node) nodeStack.peek();
+        return nodeStack.peek();
     }
 
     /**

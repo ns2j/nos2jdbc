@@ -92,9 +92,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private long validationInterval;
 
-    private Set activePool = new HashSet();
+    private Set<ConnectionWrapper> activePool = new HashSet<>();
 
-    private Map txActivePool = new HashMap();
+    private Map<Transaction, ConnectionWrapper> txActivePool = new HashMap<>();
 
     private SLinkedList freePool = new SLinkedList();
 
@@ -106,6 +106,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     public ConnectionPoolImpl() {
         timeoutTask = TimeoutManager.getInstance().addTimeoutTarget(
                 new TimeoutTarget() {
+                    @Override
                     public void expired() {
                     }
                 }, Integer.MAX_VALUE, true);
@@ -168,6 +169,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         this.timeout = timeout;
     }
 
+    @Override
     public int getMaxPoolSize() {
         return maxPoolSize;
     }
@@ -182,6 +184,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         this.maxPoolSize = maxPoolSize;
     }
 
+    @Override
     public int getMinPoolSize() {
         return minPoolSize;
     }
@@ -319,18 +322,22 @@ public class ConnectionPoolImpl implements ConnectionPool {
         this.validationInterval = validationInterval;
     }
 
+    @Override
     public int getActivePoolSize() {
         return activePool.size();
     }
 
+    @Override
     public int getTxActivePoolSize() {
         return txActivePool.size();
     }
 
+    @Override
     public int getFreePoolSize() {
         return freePool.size();
     }
 
+    @Override
     public synchronized ConnectionWrapper checkOut() throws SQLException {
         Transaction tx = getTransaction();
         if (tx == null && !isAllowLocalTx()) {
@@ -388,7 +395,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     private ConnectionWrapper getConnectionTxActivePool(Transaction tx) {
-        return (ConnectionWrapper) txActivePool.get(tx);
+        return txActivePool.get(tx);
     }
 
     private ConnectionWrapper checkOutFreePool(final Transaction tx) {
@@ -463,6 +470,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         activePool.add(connection);
     }
 
+    @Override
     public synchronized void release(ConnectionWrapper connection) {
         activePool.remove(connection);
         Transaction tx = getTransaction();
@@ -477,6 +485,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         notify();
     }
 
+    @Override
     public synchronized void checkIn(ConnectionWrapper connection) {
         activePool.remove(connection);
         checkInFreePool(connection);
@@ -505,6 +514,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         }
     }
 
+    @Override
     public synchronized void checkInTx(Transaction tx) {
         if (tx == null) {
             return;
@@ -512,13 +522,14 @@ public class ConnectionPoolImpl implements ConnectionPool {
         if (getTransaction() != null) {
             return;
         }
-        ConnectionWrapper con = (ConnectionWrapper) txActivePool.remove(tx);
+        ConnectionWrapper con = txActivePool.remove(tx);
         if (con == null) {
             return;
         }
         checkInFreePool(con);
     }
 
+    @Override
     public final synchronized void close() {
         for (SLinkedList.Entry e = freePool.getFirstEntry(); e != null; e = e
                 .getNext()) {
@@ -527,13 +538,13 @@ public class ConnectionPoolImpl implements ConnectionPool {
             item.destroy();
         }
         freePool.clear();
-        for (Iterator i = txActivePool.values().iterator(); i.hasNext();) {
-            ConnectionWrapper con = (ConnectionWrapper) i.next();
+        for (Iterator<ConnectionWrapper> i = txActivePool.values().iterator(); i.hasNext();) {
+            ConnectionWrapper con = i.next();
             con.closeReally();
         }
         txActivePool.clear();
-        for (Iterator i = activePool.iterator(); i.hasNext();) {
-            ConnectionWrapper con = (ConnectionWrapper) i.next();
+        for (Iterator<ConnectionWrapper> i = activePool.iterator(); i.hasNext();) {
+            ConnectionWrapper con = i.next();
             con.closeReally();
         }
         activePool.clear();
@@ -573,6 +584,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
             return pooledTime;
         }
 
+        @Override
         public void expired() {
             synchronized (ConnectionPoolImpl.this) {
                 if (freePool.size() <= minPoolSize) {
@@ -620,9 +632,11 @@ public class ConnectionPoolImpl implements ConnectionPool {
             this.tx = tx;
         }
 
+        @Override
         public final void beforeCompletion() {
         }
 
+        @Override
         public void afterCompletion(final int status) {
             switch (status) {
             case Status.STATUS_COMMITTED:

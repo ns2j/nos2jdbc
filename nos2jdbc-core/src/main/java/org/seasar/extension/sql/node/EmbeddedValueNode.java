@@ -63,7 +63,7 @@ public class EmbeddedValueNode extends AbstractNode {
     @Override
     public void accept(SqlContext ctx) {
         Object value = ctx.getArg(baseName);
-        Class clazz = ctx.getArgType(baseName);
+        Class<?> clazz = ctx.getArgType(baseName);
         if (propertyName != null) {
             BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);

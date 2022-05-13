@@ -38,6 +38,7 @@ public class BeanIterationAutoResultSetHandler extends
     protected int limit;
 
     /** 反復コールバック */
+    @SuppressWarnings("rawtypes")
     protected IterationCallback callback;
 
     /**
@@ -56,12 +57,13 @@ public class BeanIterationAutoResultSetHandler extends
      */
     public BeanIterationAutoResultSetHandler(final ValueType[] valueTypes,
             final EntityMapper entityMapper, final String sql, final int limit,
-            final IterationCallback callback) {
+            @SuppressWarnings("rawtypes") final IterationCallback callback) {
         super(valueTypes, entityMapper, sql);
         this.limit = limit;
         this.callback = callback;
     }
 
+    @Override
     public Object handle(final ResultSet rs) throws SQLException {
         final MappingContext mappingContext = new MappingContext();
         final IterationContext iterationContext = new IterationContext();

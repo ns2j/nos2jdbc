@@ -33,7 +33,8 @@ public class SqlContextPropertyAccessor extends ObjectPropertyAccessor {
 
     private static final String HAS_PREFIX = "has_";
 
-    public Object getProperty(Map cx, Object target, Object name)
+    @Override
+    public Object getProperty(@SuppressWarnings("rawtypes") Map cx, Object target, Object name)
             throws OgnlException {
 
         SqlContext ctx = (SqlContext) target;

@@ -121,17 +121,18 @@ class AbstMapResultSetHandlerTest {
     private static class MyHandler extends AbstractMapResultSetHandler {
 
         /**
-         * @param mapClass
+         * @param class1
          * @param dialect
          * @param persistenceConvention
          * @param sql
          */
         @SuppressWarnings("unchecked")
-        public MyHandler(Class<? extends Map> mapClass) {
-            super(mapClass, new StandardDialect(),
+        public MyHandler(@SuppressWarnings("rawtypes") Class class1) {
+            super(class1, new StandardDialect(),
                     new PersistenceConventionImpl(), null);
         }
 
+        @Override
         public Object handle(ResultSet resultSet) throws SQLException {
             return null;
         }

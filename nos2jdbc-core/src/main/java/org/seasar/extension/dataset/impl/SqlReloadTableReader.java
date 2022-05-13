@@ -74,7 +74,7 @@ public class SqlReloadTableReader implements TableReader {
         buf.append("SELECT ");
         StringBuffer whereBuf = new StringBuffer(100);
         whereBuf.append(" WHERE");
-        List primaryKeyList = new ArrayList();
+        List<String> primaryKeyList = new ArrayList<>();
         for (int i = 0; i < table.getColumnSize(); ++i) {
             DataColumn column = table.getColumn(i);
             buf.append(column.getColumnName());
@@ -92,7 +92,7 @@ public class SqlReloadTableReader implements TableReader {
         buf.append(table.getTableName());
         buf.append(whereBuf);
         sql = buf.toString();
-        primaryKeys = (String[]) primaryKeyList
+        primaryKeys = primaryKeyList
                 .toArray(new String[primaryKeyList.size()]);
     }
 
@@ -114,6 +114,7 @@ public class SqlReloadTableReader implements TableReader {
         return table;
     }
 
+    @Override
     public DataTable read() {
         DataTable newTable = new DataTableImpl(table.getTableName());
         for (int i = 0; i < table.getColumnSize(); ++i) {

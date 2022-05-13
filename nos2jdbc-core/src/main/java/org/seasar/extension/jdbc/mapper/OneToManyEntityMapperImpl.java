@@ -60,9 +60,9 @@ public class OneToManyEntityMapperImpl extends AbstractRelationshipEntityMapper 
     @SuppressWarnings("unchecked")
     @Override
     protected void mapRelationship(Object target, Object entity) {
-        List list = (List) FieldUtil.get(field, target);
+        List<Object> list = (List<Object>) FieldUtil.get(field, target);
         if (list == null) {
-            list = new ArrayList();
+            list = new ArrayList<>();
             FieldUtil.set(field, target, list);
         }
         if (entity != null) {

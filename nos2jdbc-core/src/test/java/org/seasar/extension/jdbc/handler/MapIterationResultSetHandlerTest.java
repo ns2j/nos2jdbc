@@ -45,14 +45,16 @@ class MapIterationResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle() throws Exception {
+        @SuppressWarnings("rawtypes")
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
                 new IterationCallback<Map, Integer>() {
 
+                    @SuppressWarnings("unchecked")
+                    @Override
                     public Integer iterate(Map entity, IterationContext context) {
                         ++count;
                         list.add(entity);
@@ -88,12 +90,14 @@ class MapIterationResultSetHandlerTest {
     @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithLimit() throws Exception {
+        @SuppressWarnings("rawtypes")
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 2,
                 new IterationCallback<Map, Integer>() {
 
-                    public Integer iterate(Map entity, IterationContext context) {
+                    @Override
+                    public Integer iterate(@SuppressWarnings("rawtypes") Map entity, IterationContext context) {
                         ++count;
                         list.add(entity);
                         return count;
@@ -120,11 +124,13 @@ class MapIterationResultSetHandlerTest {
     @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithExit() throws Exception {
+        @SuppressWarnings("rawtypes")
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
                 Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
                 new IterationCallback<Map, Integer>() {
 
+                    @Override
                     public Integer iterate(Map entity, IterationContext context) {
                         ++count;
                         list.add(entity);

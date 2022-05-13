@@ -173,11 +173,13 @@ public class BasicSelectHandler extends BasicHandler implements SelectHandler {
         this.maxRows = maxRows;
     }
 
+    @Override
     public Object execute(Object[] args) throws SQLRuntimeException {
         return execute(args, getArgTypes(args));
     }
 
-    public Object execute(Object[] args, Class[] argTypes)
+    @Override
+    public Object execute(Object[] args, Class<?>[] argTypes)
             throws SQLRuntimeException {
         Connection con = getConnection();
         try {
@@ -200,7 +202,7 @@ public class BasicSelectHandler extends BasicHandler implements SelectHandler {
      * @throws SQLRuntimeException
      *             SQL例外が発生した場合
      */
-    public Object execute(Connection connection, Object[] args, Class[] argTypes)
+    public Object execute(Connection connection, Object[] args, Class<?>[] argTypes)
             throws SQLRuntimeException {
         logSql(args, argTypes);
         PreparedStatement ps = null;
@@ -228,6 +230,7 @@ public class BasicSelectHandler extends BasicHandler implements SelectHandler {
         return args;
     }
 
+    @Override
     protected PreparedStatement prepareStatement(Connection connection) {
         PreparedStatement ps = super.prepareStatement(connection);
         if (fetchSize > -1) {

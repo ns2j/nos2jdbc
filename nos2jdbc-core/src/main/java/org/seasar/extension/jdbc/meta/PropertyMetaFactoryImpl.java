@@ -496,7 +496,6 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      * @param entityMeta
      *            エンティティメタデータ
      */
-    @SuppressWarnings("unchecked")
     protected void doValueType(final PropertyMeta propertyMeta,
             final EntityMeta entityMeta) {
         final Class<?> propertyClass = propertyMeta.getPropertyClass();

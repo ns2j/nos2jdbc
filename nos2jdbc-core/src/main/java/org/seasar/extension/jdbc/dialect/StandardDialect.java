@@ -409,7 +409,7 @@ public class StandardDialect implements DbmsDialect {
 
     @Override
     public String getForUpdateString(final SelectForUpdateType type,
-            final int waitSeconds, final Pair<String, String>... aliases) {
+            final int waitSeconds, @SuppressWarnings("unchecked") final Pair<String, String>... aliases) {
         return " for update";
     }
 

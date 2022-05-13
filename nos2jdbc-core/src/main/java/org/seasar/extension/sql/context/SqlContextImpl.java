@@ -40,9 +40,9 @@ public class SqlContextImpl implements SqlContext {
 
     private StringBuffer sqlBuf = new StringBuffer(255);
 
-    private List bindVariables = new ArrayList();
+    private List<Object> bindVariables = new ArrayList<>();
 
-    private List bindVariableTypes = new ArrayList();
+    private List<Class<?>> bindVariableTypes = new ArrayList<>();
 
     private boolean enabled = true;
 
@@ -95,14 +95,14 @@ public class SqlContextImpl implements SqlContext {
     }
 
     @Override
-    public Class getArgType(String name) {
+    public Class<?> getArgType(String name) {
         if (argTypes.containsKey(name)) {
-            return (Class) argTypes.get(name);
+            return (Class<?>) argTypes.get(name);
         } else if (parent != null) {
             return parent.getArgType(name);
         } else {
             if (argTypes.size() == 1) {
-                return (Class) argTypes.get(0);
+                return (Class<?>) argTypes.get(0);
             }
             logger.log("WSSR0010", new Object[] { name });
             return null;
@@ -110,7 +110,7 @@ public class SqlContextImpl implements SqlContext {
     }
 
     @Override
-    public void addArg(String name, Object arg, Class argType) {
+    public void addArg(String name, Object arg, Class<?> argType) {
         args.put(name, arg);
         argTypes.put(name, argType);
     }
@@ -126,8 +126,8 @@ public class SqlContextImpl implements SqlContext {
     }
 
     @Override
-    public Class[] getBindVariableTypes() {
-        return (Class[]) bindVariableTypes.toArray(new Class[bindVariableTypes
+    public Class<?>[] getBindVariableTypes() {
+        return bindVariableTypes.toArray(new Class[bindVariableTypes
                 .size()]);
     }
 
@@ -139,7 +139,7 @@ public class SqlContextImpl implements SqlContext {
 
     @Override
     public SqlContext addSql(String sql, Object bindVariable,
-            Class bindVariableType) {
+            Class<?> bindVariableType) {
 
         sqlBuf.append(sql);
         bindVariables.add(bindVariable);
@@ -149,7 +149,7 @@ public class SqlContextImpl implements SqlContext {
 
     @Override
     public SqlContext addSql(String sql, Object[] bindVariables,
-            Class[] bindVariableTypes) {
+            Class<?>[] bindVariableTypes) {
 
         sqlBuf.append(sql);
         for (int i = 0; i < bindVariables.length; ++i) {

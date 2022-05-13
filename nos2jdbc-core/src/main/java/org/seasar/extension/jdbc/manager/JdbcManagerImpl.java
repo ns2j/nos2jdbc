@@ -185,7 +185,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
     }
 
     @Override
-    public <T> AutoBatchInsert<T> insertBatch(final T... entities) {
+    public <T> AutoBatchInsert<T> insertBatch(@SuppressWarnings("unchecked") final T... entities) {
         return new AutoBatchInsertImpl<T>(this, Arrays.asList(entities))
                 .queryTimeout(queryTimeout);
     }
@@ -208,7 +208,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
     }
 
     @Override
-    public <T> AutoBatchUpdate<T> updateBatch(final T... entities) {
+    public <T> AutoBatchUpdate<T> updateBatch(@SuppressWarnings("unchecked") final T... entities) {
         if (entities == null) {
             throw new NullPointerException("entities");
         }
@@ -275,7 +275,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
 
     @Override
     public <T> SqlFileBatchUpdate<T> updateBatchBySqlFile(String path,
-            T... params) {
+            @SuppressWarnings("unchecked") T... params) {
         return new SqlFileBatchUpdateImpl<T>(this, path, Arrays.asList(params))
                 .queryTimeout(queryTimeout);
     }
@@ -292,7 +292,7 @@ public class JdbcManagerImpl implements JdbcManager, JdbcManagerImplementor {
     }
 
     @Override
-    public <T> AutoBatchDelete<T> deleteBatch(final T... entities) {
+    public <T> AutoBatchDelete<T> deleteBatch(@SuppressWarnings("unchecked") final T... entities) {
         if (entities == null) {
             throw new NullPointerException("entities");
         }

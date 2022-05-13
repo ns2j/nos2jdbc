@@ -17,8 +17,6 @@ package org.seasar.extension.dataset.types;
 
 import org.seasar.extension.dataset.ColumnType;
 import org.seasar.framework.conversion.StringConversionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 文字列用の {@link ColumnType}です。
@@ -27,7 +25,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class StringType extends ObjectType {
-    final static private Logger logger = LoggerFactory.getLogger(StringType.class);
     /**
      * トリムするかどうか。
      */
@@ -62,7 +59,7 @@ public class StringType extends ObjectType {
     }
 
     @Override
-    public Class getType() {
+    public Class<String> getType() {
         return String.class;
     }
 }

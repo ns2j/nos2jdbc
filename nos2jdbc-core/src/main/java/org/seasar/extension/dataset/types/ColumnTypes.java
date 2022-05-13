@@ -83,8 +83,10 @@ public class ColumnTypes {
      */
     public static final ColumnType BOOLEAN = new BooleanType();
 
+    @SuppressWarnings("unchecked")
     private static Map<Class<?>, ColumnType> typesByClass = MapUtil.createHashMap(20);
 
+    @SuppressWarnings("unchecked")
     private static Map<Integer, ColumnType> typesBySqlType = MapUtil.createHashMap(20);
 
     static {

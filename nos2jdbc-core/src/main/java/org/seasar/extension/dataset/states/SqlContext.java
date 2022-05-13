@@ -27,7 +27,7 @@ public class SqlContext {
 
     private Object[] args;
 
-    private Class[] argTypes;
+    private Class<?>[] argTypes;
 
     /**
      * {@link SqlContext}を作成します。
@@ -45,7 +45,7 @@ public class SqlContext {
      * @param argTypes
      *            引数の型
      */
-    public SqlContext(String sql, Object[] args, Class[] argTypes) {
+    public SqlContext(String sql, Object[] args, Class<?>[] argTypes) {
         setSql(sql);
         setArgs(args);
         setArgTypes(argTypes);
@@ -75,7 +75,7 @@ public class SqlContext {
      * 
      * @return 引数の型
      */
-    public Class[] getArgTypes() {
+    public Class<?>[] getArgTypes() {
         return argTypes;
     }
 
@@ -85,7 +85,7 @@ public class SqlContext {
      * @param argTypes
      *            引数の型
      */
-    public void setArgTypes(Class[] argTypes) {
+    public void setArgTypes(Class<?>[] argTypes) {
         this.argTypes = argTypes;
     }
 

@@ -57,7 +57,7 @@ public class ParenBindVariableNode extends AbstractNode {
     public void accept(SqlContext ctx) {
         Object var = OgnlUtil.getValue(parsedExpression, ctx);
         if (var instanceof List) {
-            bindArray(ctx, ((List) var).toArray());
+            bindArray(ctx, ((List<?>) var).toArray());
         } else if (var == null) {
             return;
         } else if (var.getClass().isArray()) {
@@ -77,7 +77,7 @@ public class ParenBindVariableNode extends AbstractNode {
         if (length == 0) {
             return;
         }
-        Class clazz = null;
+        Class<? extends Object> clazz = null;
         for (int i = 0; i < length; ++i) {
             Object o = Array.get(array, i);
             if (o != null) {

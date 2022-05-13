@@ -43,13 +43,13 @@ class ObjectIterationResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle() throws Exception {
         ObjectIterationResultSetHandler handler = new ObjectIterationResultSetHandler(
                 ValueTypes.INTEGER, 0,
                 new IterationCallback<Integer, Integer>() {
 
+                    @Override
                     public Integer iterate(Integer entity,
                             IterationContext context) {
                         ++count;
@@ -72,13 +72,13 @@ class ObjectIterationResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithLimit() throws Exception {
         ObjectIterationResultSetHandler handler = new ObjectIterationResultSetHandler(
                 ValueTypes.INTEGER, 2,
                 new IterationCallback<Integer, Integer>() {
 
+                    @Override
                     public Integer iterate(Integer entity,
                             IterationContext context) {
                         ++count;
@@ -99,13 +99,13 @@ class ObjectIterationResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle_WithExit() throws Exception {
         ObjectIterationResultSetHandler handler = new ObjectIterationResultSetHandler(
                 ValueTypes.INTEGER, 0,
                 new IterationCallback<Integer, Integer>() {
 
+                    @Override
                     public Integer iterate(Integer entity,
                             IterationContext context) {
                         ++count;

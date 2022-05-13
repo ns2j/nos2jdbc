@@ -28,7 +28,6 @@ import org.seasar.extension.jdbc.ValueType;
  * 
  * @author koichik
  */
-@SuppressWarnings("unchecked")
 public class ObjectIterationResultSetHandler implements ResultSetHandler {
 
     /** 値タイプ */
@@ -38,6 +37,7 @@ public class ObjectIterationResultSetHandler implements ResultSetHandler {
     protected int limit;
 
     /** 反復コールバック */
+    @SuppressWarnings("rawtypes")
     protected IterationCallback callback;
 
     /**
@@ -51,12 +51,13 @@ public class ObjectIterationResultSetHandler implements ResultSetHandler {
      *            反復コールバック
      */
     public ObjectIterationResultSetHandler(final ValueType valueType,
-            final int limit, final IterationCallback callback) {
+            final int limit, @SuppressWarnings("rawtypes") final IterationCallback callback) {
         this.valueType = valueType;
         this.limit = limit;
         this.callback = callback;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Object handle(final ResultSet rs) throws SQLException {
         final IterationContext iterationContext = new IterationContext();

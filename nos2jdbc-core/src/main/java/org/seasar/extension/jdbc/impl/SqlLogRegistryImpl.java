@@ -31,7 +31,7 @@ public class SqlLogRegistryImpl implements SqlLogRegistry {
 
     private int limitSize;
 
-    private ThreadLocal threadList = new ThreadLocal();
+    private ThreadLocal<LinkedList<SqlLog>> threadList = new ThreadLocal<>();
 
     /**
      * デフォルトの上限サイズを使用してインスタンスを構築します。
@@ -51,45 +51,52 @@ public class SqlLogRegistryImpl implements SqlLogRegistry {
         this.limitSize = limitSize;
     }
 
+    @Override
     public int getLimitSize() {
         return limitSize;
     }
 
+    @Override
     public int getSize() {
         return getSqlLogList().size();
     }
 
+    @Override
     public boolean isEmpty() {
         return getSize() == 0;
     }
 
+    @Override
     public SqlLog get(int index) {
-        return (SqlLog) getSqlLogList().get(index);
+        return getSqlLogList().get(index);
     }
 
+    @Override
     public SqlLog getLast() {
         return isEmpty() ? null : (SqlLog) getSqlLogList().getLast();
     }
 
+    @Override
     public void add(SqlLog sqlLog) {
         if (limitSize <= 0) {
             return;
         }
-        LinkedList list = getSqlLogList();
+        LinkedList<SqlLog> list = getSqlLogList();
         list.add(sqlLog);
         if (list.size() > limitSize) {
             list.removeFirst();
         }
     }
 
+    @Override
     public void clear() {
         getSqlLogList().clear();
     }
 
-    private LinkedList getSqlLogList() {
-        LinkedList list = (LinkedList) threadList.get();
+    private LinkedList<SqlLog> getSqlLogList() {
+        LinkedList<SqlLog> list = threadList.get();
         if (list == null) {
-            list = new LinkedList();
+            list = new LinkedList<>();
             threadList.set(list);
         }
         return list;

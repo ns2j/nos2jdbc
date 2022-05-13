@@ -42,7 +42,6 @@ class BeanListAutoResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandle() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
@@ -70,6 +69,7 @@ class BeanListAutoResultSetHandlerTest {
         data.put("NAME", "SCOTT");
         rs.addRowData(data);
         rs.addRowData(data);
+        @SuppressWarnings("rawtypes")
         List list = (List) handler.handle(rs);
         assertEquals(1, list.size());
         Aaa aaa = (Aaa) list.get(0);
@@ -81,7 +81,6 @@ class BeanListAutoResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testHandleWithLimit() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
@@ -113,6 +112,7 @@ class BeanListAutoResultSetHandlerTest {
         data.put("ID", Integer.valueOf(2));
         data.put("NAME", "SCOTT2");
         rs.addRowData(data);
+        @SuppressWarnings("rawtypes")
         List list = (List) handler.handle(rs);
         assertEquals(1, list.size());
         Aaa aaa = (Aaa) list.get(0);

@@ -69,11 +69,13 @@ public class BasicUpdateHandler extends BasicHandler implements UpdateHandler {
         super(dataSource, sql, statementFactory);
     }
 
+    @Override
     public int execute(Object[] args) throws SQLRuntimeException {
         return execute(args, getArgTypes(args));
     }
 
-    public int execute(Object[] args, Class[] argTypes)
+    @Override
+    public int execute(Object[] args, Class<?>[] argTypes)
             throws SQLRuntimeException {
         Connection connection = getConnection();
         try {
@@ -94,7 +96,7 @@ public class BasicUpdateHandler extends BasicHandler implements UpdateHandler {
      *            引数の型
      * @return 更新した行数
      */
-    public int execute(Connection connection, Object[] args, Class[] argTypes) {
+    public int execute(Connection connection, Object[] args, Class<?>[] argTypes) {
         logSql(args, argTypes);
         PreparedStatement ps = prepareStatement(connection);
         try {
