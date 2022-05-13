@@ -1,5 +1,5 @@
 /*
-v * Copyright 2004-2015 the Seasar Foundation and the Others.
+ * Copyright 2004-2015 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.seasar.extension.jdbc.gen.internal.model;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,18 +49,14 @@ public class SqlFileSupport {
     /**
      * SQLファイルのパスのリストを作成します。
      * 
-     * @param classpathDir
-     *            クラスパスのディレクトリ
-     * @param sqlFileSet
-     *            SQLファイルのセット
+     * @param classpathDir クラスパスのディレクトリ
+     * @param sqlFileSet   SQLファイルのセット
      * @return SQLファイルのパスのリスト
      */
-    public List<String> createSqlFilePathList(File classpathDir,
-            Set<File> sqlFileSet) {
+    public List<String> createSqlFilePathList(File classpathDir, Set<File> sqlFileSet) {
         List<String> sqlFilePathList = new ArrayList<String>();
         Set<String> dbmsNameSet = getDbmsNameSet();
-        String basePath = FileUtil.getCanonicalPath(classpathDir)
-                + File.separator;
+        String basePath = FileUtil.getCanonicalPath(classpathDir) + File.separator;
 
         for (File sqlFile : sqlFileSet) {
             String path = FileUtil.getCanonicalPath(sqlFile);
@@ -72,8 +69,7 @@ public class SqlFileSupport {
             }
             for (String dbmsName : dbmsNameSet) {
                 if (path.endsWith("_" + dbmsName)) {
-                    path = path.substring(0, path.length() - dbmsName.length()
-                            - 1);
+                    path = path.substring(0, path.length() - dbmsName.length() - 1);
                     break;
                 }
             }
@@ -98,8 +94,9 @@ public class SqlFileSupport {
 //i            return Collections.emptySet();
 //i        }
         Set<String> dbmsNameSet = new HashSet<String>();
-        //String[] names = {"db2", "derby", "firebird", "h2", "hsql", "interbase", "maxdb", "mssql", "mysql",
-        //	"oracle", "postgre", "sqlite", "sybase"};
+        // String[] names = {"db2", "derby", "firebird", "h2", "hsql", "interbase",
+        // "maxdb", "mssql", "mysql",
+        // "oracle", "postgre", "sqlite", "sybase"};
 //i        
 //i        S2Container container = SingletonS2ContainerFactory.getContainer();
 //i        DbmsDialect[] dialects = (DbmsDialect[]) container
@@ -113,61 +110,67 @@ public class SqlFileSupport {
         URL packageUrl = null;
         Iterator<?> itr = ClassLoaderUtil.getResources(dialectPackageName.replace(".", "/"));
         while (itr.hasNext())
-            packageUrl = (URL)itr.next();
-        //System.out.println(packageUrl.getProtocol());
+            packageUrl = (URL) itr.next();
+        // System.out.println(packageUrl.getProtocol());
         ClassHandler ch = new MyClassHandler(dbmsNameSet);
         if ("file".equals(packageUrl.getProtocol())) {
             File f = new File(packageUrl.getFile());
             ClassTraversal.forEach(f, ch);
         } else if ("jar".equals(packageUrl.getProtocol())) {
             JarFile jf = null;
-	    try {
-		jf = ((JarURLConnection)packageUrl.openConnection()).getJarFile();
-		ClassTraversal.forEach(jf, dialectPackageName.replace(".",  "/") + "/", ch);
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    } finally {
-		try {
-		    if (jf != null)
-			jf.close();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	    }
+            try {
+                jf = ((JarURLConnection) packageUrl.openConnection()).getJarFile();
+                ClassTraversal.forEach(jf, dialectPackageName.replace(".", "/") + "/", ch);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (jf != null)
+                        jf.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        //for (String name: dbmsNameSet) {
-        //    System.out.println(name);
-        //}
+        // for (String name: dbmsNameSet) {
+        // System.out.println(name);
+        // }
         return dbmsNameSet;
     }
-    
+
     class MyClassHandler implements ClassHandler {
-	Set<String> dbmsNameSet;
+        Set<String> dbmsNameSet;
 
-	MyClassHandler(Set<String> dbmsNameSet) {
-	    this.dbmsNameSet = dbmsNameSet;
-	}
+        MyClassHandler(Set<String> dbmsNameSet) {
+            this.dbmsNameSet = dbmsNameSet;
+        }
 
-	@Override
-    public void processClass(String pn, String shortClassName) {
-	    //System.out.println(dialectPackageName + ": " + shortClassName);
-	    if (shortClassName.contains("$"))
-		return;
-	    try {
-		Class<?> cls = Class.forName(dialectPackageName + "." + shortClassName);
-		Object o = cls.newInstance();
-		if (o instanceof DbmsDialect) {
-		    DbmsDialect dialect = (DbmsDialect)o;
-		    if (dialect.getName() != null)
-			dbmsNameSet.add(dialect.getName());
-		}
-	    } catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	    } catch (InstantiationException e) {
-		e.printStackTrace();
-	    } catch (IllegalAccessException e) {
-		e.printStackTrace();
-	    }
-	}
+        @Override
+        public void processClass(String pn, String shortClassName) {
+            // System.out.println(dialectPackageName + ": " + shortClassName);
+            if (shortClassName.contains("$"))
+                return;
+            try {
+                Class<?> cls = Class.forName(dialectPackageName + "." + shortClassName);
+                Object o = null;
+                try {
+                    o = cls.getDeclaredConstructor().newInstance();
+                } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                        | SecurityException e) {
+                    e.printStackTrace();
+                }
+                if (o instanceof DbmsDialect) {
+                    DbmsDialect dialect = (DbmsDialect) o;
+                    if (dialect.getName() != null)
+                        dbmsNameSet.add(dialect.getName());
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
