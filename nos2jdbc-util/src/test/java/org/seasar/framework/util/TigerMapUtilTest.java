@@ -30,10 +30,9 @@ class TigerMapUtilTest {
     /**
      * 
      */
-    @SuppressWarnings("unchecked")
     @Test
     void testCreate() {
-        Map map = MapUtil.createHashMap();
+        Map<?, ?> map = MapUtil.createHashMap();
         assertTrue(map instanceof ConcurrentHashMap);
     }
 }
