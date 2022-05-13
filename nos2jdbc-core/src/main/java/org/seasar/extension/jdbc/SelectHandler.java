@@ -47,5 +47,5 @@ public interface SelectHandler {
      * @throws SQLRuntimeException
      *             SQL例外が発生した場合
      */
-    Object execute(Object[] args, Class[] argTypes) throws SQLRuntimeException;
+    Object execute(Object[] args, Class<?>[] argTypes) throws SQLRuntimeException;
 }

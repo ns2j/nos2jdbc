@@ -47,5 +47,5 @@ public interface UpdateHandler {
      * @throws SQLRuntimeException
      *             SQL例外が発生した場合
      */
-    int execute(Object[] args, Class[] argTypes) throws SQLRuntimeException;
+    int execute(Object[] args, Class<?>[] argTypes) throws SQLRuntimeException;
 }
