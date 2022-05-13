@@ -75,6 +75,7 @@ class DdlVersionIncrementerImplTest {
         final Object[] values = new Object[3];
         incrementer.increment("changeLog", new DdlVersionIncrementer.Callback() {
 
+            @Override
             public void execute(DdlVersionDirectory versionDirectory) {
                 values[0] = versionDirectory.getCreateDirectory().asFile();
                 values[1] = versionDirectory.getDropDirectory().asFile();
@@ -84,6 +85,6 @@ class DdlVersionIncrementerImplTest {
         File v012 = new File(baseDir, "v012");
         assertEquals(new File(v012, "create"), values[0]);
         assertEquals(new File(v012, "drop"), values[1]);
-        assertEquals(new Integer(12), values[2]);
+        assertEquals(Integer.valueOf(12), values[2]);
     }
 }
