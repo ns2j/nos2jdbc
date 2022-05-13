@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class MockResultSetMetaData implements ResultSetMetaData {
 
-    private List columnMetaDataList = new ArrayList();
+    private List<MockColumnMetaData> columnMetaDataList = new ArrayList<>();
 
     /**
      * カラムのメタデータを返します。
@@ -38,7 +38,7 @@ public class MockResultSetMetaData implements ResultSetMetaData {
      * @return カラムのメタデータ
      */
     public MockColumnMetaData getColumnMetaData(int index) {
-        return (MockColumnMetaData) columnMetaDataList.get(index - 1);
+        return columnMetaDataList.get(index - 1);
     }
 
     /**
@@ -51,86 +51,107 @@ public class MockResultSetMetaData implements ResultSetMetaData {
         columnMetaDataList.add(columnMetaData);
     }
 
+    @Override
     public String getCatalogName(int column) throws SQLException {
         return getColumnMetaData(column).getCatalogName();
     }
 
+    @Override
     public String getColumnClassName(int column) throws SQLException {
         return getColumnMetaData(column).getColumnClassName();
     }
 
+    @Override
     public int getColumnCount() throws SQLException {
         return columnMetaDataList.size();
     }
 
+    @Override
     public int getColumnDisplaySize(int column) throws SQLException {
         return getColumnMetaData(column).getColumnDisplaySize();
     }
 
+    @Override
     public String getColumnLabel(int column) throws SQLException {
         return getColumnMetaData(column).getColumnLabel();
     }
 
+    @Override
     public String getColumnName(int column) throws SQLException {
         return getColumnMetaData(column).getColumnName();
     }
 
+    @Override
     public int getColumnType(int column) throws SQLException {
         return getColumnMetaData(column).getColumnType();
     }
 
+    @Override
     public String getColumnTypeName(int column) throws SQLException {
         return getColumnMetaData(column).getColumnTypeName();
     }
 
+    @Override
     public int getPrecision(int column) throws SQLException {
         return getColumnMetaData(column).getPrecision();
     }
 
+    @Override
     public int getScale(int column) throws SQLException {
         return getColumnMetaData(column).getScale();
     }
 
+    @Override
     public String getSchemaName(int column) throws SQLException {
         return getColumnMetaData(column).getSchemaName();
     }
 
+    @Override
     public String getTableName(int column) throws SQLException {
         return getColumnMetaData(column).getTableName();
     }
 
+    @Override
     public boolean isAutoIncrement(int column) throws SQLException {
         return getColumnMetaData(column).isAutoIncrement();
     }
 
+    @Override
     public boolean isCaseSensitive(int column) throws SQLException {
         return getColumnMetaData(column).isCaseSensitive();
     }
 
+    @Override
     public boolean isCurrency(int column) throws SQLException {
         return getColumnMetaData(column).isCurrency();
     }
 
+    @Override
     public boolean isDefinitelyWritable(int column) throws SQLException {
         return getColumnMetaData(column).isDefinitelyWritable();
     }
 
+    @Override
     public int isNullable(int column) throws SQLException {
         return getColumnMetaData(column).isNullable();
     }
 
+    @Override
     public boolean isReadOnly(int column) throws SQLException {
         return getColumnMetaData(column).isReadOnly();
     }
 
+    @Override
     public boolean isSearchable(int column) throws SQLException {
         return getColumnMetaData(column).isSearchable();
     }
 
+    @Override
     public boolean isSigned(int column) throws SQLException {
         return getColumnMetaData(column).isSigned();
     }
 
+    @Override
     public boolean isWritable(int column) throws SQLException {
         return getColumnMetaData(column).isWritable();
     }
@@ -154,11 +175,13 @@ public class MockResultSetMetaData implements ResultSetMetaData {
         throw new SQLException(columnName + " not found.");
     }
 
+    @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
 	// TODO Auto-generated method stub
 	return null;
     }
 
+    @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
 	// TODO Auto-generated method stub
 	return false;
