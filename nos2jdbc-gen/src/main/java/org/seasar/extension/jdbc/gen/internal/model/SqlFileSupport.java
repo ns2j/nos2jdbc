@@ -111,7 +111,7 @@ public class SqlFileSupport {
 //i            }
 //i        }
         URL packageUrl = null;
-        Iterator itr = ClassLoaderUtil.getResources(dialectPackageName.replace(".", "/"));
+        Iterator<?> itr = ClassLoaderUtil.getResources(dialectPackageName.replace(".", "/"));
         while (itr.hasNext())
             packageUrl = (URL)itr.next();
         //System.out.println(packageUrl.getProtocol());
@@ -148,7 +148,8 @@ public class SqlFileSupport {
 	    this.dbmsNameSet = dbmsNameSet;
 	}
 
-	public void processClass(String pn, String shortClassName) {
+	@Override
+    public void processClass(String pn, String shortClassName) {
 	    //System.out.println(dialectPackageName + ": " + shortClassName);
 	    if (shortClassName.contains("$"))
 		return;
