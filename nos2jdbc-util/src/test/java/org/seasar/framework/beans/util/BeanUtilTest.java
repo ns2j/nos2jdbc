@@ -80,8 +80,8 @@ class BeanUtilTest {
         BeanUtil.copyProperties(hoge, map);
         assertNotNull(map);
         assertEquals("A", map.get("a"));
-        assertEquals(new Boolean(true), map.get("b"));
-        assertEquals(new Integer(3), map.get("c"));
+        assertEquals(Boolean.valueOf(true), map.get("b"));
+        assertEquals(Integer.valueOf(3), map.get("c"));
     }
 
     /**
@@ -89,16 +89,16 @@ class BeanUtilTest {
      */
     @Test
     void testCopyToBean() throws Exception {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("a", "A");
-        map.put("b", new Boolean(true));
-        map.put("c", new Integer(3));
-        map.put("d", new Double(1.4));
+        map.put("b", Boolean.valueOf(true));
+        map.put("c", Integer.valueOf(3));
+        map.put("d", Double.valueOf(1.4));
         HogeDto hoge = new HogeDto();
         BeanUtil.copyProperties(map, hoge);
         assertEquals("A", hoge.getA());
-        assertEquals(new Boolean(true), new Boolean(hoge.isB()));
-        assertEquals(new Integer(3), new Integer(hoge.getC()));
+        assertEquals(Boolean.valueOf(true), Boolean.valueOf(hoge.isB()));
+        assertEquals(Integer.valueOf(3), Integer.valueOf(hoge.getC()));
     }
 
     /**

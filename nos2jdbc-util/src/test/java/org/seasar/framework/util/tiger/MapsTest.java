@@ -33,9 +33,9 @@ class MapsTest {
     void test() throws Exception {
         Map<String, Integer> map = map("a", 1).$("b", 2).$("c", 3).$();
         assertEquals(3, map.size());
-        assertEquals(new Integer(1), map.get("a"));
-        assertEquals(new Integer(2), map.get("b"));
-        assertEquals(new Integer(3), map.get("c"));
+        assertEquals(Integer.valueOf(1), map.get("a"));
+        assertEquals(Integer.valueOf(2), map.get("b"));
+        assertEquals(Integer.valueOf(3), map.get("c"));
     }
 
 }

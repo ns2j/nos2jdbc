@@ -67,7 +67,7 @@ class BeanDescImplTest {
     @Test
     void testInvoke() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
-        assertEquals(new Integer(3), beanDesc.invoke(new MyBean(), "add", new Object[] { new Integer(1), new Integer(2) }), "1");
+        assertEquals(Integer.valueOf(3), beanDesc.invoke(new MyBean(), "add", new Object[] { Integer.valueOf(1), Integer.valueOf(2) }), "1");
     }
 
     /**
@@ -76,7 +76,7 @@ class BeanDescImplTest {
     @Test
     void testInvoke2() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
-        assertEquals(new Integer(3), beanDesc.invoke(new MyBean(), "add2", new Object[] { new BigDecimal(1), new BigDecimal(2) }), "1");
+        assertEquals(Integer.valueOf(3), beanDesc.invoke(new MyBean(), "add2", new Object[] { new BigDecimal(1), new BigDecimal(2) }), "1");
     }
 
     /**
@@ -85,8 +85,8 @@ class BeanDescImplTest {
     @Test
     void testInvoke3() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(Math.class);
-        assertEquals(new Integer(3), beanDesc.invoke(null, "max", new Object[] { new Integer(1), new Integer(3) }), "1");
-        assertEquals(new Long(3), beanDesc.invoke(null, "max", new Object[] { new Long(1), new Long(3) }), "2");
+        assertEquals(Integer.valueOf(3), beanDesc.invoke(null, "max", new Object[] { Integer.valueOf(1), Integer.valueOf(3) }), "1");
+        assertEquals(Long.valueOf(3), beanDesc.invoke(null, "max", new Object[] { Long.valueOf(1), Long.valueOf(3) }), "2");
     }
 
     /**
@@ -95,7 +95,7 @@ class BeanDescImplTest {
     @Test
     void testInvoke4() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(Math.class);
-        assertEquals(new Double(3), beanDesc.invoke(null, "ceil", new Object[] { new BigDecimal(2.1) }), "1");
+        assertEquals(Double.valueOf(3), beanDesc.invoke(null, "ceil", new Object[] { new BigDecimal(2.1) }), "1");
     }
 
     /**
@@ -104,7 +104,7 @@ class BeanDescImplTest {
     @Test
     void testInvoke5() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
-        assertEquals(new Integer("3"), beanDesc.invoke(new MyBean(), "echo", new Object[] { new Double("3") }), "1");
+        assertEquals(Integer.valueOf("3"), beanDesc.invoke(new MyBean(), "echo", new Object[] { Double.valueOf("3") }), "1");
     }
 
     /**
@@ -127,7 +127,7 @@ class BeanDescImplTest {
     @Test
     void testNewInstance() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(Integer.class);
-        Integer i = new Integer(10);
+        Integer i = Integer.valueOf(10);
         Object[] args = new Object[] { i };
         assertEquals(i, beanDesc.newInstance(args), "1");
         Object[] args2 = new Object[] { "10" };
@@ -142,7 +142,7 @@ class BeanDescImplTest {
         BeanDesc beanDesc = new BeanDescImpl(Integer.class);
         BigDecimal d = new BigDecimal(10);
         Object[] args = new Object[] { d };
-        assertEquals(new Integer(10), beanDesc.newInstance(args), "1");
+        assertEquals(Integer.valueOf(10), beanDesc.newInstance(args), "1");
     }
 
     /**
@@ -226,7 +226,7 @@ class BeanDescImplTest {
     void testAddFields() throws Exception {
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         Field eee = beanDesc.getField("eee");
-        assertTrue(eee.isAccessible());
+        assertTrue(eee.canAccess(beanDesc.newInstance(new Object[] {})));
         PropertyDesc pd = beanDesc.getPropertyDesc("ggg");
         assertNotNull(pd);
         assertEquals("ggg", pd.getPropertyName());
@@ -354,7 +354,7 @@ class BeanDescImplTest {
          * @return
          */
         public Number add(Number arg1, Number arg2) {
-            return new Integer(3);
+            return Integer.valueOf(3);
         }
 
         /**

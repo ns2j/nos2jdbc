@@ -162,7 +162,7 @@ class PropertyDescImplTest {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("ggg");
-        propDesc.setValue(myBean, new Integer(1));
+        propDesc.setValue(myBean, Integer.valueOf(1));
         assertEquals(new BigDecimal(1), myBean.getGgg(), "1");
     }
 
@@ -199,7 +199,7 @@ class PropertyDescImplTest {
         MyBean myBean = new MyBean();
         BeanDesc beanDesc = new BeanDescImpl(MyBean.class);
         PropertyDesc propDesc = beanDesc.getPropertyDesc("str");
-        propDesc.setValue(myBean, new Integer(1));
+        propDesc.setValue(myBean, Integer.valueOf(1));
         assertEquals("1", myBean.str);
     }
 
@@ -349,7 +349,7 @@ class PropertyDescImplTest {
          * @return
          */
         public Number add(Number arg1, Number arg2) {
-            return new Integer(3);
+            return Integer.valueOf(3);
         }
 
         /**

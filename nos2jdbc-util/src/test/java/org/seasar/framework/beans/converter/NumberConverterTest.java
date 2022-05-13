@@ -32,7 +32,7 @@ class NumberConverterTest {
     @Test
     void testGetAsObject() throws Exception {
         NumberConverter converter = new NumberConverter("##0");
-        assertEquals(new Long("100"), converter.getAsObject("100"));
+        assertEquals(Long.valueOf("100"), converter.getAsObject("100"));
     }
 
     /**
@@ -41,7 +41,7 @@ class NumberConverterTest {
     @Test
     void testGetAsString() throws Exception {
         NumberConverter converter = new NumberConverter("##0");
-        assertEquals("100", converter.getAsString(new Integer("100")));
+        assertEquals("100", converter.getAsString(Integer.valueOf("100")));
     }
 
     /**
