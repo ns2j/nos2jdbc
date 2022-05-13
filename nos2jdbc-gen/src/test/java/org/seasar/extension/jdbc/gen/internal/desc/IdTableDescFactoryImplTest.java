@@ -157,6 +157,6 @@ class IdTableDescFactoryImplTest {
         assertNotNull(tableDesc.getPrimaryKeyDesc());
         assertEquals(2, tableDesc.getColumnDescList().size());
         assertEquals("PK", tableDesc.getColumnDescList().get(0).getName());
-        assertEquals("VALUE", tableDesc.getColumnDescList().get(1).getName());
+        assertEquals("VALUE1", tableDesc.getColumnDescList().get(1).getName());
     }
 }
