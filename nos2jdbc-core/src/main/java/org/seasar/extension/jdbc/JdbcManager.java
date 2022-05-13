@@ -196,7 +196,7 @@ public interface JdbcManager {
      *            エンティティの並び
      * @return 自動バッチ挿入
      */
-    <T> AutoBatchInsert<T> insertBatch(T... entities);
+    <T> AutoBatchInsert<T> insertBatch(@SuppressWarnings("unchecked") T... entities);
 
     /**
      * 自動バッチ挿入を作成します。
@@ -229,7 +229,7 @@ public interface JdbcManager {
      *            エンティティの並び
      * @return 自動バッチ更新
      */
-    <T> AutoBatchUpdate<T> updateBatch(T... entities);
+    <T> AutoBatchUpdate<T> updateBatch(@SuppressWarnings("unchecked") T... entities);
 
     /**
      * 自動バッチ更新を作成します。
@@ -319,7 +319,7 @@ public interface JdbcManager {
      * @return SQLバッチファイル更新
      * @see SqlFileBatchUpdate
      */
-    <T> SqlFileBatchUpdate<T> updateBatchBySqlFile(String path, T... params);
+    <T> SqlFileBatchUpdate<T> updateBatchBySqlFile(String path, @SuppressWarnings("unchecked") T... params);
 
     /**
      * SQLバッチファイル更新を作成します。
@@ -363,7 +363,7 @@ public interface JdbcManager {
      *            エンティティの並び
      * @return 自動バッチ削除
      */
-    <T> AutoBatchDelete<T> deleteBatch(T... entities);
+    <T> AutoBatchDelete<T> deleteBatch(@SuppressWarnings("unchecked") T... entities);
 
     /**
      * 自動バッチ削除を作成します。
