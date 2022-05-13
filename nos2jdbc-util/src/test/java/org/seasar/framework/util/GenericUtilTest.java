@@ -26,7 +26,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.junit.jupiter.api.*;
-import org.seasar.framework.util.GenericUtil;
 
 import static org.junit.jupiter.api.Assertions.*;
 

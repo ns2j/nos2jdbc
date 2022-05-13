@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.*;
-import org.seasar.framework.util.ReflectionUtil;
 
 import static org.junit.jupiter.api.Assertions.*;
 
