@@ -87,9 +87,9 @@ public class MapUtil {
      */
     protected static MapFactory getMapFactory() {
         try {
-            final Class clazz = Class
+            final Class<?> clazz = Class
                     .forName("org.seasar.framework.util.ConcurrentMapFactory");
-            return (MapFactory) clazz.newInstance();
+            return (MapFactory) clazz.getDeclaredConstructor().newInstance();
         } catch (final Throwable ignore) {
         }
         return new SynchronizedMapFactory();
@@ -136,14 +136,17 @@ public class MapUtil {
      */
     public static class SynchronizedMapFactory implements MapFactory {
 
+        @Override
         public Map create() {
             return Collections.synchronizedMap(new HashMap());
         }
 
+        @Override
         public Map create(final int initialCapacity) {
             return Collections.synchronizedMap(new HashMap(initialCapacity));
         }
 
+        @Override
         public Map create(final int initialCapacity, final float loadFactor) {
             return Collections.synchronizedMap(new HashMap(initialCapacity,
                     loadFactor));
