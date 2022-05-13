@@ -52,8 +52,8 @@ class ListTypeTest {
         Collection<? extends Integer> collection = numberListType.toObject("[1,2]");
         assertEquals(2, collection.size());
         Iterator<? extends Integer> it = collection.iterator();
-        assertEquals(new Integer(1), it.next());
-        assertEquals(new Integer(2), it.next());
+        assertEquals(Integer.valueOf(1), it.next());
+        assertEquals(Integer.valueOf(2), it.next());
     }
 
     /**
