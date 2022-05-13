@@ -302,6 +302,10 @@ public class PropertyMeta {
             return sequenceIdGenerator;
         case TABLE:
             return tableIdGenerator;
+        case AUTO:
+            break;
+        default:
+            break;
         }
         return null; // unreachable
     }
