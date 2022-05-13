@@ -34,8 +34,6 @@ import org.seasar.framework.util.ClassTraversal;
 import org.seasar.framework.util.ClassTraversal.ClassHandler;
 import org.seasar.framework.util.ClassUtil;
 
-import com.sun.javadoc.Doclet;
-
 import nos2jdbc.annotation.NonAuto;
 
 /**
