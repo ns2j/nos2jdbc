@@ -39,7 +39,7 @@ public interface BatchHandler {
      * @throws SQLRuntimeException
      *             SQL例外が発生した場合
      */
-    int execute(List list) throws SQLRuntimeException;
+    int execute(List<?> list) throws SQLRuntimeException;
 
     /**
      * 一つのSQLに複数のパラメータを適用してバッチ実行します。
@@ -52,6 +52,6 @@ public interface BatchHandler {
      * @throws SQLRuntimeException
      *             SQL例外が発生した場合
      */
-    int execute(List list, Class[] argTypes) throws SQLRuntimeException;
+    int execute(List<?> list, Class<?>[] argTypes) throws SQLRuntimeException;
 
 }

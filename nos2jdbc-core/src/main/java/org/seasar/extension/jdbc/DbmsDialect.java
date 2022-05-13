@@ -268,7 +268,7 @@ public interface DbmsDialect {
      * @return SELECT文に付加する<code>FOR UPDATE</code>句のSQL
      */
     String getForUpdateString(SelectForUpdateType type, int waitSeconds,
-            Pair<String, String>... aliases);
+            @SuppressWarnings("unchecked") Pair<String, String>... aliases);
 
     /**
      * SELECT文で排他制御のためのロックヒントをサポートしていれば<code>true</code>を返します。

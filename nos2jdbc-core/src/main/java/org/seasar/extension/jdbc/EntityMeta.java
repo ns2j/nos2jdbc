@@ -256,20 +256,24 @@ public class EntityMeta {
     public Iterable<PropertyMeta> getAllPropertyMeta() {
         return new Iterable<PropertyMeta>() {
 
+            @Override
             public Iterator<PropertyMeta> iterator() {
                 return new Iterator<PropertyMeta>() {
 
                     private int i;
 
+                    @Override
                     public boolean hasNext() {
                         return i < propertyMetaMap.size();
                     }
 
+                    @Override
                     public PropertyMeta next() {
                         return PropertyMeta.class
                                 .cast(propertyMetaMap.get(i++));
                     }
 
+                    @Override
                     public void remove() {
                         throw new UnsupportedOperationException();
                     }
@@ -297,20 +301,24 @@ public class EntityMeta {
     public Iterable<PropertyMeta> getAllColumnPropertyMeta() {
         return new Iterable<PropertyMeta>() {
 
+            @Override
             public Iterator<PropertyMeta> iterator() {
                 return new Iterator<PropertyMeta>() {
 
                     private int i;
 
+                    @Override
                     public boolean hasNext() {
                         return i < columnPropertyMetaMap.size();
                     }
 
+                    @Override
                     public PropertyMeta next() {
                         return PropertyMeta.class.cast(columnPropertyMetaMap
                                 .get(i++));
                     }
 
+                    @Override
                     public void remove() {
                         throw new UnsupportedOperationException();
                     }
@@ -355,10 +363,9 @@ public class EntityMeta {
      *            関連クラス
      * @return MappedByで注釈されているプロパティメタデータ
      */
-    @SuppressWarnings("unchecked")
     public PropertyMeta getMappedByPropertyMeta(String mappedBy,
             Class<?> relationshipClass) {
-        Map m = (Map) mappedByPropertyMetaMap.get(mappedBy);
+        Map<?, ?> m = (Map<?, ?>) mappedByPropertyMetaMap.get(mappedBy);
         if (m == null) {
             return null;
         }
