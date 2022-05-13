@@ -58,13 +58,13 @@ public class TransactionImpl implements ExtendedTransaction,
 
     private int status = Status.STATUS_NO_TRANSACTION;
 
-    private List xaResourceWrappers = new ArrayList();
+    private List<XAResourceWrapper> xaResourceWrappers = new ArrayList<>();
 
-    private List synchronizations = new ArrayList();
+    private List<Synchronization> synchronizations = new ArrayList<>();
 
-    private List interposedSynchronizations = new ArrayList();
+    private List<Synchronization> interposedSynchronizations = new ArrayList<>();
 
-    private Map resourceMap = new HashMap();
+    private Map<Object, Object> resourceMap = new HashMap<>();
 
     private boolean suspended = false;
 
@@ -156,7 +156,7 @@ public class TransactionImpl implements ExtendedTransaction,
     }
 
     private XAResourceWrapper getXAResourceWrapper(int index) {
-        return (XAResourceWrapper) xaResourceWrappers.get(index);
+        return xaResourceWrappers.get(index);
     }
 
     /**
@@ -371,7 +371,7 @@ public class TransactionImpl implements ExtendedTransaction,
     }
 
     private Synchronization getSynchronization(int index) {
-        return (Synchronization) synchronizations.get(index);
+        return synchronizations.get(index);
     }
 
     private int getInterposedSynchronizationSize() {
@@ -379,7 +379,7 @@ public class TransactionImpl implements ExtendedTransaction,
     }
 
     private Synchronization getInterposedSynchronization(int index) {
-        return (Synchronization) interposedSynchronizations.get(index);
+        return interposedSynchronizations.get(index);
     }
 
     @Override
@@ -593,7 +593,7 @@ public class TransactionImpl implements ExtendedTransaction,
      * 
      * @return List
      */
-    public List getSynchronizations() {
+    public List<Synchronization> getSynchronizations() {
         return synchronizations;
     }
 
@@ -602,7 +602,7 @@ public class TransactionImpl implements ExtendedTransaction,
      * 
      * @return List
      */
-    public List getInterposedSynchronizations() {
+    public List<Synchronization> getInterposedSynchronizations() {
         return interposedSynchronizations;
     }
 }

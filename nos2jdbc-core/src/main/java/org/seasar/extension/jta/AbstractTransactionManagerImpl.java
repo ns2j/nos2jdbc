@@ -38,7 +38,7 @@ public abstract class AbstractTransactionManagerImpl implements
         TransactionManager {
 
     /** スレッドに関連づけられているトランザクション */
-    protected final ThreadLocal threadAttachTx = new ThreadLocal();
+    protected final ThreadLocal<ExtendedTransaction> threadAttachTx = new ThreadLocal<>();
 
     /**
      * <code>AbstractTransactionManagerImpl</code>のインスタンスを構築します。
@@ -46,6 +46,7 @@ public abstract class AbstractTransactionManagerImpl implements
     public AbstractTransactionManagerImpl() {
     }
 
+    @Override
     public void begin() throws NotSupportedException, SystemException {
         ExtendedTransaction tx = getCurrent();
         if (tx != null) {
@@ -55,6 +56,7 @@ public abstract class AbstractTransactionManagerImpl implements
         tx.begin();
     }
 
+    @Override
     public void commit() throws RollbackException, HeuristicMixedException,
             HeuristicRollbackException, SecurityException,
             IllegalStateException, SystemException {
@@ -70,6 +72,7 @@ public abstract class AbstractTransactionManagerImpl implements
         }
     }
 
+    @Override
     public Transaction suspend() throws SystemException {
         final ExtendedTransaction tx = getCurrent();
         if (tx == null) {
@@ -83,6 +86,7 @@ public abstract class AbstractTransactionManagerImpl implements
         return tx;
     }
 
+    @Override
     public void resume(final Transaction resumeTx)
             throws InvalidTransactionException, IllegalStateException,
             SystemException {
@@ -95,6 +99,7 @@ public abstract class AbstractTransactionManagerImpl implements
         setCurrent((ExtendedTransaction) resumeTx);
     }
 
+    @Override
     public void rollback() throws IllegalStateException, SecurityException,
             SystemException {
 
@@ -109,6 +114,7 @@ public abstract class AbstractTransactionManagerImpl implements
         }
     }
 
+    @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
 
         final ExtendedTransaction tx = getCurrent();
@@ -118,9 +124,11 @@ public abstract class AbstractTransactionManagerImpl implements
         tx.setRollbackOnly();
     }
 
+    @Override
     public void setTransactionTimeout(final int timeout) throws SystemException {
     }
 
+    @Override
     public int getStatus() {
         final ExtendedTransaction tx = getCurrent();
         if (tx != null) {
@@ -129,6 +137,7 @@ public abstract class AbstractTransactionManagerImpl implements
         return Status.STATUS_NO_TRANSACTION;
     }
 
+    @Override
     public Transaction getTransaction() {
         return getCurrent();
     }
@@ -139,7 +148,7 @@ public abstract class AbstractTransactionManagerImpl implements
      * @return 現在のスレッドに関連づけられているトランザクション
      */
     protected ExtendedTransaction getCurrent() {
-        final ExtendedTransaction tx = (ExtendedTransaction) threadAttachTx.get();
+        final ExtendedTransaction tx = threadAttachTx.get();
         if (tx != null
                 && TransactionUtil.getStatus(tx) == Status.STATUS_NO_TRANSACTION) {
             setCurrent(null);
@@ -164,7 +173,7 @@ public abstract class AbstractTransactionManagerImpl implements
      * @return 現在のスレッドに関連づけられたトランザクション
      */
     protected ExtendedTransaction attachNewTransaction() {
-        ExtendedTransaction tx = (ExtendedTransaction) threadAttachTx.get();
+        ExtendedTransaction tx = threadAttachTx.get();
         if (tx == null) {
             tx = createTransaction();
             setCurrent(tx);

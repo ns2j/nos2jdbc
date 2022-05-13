@@ -49,8 +49,8 @@ public class TransactionSynchronizationRegistryImpl implements
 
     private TransactionManager tm;
 
-    private final Map transactionContexts = Collections
-            .synchronizedMap(new HashMap());
+    private final Map<Transaction, SynchronizationRegisterImpl> transactionContexts = Collections
+            .synchronizedMap(new HashMap<>());
 
     /**
      * インスタンスを構築します。
@@ -78,6 +78,7 @@ public class TransactionSynchronizationRegistryImpl implements
         this.tm = tm;
     }
 
+    @Override
     public void putResource(final Object key, final Object value) {
         if (key == null) {
             throw new NullPointerException("key");
@@ -86,6 +87,7 @@ public class TransactionSynchronizationRegistryImpl implements
         getContext().putResource(key, value);
     }
 
+    @Override
     public Object getResource(final Object key) {
         if (key == null) {
             throw new NullPointerException("key");
@@ -94,11 +96,13 @@ public class TransactionSynchronizationRegistryImpl implements
         return getContext().getResource(key);
     }
 
+    @Override
     public void setRollbackOnly() {
         assertActive();
         TransactionManagerUtil.setRollbackOnly(tm);
     }
 
+    @Override
     public boolean getRollbackOnly() {
         assertActive();
         switch (getTransactionStatus()) {
@@ -109,6 +113,7 @@ public class TransactionSynchronizationRegistryImpl implements
         return false;
     }
 
+    @Override
     public Object getTransactionKey() {
         if (!isActive()) {
             return null;
@@ -116,10 +121,12 @@ public class TransactionSynchronizationRegistryImpl implements
         return getTransaction();
     }
 
+    @Override
     public int getTransactionStatus() {
         return TransactionManagerUtil.getStatus(tm);
     }
 
+    @Override
     public void registerInterposedSynchronization(final Synchronization sync) {
         assertActive();
         getContext().registerInterposedSynchronization(sync);
@@ -165,7 +172,7 @@ public class TransactionSynchronizationRegistryImpl implements
         if (tx instanceof SynchronizationRegister) {
             return (SynchronizationRegister) tx;
         }
-        SynchronizationRegisterImpl context = (SynchronizationRegisterImpl) transactionContexts
+        SynchronizationRegisterImpl context = transactionContexts
                 .get(tx);
         if (context == null) {
             context = new SynchronizationRegisterImpl(tx);
@@ -185,9 +192,9 @@ public class TransactionSynchronizationRegistryImpl implements
 
         private final Transaction tx;
 
-        private final List interposedSynchronizations = new ArrayList();
+        private final List<Synchronization> interposedSynchronizations = new ArrayList<>();
 
-        private final Map resourceMap = new HashMap();
+        private final Map<Object, Object> resourceMap = new HashMap<>();
 
         /**
          * インスタンスを構築します。
@@ -199,32 +206,37 @@ public class TransactionSynchronizationRegistryImpl implements
             this.tx = tx;
         }
 
+        @Override
         public void registerInterposedSynchronization(final Synchronization sync)
                 throws IllegalStateException {
             interposedSynchronizations.add(sync);
         }
 
+        @Override
         public void putResource(final Object key, final Object value)
                 throws IllegalStateException {
             resourceMap.put(key, value);
         }
 
+        @Override
         public Object getResource(final Object key)
                 throws IllegalStateException {
             return resourceMap.get(key);
         }
 
+        @Override
         public void beforeCompletion() {
             for (int i = 0; i < interposedSynchronizations.size(); ++i) {
-                final Synchronization sync = (Synchronization) interposedSynchronizations
+                final Synchronization sync = interposedSynchronizations
                         .get(i);
                 sync.beforeCompletion();
             }
         }
 
+        @Override
         public void afterCompletion(final int status) {
             for (int i = 0; i < interposedSynchronizations.size(); ++i) {
-                final Synchronization sync = (Synchronization) interposedSynchronizations
+                final Synchronization sync = interposedSynchronizations
                         .get(i);
                 try {
                     sync.afterCompletion(status);
