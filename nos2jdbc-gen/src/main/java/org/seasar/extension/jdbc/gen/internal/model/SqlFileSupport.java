@@ -152,23 +152,14 @@ public class SqlFileSupport {
                 return;
             try {
                 Class<?> cls = Class.forName(dialectPackageName + "." + shortClassName);
-                Object o = null;
-                try {
-                    o = cls.getDeclaredConstructor().newInstance();
-                } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-                        | SecurityException e) {
-                    e.printStackTrace();
-                }
+                Object o = cls.getDeclaredConstructor().newInstance();
                 if (o instanceof DbmsDialect) {
                     DbmsDialect dialect = (DbmsDialect) o;
                     if (dialect.getName() != null)
                         dbmsNameSet.add(dialect.getName());
                 }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                | SecurityException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
