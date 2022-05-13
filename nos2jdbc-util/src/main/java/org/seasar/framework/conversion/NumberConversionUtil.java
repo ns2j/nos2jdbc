@@ -44,7 +44,7 @@ public class NumberConversionUtil {
      * @param o o
      * @return 適切な {@link Number}
      */
-    public static Object convertNumber(Class type, Object o) {
+    public static Object convertNumber(Class<?> type, Object o) {
         if (type == Integer.class) {
             return IntegerConversionUtil.toInteger(o);
         } else if (type == BigDecimal.class) {
@@ -72,7 +72,7 @@ public class NumberConversionUtil {
      * @param o o
      * @return Wrapper
      */
-    public static Object convertPrimitiveWrapper(Class type, Object o) {
+    public static Object convertPrimitiveWrapper(Class<?> type, Object o) {
         if (type == int.class) {
             Integer i = IntegerConversionUtil.toInteger(o);
             if (i != null) {
