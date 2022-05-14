@@ -45,9 +45,8 @@ public class StatementCache extends LruHashMap {
         super(limitSize);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    protected boolean removeEldestEntry(java.util.Map.Entry entry) {
+    protected boolean removeEldestEntry(java.util.Map.Entry<Object, Object> entry) {
         if (super.removeEldestEntry(entry)) {
             Statement stmt = (Statement) entry.getValue();
             StatementUtil.close(stmt);
@@ -62,10 +61,9 @@ public class StatementCache extends LruHashMap {
      * @throws SQLException
      *             SQL例外が発生した場合
      */
-    @SuppressWarnings("unchecked")
     public void destroy() throws SQLException {
         SQLException e = null;
-        for (Iterator i = values().iterator(); i.hasNext();) {
+        for (Iterator<Object> i = values().iterator(); i.hasNext();) {
             Statement stmt = (Statement) i.next();
             try {
                 stmt.close();
