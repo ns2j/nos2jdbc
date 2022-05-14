@@ -89,7 +89,7 @@ public class DefaultMemberAccess implements MemberAccess
                 MemberAccess interface
           ===================================================================*/
     @Override
-    public Object setup(Map context, Object target, Member member, String propertyName)
+    public Object setup(@SuppressWarnings("rawtypes") Map context, Object target, Member member, String propertyName)
     {
         Object      result = null;
 
@@ -97,7 +97,7 @@ public class DefaultMemberAccess implements MemberAccess
             AccessibleObject    accessible = (AccessibleObject) member;
 
             //if (!accessible.isAccessible()) {
-            if (!accessible.isAccessible()) {
+            if (!accessible.canAccess(target)) {
                 result = Boolean.FALSE;
                 _accessibleObjectHandler.setAccessible(accessible, true);
             }
@@ -106,7 +106,7 @@ public class DefaultMemberAccess implements MemberAccess
     }
 
     @Override
-    public void restore(Map context, Object target, Member member, String propertyName, Object state)
+    public void restore(@SuppressWarnings("rawtypes") Map context, Object target, Member member, String propertyName, Object state)
     {
         if (state != null) {
             final AccessibleObject  accessible = (AccessibleObject) member;
@@ -131,7 +131,7 @@ public class DefaultMemberAccess implements MemberAccess
      * @return true if the member is accessible in the context, false otherwise.
      */
         @Override
-        public boolean isAccessible(Map context, Object target, Member member, String propertyName)
+        public boolean isAccessible(@SuppressWarnings("rawtypes") Map context, Object target, Member member, String propertyName)
         {
             int         modifiers = member.getModifiers();
             boolean     result = Modifier.isPublic(modifiers);

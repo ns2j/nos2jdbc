@@ -23,16 +23,16 @@ import java.util.Iterator;
  * 
  * @author shot
  */
-public class EnumerationIterator implements Iterator {
+public class EnumerationIterator<T> implements Iterator<T> {
 
-    private Enumeration enumeration = null;
+    private Enumeration<T> enumeration = null;
 
     /**
      * {@link EnumerationIterator}を作成します。
      * 
      * @param e e
      */
-    public EnumerationIterator(final Enumeration e) {
+    public EnumerationIterator(final Enumeration<T> e) {
         if (e == null) {
             throw new NullPointerException("Enumeration");
         }
@@ -50,7 +50,7 @@ public class EnumerationIterator implements Iterator {
     }
 
     @Override
-    public Object next() {
+    public T next() {
         return enumeration.nextElement();
     }
 

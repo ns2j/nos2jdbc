@@ -28,12 +28,12 @@ import java.util.Set;
  * @author higa
  * 
  */
-public class CaseInsensitiveSet extends AbstractSet implements Set,
+public class CaseInsensitiveSet extends AbstractSet<String> implements Set<String>,
         Serializable {
 
     static final long serialVersionUID = 0L;
 
-    private transient Map map;
+    private transient Map<String, Object> map;
 
     private static final Object PRESENT = new Object();
 
@@ -41,7 +41,7 @@ public class CaseInsensitiveSet extends AbstractSet implements Set,
      * {@link CaseInsensitiveSet}を作成します。
      */
     public CaseInsensitiveSet() {
-        map = new CaseInsensitiveMap();
+        map = new CaseInsensitiveMap<>();
     }
 
     /**
@@ -49,8 +49,8 @@ public class CaseInsensitiveSet extends AbstractSet implements Set,
      * 
      * @param c c
      */
-    public CaseInsensitiveSet(Collection c) {
-        map = new CaseInsensitiveMap(Math.max((int) (c.size() / .75f) + 1, 16));
+    public CaseInsensitiveSet(Collection<String> c) {
+        map = new CaseInsensitiveMap<>(Math.max((int) (c.size() / .75f) + 1, 16));
         addAll(c);
     }
 
@@ -60,11 +60,11 @@ public class CaseInsensitiveSet extends AbstractSet implements Set,
      * @param initialCapacity initialCapacity
      */
     public CaseInsensitiveSet(int initialCapacity) {
-        map = new CaseInsensitiveMap(initialCapacity);
+        map = new CaseInsensitiveMap<>(initialCapacity);
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<String> iterator() {
         return map.keySet().iterator();
     }
 
@@ -84,7 +84,7 @@ public class CaseInsensitiveSet extends AbstractSet implements Set,
     }
 
     @Override
-    public boolean add(Object o) {
+    public boolean add(String o) {
         return map.put(o, PRESENT) == null;
     }
 

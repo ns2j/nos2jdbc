@@ -49,6 +49,7 @@ public class DateConverter implements Converter {
         this.pattern = pattern;
     }
 
+    @Override
     public Object getAsObject(String value) {
         if (StringUtil.isEmpty(value)) {
             return null;
@@ -56,11 +57,13 @@ public class DateConverter implements Converter {
         return DateConversionUtil.toDate(value, pattern);
     }
 
+    @Override
     public String getAsString(Object value) {
         return StringConversionUtil.toString((Date) value, pattern);
     }
 
-    public boolean isTarget(Class clazz) {
+    @Override
+    public boolean isTarget(Class<?> clazz) {
         return clazz == Date.class;
     }
 

@@ -111,12 +111,12 @@ public class StringUtil {
         if (isEmpty(str)) {
             return EMPTY_STRINGS;
         }
-        List list = new ArrayList();
+        List<Object> list = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(str, delim);
         while (st.hasMoreElements()) {
             list.add(st.nextElement());
         }
-        return (String[]) list.toArray(new String[list.size()]);
+        return list.toArray(new String[list.size()]);
     }
 
     /**
@@ -282,6 +282,7 @@ public class StringUtil {
      * @see #startsWithIgnoreCase(String, String)
      * @deprecated
      */
+    @Deprecated
     public static boolean startsWith(final String text, final String fragment) {
         return startsWithIgnoreCase(text, fragment);
     }

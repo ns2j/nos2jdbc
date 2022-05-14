@@ -27,7 +27,7 @@ public class PropertyNotFoundRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = -5177019197796206774L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     private String propertyName;
 
@@ -37,7 +37,7 @@ public class PropertyNotFoundRuntimeException extends SRuntimeException {
      * @param componentClass componentClass
      * @param propertyName propertyName
      */
-    public PropertyNotFoundRuntimeException(Class componentClass,
+    public PropertyNotFoundRuntimeException(Class<?> componentClass,
             String propertyName) {
         super("ESSR0065",
                 new Object[] { componentClass.getName(), propertyName });
@@ -50,7 +50,7 @@ public class PropertyNotFoundRuntimeException extends SRuntimeException {
      * 
      * @return ターゲットの{@link Class}
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 

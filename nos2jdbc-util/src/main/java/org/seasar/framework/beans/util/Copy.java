@@ -62,11 +62,11 @@ public class Copy extends AbstractCopy<Copy> {
     @SuppressWarnings("unchecked")
     public void execute() {
         if (src instanceof Map && dest instanceof Map) {
-            copyMapToMap((Map) src, (Map) dest);
+            copyMapToMap((Map<String, Object>) src, (Map<String, Object>) dest);
         } else if (src instanceof Map) {
-            copyMapToBean((Map) src, dest);
+            copyMapToBean((Map<String, Object>) src, dest);
         } else if (dest instanceof Map) {
-            copyBeanToMap(src, (Map) dest);
+            copyBeanToMap(src, (Map<String, Object>) dest);
         } else {
             copyBeanToBean(src, dest);
         }

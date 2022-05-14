@@ -99,7 +99,7 @@ public class ModifierUtil {
      *            クラス
      * @return <code>abstract</code>かどうか
      */
-    public static boolean isAbstract(Class clazz) {
+    public static boolean isAbstract(Class<?> clazz) {
         return isAbstract(clazz.getModifiers());
     }
 

@@ -27,11 +27,11 @@ public class NoSuchMethodRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = -5673845060079098617L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     private String methodName;
 
-    private Class[] argTypes;
+    private Class<?>[] argTypes;
 
     /**
      * {@link NoSuchMethodRuntimeException}を作成します。
@@ -41,8 +41,8 @@ public class NoSuchMethodRuntimeException extends SRuntimeException {
      * @param argTypes array of argType
      * @param cause cause of exception
      */
-    public NoSuchMethodRuntimeException(Class targetClass, String methodName,
-            Class[] argTypes, NoSuchMethodException cause) {
+    public NoSuchMethodRuntimeException(Class<?> targetClass, String methodName,
+            Class<?>[] argTypes, NoSuchMethodException cause) {
 
         super("ESSR0057", new Object[] { targetClass.getName(),
                 MethodUtil.getSignature(methodName, argTypes), cause }, cause);
@@ -56,7 +56,7 @@ public class NoSuchMethodRuntimeException extends SRuntimeException {
      * 
      * @return ターゲットのクラス
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 
@@ -74,7 +74,7 @@ public class NoSuchMethodRuntimeException extends SRuntimeException {
      * 
      * @return 引数の型の配列
      */
-    public Class[] getArgTypes() {
+    public Class<?>[] getArgTypes() {
         return argTypes;
     }
 }

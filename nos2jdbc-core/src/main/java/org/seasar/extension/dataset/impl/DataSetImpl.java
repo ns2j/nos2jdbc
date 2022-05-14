@@ -28,7 +28,7 @@ import org.seasar.framework.util.CaseInsensitiveMap;
  * 
  */
 public class DataSetImpl implements DataSet {
-    private ArrayMap tables = new CaseInsensitiveMap();
+    private ArrayMap<String, DataTable> tables = new CaseInsensitiveMap<>();
 
     /**
      * {@link DataSetImpl}を作成します。
@@ -75,7 +75,7 @@ public class DataSetImpl implements DataSet {
     public DataTable getTable(String tableName)
             throws TableNotFoundRuntimeException {
 
-        DataTable table = (DataTable) tables.get(tableName);
+        DataTable table = tables.get(tableName);
         if (table == null) {
             throw new TableNotFoundRuntimeException(tableName);
         }
@@ -112,7 +112,7 @@ public class DataSetImpl implements DataSet {
      */
     @Override
     public DataTable removeTable(int index) {
-        return (DataTable) tables.remove(index);
+        return tables.remove(index);
     }
 
     /**
@@ -120,7 +120,7 @@ public class DataSetImpl implements DataSet {
      */
     @Override
     public DataTable removeTable(String tableName) {
-        DataTable table = (DataTable) tables.remove(tableName);
+        DataTable table = tables.remove(tableName);
         if (table == null) {
             throw new TableNotFoundRuntimeException(tableName);
         }

@@ -285,7 +285,12 @@ public abstract class ReflectionUtil {
     public static <T> T newInstance(final Class<T> clazz)
             throws InstantiationRuntimeException, IllegalAccessRuntimeException {
         try {
-            return clazz.newInstance();
+            try {
+                return clazz.getDeclaredConstructor().newInstance();
+            } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                    | SecurityException e) {
+                throw new RuntimeException(e);
+            }
         } catch (final InstantiationException e) {
             throw new InstantiationRuntimeException(clazz, e);
         } catch (final IllegalAccessException e) {

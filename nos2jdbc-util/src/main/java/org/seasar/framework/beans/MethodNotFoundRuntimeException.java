@@ -30,11 +30,11 @@ public class MethodNotFoundRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = -3508955801981550317L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     private String methodName;
 
-    private Class[] methodArgClasses;
+    private Class<?>[] methodArgClasses;
 
     /**
      * {@link MethodNotFoundRuntimeException}を作成します。
@@ -43,7 +43,7 @@ public class MethodNotFoundRuntimeException extends SRuntimeException {
      * @param methodName methodName
      * @param methodArgs methodArgs
      */
-    public MethodNotFoundRuntimeException(Class targetClass, String methodName,
+    public MethodNotFoundRuntimeException(Class<?> targetClass, String methodName,
             Object[] methodArgs) {
 
         super("ESSR0049", new Object[] { targetClass.getName(),
@@ -68,8 +68,8 @@ public class MethodNotFoundRuntimeException extends SRuntimeException {
      * @param methodName methodName
      * @param methodArgClasses methodArgClasses
      */
-    public MethodNotFoundRuntimeException(Class targetClass, String methodName,
-            Class[] methodArgClasses) {
+    public MethodNotFoundRuntimeException(Class<?> targetClass, String methodName,
+            Class<?>[] methodArgClasses) {
 
         super("ESSR0049", new Object[] { targetClass.getName(),
                 MethodUtil.getSignature(methodName, methodArgClasses) });
@@ -83,7 +83,7 @@ public class MethodNotFoundRuntimeException extends SRuntimeException {
      * 
      * @return ターゲットの{@link Class}
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 
@@ -101,7 +101,7 @@ public class MethodNotFoundRuntimeException extends SRuntimeException {
      * 
      * @return メソッドの引数の{@link Class}の配列
      */
-    public Class[] getMethodArgClasses() {
+    public Class<?>[] getMethodArgClasses() {
         return methodArgClasses;
     }
 

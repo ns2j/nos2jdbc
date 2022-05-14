@@ -33,7 +33,7 @@ public class BeanDescFactory {
 
     private static volatile boolean initialized;
 
-    private static Map beanDescCache = MapUtil.createHashMap(1024);
+    private static Map<Class<?>, BeanDesc> beanDescCache = MapUtil.createHashMap(1024);
 
     static {
         initialize();
@@ -51,11 +51,11 @@ public class BeanDescFactory {
      * @param clazz class
      * @return {@link BeanDesc}
      */
-    public static BeanDesc getBeanDesc(Class clazz) {
+    public static BeanDesc getBeanDesc(Class<?> clazz) {
         if (!initialized) {
             initialize();
         }
-        BeanDesc beanDesc = (BeanDesc) beanDescCache.get(clazz);
+        BeanDesc beanDesc = beanDescCache.get(clazz);
         if (beanDesc == null) {
             beanDesc = new BeanDescImpl(clazz);
             beanDescCache.put(clazz, beanDesc);

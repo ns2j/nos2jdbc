@@ -34,7 +34,7 @@ public class SessionObjectNotSerializableRuntimeException extends
      * @param clazz
      *            {@link Serializable}でないクラス
      */
-    public SessionObjectNotSerializableRuntimeException(final Class clazz) {
+    public SessionObjectNotSerializableRuntimeException(final Class<?> clazz) {
         super("ESSR0099", new Object[] { clazz });
     }
 

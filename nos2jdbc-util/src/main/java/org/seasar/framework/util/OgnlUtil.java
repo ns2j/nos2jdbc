@@ -73,7 +73,7 @@ public class OgnlUtil {
      * @return 値
      * @see #getValue(Object, Map, Object, String, int)
      */
-    public static Object getValue(Object exp, Map ctx, Object root) {
+    public static Object getValue(Object exp, @SuppressWarnings("rawtypes") Map ctx, Object root) {
         return getValue(exp, ctx, root, null, 0);
     }
 
@@ -89,9 +89,10 @@ public class OgnlUtil {
      * @throws OgnlRuntimeException
      *             OgnlExceptionが発生した場合
      */
-    public static Object getValue(Object exp, Map ctx, Object root,
+    public static Object getValue(Object exp, @SuppressWarnings("rawtypes") Map ctx, Object root,
             String path, int lineNumber) throws OgnlRuntimeException {
         try {
+            @SuppressWarnings("rawtypes")
             Map newCtx = addClassResolverIfNecessary(ctx, root);
             if (newCtx != null) {
                 if (exp instanceof String)
@@ -139,6 +140,7 @@ public class OgnlUtil {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     static Map addClassResolverIfNecessary(Map ctx, Object root) {
 //i        if (root instanceof S2Container) {
 //i            S2Container container = (S2Container) root;
@@ -180,7 +182,7 @@ public class OgnlUtil {
         }
 
         @Override
-        public Class classForName(String className, Map ctx)
+        public Class<?> classForName(String className, @SuppressWarnings("rawtypes") Map ctx)
                 throws ClassNotFoundException {
             try {
                 return classLoader.loadClass(className);

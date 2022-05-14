@@ -388,8 +388,7 @@ public abstract class AbstractCopy<S extends AbstractCopy<S>> {
      * @param dest
      *            コピー先
      */
-    @SuppressWarnings("unchecked")
-    protected void copyBeanToMap(Object src, Map dest) {
+    protected void copyBeanToMap(Object src, Map<String, Object> dest) {
         BeanDesc srcBeanDesc = BeanDescFactory.getBeanDesc(src.getClass());
         int size = srcBeanDesc.getPropertyDescSize();
         for (int i = 0; i < size; i++) {

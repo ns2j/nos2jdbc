@@ -18,8 +18,6 @@ package org.seasar.extension.jdbc;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import org.seasar.extension.jdbc.exception.ColumnDuplicatedRuntimeException;
 import org.seasar.extension.jdbc.exception.EntityColumnNotFoundRuntimeException;
 import org.seasar.extension.jdbc.exception.PropertyDuplicatedRuntimeException;
@@ -53,12 +51,12 @@ public class EntityMeta {
     /**
      * プロパティメタデータの配列マップです。
      */
-    protected CaseInsensitiveMap propertyMetaMap = new CaseInsensitiveMap();
+    protected CaseInsensitiveMap<PropertyMeta> propertyMetaMap = new CaseInsensitiveMap<>();
 
     /**
      * 追加情報の配列マップです。
      */
-    protected ArrayMap additionalInfoMap = new ArrayMap();
+    protected ArrayMap<String, Object> additionalInfoMap = new ArrayMap<>();
 
     /**
      * 識別子になっているプロパティメタデータのリストです。
@@ -73,12 +71,12 @@ public class EntityMeta {
     /**
      * MappedByで注釈されているプロパティメタデータのマップです。
      */
-    protected CaseInsensitiveMap mappedByPropertyMetaMap = new CaseInsensitiveMap();
+    protected CaseInsensitiveMap<CaseInsensitiveMap<PropertyMeta>> mappedByPropertyMetaMap = new CaseInsensitiveMap<>();
 
     /**
      * カラム名をキーにしたプロパティメタデータの配列マップです。
      */
-    protected CaseInsensitiveMap columnPropertyMetaMap = new CaseInsensitiveMap();
+    protected CaseInsensitiveMap<PropertyMeta> columnPropertyMetaMap = new CaseInsensitiveMap<>();
 
     /**
      * 関連が解決されたかどうかです。
@@ -170,7 +168,7 @@ public class EntityMeta {
      */
     public PropertyMeta getPropertyMeta(String propertyName)
             throws PropertyNotFoundRuntimeException {
-        PropertyMeta meta = (PropertyMeta) propertyMetaMap.get(propertyName);
+        PropertyMeta meta = propertyMetaMap.get(propertyName);
         if (meta == null) {
             throw new PropertyNotFoundRuntimeException(name, propertyName);
         }
@@ -189,7 +187,7 @@ public class EntityMeta {
      */
     public PropertyMeta getColumnPropertyMeta(String columnName)
             throws EntityColumnNotFoundRuntimeException {
-        PropertyMeta meta = (PropertyMeta) columnPropertyMetaMap
+        PropertyMeta meta = columnPropertyMetaMap
                 .get(columnName);
         if (meta == null) {
             throw new EntityColumnNotFoundRuntimeException(name, columnName);
@@ -365,11 +363,11 @@ public class EntityMeta {
      */
     public PropertyMeta getMappedByPropertyMeta(String mappedBy,
             Class<?> relationshipClass) {
-        Map<?, ?> m = (Map<?, ?>) mappedByPropertyMetaMap.get(mappedBy);
+        CaseInsensitiveMap<PropertyMeta> m = mappedByPropertyMetaMap.get(mappedBy);
         if (m == null) {
             return null;
         }
-        return (PropertyMeta) m.get(relationshipClass.getName());
+        return m.get(relationshipClass.getName());
     }
 
     /**
@@ -390,17 +388,17 @@ public class EntityMeta {
             versionPropertyMeta = propertyMeta;
         }
         if (propertyMeta.getMappedBy() != null) {
-            CaseInsensitiveMap m = (CaseInsensitiveMap) mappedByPropertyMetaMap
+            CaseInsensitiveMap<PropertyMeta> m = mappedByPropertyMetaMap
                     .get(propertyMeta.getMappedBy());
             if (m == null) {
-                m = new CaseInsensitiveMap();
+                m = new CaseInsensitiveMap<>();
                 mappedByPropertyMetaMap.put(propertyMeta.getMappedBy(), m);
             }
             m.put(propertyMeta.getRelationshipClass().getName(), propertyMeta);
         }
         if (propertyMeta.getColumnMeta() != null) {
             String columnName = propertyMeta.getColumnMeta().getName();
-            PropertyMeta pm2 = (PropertyMeta) columnPropertyMetaMap.put(
+            PropertyMeta pm2 = columnPropertyMetaMap.put(
                     columnName, propertyMeta);
             if (pm2 != null) {
                 throw new ColumnDuplicatedRuntimeException(name, pm2.getName(),

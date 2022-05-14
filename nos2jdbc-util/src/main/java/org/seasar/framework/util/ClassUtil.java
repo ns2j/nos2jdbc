@@ -17,6 +17,7 @@ package org.seasar.framework.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,11 +41,11 @@ import org.seasar.framework.exception.NoSuchMethodRuntimeException;
  */
 public class ClassUtil {
 
-    private static Map wrapperToPrimitiveMap = new HashMap();
+    private static Map<Class<?>, Class<?>> wrapperToPrimitiveMap = new HashMap<>();
 
-    private static Map primitiveToWrapperMap = new HashMap();
+    private static Map<Class<?>, Class<?>> primitiveToWrapperMap = new HashMap<>();
 
-    private static Map primitiveClassNameMap = new HashMap();
+    private static Map<String, Class<?>> primitiveClassNameMap = new HashMap<>();
 
     static {
         wrapperToPrimitiveMap.put(Character.class, Character.TYPE);
@@ -90,7 +91,7 @@ public class ClassUtil {
      *             {@link ClassNotFoundException}がおきた場合
      * @see Class#forName(String)
      */
-    public static Class forName(String className)
+    public static Class<?> forName(String className)
             throws ClassNotFoundRuntimeException {
 
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -110,9 +111,9 @@ public class ClassUtil {
      *             {@link ClassNotFoundException}がおきた場合
      * @see #forName(String)
      */
-    public static Class convertClass(String className)
+    public static Class<?> convertClass(String className)
             throws ClassNotFoundRuntimeException {
-        Class clazz = (Class) primitiveClassNameMap.get(className);
+        Class<?> clazz = primitiveClassNameMap.get(className);
         if (clazz != null) {
             return clazz;
         }
@@ -130,11 +131,16 @@ public class ClassUtil {
      *             {@link IllegalAccessException}がおきた場合
      * @see Class#newInstance()
      */
-    public static Object newInstance(Class clazz)
+    public static Object newInstance(Class<?> clazz)
             throws InstantiationRuntimeException, IllegalAccessRuntimeException {
 
         try {
-            return clazz.newInstance();
+            try {
+                return clazz.getDeclaredConstructor().newInstance();
+            } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                    | SecurityException e) {
+                throw new RuntimeException(e);
+            }
         } catch (InstantiationException ex) {
             throw new InstantiationRuntimeException(clazz, ex);
         } catch (IllegalAccessException ex) {
@@ -170,7 +176,7 @@ public class ClassUtil {
      * @return 代入可能かどうか
      * @see Class#isAssignableFrom(Class)
      */
-    public static boolean isAssignableFrom(Class toClass, Class fromClass) {
+    public static boolean isAssignableFrom(Class<?> toClass, Class<?> fromClass) {
         if (toClass == Object.class && !fromClass.isPrimitive()) {
             return true;
         }
@@ -186,8 +192,8 @@ public class ClassUtil {
      * @param clazz class
      * @return プリミティブクラス
      */
-    public static Class getPrimitiveClass(Class clazz) {
-        return (Class) wrapperToPrimitiveMap.get(clazz);
+    public static Class<?> getPrimitiveClass(Class<?> clazz) {
+        return wrapperToPrimitiveMap.get(clazz);
     }
 
     /**
@@ -196,8 +202,8 @@ public class ClassUtil {
      * @param clazz class
      * @return {@link Class}
      */
-    public static Class getPrimitiveClassIfWrapper(Class clazz) {
-        Class ret = getPrimitiveClass(clazz);
+    public static Class<?> getPrimitiveClassIfWrapper(Class<?> clazz) {
+        Class<?> ret = getPrimitiveClass(clazz);
         if (ret != null) {
             return ret;
         }
@@ -210,8 +216,8 @@ public class ClassUtil {
      * @param clazz class
      * @return {@link Class}
      */
-    public static Class getWrapperClass(Class clazz) {
-        return (Class) primitiveToWrapperMap.get(clazz);
+    public static Class<?> getWrapperClass(Class<?> clazz) {
+        return primitiveToWrapperMap.get(clazz);
     }
 
     /**
@@ -220,8 +226,8 @@ public class ClassUtil {
      * @param clazz class
      * @return {@link Class}
      */
-    public static Class getWrapperClassIfPrimitive(Class clazz) {
-        Class ret = getWrapperClass(clazz);
+    public static Class<?> getWrapperClassIfPrimitive(Class<?> clazz) {
+        Class<?> ret = getWrapperClass(clazz);
         if (ret != null) {
             return ret;
         }
@@ -238,7 +244,7 @@ public class ClassUtil {
      *             {@link NoSuchMethodException}がおきた場合
      * @see Class#getConstructor(Class[])
      */
-    public static Constructor getConstructor(Class clazz, Class[] argTypes)
+    public static Constructor<?> getConstructor(Class<?> clazz, Class<?>[] argTypes)
             throws NoSuchConstructorRuntimeException {
         try {
             return clazz.getConstructor(argTypes);
@@ -257,8 +263,8 @@ public class ClassUtil {
      *             {@link NoSuchMethodException}がおきた場合
      * @see Class#getDeclaredConstructor(Class[])
      */
-    public static Constructor getDeclaredConstructor(Class clazz,
-            Class[] argTypes) throws NoSuchConstructorRuntimeException {
+    public static Constructor<?> getDeclaredConstructor(Class<?> clazz,
+            Class<?>[] argTypes) throws NoSuchConstructorRuntimeException {
         try {
             return clazz.getDeclaredConstructor(argTypes);
         } catch (NoSuchMethodException ex) {
@@ -277,8 +283,8 @@ public class ClassUtil {
      *             {@link NoSuchMethodException}がおきた場合
      * @see Class#getMethod(String, Class[])
      */
-    public static Method getMethod(Class clazz, String methodName,
-            Class[] argTypes) throws NoSuchMethodRuntimeException {
+    public static Method getMethod(Class<?> clazz, String methodName,
+            Class<?>[] argTypes) throws NoSuchMethodRuntimeException {
 
         try {
             return clazz.getMethod(methodName, argTypes);
@@ -299,8 +305,8 @@ public class ClassUtil {
      *             {@link NoSuchMethodException}がおきた場合
      * @see Class#getDeclaredMethod(String, Class[])
      */
-    public static Method getDeclaredMethod(Class clazz, String methodName,
-            Class[] argTypes) throws NoSuchMethodRuntimeException {
+    public static Method getDeclaredMethod(Class<?> clazz, String methodName,
+            Class<?>[] argTypes) throws NoSuchMethodRuntimeException {
 
         try {
             return clazz.getDeclaredMethod(methodName, argTypes);
@@ -320,7 +326,7 @@ public class ClassUtil {
      *             {@link NoSuchFieldException}がおきた場合
      * @see Class#getField(String)
      */
-    public static Field getField(Class clazz, String fieldName)
+    public static Field getField(Class<?> clazz, String fieldName)
             throws NoSuchFieldRuntimeException {
         try {
             return clazz.getField(fieldName);
@@ -339,7 +345,7 @@ public class ClassUtil {
      *             {@link NoSuchFieldException}がおきた場合
      * @see Class#getDeclaredField(String)
      */
-    public static Field getDeclaredField(Class clazz, String fieldName)
+    public static Field getDeclaredField(Class<?> clazz, String fieldName)
             throws NoSuchFieldRuntimeException {
         try {
             return clazz.getDeclaredField(fieldName);
@@ -355,7 +361,7 @@ public class ClassUtil {
      *            対象のクラス
      * @return このクラスに定義されたフィールドの配列
      */
-    public static Field[] getDeclaredFields(final Class clazz) {
+    public static Field[] getDeclaredFields(final Class<?> clazz) {
         final ClassPool pool = ClassPoolUtil.getClassPool(clazz);
         final CtClass ctClass = ClassPoolUtil.toCtClass(pool, clazz);
         final CtField[] ctFields;
@@ -377,7 +383,7 @@ public class ClassUtil {
      * @param clazz class
      * @return パッケージ名
      */
-    public static String getPackageName(Class clazz) {
+    public static String getPackageName(Class<?> clazz) {
         String fqcn = clazz.getName();
         int pos = fqcn.lastIndexOf('.');
         if (pos > 0) {
@@ -393,7 +399,7 @@ public class ClassUtil {
      * @return FQCNからパッケージ名を除いた名前
      * @see #getShortClassName(String)
      */
-    public static String getShortClassName(Class clazz) {
+    public static String getShortClassName(Class<?> clazz) {
         return getShortClassName(clazz.getName());
     }
 
@@ -435,7 +441,7 @@ public class ClassUtil {
      * @param clazz class
      * @return クラス名
      */
-    public static String getSimpleClassName(final Class clazz) {
+    public static String getSimpleClassName(final Class<?> clazz) {
         if (clazz.isArray()) {
             return getSimpleClassName(clazz.getComponentType()) + "[]";
         }
@@ -449,7 +455,7 @@ public class ClassUtil {
      * @return リソースパス
      * @see #getResourcePath(String)
      */
-    public static String getResourcePath(Class clazz) {
+    public static String getResourcePath(Class<?> clazz) {
         return getResourcePath(clazz.getName());
     }
 

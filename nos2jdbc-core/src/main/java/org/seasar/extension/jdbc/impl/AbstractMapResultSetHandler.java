@@ -50,9 +50,7 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
      */
     protected Map<String, Object> createRow(ResultSet rs, PropertyType[] propertyTypes)
             throws SQLException {
-
-        @SuppressWarnings("unchecked")
-        Map<String, Object> row = new CaseInsensitiveMap();
+        Map<String, Object> row = new CaseInsensitiveMap<>();
         for (int i = 0; i < propertyTypes.length; ++i) {
             Object value = propertyTypes[i].getValueType().getValue(rs, i + 1);
             row.put(propertyTypes[i].getPropertyName(), value);

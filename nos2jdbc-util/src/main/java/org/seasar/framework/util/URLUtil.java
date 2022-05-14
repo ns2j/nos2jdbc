@@ -39,7 +39,7 @@ import org.seasar.framework.exception.SRuntimeException;
 public class URLUtil {
 
     /** プロトコルを正規化するためのマップ */
-    protected static final Map CANONICAL_PROTOCOLS = new HashMap();
+    protected static final Map<String, String> CANONICAL_PROTOCOLS = new HashMap<>();
     static {
         CANONICAL_PROTOCOLS.put("wsjar", "jar"); // WebSphereがJarファイルのために使用する固有のプロトコル
         CANONICAL_PROTOCOLS.put("vfsfile", "file"); // JBossAS5がファイルシステムのために使用する固有のプロトコル
@@ -153,7 +153,7 @@ public class URLUtil {
      * @return 正規化されたプロトコル
      */
     public static String toCanonicalProtocol(final String protocol) {
-        final String canonicalProtocol = (String) CANONICAL_PROTOCOLS
+        final String canonicalProtocol = CANONICAL_PROTOCOLS
                 .get(protocol);
         if (canonicalProtocol != null) {
             return canonicalProtocol;

@@ -219,7 +219,7 @@ public class ArrayUtil {
         if (array1.length != array2.length) {
             return false;
         }
-        List list = Arrays.asList(array2);
+        List<Object> list = Arrays.asList(array2);
         for (int i = 0; i < array1.length; i++) {
             Object o1 = array1[i];
             if (!list.contains(o1)) {
@@ -263,7 +263,7 @@ public class ArrayUtil {
      * @param value value
      * @param index index
      */
-    public static void setArrayValue(Object array, Class valueType,
+    public static void setArrayValue(Object array, Class<?> valueType,
             Object value, int index) {
         if (value == null) {
             return;
@@ -314,9 +314,9 @@ public class ArrayUtil {
      *            配列
      * @return リスト
      */
-    public static List toList(Object obj) {
+    public static List<Object> toList(Object obj) {
         int length = Array.getLength(obj);
-        List list = new ArrayList(length);
+        List<Object> list = new ArrayList<>(length);
         for (int i = 0; i < length; i++) {
             list.add(Array.get(obj, i));
         }

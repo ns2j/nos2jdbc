@@ -45,7 +45,7 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
     public Object handle(ResultSet resultSet) throws SQLException {
         PropertyType[] propertyTypes = PropertyTypeUtil
                 .createPropertyTypes(resultSet.getMetaData());
-        List<Map<?, ?>> list = new ArrayList<>();
+        List<Map<String, Object>> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(createRow(resultSet, propertyTypes));
         }

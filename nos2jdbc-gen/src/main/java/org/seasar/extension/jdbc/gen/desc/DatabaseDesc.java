@@ -36,8 +36,7 @@ public class DatabaseDesc {
     protected List<TableDesc> tableDescList = new ArrayList<TableDesc>();
 
     /** テーブルの標準名をキー、テーブル記述を値としたマップ */
-    @SuppressWarnings("unchecked")
-    protected Map<String, TableDesc> tableDescMap = new CaseInsensitiveMap();
+    protected Map<String, TableDesc> tableDescMap = new CaseInsensitiveMap<>();
 
     /**
      * このインスタンスで保持する{@link TableDesc}がフィルタされている場合{@code true}を返します。

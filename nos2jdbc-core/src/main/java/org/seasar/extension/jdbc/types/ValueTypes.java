@@ -248,7 +248,6 @@ public class ValueTypes {
 
     private static volatile boolean initialized;
 
-    @SuppressWarnings("unchecked")
     private static Map<String, ValueType> valueTypeCache = MapUtil.createHashMap(50);
 
     static {

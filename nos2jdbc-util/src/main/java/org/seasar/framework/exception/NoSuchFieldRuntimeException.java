@@ -25,7 +25,7 @@ public class NoSuchFieldRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = 6609175673610180338L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     private String fieldName;
 
@@ -36,7 +36,7 @@ public class NoSuchFieldRuntimeException extends SRuntimeException {
      * @param fieldName field name
      * @param cause cause of exception
      */
-    public NoSuchFieldRuntimeException(Class targetClass, String fieldName,
+    public NoSuchFieldRuntimeException(Class<?> targetClass, String fieldName,
             NoSuchFieldException cause) {
 
         super("ESSR0070", new Object[] { targetClass.getName(), fieldName },
@@ -50,7 +50,7 @@ public class NoSuchFieldRuntimeException extends SRuntimeException {
      * 
      * @return ターゲットのクラス
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 

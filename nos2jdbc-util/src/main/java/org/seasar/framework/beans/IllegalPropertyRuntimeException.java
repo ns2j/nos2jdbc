@@ -27,7 +27,7 @@ public class IllegalPropertyRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = 3584516316082904020L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     private String propertyName;
 
@@ -38,7 +38,7 @@ public class IllegalPropertyRuntimeException extends SRuntimeException {
      * @param propertyName propertyName
      * @param cause cause
      */
-    public IllegalPropertyRuntimeException(Class targetClass,
+    public IllegalPropertyRuntimeException(Class<?> targetClass,
             String propertyName, Throwable cause) {
         super("ESSR0059", new Object[] { targetClass.getName(), propertyName,
                 cause }, cause);
@@ -51,7 +51,7 @@ public class IllegalPropertyRuntimeException extends SRuntimeException {
      * 
      * @return ターゲットの{@link Class}
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 

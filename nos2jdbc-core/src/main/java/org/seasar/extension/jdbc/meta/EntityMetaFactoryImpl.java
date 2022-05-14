@@ -229,7 +229,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * @return フィールドの配列
      */
     protected Field[] getFields(Class<?> entityClass) {
-        ArrayMap fields = new ArrayMap();
+        ArrayMap<String, Field> fields = new ArrayMap<>();
         for (Field f : ClassUtil.getDeclaredFields(entityClass)) {
             if (!ModifierUtil.isInstanceField(f)) {
                 continue;

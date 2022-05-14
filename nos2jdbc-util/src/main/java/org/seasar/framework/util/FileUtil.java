@@ -62,7 +62,7 @@ public class FileUtil {
      */
     public static URL toURL(final File file) {
         try {
-            return file.toURL();
+            return file.toURI().toURL();
         } catch (final IOException e) {
             throw new IORuntimeException(e);
         }

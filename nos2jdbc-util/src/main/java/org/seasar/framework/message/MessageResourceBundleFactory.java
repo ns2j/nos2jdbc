@@ -37,7 +37,7 @@ public class MessageResourceBundleFactory {
 
     private static final Object NOT_FOUND = new Object();
 
-    private static Map cache = new HashMap();
+    private static Map<String, Object> cache = new HashMap<>();
 
     private static boolean initialized = false;
 

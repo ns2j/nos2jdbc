@@ -30,16 +30,14 @@ import org.seasar.extension.jdbc.util.BindVariableUtil;
  */
 public class EnumOrdinalType extends AbstractValueType {
 
-    @SuppressWarnings("unchecked")
-    private final Class<? extends Enum> enumClass;
+    private final Class<? extends Enum<?>> enumClass;
 
     /**
      * インスタンスを構築します。
      * 
      * @param enumClass enum class
      */
-    @SuppressWarnings("unchecked")
-    public EnumOrdinalType(Class<? extends Enum> enumClass) {
+    public EnumOrdinalType(Class<? extends Enum<?>> enumClass) {
         super(Types.INTEGER);
         this.enumClass = enumClass;
     }
@@ -83,7 +81,6 @@ public class EnumOrdinalType extends AbstractValueType {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void bindValue(PreparedStatement ps, int index, Object value)
             throws SQLException {
         if (value == null) {
@@ -94,7 +91,6 @@ public class EnumOrdinalType extends AbstractValueType {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void bindValue(CallableStatement cs, String parameterName,
             Object value) throws SQLException {
         if (value == null) {
@@ -119,8 +115,7 @@ public class EnumOrdinalType extends AbstractValueType {
      *            序数
      * @return {@link Enum}
      */
-    @SuppressWarnings("unchecked")
-    protected Enum toEnum(int ordinal) {
+    protected Enum<?> toEnum(int ordinal) {
         return enumClass.getEnumConstants()[ordinal];
     }
 

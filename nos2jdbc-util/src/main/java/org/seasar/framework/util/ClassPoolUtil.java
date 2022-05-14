@@ -36,8 +36,8 @@ public class ClassPoolUtil {
     /**
      * ClassPoolのキャッシュです。
      */
-    protected static final Map classPoolMap = Collections
-            .synchronizedMap(new WeakHashMap());
+    protected static final Map<ClassLoader, ClassPool> classPoolMap = Collections
+            .synchronizedMap(new WeakHashMap<>());
 
     /** クラスが初期化済みであることを示します。 */
     protected static boolean initialized;
@@ -66,7 +66,7 @@ public class ClassPoolUtil {
      * @param targetClass target class
      * @return ClassPool
      */
-    public static ClassPool getClassPool(final Class targetClass) {
+    public static ClassPool getClassPool(final Class<?> targetClass) {
         return getClassPool(ClassLoaderUtil.getClassLoader(targetClass));
     }
 
@@ -78,7 +78,7 @@ public class ClassPoolUtil {
      */
     public static ClassPool getClassPool(final ClassLoader classLoader) {
         initialize();
-        ClassPool classPool = (ClassPool) classPoolMap.get(classLoader);
+        ClassPool classPool = classPoolMap.get(classLoader);
         if (classPool == null) {
             if (classLoader == null) {
                 return ClassPool.getDefault();
@@ -97,7 +97,7 @@ public class ClassPoolUtil {
      * @param clazz class
      * @return CtClass
      */
-    public static CtClass toCtClass(final ClassPool classPool, final Class clazz) {
+    public static CtClass toCtClass(final ClassPool classPool, final Class<?> clazz) {
         return toCtClass(classPool, ClassUtil.getSimpleClassName(clazz));
     }
 
@@ -144,7 +144,7 @@ public class ClassPoolUtil {
      * @return CtClassの配列
      */
     public static CtClass[] toCtClassArray(final ClassPool classPool,
-            final Class[] classes) {
+            final Class<?>[] classes) {
         if (classes == null) {
             return null;
         }
@@ -176,7 +176,7 @@ public class ClassPoolUtil {
      * @return CtClass
      */
     public static CtClass createCtClass(final ClassPool classPool,
-            final String name, final Class superClass) {
+            final String name, final Class<?> superClass) {
         return createCtClass(classPool, name, toCtClass(classPool, superClass));
     }
 

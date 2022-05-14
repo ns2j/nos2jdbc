@@ -49,6 +49,7 @@ public class NumberConverter implements Converter {
         this.pattern = pattern;
     }
 
+    @Override
     public Object getAsObject(String value) {
         if (StringUtil.isEmpty(value)) {
             return null;
@@ -61,11 +62,13 @@ public class NumberConverter implements Converter {
 
     }
 
+    @Override
     public String getAsString(Object value) {
         return new DecimalFormat(pattern).format(value);
     }
 
-    public boolean isTarget(Class clazz) {
+    @Override
+    public boolean isTarget(Class<?> clazz) {
         return Number.class.isAssignableFrom(clazz);
     }
 

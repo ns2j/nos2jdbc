@@ -139,9 +139,9 @@ public class TimeoutManager implements Runnable {
     public void run() {
         boolean interrupted = false;
         for (;;) {
-            final List expiredTask = getExpiredTask();
-            for (final Iterator it = expiredTask.iterator(); it.hasNext();) {
-                final TimeoutTask task = (TimeoutTask) it.next();
+            final List<TimeoutTask> expiredTask = getExpiredTask();
+            for (final Iterator<TimeoutTask> it = expiredTask.iterator(); it.hasNext();) {
+                final TimeoutTask task = it.next();
                 task.expired();
                 if (task.isPermanent()) {
                     task.restart();
@@ -163,8 +163,8 @@ public class TimeoutManager implements Runnable {
      * 
      * @return 期限の切れた {@link TimeoutTask}のリスト
      */
-    protected synchronized List getExpiredTask() {
-        final List expiredTask = new ArrayList();
+    protected synchronized List<TimeoutTask> getExpiredTask() {
+        final List<TimeoutTask> expiredTask = new ArrayList<>();
         try {
             if (timeoutTaskList == null || timeoutTaskList.isEmpty()) {
                 return expiredTask;

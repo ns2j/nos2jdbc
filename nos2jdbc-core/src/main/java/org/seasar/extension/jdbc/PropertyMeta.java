@@ -142,7 +142,7 @@ public class PropertyMeta {
     /**
      * 追加情報のマップです。
      */
-    protected ArrayMap additionalInfoMap = new ArrayMap();
+    protected ArrayMap<String, Object> additionalInfoMap = new ArrayMap<>();
 
     /**
      * 名前を返します。

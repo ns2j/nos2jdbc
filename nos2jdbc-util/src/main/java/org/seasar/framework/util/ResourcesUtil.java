@@ -59,7 +59,7 @@ public class ResourcesUtil {
     private static final Logger logger = Logger.getLogger(ResourcesUtil.class);
 
     /** URLのプロトコルをキー、{@link ResourcesFactory}を値とするマッピングです。 */
-    protected static final Map resourcesTypeFactories = new HashMap();
+    protected static final Map<String, ResourcesFactory> resourcesTypeFactories = new HashMap<>();
     static {
         addResourcesFactory("file", new ResourcesFactory() {
             @Override
@@ -126,7 +126,7 @@ public class ResourcesUtil {
      *            基点となるクラス
      * @return 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}
      */
-    public static Resources getResourcesType(final Class referenceClass) {
+    public static Resources getResourcesType(final Class<?> referenceClass) {
         final URL url = ResourceUtil.getResource(toClassFile(referenceClass
                 .getName()));
         final String path[] = referenceClass.getName().split("\\.");
@@ -164,10 +164,10 @@ public class ResourcesUtil {
         }
 
         final String baseName = toDirectoryName(rootPackage);
-        final List list = new ArrayList();
-        for (final Iterator it = ClassLoaderUtil.getResources(baseName); it
+        final List<Object> list = new ArrayList<>();
+        for (final Iterator<URL> it = ClassLoaderUtil.getResources(baseName); it
                 .hasNext();) {
-            final URL url = (URL) it.next();
+            final URL url = it.next();
             final Resources resourcesType = getResourcesType(url, rootPackage,
                     baseName);
             if (resourcesType != null) {
@@ -178,7 +178,7 @@ public class ResourcesUtil {
             logger.log("WSSR0014", new Object[] { rootPackage });
             return EMPTY_ARRAY;
         }
-        return (Resources[]) list.toArray(new Resources[list.size()]);
+        return list.toArray(new Resources[list.size()]);
     }
 
     /**
@@ -197,7 +197,7 @@ public class ResourcesUtil {
      */
     protected static Resources getResourcesType(final URL url,
             final String rootPackage, final String rootDir) {
-        final ResourcesFactory factory = (ResourcesFactory) resourcesTypeFactories
+        final ResourcesFactory factory = resourcesTypeFactories
                 .get(URLUtil.toCanonicalProtocol(url.getProtocol()));
         if (factory != null) {
             return factory.create(url, rootPackage, rootDir);
@@ -503,7 +503,7 @@ public class ResourcesUtil {
         protected final String prefix;
 
         /** Zip内のエントリ名の{@link Set}です。 */
-        protected final Set entryNames = new HashSet();
+        protected final Set<String> entryNames = new HashSet<>();
 
         /**
          * インスタンスを構築します。

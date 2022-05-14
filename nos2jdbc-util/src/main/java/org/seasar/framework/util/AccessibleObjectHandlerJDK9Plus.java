@@ -48,7 +48,7 @@ import ognl.OgnlRuntime;
  */
 class AccessibleObjectHandlerJDK9Plus implements AccessibleObjectHandler
 {
-    private static final Class _clazzUnsafe = instantiateClazzUnsafe();
+    private static final Class<?> _clazzUnsafe = instantiateClazzUnsafe();
     private static final Object _unsafeInstance = instantiateUnsafeInstance(_clazzUnsafe);
     private static final Method _unsafeObjectFieldOffsetMethod = instantiateUnsafeObjectFieldOffsetMethod(_clazzUnsafe);
     private static final Method _unsafePutBooleanMethod = instantiateUnsafePutBooleanMethod(_clazzUnsafe);
@@ -67,7 +67,7 @@ class AccessibleObjectHandlerJDK9Plus implements AccessibleObjectHandler
      * @param clazz the Class upon which to perform the unsafe check.
      * @return true if parameter is Unsafe or a descendant, false otherwise
      */
-    static boolean unsafeOrDescendant(final Class clazz) {
+    static boolean unsafeOrDescendant(final Class<?> clazz) {
         return (_clazzUnsafe != null ? _clazzUnsafe.isAssignableFrom(clazz) : false);
     }
 
@@ -76,8 +76,8 @@ class AccessibleObjectHandlerJDK9Plus implements AccessibleObjectHandler
      *
      * @return class if available, null otherwise
      */
-    private static Class instantiateClazzUnsafe() {
-        Class clazz;
+    private static Class<?> instantiateClazzUnsafe() {
+        Class<?> clazz;
 
         try {
             clazz = Class.forName("sun.misc.Unsafe");
@@ -94,7 +94,7 @@ class AccessibleObjectHandlerJDK9Plus implements AccessibleObjectHandler
      * @param clazz (expected to be an Unsafe instance)
      * @return instance if available, null otherwise
      */
-    private static Object instantiateUnsafeInstance(Class clazz) {
+    private static Object instantiateUnsafeInstance(Class<?> clazz) {
         Object unsafe;
 
         if (clazz != null) {
@@ -127,7 +127,7 @@ class AccessibleObjectHandlerJDK9Plus implements AccessibleObjectHandler
      * @param clazz (expected to be an Unsafe instance)
      * @return method if available, null otherwise
      */
-    private static Method instantiateUnsafeObjectFieldOffsetMethod(Class clazz) {
+    private static Method instantiateUnsafeObjectFieldOffsetMethod(Class<?> clazz) {
         Method method;
 
         if (clazz != null) {
@@ -149,7 +149,7 @@ class AccessibleObjectHandlerJDK9Plus implements AccessibleObjectHandler
      * @param clazz (expected to be an Unsafe instance)
      * @return method if available, null otherwise
      */
-    private static Method instantiateUnsafePutBooleanMethod(Class clazz) {
+    private static Method instantiateUnsafePutBooleanMethod(Class<?> clazz) {
         Method method;
 
         if (clazz != null) {

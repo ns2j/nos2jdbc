@@ -42,7 +42,7 @@ import org.seasar.framework.util.StringUtil;
 public class DataRowImpl implements DataRow {
     private DataTable table_;
 
-    private ArrayMap values_ = new CaseInsensitiveMap();
+    private ArrayMap<String, Object> values_ = new CaseInsensitiveMap<>();
 
     private RowState state_ = RowStates.UNCHANGED;
 

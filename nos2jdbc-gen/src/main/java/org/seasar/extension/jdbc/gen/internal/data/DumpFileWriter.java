@@ -62,8 +62,7 @@ public class DumpFileWriter {
     protected String encoding;
 
     /** カラム名をキー、カラム記述を値とするマップ */
-    @SuppressWarnings("unchecked")
-    protected Map<String, ColumnDesc> columnDescMap = new CaseInsensitiveMap();
+    protected Map<String, ColumnDesc> columnDescMap = new CaseInsensitiveMap<>();
 
     /** 区切り文字 */
     protected char delimiter;
@@ -277,8 +276,7 @@ public class DumpFileWriter {
     protected Header createHeader(ResultSetMetaData metaData)
             throws SQLException {
         Header header = new Header();
-        @SuppressWarnings("unchecked")
-        Map<String, Integer> indexMap = new CaseInsensitiveMap();
+        Map<String, Integer> indexMap = new CaseInsensitiveMap<>();
         for (int i = 0; i < metaData.getColumnCount(); i++) {
             int index = i + 1;
             String columnLabel = metaData.getColumnLabel(index);

@@ -25,7 +25,7 @@ import java.util.Map;
  * @author koichik
  * 
  */
-public class LruHashMap extends LinkedHashMap {
+public class LruHashMap extends LinkedHashMap<Object, Object> {
 
     private static final long serialVersionUID = 1L;
 
@@ -76,7 +76,7 @@ public class LruHashMap extends LinkedHashMap {
     }
 
     @Override
-    protected boolean removeEldestEntry(final Map.Entry entry) {
+    protected boolean removeEldestEntry(final Map.Entry<Object, Object> entry) {
         return size() > limitSize;
     }
 }

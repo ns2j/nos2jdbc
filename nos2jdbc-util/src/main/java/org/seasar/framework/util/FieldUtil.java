@@ -164,10 +164,10 @@ public class FieldUtil {
             throw new IllegalAccessRuntimeException(field.getDeclaringClass(),
                     e);
         } catch (IllegalArgumentException e) {
-            Class clazz = field.getDeclaringClass();
-            Class fieldClass = field.getType();
-            Class valueClass = value == null ? null : value.getClass();
-            Class targetClass = target == null ? null : target.getClass();
+            Class<?> clazz = field.getDeclaringClass();
+            Class<?> fieldClass = field.getType();
+            Class<?> valueClass = value == null ? null : value.getClass();
+            Class<?> targetClass = target == null ? null : target.getClass();
             throw new SIllegalArgumentException("ESSR0094",
                     new Object[] {
                             clazz.getName(),
@@ -215,12 +215,12 @@ public class FieldUtil {
      *            フィールド
      * @return フィールドのパラメタ化されたコレクションの要素型
      */
-    public static Class getElementTypeOfCollectionFromFieldType(
+    public static Class<?> getElementTypeOfCollectionFromFieldType(
             final Field field) {
         if (GET_ELEMENT_TYPE_OF_COLLECTION_FROM_FIELD_TYPE_METHOD == null) {
             return null;
         }
-        return (Class) MethodUtil.invoke(
+        return (Class<?>) MethodUtil.invoke(
                 GET_ELEMENT_TYPE_OF_COLLECTION_FROM_FIELD_TYPE_METHOD, null,
                 new Object[] { field });
     }
@@ -232,11 +232,11 @@ public class FieldUtil {
      *            フィールド
      * @return フィールドのパラメタ化されたリストの要素型
      */
-    public static Class getElementTypeOfListFromFieldType(final Field field) {
+    public static Class<?> getElementTypeOfListFromFieldType(final Field field) {
         if (GET_ELEMENT_TYPE_OF_LIST_FROM_FIELD_TYPE_METHOD == null) {
             return null;
         }
-        return (Class) MethodUtil.invoke(
+        return (Class<?>) MethodUtil.invoke(
                 GET_ELEMENT_TYPE_OF_LIST_FROM_FIELD_TYPE_METHOD, null,
                 new Object[] { field });
     }
@@ -248,11 +248,11 @@ public class FieldUtil {
      *            フィールド
      * @return フィールドのパラメタ化されたセットの要素型
      */
-    public static Class getElementTypeOfSetFromFieldType(final Field field) {
+    public static Class<?> getElementTypeOfSetFromFieldType(final Field field) {
         if (GET_ELEMENT_TYPE_OF_SET_FROM_FIELD_TYPE_METHOD == null) {
             return null;
         }
-        return (Class) MethodUtil.invoke(
+        return (Class<?>) MethodUtil.invoke(
                 GET_ELEMENT_TYPE_OF_SET_FROM_FIELD_TYPE_METHOD, null,
                 new Object[] { field });
     }
@@ -269,7 +269,7 @@ public class FieldUtil {
      */
     protected static Method getElementTypeFromFieldTypeMethod(final String type) {
         try {
-            final Class reflectionUtilClass = Class
+            final Class<?> reflectionUtilClass = Class
                     .forName(REFLECTION_UTIL_CLASS_NAME);
             return reflectionUtilClass.getMethod("getElementTypeOf" + type
                     + "FromFieldType", new Class[] { Field.class });

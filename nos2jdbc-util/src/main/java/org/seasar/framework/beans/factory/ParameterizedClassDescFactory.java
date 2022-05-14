@@ -22,6 +22,8 @@ import java.util.Map;
 
 import org.seasar.framework.beans.ParameterizedClassDesc;
 import org.seasar.framework.beans.PropertyDesc;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 
 /**
  * フィールの型やメソッドの引数型、戻り値型を表現する{@link ParameterizedClassDesc}を作成するファクトリです。
@@ -53,7 +55,8 @@ public class ParameterizedClassDescFactory {
      *            パラメータ化された型(クラスまたはインタフェース)
      * @return パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
      */
-    public static Map getTypeVariables(Class beanClass) {
+    @SuppressWarnings("unchecked")
+    public static Map<TypeVariable<?>, Type> getTypeVariables(Class<?> beanClass) {
         if (provider == null) {
             return Collections.EMPTY_MAP;
         }
@@ -73,7 +76,7 @@ public class ParameterizedClassDescFactory {
      * @return フィールドの型を表現する{@link ParameterizedClassDesc}
      */
     public static ParameterizedClassDesc createParameterizedClassDesc(
-            final Field field, final Map map) {
+            final Field field, final Map<TypeVariable<?>, Type> map) {
         if (provider == null) {
             return null;
         }
@@ -95,7 +98,7 @@ public class ParameterizedClassDescFactory {
      * @return メソッドの引数型を表現する{@link ParameterizedClassDesc}
      */
     public static ParameterizedClassDesc createParameterizedClassDesc(
-            final Method method, final int index, final Map map) {
+            final Method method, final int index, final Map<TypeVariable<?>, Type> map) {
         if (provider == null) {
             return null;
         }
@@ -115,7 +118,7 @@ public class ParameterizedClassDescFactory {
      * @return メソッドの戻り値型を表現する{@link ParameterizedClassDesc}
      */
     public static ParameterizedClassDesc createParameterizedClassDesc(
-            final Method method, final Map map) {
+            final Method method, final Map<TypeVariable<?>, Type> map) {
         if (provider == null) {
             return null;
         }
@@ -132,8 +135,8 @@ public class ParameterizedClassDescFactory {
      */
     protected static Provider createProvider() {
         try {
-            final Class clazz = Class.forName(PROVIDER_CLASS_NAME);
-            return (Provider) clazz.newInstance();
+            final Class<?> clazz = Class.forName(PROVIDER_CLASS_NAME);
+            return (Provider) clazz.getDeclaredConstructor().newInstance();
         } catch (final Exception e) {
             return null;
         }
@@ -157,7 +160,7 @@ public class ParameterizedClassDescFactory {
          *            パラメータ化された型(クラスまたはインタフェース)
          * @return パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
          */
-        Map getTypeVariables(Class beanClass);
+        Map<TypeVariable<?>, Type> getTypeVariables(Class<?> beanClass);
 
         /**
          * フィールドの型をを表現する{@link ParameterizedClassDesc}を作成して返します。
@@ -168,7 +171,8 @@ public class ParameterizedClassDescFactory {
          *            パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
          * @return フィールドの型を表現する{@link ParameterizedClassDesc}
          */
-        ParameterizedClassDesc createParameterizedClassDesc(Field field, Map map);
+        ParameterizedClassDesc createParameterizedClassDesc(
+                final Field field, final Map<TypeVariable<?>, Type> map);
 
         /**
          * メソッドの引数型を表現する{@link ParameterizedClassDesc}を作成して返します。
@@ -181,8 +185,7 @@ public class ParameterizedClassDescFactory {
          *            パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
          * @return メソッドの引数型を表現する{@link ParameterizedClassDesc}
          */
-        ParameterizedClassDesc createParameterizedClassDesc(Method method,
-                int index, Map map);
+        ParameterizedClassDesc createParameterizedClassDesc(Method method, int index, Map<TypeVariable<?>, Type> map);
 
         /**
          * メソッドの戻り値型を表現する{@link ParameterizedClassDesc}を作成して返します。
@@ -194,7 +197,7 @@ public class ParameterizedClassDescFactory {
          * @return メソッドの戻り値型を表現する{@link ParameterizedClassDesc}を作成して返します。
          */
         ParameterizedClassDesc createParameterizedClassDesc(Method method,
-                Map map);
+              Map<TypeVariable<?>, Type> map);
 
     }
 

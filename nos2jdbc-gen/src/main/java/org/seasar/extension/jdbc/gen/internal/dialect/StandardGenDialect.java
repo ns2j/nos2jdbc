@@ -77,11 +77,10 @@ public class StandardGenDialect implements GenDialect {
     protected Map<Integer, SqlType> sqlTypeMap = new HashMap<Integer, SqlType>();
 
     /** カラムの型名をキー、{@link ColumnType}を値とするマップ */
-    @SuppressWarnings("unchecked")
-    protected Map<Object, ColumnType> columnTypeMap = new CaseInsensitiveMap();
+    protected Map<String, ColumnType> columnTypeMap = new CaseInsensitiveMap<>();
 
     /** カラムのSQL型をキー、{@link ColumnType}を値とするマップ。 */
-    protected Map<Integer, ColumnType> fallbackColumnTypeMap = new HashMap<Integer, ColumnType>();
+    protected Map<Integer, ColumnType> fallbackColumnTypeMap = new HashMap<>();
 
     /**
      * インスタンスを構築します。

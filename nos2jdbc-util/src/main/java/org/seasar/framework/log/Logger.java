@@ -29,7 +29,7 @@ import org.seasar.framework.message.MessageFormatter;
  */
 public class Logger {
 
-    private static final Map loggers = new HashMap();
+    private static final Map<Class<?>, Logger> loggers = new HashMap<>();
 
     private static boolean initialized;
 
@@ -42,11 +42,11 @@ public class Logger {
      * @param clazz class
      * @return {@link Logger}
      */
-    public static synchronized Logger getLogger(final Class clazz) {
+    public static synchronized Logger getLogger(final Class<?> clazz) {
         if (!initialized) {
             initialize();
         }
-        Logger logger = (Logger) loggers.get(clazz);
+        Logger logger = loggers.get(clazz);
         if (logger == null) {
             logger = new Logger(clazz);
             loggers.put(clazz, logger);
@@ -70,7 +70,7 @@ public class Logger {
         initialized = false;
     }
 
-    private Logger(final Class clazz) {
+    private Logger(final Class<?> clazz) {
         log = LoggerFactory.getLogger(clazz);
     }
 

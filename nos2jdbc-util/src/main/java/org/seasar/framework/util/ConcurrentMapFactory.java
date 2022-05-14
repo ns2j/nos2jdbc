@@ -25,19 +25,21 @@ import org.seasar.framework.util.MapUtil.MapFactory;
  * 
  * @author koichik
  */
-@SuppressWarnings("unchecked")
 public class ConcurrentMapFactory implements MapFactory {
 
-    public Map create() {
-        return new ConcurrentHashMap();
+    @Override
+    public Map<Object, Object> create() {
+        return new ConcurrentHashMap<Object, Object>();
     }
 
-    public Map create(final int initialCapacity) {
-        return new ConcurrentHashMap(initialCapacity);
+    @Override
+    public Map<Object, Object> create(final int initialCapacity) {
+        return new ConcurrentHashMap<Object, Object>(initialCapacity);
     }
 
-    public Map create(final int initialCapacity, final float loadFactor) {
-        return new ConcurrentHashMap(initialCapacity, loadFactor,
+    @Override
+    public Map<Object, Object> create(final int initialCapacity, final float loadFactor) {
+        return new ConcurrentHashMap<Object, Object>(initialCapacity, loadFactor,
                 initialCapacity);
     }
 

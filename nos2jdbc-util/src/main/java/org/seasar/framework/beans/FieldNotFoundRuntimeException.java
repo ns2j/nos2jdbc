@@ -29,7 +29,7 @@ public class FieldNotFoundRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = -2715036865146285893L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     private String fieldName;
 
@@ -39,7 +39,7 @@ public class FieldNotFoundRuntimeException extends SRuntimeException {
      * @param targetClass targetClass
      * @param fieldName fieldName
      */
-    public FieldNotFoundRuntimeException(Class targetClass, String fieldName) {
+    public FieldNotFoundRuntimeException(Class<?> targetClass, String fieldName) {
         super("ESSR0070", new Object[] { targetClass.getName(), fieldName });
         this.targetClass = targetClass;
         this.fieldName = fieldName;
@@ -50,7 +50,7 @@ public class FieldNotFoundRuntimeException extends SRuntimeException {
      * 
      * @return ターゲットの{@link Class}
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 

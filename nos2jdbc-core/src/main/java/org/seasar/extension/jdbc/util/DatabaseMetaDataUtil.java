@@ -52,8 +52,8 @@ public class DatabaseMetaDataUtil {
     public static String[] getPrimaryKeys(DatabaseMetaData dbMetaData,
             String tableName) {
 
-        Set set = getPrimaryKeySet(dbMetaData, tableName);
-        return (String[]) set.toArray(new String[set.size()]);
+        Set<String> set = getPrimaryKeySet(dbMetaData, tableName);
+        return set.toArray(new String[set.size()]);
     }
 
     /**
@@ -65,7 +65,7 @@ public class DatabaseMetaDataUtil {
      *            テーブル名
      * @return プライマリーキーの {@link Set}
      */
-    public static Set getPrimaryKeySet(DatabaseMetaData dbMetaData,
+    public static Set<String> getPrimaryKeySet(DatabaseMetaData dbMetaData,
             String tableName) {
         final String schema;
         int index = tableName.indexOf('.');
@@ -77,7 +77,7 @@ public class DatabaseMetaDataUtil {
         }
         final String convertedTableName = convertIdentifier(dbMetaData,
                 tableName);
-        Set set = new CaseInsensitiveSet();
+        Set<String> set = new CaseInsensitiveSet();
         addPrimaryKeys(dbMetaData, convertIdentifier(dbMetaData, schema),
                 convertedTableName, set);
         if (set.size() == 0) {
@@ -100,9 +100,9 @@ public class DatabaseMetaDataUtil {
      * @param tableName String
      * @return Set
      */
-    public static Set getPrimaryKeySet(DatabaseMetaData dbMetaData,
+    public static Set<String> getPrimaryKeySet(DatabaseMetaData dbMetaData,
             String schema, String tableName) {
-        Set set = new CaseInsensitiveSet();
+        Set<String> set = new CaseInsensitiveSet();
         addPrimaryKeys(dbMetaData, schema, tableName, set);
         return set;
     }
@@ -123,7 +123,7 @@ public class DatabaseMetaDataUtil {
     }
 
     private static void addPrimaryKeys(DatabaseMetaData dbMetaData,
-            String schema, String tableName, Set set) {
+            String schema, String tableName, Set<String> set) {
         try {
             ResultSet rs = dbMetaData.getPrimaryKeys(null, schema, tableName);
             while (rs.next()) {
@@ -147,11 +147,11 @@ public class DatabaseMetaDataUtil {
     public static String[] getColumns(DatabaseMetaData dbMetaData,
             String tableName) {
 
-        Map map = getColumnMap(dbMetaData, tableName);
+        Map<String, ColumnDesc> map = getColumnMap(dbMetaData, tableName);
         String[] ret = new String[map.size()];
         int index = 0;
-        for (Iterator i = map.values().iterator(); i.hasNext();) {
-            ColumnDesc cd = (ColumnDesc) i.next();
+        for (Iterator<ColumnDesc> i = map.values().iterator(); i.hasNext();) {
+            ColumnDesc cd = i.next();
             ret[index++] = cd.getName();
         }
         return ret;
@@ -166,7 +166,7 @@ public class DatabaseMetaDataUtil {
      *            テーブル名
      * @return カラムデータの {@link Map}
      */
-    public static Map getColumnMap(DatabaseMetaData dbMetaData, String tableName) {
+    public static Map<String, ColumnDesc> getColumnMap(DatabaseMetaData dbMetaData, String tableName) {
         return getColumnCaseInsensitiveMap(dbMetaData, tableName);
     }
 
@@ -179,7 +179,7 @@ public class DatabaseMetaDataUtil {
      *            テーブル名
      * @return カラムデータの {@link CaseInsensitiveMap}
      */
-    public static CaseInsensitiveMap getColumnCaseInsensitiveMap(
+    public static CaseInsensitiveMap<ColumnDesc> getColumnCaseInsensitiveMap(
             DatabaseMetaData dbMetaData, String tableName) {
         final String schema;
         int index = tableName.indexOf('.');
@@ -191,7 +191,7 @@ public class DatabaseMetaDataUtil {
         }
         final String convertedTableName = convertIdentifier(dbMetaData,
                 tableName);
-        CaseInsensitiveMap map = new CaseInsensitiveMap();
+        CaseInsensitiveMap<ColumnDesc> map = new CaseInsensitiveMap<>();
         addColumns(dbMetaData, convertIdentifier(dbMetaData, schema),
                 convertedTableName, map);
         if (map.size() == 0) {
@@ -217,15 +217,15 @@ public class DatabaseMetaDataUtil {
      *            テーブル名
      * @return カラムデータの {@link CaseInsensitiveMap}
      */
-    public static CaseInsensitiveMap getColumnMap(DatabaseMetaData dbMetaData,
+    public static CaseInsensitiveMap<ColumnDesc> getColumnMap(DatabaseMetaData dbMetaData,
             String schema, String tableName) {
-        CaseInsensitiveMap map = new CaseInsensitiveMap();
+        CaseInsensitiveMap<ColumnDesc> map = new CaseInsensitiveMap<>();
         addColumns(dbMetaData, schema, tableName, map);
         return map;
     }
 
     private static void addColumns(DatabaseMetaData dbMetaData, String schema,
-            String tableName, Map map) {
+            String tableName, Map<String, ColumnDesc> map) {
         try {
             ResultSet rs = dbMetaData.getColumns(null, schema, tableName, null);
             while (rs.next()) {

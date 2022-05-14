@@ -59,7 +59,7 @@ public class InitialContextUtil {
      * @throws NamingRuntimeException
      *             初期コンテキストを作成できなかった場合にスローされます
      */
-    public static InitialContext create(final Hashtable env) {
+    public static InitialContext create(final Hashtable<?, ?> env) {
         try {
             return new InitialContext(env);
         } catch (final NamingException ex) {

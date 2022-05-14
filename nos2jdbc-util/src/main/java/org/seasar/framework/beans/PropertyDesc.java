@@ -39,7 +39,7 @@ public interface PropertyDesc {
      * 
      * @return プロパティの型
      */
-    Class getPropertyType();
+    Class<?> getPropertyType();
 
     /**
      * getterメソッドを返します。
@@ -178,7 +178,7 @@ public interface PropertyDesc {
      * @return このプロパティがパラメタ化された{@link Collection}の場合、その要素型
      * @since 2.4.18
      */
-    Class getElementClassOfCollection();
+    Class<?> getElementClassOfCollection();
 
     /**
      * 実行環境がJava5以降で、このプロパティがパラメタ化された{@link Map}の場合、そのキー型を返します。
@@ -189,7 +189,7 @@ public interface PropertyDesc {
      * @return このプロパティがパラメタ化された{@link Map}の場合、そのキー型
      * @since 2.4.18
      */
-    Class getKeyClassOfMap();
+    Class<?> getKeyClassOfMap();
 
     /**
      * 実行環境がJava5以降で、このプロパティがパラメタ化された{@link Map}の場合、その値型を返します。
@@ -200,6 +200,6 @@ public interface PropertyDesc {
      * @return このプロパティがパラメタ化された{@link Map}の場合、その値型
      * @since 2.4.18
      */
-    Class getValueClassOfMap();
+    Class<?> getValueClassOfMap();
 
 }

@@ -28,11 +28,11 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = 8584662068396978822L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     private Object[] methodArgs;
 
-    private Class[] paramTypes;
+    private Class<?>[] paramTypes;
 
     /**
      * {@link ConstructorNotFoundRuntimeException}を作成します。
@@ -40,7 +40,7 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
      * @param targetClass targetClass
      * @param methodArgs methodArgs
      */
-    public ConstructorNotFoundRuntimeException(Class targetClass,
+    public ConstructorNotFoundRuntimeException(Class<?> targetClass,
             Object[] methodArgs) {
         super("ESSR0048", new Object[] { targetClass.getName(),
                 getSignature(methodArgs) });
@@ -55,8 +55,8 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
      * @param targetClass targetClass
      * @param paramTypes paramTypes
      */
-    public ConstructorNotFoundRuntimeException(Class targetClass,
-            Class[] paramTypes) {
+    public ConstructorNotFoundRuntimeException(Class<?> targetClass,
+            Class<?>[] paramTypes) {
         super("ESSR0048", new Object[] { targetClass.getName(),
                 getSignature(paramTypes) });
 
@@ -69,7 +69,7 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
      * 
      * @return ターゲットのクラス
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 
@@ -87,7 +87,7 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
      * 
      * @return array of paramType
      */
-    public Class[] getParamTypes() {
+    public Class<?>[] getParamTypes() {
         return paramTypes;
     }
 
@@ -108,7 +108,7 @@ public class ConstructorNotFoundRuntimeException extends SRuntimeException {
         return buf.toString();
     }
 
-    private static String getSignature(Class[] paramTypes) {
+    private static String getSignature(Class<?>[] paramTypes) {
         StringBuffer buf = new StringBuffer(100);
         if (paramTypes != null) {
             for (int i = 0; i < paramTypes.length; ++i) {

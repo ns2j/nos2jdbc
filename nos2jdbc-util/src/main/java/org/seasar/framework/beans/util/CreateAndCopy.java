@@ -71,14 +71,14 @@ public class CreateAndCopy<T> extends AbstractCopy<CreateAndCopy<T>> {
     @SuppressWarnings("unchecked")
     public T execute() {
         if (Map.class.isAssignableFrom(destClass)) {
-            Map dest = null;
+            Map<String, Object> dest = null;
             if (ModifierUtil.isAbstract(destClass)) {
-                dest = new HashMap();
+                dest = new HashMap<>();
             } else {
-                dest = (Map) ClassUtil.newInstance(destClass);
+                dest = (Map<String, Object>) ClassUtil.newInstance(destClass);
             }
             if (src instanceof Map) {
-                copyMapToMap((Map) src, dest);
+                copyMapToMap((Map<String, Object>) src, dest);
             } else {
                 copyBeanToMap(src, dest);
             }
@@ -86,7 +86,7 @@ public class CreateAndCopy<T> extends AbstractCopy<CreateAndCopy<T>> {
         }
         T dest = (T) ClassUtil.newInstance(destClass);
         if (src instanceof Map) {
-            copyMapToBean((Map) src, dest);
+            copyMapToBean((Map<String, Object>) src, dest);
         } else {
             copyBeanToBean(src, dest);
         }

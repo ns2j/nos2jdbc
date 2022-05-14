@@ -48,7 +48,7 @@ public abstract class DriverManagerUtil {
      *            登録するJDBCドライバのクラス
      * @since 2.4.10
      */
-    public static void registerDriver(final Class driverClass) {
+    public static void registerDriver(final Class<?> driverClass) {
         registerDriver((Driver) ClassUtil.newInstance(driverClass));
     }
 
@@ -88,9 +88,9 @@ public abstract class DriverManagerUtil {
      * @since 2.4.10
      */
     public static synchronized void deregisterAllDrivers() {
-        for (final Enumeration e = DriverManager.getDrivers(); e
+        for (final Enumeration<Driver> e = DriverManager.getDrivers(); e
                 .hasMoreElements();) {
-            deregisterDriver((Driver) e.nextElement());
+            deregisterDriver(e.nextElement());
         }
     }
 

@@ -38,7 +38,7 @@ import org.seasar.framework.log.Logger;
 public class DisposableUtil {
 
     /** 登録済みの{@link Disposable} */
-    protected static final LinkedList disposables = new LinkedList();
+    protected static final LinkedList<Disposable> disposables = new LinkedList<>();
 
     /**
      * 破棄可能なリソースを登録します。
@@ -70,7 +70,7 @@ public class DisposableUtil {
      */
     public static synchronized void dispose() {
         while (!disposables.isEmpty()) {
-            final Disposable disposable = (Disposable) disposables.removeLast();
+            final Disposable disposable = disposables.removeLast();
             try {
                 disposable.dispose();
             } catch (final Throwable t) {

@@ -27,7 +27,7 @@ public class InvocationTargetRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = 7760491787158046906L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     /**
      * {@link InvocationTargetRuntimeException}を作成します。
@@ -35,7 +35,7 @@ public class InvocationTargetRuntimeException extends SRuntimeException {
      * @param targetClass target class
      * @param cause cause of exception
      */
-    public InvocationTargetRuntimeException(Class targetClass,
+    public InvocationTargetRuntimeException(Class<?> targetClass,
             InvocationTargetException cause) {
 
         super("ESSR0043", new Object[] { targetClass.getName(),
@@ -48,7 +48,7 @@ public class InvocationTargetRuntimeException extends SRuntimeException {
      * 
      * @return target class
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 }

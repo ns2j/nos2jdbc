@@ -41,7 +41,7 @@ public class MapUtil {
      * 
      * @return スレッドセーフな{@link java.util.HashMap}
      */
-    public static Map createHashMap() {
+    public static <K, V> Map<K, V> createHashMap() {
         return factory.create();
     }
 
@@ -57,7 +57,7 @@ public class MapUtil {
      *            初期容量
      * @return スレッドセーフな{@link java.util.HashMap}
      */
-    public static Map createHashMap(final int initialCapacity) {
+    public static <K, V> Map<K, V> createHashMap(final int initialCapacity) {
         return factory.create(initialCapacity);
     }
 
@@ -75,7 +75,7 @@ public class MapUtil {
      *            負荷係数
      * @return スレッドセーフな{@link java.util.HashMap}
      */
-    public static Map createHashMap(final int initialCapacity,
+    public static <K, V> Map<K, V> createHashMap(final int initialCapacity,
             final float loadFactor) {
         return factory.create(initialCapacity, loadFactor);
     }
@@ -106,7 +106,7 @@ public class MapUtil {
          * 
          * @return スレッドセーフな{@link java.util.HashMap}
          */
-        Map create();
+        <K, V> Map<K, V> create();
 
         /**
          * 指定されて初期容量とデフォルトの負荷係数で{@link java.util.HashMap}を作成して返します。
@@ -114,7 +114,7 @@ public class MapUtil {
          * @param initialCapacity
          * @return スレッドセーフな{@link java.util.HashMap}
          */
-        Map create(int initialCapacity);
+        <K, V> Map<K, V> create(int initialCapacity);
 
         /**
          * 指定された初期容量と負荷係数で{@link java.util.HashMap}を作成して返します。
@@ -125,7 +125,7 @@ public class MapUtil {
          *            負荷係数
          * @return スレッドセーフな{@link java.util.HashMap}
          */
-        Map create(int initialCapacity, float loadFactor);
+        <K, V> Map<K, V> create(int initialCapacity, float loadFactor);
     }
 
     /**
@@ -137,18 +137,18 @@ public class MapUtil {
     public static class SynchronizedMapFactory implements MapFactory {
 
         @Override
-        public Map create() {
-            return Collections.synchronizedMap(new HashMap());
+        public <K, V> Map<K, V> create() {
+            return Collections.synchronizedMap(new HashMap<>());
         }
 
         @Override
-        public Map create(final int initialCapacity) {
-            return Collections.synchronizedMap(new HashMap(initialCapacity));
+        public <K, V> Map<K, V> create(final int initialCapacity) {
+            return Collections.synchronizedMap(new HashMap<>(initialCapacity));
         }
 
         @Override
-        public Map create(final int initialCapacity, final float loadFactor) {
-            return Collections.synchronizedMap(new HashMap(initialCapacity,
+        public <K, V> Map<K, V> create(final int initialCapacity, final float loadFactor) {
+            return Collections.synchronizedMap(new HashMap<>(initialCapacity,
                     loadFactor));
         }
 

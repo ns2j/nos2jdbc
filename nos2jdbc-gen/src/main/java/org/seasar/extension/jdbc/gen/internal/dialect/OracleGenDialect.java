@@ -262,8 +262,7 @@ public class OracleGenDialect extends StandardGenDialect {
             ps.setString(2, tableName);
             ResultSet rs = PreparedStatementUtil.executeQuery(ps);
             try {
-                @SuppressWarnings("unchecked")
-                Map<String, String> commentMap = new CaseInsensitiveMap();
+                Map<String, String> commentMap = new CaseInsensitiveMap<>();
                 while (rs.next()) {
                     commentMap.put(rs.getString(1), rs.getString(2));
                 }

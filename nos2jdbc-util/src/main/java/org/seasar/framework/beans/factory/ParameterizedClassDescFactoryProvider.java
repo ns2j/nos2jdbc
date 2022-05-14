@@ -35,27 +35,27 @@ import org.seasar.framework.beans.impl.ParameterizedClassDescImpl;
  */
 public class ParameterizedClassDescFactoryProvider implements Provider {
 
-    @SuppressWarnings("unchecked")
-    public Map<TypeVariable<?>, Type> getTypeVariables(Class beanClass) {
+    @Override
+    public Map<TypeVariable<?>, Type> getTypeVariables(Class<?> beanClass) {
         return getTypeVariableMap(beanClass);
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public ParameterizedClassDesc createParameterizedClassDesc(
-            final Field field, final Map map) {
+            final Field field, final Map<TypeVariable<?>, Type> map) {
         return createParameterizedClassDesc(field.getGenericType(), map);
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public ParameterizedClassDesc createParameterizedClassDesc(
-            final Method method, final int index, Map map) {
+            final Method method, final int index, Map<TypeVariable<?>, Type> map) {
         return createParameterizedClassDesc(
                 method.getGenericParameterTypes()[index], map);
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public ParameterizedClassDesc createParameterizedClassDesc(
-            final Method method, Map map) {
+            final Method method, Map<TypeVariable<?>, Type> map) {
         return createParameterizedClassDesc(method.getGenericReturnType(), map);
     }
 

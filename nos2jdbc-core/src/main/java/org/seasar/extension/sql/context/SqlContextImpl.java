@@ -34,9 +34,9 @@ public class SqlContextImpl implements SqlContext {
 
     private static Logger logger = Logger.getLogger(SqlContextImpl.class);
 
-    private CaseInsensitiveMap args = new CaseInsensitiveMap();
+    private CaseInsensitiveMap<Object> args = new CaseInsensitiveMap<>();
 
-    private CaseInsensitiveMap argTypes = new CaseInsensitiveMap();
+    private CaseInsensitiveMap<Class<?>> argTypes = new CaseInsensitiveMap<>();
 
     private StringBuffer sqlBuf = new StringBuffer(255);
 
@@ -97,7 +97,7 @@ public class SqlContextImpl implements SqlContext {
     @Override
     public Class<?> getArgType(String name) {
         if (argTypes.containsKey(name)) {
-            return (Class<?>) argTypes.get(name);
+            return argTypes.get(name);
         } else if (parent != null) {
             return parent.getArgType(name);
         } else {

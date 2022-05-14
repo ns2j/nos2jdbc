@@ -31,7 +31,7 @@ import org.seasar.extension.jdbc.util.BindVariableUtil;
  */
 public class EnumType extends AbstractValueType {
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     private final Class<? extends Enum> enumClass;
 
     /**
@@ -39,8 +39,7 @@ public class EnumType extends AbstractValueType {
      * 
      * @param enumClass enum class
      */
-    @SuppressWarnings("unchecked")
-    public EnumType(Class<? extends Enum> enumClass) {
+    public EnumType(@SuppressWarnings("rawtypes") Class<? extends Enum> enumClass) {
         super(Types.VARCHAR);
         this.enumClass = enumClass;
     }
@@ -57,7 +56,7 @@ public class EnumType extends AbstractValueType {
      * @return {@link Enum}
      */
     @SuppressWarnings("unchecked")
-    protected Enum toEnum(String name) {
+    protected Enum<?> toEnum(String name) {
         if (name == null) {
             return null;
         }
@@ -84,7 +83,6 @@ public class EnumType extends AbstractValueType {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void bindValue(PreparedStatement ps, int index, Object value)
             throws SQLException {
 
@@ -96,7 +94,6 @@ public class EnumType extends AbstractValueType {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void bindValue(CallableStatement cs, String parameterName,
             Object value) throws SQLException {
 

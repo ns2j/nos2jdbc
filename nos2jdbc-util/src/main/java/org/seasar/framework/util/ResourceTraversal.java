@@ -125,9 +125,9 @@ public class ResourceTraversal {
     public static void forEach(final JarFile jarFile, final String prefix,
             final ResourceHandler handler) {
         final int pos = prefix.length();
-        final Enumeration enumeration = jarFile.entries();
+        final Enumeration<JarEntry> enumeration = jarFile.entries();
         while (enumeration.hasMoreElements()) {
-            final JarEntry entry = (JarEntry) enumeration.nextElement();
+            final JarEntry entry = enumeration.nextElement();
             if (!entry.isDirectory()) {
                 final String entryName = entry.getName().replace('\\', '/');
                 if (!entryName.startsWith(prefix)) {

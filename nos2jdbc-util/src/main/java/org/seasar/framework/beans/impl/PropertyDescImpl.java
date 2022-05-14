@@ -18,6 +18,8 @@ package org.seasar.framework.beans.impl;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -53,7 +55,7 @@ public class PropertyDescImpl implements PropertyDesc {
 
     private String propertyName;
 
-    private Class propertyType;
+    private Class<?> propertyType;
 
     private Method readMethod;
 
@@ -63,7 +65,7 @@ public class PropertyDescImpl implements PropertyDesc {
 
     private BeanDesc beanDesc;
 
-    private Constructor stringConstructor;
+    private Constructor<?> stringConstructor;
 
     private Method valueOfMethod;
 
@@ -82,7 +84,7 @@ public class PropertyDescImpl implements PropertyDesc {
      * @param writeMethod writeMethod
      * @param beanDesc beanDesc
      */
-    public PropertyDescImpl(String propertyName, Class propertyType,
+    public PropertyDescImpl(String propertyName, Class<?> propertyType,
             Method readMethod, Method writeMethod, BeanDesc beanDesc) {
 
         this(propertyName, propertyType, readMethod, writeMethod, null,
@@ -99,7 +101,7 @@ public class PropertyDescImpl implements PropertyDesc {
      * @param field field
      * @param beanDesc beanDesc
      */
-    public PropertyDescImpl(String propertyName, Class propertyType,
+    public PropertyDescImpl(String propertyName, Class<?> propertyType,
             Method readMethod, Method writeMethod, Field field,
             BeanDesc beanDesc) {
 
@@ -121,9 +123,9 @@ public class PropertyDescImpl implements PropertyDesc {
     }
 
     private void setupStringConstructor() {
-        Constructor[] cons = propertyType.getConstructors();
+        Constructor<?>[] cons = propertyType.getConstructors();
         for (int i = 0; i < cons.length; ++i) {
-            Constructor con = cons[i];
+            Constructor<?> con = cons[i];
             if (con.getParameterTypes().length == 1
                     && con.getParameterTypes()[0].equals(String.class)) {
                 stringConstructor = con;
@@ -151,7 +153,7 @@ public class PropertyDescImpl implements PropertyDesc {
     }
 
     private void setUpParameterizedClassDesc() {
-        final Map typeVariables = ((BeanDescImpl) beanDesc).getTypeVariables();
+        final Map<TypeVariable<?>, Type> typeVariables = ((BeanDescImpl) beanDesc).getTypeVariables();
         if (field != null) {
             parameterizedClassDesc = ParameterizedClassDescFactory
                     .createParameterizedClassDesc(field, typeVariables);
@@ -170,7 +172,7 @@ public class PropertyDescImpl implements PropertyDesc {
     }
 
     @Override
-    public final Class getPropertyType() {
+    public final Class<?> getPropertyType() {
         return propertyType;
     }
 
@@ -265,9 +267,9 @@ public class PropertyDescImpl implements PropertyDesc {
                     MethodUtil.invoke(writeMethod, target,
                             new Object[] { value });
                 } catch (Throwable t) {
-                    Class clazz = writeMethod.getDeclaringClass();
-                    Class valueClass = value == null ? null : value.getClass();
-                    Class targetClass = target == null ? null : target
+                    Class<?> clazz = writeMethod.getDeclaringClass();
+                    Class<?> valueClass = value == null ? null : value.getClass();
+                    Class<?> targetClass = target == null ? null : target
                             .getClass();
                     throw new SIllegalArgumentException("ESSR0098",
                             new Object[] {
@@ -379,7 +381,7 @@ public class PropertyDescImpl implements PropertyDesc {
     }
 
     @Override
-    public Class getElementClassOfCollection() {
+    public Class<?> getElementClassOfCollection() {
         if (!Collection.class.isAssignableFrom(propertyType)
                 || !isParameterized()) {
             return null;
@@ -393,7 +395,7 @@ public class PropertyDescImpl implements PropertyDesc {
     }
 
     @Override
-    public Class getKeyClassOfMap() {
+    public Class<?> getKeyClassOfMap() {
         if (!Map.class.isAssignableFrom(propertyType) || !isParameterized()) {
             return null;
         }
@@ -406,7 +408,7 @@ public class PropertyDescImpl implements PropertyDesc {
     }
 
     @Override
-    public Class getValueClassOfMap() {
+    public Class<?> getValueClassOfMap() {
         if (!Map.class.isAssignableFrom(propertyType) || !isParameterized()) {
             return null;
         }

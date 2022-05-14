@@ -46,13 +46,13 @@ public class BeanUtil {
      * @param dest
      *            あて先
      */
-    public static void copyProperties(Map src, Object dest) {
+    public static void copyProperties(Map<String, ?> src, Object dest) {
         if (src == null || dest == null) {
             return;
         }
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(dest.getClass());
-        for (Iterator i = src.keySet().iterator(); i.hasNext();) {
-            String key = (String) i.next();
+        for (Iterator<String> i = src.keySet().iterator(); i.hasNext();) {
+            String key = i.next();
             if (!beanDesc.hasPropertyDesc(key)) {
                 continue;
             }
@@ -71,7 +71,7 @@ public class BeanUtil {
      * @param dest
      *            あて先
      */
-    public static void copyProperties(Object src, Map dest) {
+    public static void copyProperties(Object src, Map<String, Object> dest) {
         if (src == null || dest == null) {
             return;
         }
@@ -142,7 +142,7 @@ public class BeanUtil {
      *            ソース
      * @return JavaBeansの値を持つマップ
      */
-    public static Map createProperties(Object src) {
+    public static Map<String, Object> createProperties(Object src) {
         return createProperties(src, null);
     }
 
@@ -155,8 +155,8 @@ public class BeanUtil {
      *            プレフィックス
      * @return JavaBeansの値を持つマップ
      */
-    public static Map createProperties(Object src, String prefix) {
-        Map map = new HashMap();
+    public static Map<String, Object> createProperties(Object src, String prefix) {
+        Map<String, Object> map = new HashMap<>();
         if (src == null) {
             return map;
         }

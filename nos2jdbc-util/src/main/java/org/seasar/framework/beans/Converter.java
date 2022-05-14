@@ -47,5 +47,5 @@ public interface Converter {
      * @param clazz clazz
      * @return boolean
      */
-    boolean isTarget(Class clazz);
+    boolean isTarget(Class<?> clazz);
 }

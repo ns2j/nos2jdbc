@@ -30,9 +30,9 @@ public class NoSuchConstructorRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = 8688818589925114466L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
-    private Class[] argTypes;
+    private Class<?>[] argTypes;
 
     /**
      * {@link NoSuchConstructorRuntimeException}を作成します。
@@ -41,8 +41,8 @@ public class NoSuchConstructorRuntimeException extends SRuntimeException {
      * @param argTypes array of argType
      * @param cause cause of exception
      */
-    public NoSuchConstructorRuntimeException(Class targetClass,
-            Class[] argTypes, NoSuchMethodException cause) {
+    public NoSuchConstructorRuntimeException(Class<?> targetClass,
+            Class<?>[] argTypes, NoSuchMethodException cause) {
 
         super("ESSR0064", new Object[] {
                 targetClass.getName(),
@@ -58,7 +58,7 @@ public class NoSuchConstructorRuntimeException extends SRuntimeException {
      * 
      * @return target class
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 
@@ -67,7 +67,7 @@ public class NoSuchConstructorRuntimeException extends SRuntimeException {
      * 
      * @return array of ArgType
      */
-    public Class[] getArgTypes() {
+    public Class<?>[] getArgTypes() {
         return argTypes;
     }
 }

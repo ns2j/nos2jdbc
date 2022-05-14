@@ -64,7 +64,7 @@ public class ResourceUtil {
      * @param clazz class
      * @return リソースパス
      */
-    public static String getResourcePath(Class clazz) {
+    public static String getResourcePath(Class<?> clazz) {
         return clazz.getName().replace('.', '/') + ".class";
     }
 
@@ -274,7 +274,7 @@ public class ResourceUtil {
      * @return ルートディレクトリ
      * @see #getBuildDir(String)
      */
-    public static File getBuildDir(Class clazz) {
+    public static File getBuildDir(Class<?> clazz) {
         return getBuildDir(getResourcePath(clazz));
     }
 
@@ -364,7 +364,7 @@ public class ResourceUtil {
      * @return ファイル
      * @see #getResourceAsFileNoException(String)
      */
-    public static File getResourceAsFileNoException(Class clazz) {
+    public static File getResourceAsFileNoException(Class<?> clazz) {
         return getResourceAsFileNoException(getResourcePath(clazz));
     }
 
@@ -406,7 +406,7 @@ public class ResourceUtil {
      * @param clazz class
      * @return 変換された結果
      */
-    public static String convertPath(String path, Class clazz) {
+    public static String convertPath(String path, Class<?> clazz) {
         if (isExist(path)) {
             return path;
         }

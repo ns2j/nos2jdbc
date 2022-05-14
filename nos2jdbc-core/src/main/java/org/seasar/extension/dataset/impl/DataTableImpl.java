@@ -51,7 +51,7 @@ public class DataTableImpl implements DataTable {
 
     private List<DataRow> removedRows = new ArrayList<>();
 
-    private ArrayMap columns = new CaseInsensitiveMap();
+    private ArrayMap<String, DataColumn> columns = new CaseInsensitiveMap<>();
 
     private boolean hasMetaData = false;
 
@@ -153,7 +153,7 @@ public class DataTableImpl implements DataTable {
      */
     @Override
     public DataColumn getColumn(int index) {
-        return (DataColumn) columns.get(index);
+        return columns.get(index);
     }
 
     /**
@@ -169,16 +169,16 @@ public class DataTableImpl implements DataTable {
     }
 
     private DataColumn getColumn0(String columnName) {
-        DataColumn column = (DataColumn) columns.get(columnName);
+        DataColumn column = columns.get(columnName);
         if (column == null) {
             String name = StringUtil.replace(columnName, "_", "");
-            column = (DataColumn) columns.get(name);
+            column = columns.get(name);
             if (column == null) {
                 for (int i = 0; i < columns.size(); ++i) {
-                    String key = (String) columns.getKey(i);
+                    String key = columns.getKey(i);
                     String key2 = StringUtil.replace(key, "_", "");
                     if (key2.equalsIgnoreCase(name)) {
-                        column = (DataColumn) columns.get(i);
+                        column = columns.get(i);
                         break;
                     }
                 }
@@ -252,9 +252,9 @@ public class DataTableImpl implements DataTable {
      */
     @Override
     public void setupMetaData(DatabaseMetaData dbMetaData) {
-        Set<?> primaryKeySet = DatabaseMetaDataUtil.getPrimaryKeySet(dbMetaData,
+        Set<String> primaryKeySet = DatabaseMetaDataUtil.getPrimaryKeySet(dbMetaData,
                 tableName);
-        Map<?, ?> columnMap = DatabaseMetaDataUtil
+        Map<String, ColumnDesc> columnMap = DatabaseMetaDataUtil
                 .getColumnMap(dbMetaData, tableName);
         for (int i = 0; i < getColumnSize(); ++i) {
             DataColumn column = getColumn(i);
@@ -265,7 +265,7 @@ public class DataTableImpl implements DataTable {
             }
             if (columnMap.containsKey(column.getColumnName())) {
                 column.setWritable(true);
-                ColumnDesc cd = (ColumnDesc) columnMap.get(column
+                ColumnDesc cd = columnMap.get(column
                         .getColumnName());
                 column
                         .setColumnType(ColumnTypes.getColumnType(cd

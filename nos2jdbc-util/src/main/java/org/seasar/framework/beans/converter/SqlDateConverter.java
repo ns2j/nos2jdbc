@@ -49,6 +49,7 @@ public class SqlDateConverter implements Converter {
         this.pattern = pattern;
     }
 
+    @Override
     public Object getAsObject(String value) {
         if (StringUtil.isEmpty(value)) {
             return null;
@@ -56,11 +57,13 @@ public class SqlDateConverter implements Converter {
         return SqlDateConversionUtil.toDate(value, pattern);
     }
 
+    @Override
     public String getAsString(Object value) {
         return StringConversionUtil.toString((Date) value, pattern);
     }
 
-    public boolean isTarget(Class clazz) {
+    @Override
+    public boolean isTarget(Class<?> clazz) {
         return clazz == java.sql.Date.class;
     }
 

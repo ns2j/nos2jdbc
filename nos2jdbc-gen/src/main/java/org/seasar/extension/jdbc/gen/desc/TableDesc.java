@@ -52,8 +52,7 @@ public class TableDesc {
     protected List<ColumnDesc> columnDescList = new ArrayList<ColumnDesc>();
 
     /** カラム名ーをキー、カラム記述を値とするマップ */
-    @SuppressWarnings("unchecked")
-    protected Map<String, ColumnDesc> columnDescMap = new CaseInsensitiveMap();
+    protected Map<String, ColumnDesc> columnDescMap = new CaseInsensitiveMap<>();
 
     /** 主キー記述のリスト */
     protected PrimaryKeyDesc primaryKeyDesc;

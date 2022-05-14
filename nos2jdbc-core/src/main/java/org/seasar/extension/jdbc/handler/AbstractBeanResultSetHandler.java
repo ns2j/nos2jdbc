@@ -108,10 +108,10 @@ public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
 
         int count = rsmd.getColumnCount();
         PropertyType[] propertyTypes = new PropertyType[count];
-        CaseInsensitiveMap pdWithColumn = createPropertyDescMapWithColumn();
+        CaseInsensitiveMap<PropertyDesc> pdWithColumn = createPropertyDescMapWithColumn();
         for (int i = 0; i < count; ++i) {
             String columnName = rsmd.getColumnLabel(i + 1);
-            PropertyDesc propertyDesc = (PropertyDesc) pdWithColumn
+            PropertyDesc propertyDesc = pdWithColumn
                     .get(columnName);
             if (propertyDesc == null) {
                 String propertyName = persistenceConvention
@@ -133,8 +133,8 @@ public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
      * 
      * @return {@link Column}アノテーションのname属性をもつ {@link PropertyDesc}の {@link Map}
      */
-    protected CaseInsensitiveMap createPropertyDescMapWithColumn() {
-        CaseInsensitiveMap map = new CaseInsensitiveMap();
+    protected CaseInsensitiveMap<PropertyDesc> createPropertyDescMapWithColumn() {
+        CaseInsensitiveMap<PropertyDesc> map = new CaseInsensitiveMap<>();
         int size = beanDesc.getPropertyDescSize();
         for (int i = 0; i < size; ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);

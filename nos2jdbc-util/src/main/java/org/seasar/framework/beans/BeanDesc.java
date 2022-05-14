@@ -32,7 +32,7 @@ public interface BeanDesc {
      * 
      * @return bean class
      */
-    Class getBeanClass();
+    Class<?> getBeanClass();
 
     /**
      * {@link PropertyDesc}を持っているかどうかを返します。
@@ -129,7 +129,7 @@ public interface BeanDesc {
      * @return 引数に応じた{@link Constructor}
      * @throws ConstructorNotFoundRuntimeException {@link ConstructorNotFoundRuntimeException}
      */
-    Constructor getSuitableConstructor(Object[] args)
+    Constructor<?> getSuitableConstructor(Object[] args)
             throws ConstructorNotFoundRuntimeException;
 
     /**
@@ -138,7 +138,7 @@ public interface BeanDesc {
      * @param paramTypes paramTypes
      * @return 型に応じた{@link Constructor}
      */
-    Constructor getConstructor(Class[] paramTypes);
+    Constructor<?> getConstructor(Class<?>[] paramTypes);
 
     /**
      * Diiguでエンハンスした{@link Constructor}のパラメータ名の配列を返します。
@@ -146,7 +146,7 @@ public interface BeanDesc {
      * @param paramTypes paramTypes
      * @return パラメータ名の配列
      */
-    String[] getConstructorParameterNames(final Class[] paramTypes);
+    String[] getConstructorParameterNames(final Class<?>[] paramTypes);
 
     /**
      * Diiguでエンハンスした{@link Constructor}のパラメータ名の配列を返します。
@@ -154,7 +154,7 @@ public interface BeanDesc {
      * @param constructor constructor
      * @return パラメータ名の配列
      */
-    String[] getConstructorParameterNames(Constructor constructor);
+    String[] getConstructorParameterNames(Constructor<?> constructor);
 
     /**
      * ターゲットのメソッドを呼び出します。
@@ -188,7 +188,7 @@ public interface BeanDesc {
      * @throws MethodNotFoundRuntimeException
      *             {@link Method}が見つからない場合。
      */
-    Method getMethod(String methodName, Class[] paramTypes)
+    Method getMethod(String methodName, Class<?>[] paramTypes)
             throws MethodNotFoundRuntimeException;
 
     /**
@@ -206,7 +206,7 @@ public interface BeanDesc {
      * @param paramTypes paramTypes
      * @return {@link Method}
      */
-    Method getMethodNoException(String methodName, Class[] paramTypes);
+    Method getMethodNoException(String methodName, Class<?>[] paramTypes);
 
     /**
      * {@link Method}の配列を返します。
@@ -245,7 +245,7 @@ public interface BeanDesc {
      * @throws IllegalDiiguRuntimeException
      *             Diiguでエンハンスされていない場合。
      */
-    String[] getMethodParameterNames(String methodName, final Class[] paramTypes)
+    String[] getMethodParameterNames(String methodName, final Class<?>[] paramTypes)
             throws MethodNotFoundRuntimeException, IllegalDiiguRuntimeException;
 
     /**
@@ -258,7 +258,7 @@ public interface BeanDesc {
      *             {@link Method}が見つからない場合。
      */
     String[] getMethodParameterNamesNoException(String methodName,
-            final Class[] paramTypes) throws MethodNotFoundRuntimeException;
+            final Class<?>[] paramTypes) throws MethodNotFoundRuntimeException;
 
     /**
      * {@link Method}のパラメータ名の配列を返します。

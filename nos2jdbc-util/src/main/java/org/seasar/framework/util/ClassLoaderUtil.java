@@ -94,7 +94,7 @@ public abstract class ClassLoaderUtil {
      * @throws IllegalStateException
      *             クラスローダを取得できなかった場合
      */
-    public static ClassLoader getClassLoader(final Class targetClass) {
+    public static ClassLoader getClassLoader(final Class<?> targetClass) {
         final ClassLoader contextClassLoader = Thread.currentThread()
                 .getContextClassLoader();
         if (contextClassLoader != null) {
@@ -136,7 +136,7 @@ public abstract class ClassLoaderUtil {
      *         オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
      * @see java.lang.ClassLoader#getResources(String)
      */
-    public static Iterator getResources(final String name) {
+    public static Iterator<URL> getResources(final String name) {
         return getResources(Thread.currentThread().getContextClassLoader(),
                 name);
     }
@@ -152,7 +152,7 @@ public abstract class ClassLoaderUtil {
      *         オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
      * @see java.lang.ClassLoader#getResources(String)
      */
-    public static Iterator getResources(final Class targetClass,
+    public static Iterator<URL> getResources(final Class<?> targetClass,
             final String name) {
         return getResources(getClassLoader(targetClass), name);
     }
@@ -168,11 +168,11 @@ public abstract class ClassLoaderUtil {
      *         オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
      * @see java.lang.ClassLoader#getResources(String)
      */
-    public static Iterator getResources(final ClassLoader loader,
+    public static Iterator<URL> getResources(final ClassLoader loader,
             final String name) {
         try {
-            final Enumeration e = loader.getResources(name);
-            return new EnumerationIterator(e);
+            final Enumeration<URL> e = loader.getResources(name);
+            return new EnumerationIterator<URL>(e);
         } catch (final IOException e) {
             throw new IORuntimeException(e);
         }
@@ -208,11 +208,11 @@ public abstract class ClassLoaderUtil {
      * @return <code>Class</code>オブジェクト。クラスがロードされていない場合は<code>null</code>
      * @see java.lang.ClassLoader#findLoadedClass(String)
      */
-    public static Class findLoadedClass(final ClassLoader classLoader,
+    public static Class<?> findLoadedClass(final ClassLoader classLoader,
             final String className) {
         for (ClassLoader loader = classLoader; loader != null; loader = loader
                 .getParent()) {
-            final Class clazz = (Class) MethodUtil.invoke(
+            final Class<?> clazz = (Class<?>) MethodUtil.invoke(
                     findLoadedClassMethod, loader, new Object[] { className });
             if (clazz != null) {
                 return clazz;
@@ -237,12 +237,12 @@ public abstract class ClassLoaderUtil {
      * @return 指定されたクラスデータから作成された<code>Class</code>オブジェクト
      * @see java.lang.ClassLoader#defineClass(String, byte[], int, int)
      */
-    public static Class defineClass(final ClassLoader classLoader,
+    public static Class<?> defineClass(final ClassLoader classLoader,
             final String className, final byte[] bytes, final int offset,
             final int length) {
-        return (Class) MethodUtil.invoke(defineClassMethod, classLoader,
-                new Object[] { className, bytes, new Integer(offset),
-                        new Integer(length) });
+        return (Class<?>) MethodUtil.invoke(defineClassMethod, classLoader,
+                new Object[] { className, bytes, Integer.valueOf(offset),
+                        Integer.valueOf(length) });
     }
 
     /**
@@ -292,7 +292,7 @@ public abstract class ClassLoaderUtil {
      *             クラスが見つからなかった場合
      * @see java.lang.ClassLoader#loadClass(String)
      */
-    public static Class loadClass(final ClassLoader loader,
+    public static Class<?> loadClass(final ClassLoader loader,
             final String className) {
         try {
             return loader.loadClass(className);

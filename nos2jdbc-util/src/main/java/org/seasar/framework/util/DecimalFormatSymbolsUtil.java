@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class DecimalFormatSymbolsUtil {
 
-    private static Map cache = MapUtil.createHashMap();
+    private static Map<Locale, DecimalFormatSymbols> cache = MapUtil.createHashMap();
 
     /**
      * インスタンスを構築します。
@@ -51,7 +51,7 @@ public class DecimalFormatSymbolsUtil {
      * @return {@link DecimalFormatSymbols}
      */
     public static DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
-        DecimalFormatSymbols symbols = (DecimalFormatSymbols) cache.get(locale);
+        DecimalFormatSymbols symbols = cache.get(locale);
         if (symbols == null) {
             symbols = new DecimalFormatSymbols(locale);
             cache.put(locale, symbols);

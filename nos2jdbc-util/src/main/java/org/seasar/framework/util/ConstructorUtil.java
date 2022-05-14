@@ -49,7 +49,7 @@ public class ConstructorUtil {
      * @throws InvocationTargetRuntimeException
      *             {@link InvocationTargetException}が起こった場合
      */
-    public static Object newInstance(Constructor constructor, Object[] args)
+    public static Object newInstance(Constructor<?> constructor, Object[] args)
             throws InstantiationRuntimeException,
             IllegalAccessRuntimeException, InvocationTargetRuntimeException {
 

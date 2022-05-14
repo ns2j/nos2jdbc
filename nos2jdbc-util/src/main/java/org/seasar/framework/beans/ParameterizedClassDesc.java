@@ -36,7 +36,7 @@ public interface ParameterizedClassDesc {
      * @return 原型となるクラス
      * {@link java.lang.reflect.ParameterizedType#getActualTypeArguments()}
      */
-    Class getRawClass();
+    Class<?> getRawClass();
 
     /**
      * 型引数を表す{@link ParameterizedClassDesc}の配列を返します。

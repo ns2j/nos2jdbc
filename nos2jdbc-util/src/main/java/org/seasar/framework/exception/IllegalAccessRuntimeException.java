@@ -25,7 +25,7 @@ public class IllegalAccessRuntimeException extends SRuntimeException {
 
     private static final long serialVersionUID = -3649900343028907465L;
 
-    private Class targetClass;
+    private Class<?> targetClass;
 
     /**
      * {@link IllegalAccessRuntimeException}を作成します。
@@ -33,7 +33,7 @@ public class IllegalAccessRuntimeException extends SRuntimeException {
      * @param targetClass target class
      * @param cause cause of exception
      */
-    public IllegalAccessRuntimeException(Class targetClass,
+    public IllegalAccessRuntimeException(Class<?> targetClass,
             IllegalAccessException cause) {
 
         super("ESSR0042", new Object[] { targetClass.getName(), cause }, cause);
@@ -45,7 +45,7 @@ public class IllegalAccessRuntimeException extends SRuntimeException {
      *
      * @return target class
      */
-    public Class getTargetClass() {
+    public Class<?> getTargetClass() {
         return targetClass;
     }
 }

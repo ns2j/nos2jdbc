@@ -84,15 +84,15 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
 
     private String[] rootPackageNames = new String[0];
 
-    private Set hotdeployRootPackageNames = new HashSet();
+    private Set<String> hotdeployRootPackageNames = new HashSet<>();
 
     private String[] ignorePackageNames = new String[0];
 
-    private Map existCheckerArrays = MapUtil.createHashMap();
+    private Map<String, Resources[]> existCheckerArrays = MapUtil.createHashMap();
 
-    private Map interfaceToImplementationMap = new HashMap();
+    private Map<String, String> interfaceToImplementationMap = new HashMap<>();
 
-    private Map implementationToInterfaceMap = new HashMap();
+    private Map<String, String> implementationToInterfaceMap = new HashMap<>();
 
     /**
      * {@link NamingConventionImpl}を作成します。
@@ -116,9 +116,9 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
 
     @Override
     public void dispose() {
-        for (final Iterator it = existCheckerArrays.values().iterator(); it
+        for (final Iterator<Resources[]> it = existCheckerArrays.values().iterator(); it
                 .hasNext();) {
-            final Resources[] array = (Resources[]) it.next();
+            final Resources[] array = it.next();
             for (int i = 0; i < array.length; ++i) {
                 array[i].close();
             }
@@ -550,7 +550,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
     }
 
     @Override
-    public Class fromComponentNameToClass(final String componentName) {
+    public Class<?> fromComponentNameToClass(final String componentName) {
         if (StringUtil.isEmpty(componentName)) {
             throw new EmptyRuntimeException("componentName");
         }
@@ -564,7 +564,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
         for (int i = 0; i < rootPackageNames.length; ++i) {
             String rootPackageName = rootPackageNames[i];
             if (subAppSuffix) {
-                Class clazz = findClass(rootPackageName,
+                Class<?> clazz = findClass(rootPackageName,
                         subApplicationRootPackageName, partOfClassName);
                 if (clazz != null) {
                     return clazz;
@@ -575,7 +575,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
                     return clazz;
                 }
             } else {
-                Class clazz = findClass(rootPackageName, middlePackageName,
+                Class<?> clazz = findClass(rootPackageName, middlePackageName,
                         partOfClassName);
                 if (clazz != null) {
                     return clazz;
@@ -624,7 +624,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
      *            クラス名の一部
      * @return クラス
      */
-    protected Class findClass(final String rootPackageName,
+    protected Class<?> findClass(final String rootPackageName,
             final String middlePackageName, final String partOfClassName) {
         initialize();
 
@@ -650,7 +650,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
 
     @Override
     public String toImplementationClassName(final String className) {
-        String implementationClassName = (String) interfaceToImplementationMap
+        String implementationClassName = interfaceToImplementationMap
                 .get(className);
         if (implementationClassName != null) {
             return implementationClassName;
@@ -667,7 +667,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
 
     @Override
     public String toInterfaceClassName(final String className) {
-        String interfaceClassName = (String) implementationToInterfaceMap
+        String interfaceClassName = implementationToInterfaceMap
                 .get(className);
         if (interfaceClassName != null) {
             return interfaceClassName;
@@ -687,14 +687,14 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
     }
 
     @Override
-    public boolean isSkipClass(final Class clazz) {
+    public boolean isSkipClass(final Class<?> clazz) {
         if (clazz.isInterface()) {
             return false;
         }
-        for (final Iterator it = interfaceToImplementationMap.entrySet()
+        for (final Iterator<Entry<String, String>> it = interfaceToImplementationMap.entrySet()
                 .iterator(); it.hasNext();) {
-            final Entry entry = (Entry) it.next();
-            final Class interfaceClass = ClassUtil.forName((String) entry
+            final Entry<String, String> entry = it.next();
+            final Class<?> interfaceClass = ClassUtil.forName(entry
                     .getKey());
             if (interfaceClass.isAssignableFrom(clazz)) {
                 return true;
@@ -704,7 +704,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
     }
 
     @Override
-    public Class toCompleteClass(final Class clazz) {
+    public Class<?> toCompleteClass(final Class<?> clazz) {
         if (!clazz.isInterface()) {
             return clazz;
         }
@@ -817,7 +817,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
     }
 
     @Override
-    public String fromPageClassToPath(final Class pageClass) {
+    public String fromPageClassToPath(final Class<?> pageClass) {
         String componentName = fromClassNameToComponentName(pageClass.getName());
         return fromPageNameToPath(componentName);
     }
@@ -936,7 +936,7 @@ public class NamingConventionImpl implements NamingConvention, Disposable {
      * @return 存在チェッカの配列
      */
     protected Resources[] getExistCheckerArray(final String rootPackageName) {
-        return (Resources[]) existCheckerArrays.get(rootPackageName);
+        return existCheckerArrays.get(rootPackageName);
     }
 
     /**
