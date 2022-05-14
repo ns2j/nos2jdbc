@@ -31,14 +31,13 @@ import org.seasar.framework.convention.PersistenceConvention;
  * 
  * @author koichik
  */
-public class BeanIterationResultSetHandler extends AbstractBeanResultSetHandler {
+public class BeanIterationResultSetHandler<T> extends AbstractBeanResultSetHandler {
 
     /** リミット */
     protected int limit;
 
     /** 反復コールバック */
-    @SuppressWarnings("rawtypes")
-    protected IterationCallback callback;
+    protected IterationCallback<T, ?> callback;
 
     /**
      * {@link BeanIterationResultSetHandler}を作成します。
@@ -59,7 +58,7 @@ public class BeanIterationResultSetHandler extends AbstractBeanResultSetHandler 
     public BeanIterationResultSetHandler(final Class<?> beanClass,
             final DbmsDialect dialect,
             final PersistenceConvention persistenceConvention,
-            final String sql, final int limit, @SuppressWarnings("rawtypes") final IterationCallback callback) {
+            final String sql, final int limit, final IterationCallback<T, ?> callback) {
         super(beanClass, dialect, persistenceConvention, sql);
         this.limit = limit;
         this.callback = callback;
@@ -74,7 +73,7 @@ public class BeanIterationResultSetHandler extends AbstractBeanResultSetHandler 
         final IterationContext iterationContext = new IterationContext();
         Object result = null;
         for (int i = 0; (limit <= 0 || i < limit) && rs.next(); i++) {
-            final Object entity = createRow(rs, propertyTypes);
+            final T entity = (T) createRow(rs, propertyTypes);
             result = callback.iterate(entity, iterationContext);
             if (iterationContext.isExit()) {
                 return result;

@@ -24,15 +24,14 @@ import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.MappingContext;
 
-public class BeanIterationNonAutoResultSetHandler extends
+public class BeanIterationNonAutoResultSetHandler<T> extends
         AbstractBeanNonAutoResultSetHandler {
 
     /** リミット */
     protected int limit;
 
     /** 反復コールバック */
-    @SuppressWarnings("rawtypes")
-    protected IterationCallback callback;
+    protected IterationCallback<T, ?> callback;
 
     /**
      * {@link BeanIterationNonAutoResultSetHandler}を作成します。
@@ -51,7 +50,7 @@ public class BeanIterationNonAutoResultSetHandler extends
     public BeanIterationNonAutoResultSetHandler(Class<?> beanClass,
             final EntityMetaFactory entityMetaFactory, DbmsDialect dailect, final String sql, final int limit,
             boolean shouldSetInverseField, 
-            final IterationCallback<Object, IterationContext> callback) {
+            final IterationCallback<T, ?> callback) {
         super(beanClass, entityMetaFactory, dailect, sql, shouldSetInverseField);
         this.limit = limit;
         this.callback = callback;
@@ -65,7 +64,7 @@ public class BeanIterationNonAutoResultSetHandler extends
 	
         final MappingContext mappingContext = new MappingContext();
         final IterationContext iterationContext = new IterationContext();
-        Object entity = null;
+        T entity = null;
         Object previousKey = null;
         Object result = null;
         for (int i = 0; (limit <= 0 || i < limit) && rs.next(); i++) {
@@ -81,7 +80,7 @@ public class BeanIterationNonAutoResultSetHandler extends
                     }
                     mappingContext.clear();
                 }
-                entity = entityMapper.map(values, mappingContext);
+                entity = (T) entityMapper.map(values, mappingContext);
                 previousKey = key;
             }
         }

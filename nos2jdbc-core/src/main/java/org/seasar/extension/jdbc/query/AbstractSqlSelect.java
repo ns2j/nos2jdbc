@@ -122,7 +122,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected ResultSetHandler createIterateResultSetHandler(
-            final IterationCallback callback) {
+            final IterationCallback<T, ?> callback) {
         final DbmsDialect dialect = jdbcManager.getDialect();
         final PersistenceConvention persistenceConvention = jdbcManager
                 .getPersistenceConvention();
@@ -130,20 +130,21 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         final ValueType valueType = simple ? getValueType(baseClass, resultLob,
                 resultTemporalType) : null;
         if (simple) {
-            return new ObjectIterationResultSetHandler(valueType, limit,
+            return new ObjectIterationResultSetHandler<>(valueType, limit,
                     callback);
         }
         if (Map.class.isAssignableFrom(baseClass)) {
+            
             return new MapIterationResultSetHandler(
                     (Class<? extends Map>) baseClass, dialect,
-                    persistenceConvention, executedSql, limit, callback);
+                    persistenceConvention, executedSql, limit, (IterationCallback<Map, ?>) callback);
         }
         if (baseClass.isAnnotationPresent(Entity.class)) {
             EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();
-            return new BeanIterationNonAutoResultSetHandler(baseClass, entityMetaFactory,
+            return new BeanIterationNonAutoResultSetHandler<>(baseClass, entityMetaFactory,
         	    dialect, executedSql, limit, shouldSetInverseField, callback);
         }
-        return new BeanIterationResultSetHandler(baseClass, dialect,
+        return new BeanIterationResultSetHandler<>(baseClass, dialect,
                 persistenceConvention, executedSql, limit, callback);
     }
 

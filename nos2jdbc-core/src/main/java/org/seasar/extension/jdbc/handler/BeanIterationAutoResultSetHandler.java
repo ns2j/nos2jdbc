@@ -30,16 +30,14 @@ import org.seasar.extension.jdbc.ValueType;
  * 
  * @author koichik
  */
-@SuppressWarnings("unchecked")
-public class BeanIterationAutoResultSetHandler extends
+public class BeanIterationAutoResultSetHandler<T> extends
         AbstractBeanAutoResultSetHandler {
 
     /** リミット */
     protected int limit;
 
     /** 反復コールバック */
-    @SuppressWarnings("rawtypes")
-    protected IterationCallback callback;
+    protected IterationCallback<T, ?> callback;
 
     /**
      * {@link BeanIterationAutoResultSetHandler}を作成します。
@@ -57,17 +55,18 @@ public class BeanIterationAutoResultSetHandler extends
      */
     public BeanIterationAutoResultSetHandler(final ValueType[] valueTypes,
             final EntityMapper entityMapper, final String sql, final int limit,
-            @SuppressWarnings("rawtypes") final IterationCallback callback) {
+            final IterationCallback<T, ?> callback) {
         super(valueTypes, entityMapper, sql);
         this.limit = limit;
         this.callback = callback;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Object handle(final ResultSet rs) throws SQLException {
         final MappingContext mappingContext = new MappingContext();
         final IterationContext iterationContext = new IterationContext();
-        Object entity = null;
+        T entity = null;
         Object previousKey = null;
         Object result = null;
         for (int i = 0; (limit <= 0 || i < limit) && rs.next(); i++) {
@@ -83,7 +82,7 @@ public class BeanIterationAutoResultSetHandler extends
                     }
                     mappingContext.clear();
                 }
-                entity = entityMapper.map(values, mappingContext);
+                entity = (T) entityMapper.map(values, mappingContext);
                 previousKey = key;
             }
         }

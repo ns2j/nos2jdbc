@@ -28,7 +28,7 @@ import org.seasar.extension.jdbc.ValueType;
  * 
  * @author koichik
  */
-public class ObjectIterationResultSetHandler implements ResultSetHandler {
+public class ObjectIterationResultSetHandler<T> implements ResultSetHandler {
 
     /** 値タイプ */
     protected ValueType valueType;
@@ -37,8 +37,7 @@ public class ObjectIterationResultSetHandler implements ResultSetHandler {
     protected int limit;
 
     /** 反復コールバック */
-    @SuppressWarnings("rawtypes")
-    protected IterationCallback callback;
+    protected IterationCallback<T, ?> callback;
 
     /**
      * {@link ObjectIterationResultSetHandler}を作成します。
@@ -51,7 +50,7 @@ public class ObjectIterationResultSetHandler implements ResultSetHandler {
      *            反復コールバック
      */
     public ObjectIterationResultSetHandler(final ValueType valueType,
-            final int limit, @SuppressWarnings("rawtypes") final IterationCallback callback) {
+            final int limit, final IterationCallback<T, ?> callback) {
         this.valueType = valueType;
         this.limit = limit;
         this.callback = callback;
@@ -63,7 +62,7 @@ public class ObjectIterationResultSetHandler implements ResultSetHandler {
         final IterationContext iterationContext = new IterationContext();
         Object result = null;
         for (int i = 0; (limit <= 0 || i < limit) && rs.next(); i++) {
-            result = callback.iterate(valueType.getValue(rs, 1),
+            result = callback.iterate((T) valueType.getValue(rs, 1),
                     iterationContext);
             if (iterationContext.isExit()) {
                 return result;

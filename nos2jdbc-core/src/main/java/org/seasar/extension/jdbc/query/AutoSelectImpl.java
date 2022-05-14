@@ -1269,7 +1269,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
     @Override
     protected ResultSetHandler createIterateResultSetHandler(
             final IterationCallback<T, ?> callback) {
-        return new BeanIterationAutoResultSetHandler(getValueTypes(),
+        return new BeanIterationAutoResultSetHandler<>(getValueTypes(),
                 getEntityMapper(), executedSql, limit, callback);
     }
 

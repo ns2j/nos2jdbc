@@ -38,7 +38,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
 
     /** 反復コールバック */
     @SuppressWarnings("rawtypes")
-    protected IterationCallback callback;
+    protected IterationCallback<Map, ?> callback;
 
     /**
      * {@link MapIterationResultSetHandler}を作成します。
@@ -56,15 +56,15 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
      * @param callback
      *            反復コールバック
      */
-    public MapIterationResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
+    @SuppressWarnings({"rawtypes"})
+    public MapIterationResultSetHandler(Class<? extends java.util.Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
-            String sql, int limit, @SuppressWarnings("rawtypes") final IterationCallback callback) {
+            String sql, int limit, final IterationCallback<Map, ?> callback) {
         super(mapClass, dialect, peristenceConvention, sql);
         this.limit = limit;
         this.callback = callback;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Object handle(ResultSet rs) throws SQLException {
         final PropertyType[] propertyTypes = createPropertyTypes(rs
@@ -72,7 +72,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
         final IterationContext iterationContext = new IterationContext();
         Object result = null;
         for (int i = 0; (limit <= 0 || i < limit) && rs.next(); i++) {
-            final Object entity = createRow(rs, propertyTypes);
+            final Map<?, ?> entity = (Map<?, ?>) createRow(rs, propertyTypes);
             result = callback.iterate(entity, iterationContext);
             if (iterationContext.isExit()) {
                 return result;
