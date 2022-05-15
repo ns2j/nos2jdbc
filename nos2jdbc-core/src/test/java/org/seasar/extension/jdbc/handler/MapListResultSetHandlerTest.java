@@ -42,7 +42,7 @@ class MapListResultSetHandlerTest {
     @Test
     void handle() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
-                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
+                Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa");
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -71,7 +71,7 @@ class MapListResultSetHandlerTest {
     @Test
     void handleWithLimit() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
-                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
+                Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 1);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();

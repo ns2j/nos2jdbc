@@ -55,7 +55,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
      * @param callback
      *            反復コールバック
      */
-    public MapIterationResultSetHandler(Class<? extends Map<String, ?>> mapClass,
+    public MapIterationResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql, int limit, final IterationCallback<Map<String, ?>, ?> callback) {
         super(mapClass, dialect, peristenceConvention, sql);

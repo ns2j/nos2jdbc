@@ -38,7 +38,7 @@ class MapResultSetHandlerTest {
     @SuppressWarnings("unchecked")
     @Test
     void handle() throws Exception {
-        MapResultSetHandler handler = new MapResultSetHandler((Class<? extends Map<String, ?>>)Map.class,
+        MapResultSetHandler handler = new MapResultSetHandler(Map.class,
                 new StandardDialect(), new PersistenceConventionImpl(),
                 "select * from aaa");
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -66,7 +66,7 @@ class MapResultSetHandlerTest {
     void handle_nonUniqueResult() throws Exception {
         String sql = "select * from aaa";
         @SuppressWarnings("unchecked")
-        MapResultSetHandler handler = new MapResultSetHandler((Class<? extends Map<String, ?>>)Map.class,
+        MapResultSetHandler handler = new MapResultSetHandler(Map.class,
                 new StandardDialect(), new PersistenceConventionImpl(),
                 "select * from aaa");
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();

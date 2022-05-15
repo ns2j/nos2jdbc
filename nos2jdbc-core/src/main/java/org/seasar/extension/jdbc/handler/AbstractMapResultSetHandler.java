@@ -43,12 +43,14 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
     /**
      * デフォルトのマップの実装クラスです。
      */
-    protected static final Class<? extends Map<String, ?>> DEFAULT_MAP_CLASS = BeanMap.class;
+    @SuppressWarnings("rawtypes")
+    protected static final Class<? extends Map> DEFAULT_MAP_CLASS = BeanMap.class;
 
     /**
      * マップクラスです。
      */
-    protected Class<? extends Map<String, ?>> mapClass = DEFAULT_MAP_CLASS;
+    @SuppressWarnings("rawtypes")
+    protected Class<? extends Map> mapClass = DEFAULT_MAP_CLASS;
 
     /**
      * データベースの方言です。
@@ -77,7 +79,7 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
      * @param sql
      *            SQL
      */
-    public AbstractMapResultSetHandler(Class<? extends Map<String, ?>> mapClass,
+    public AbstractMapResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention persistenceConvention,
             String sql) {
         if (!ModifierUtil.isAbstract(mapClass)) {

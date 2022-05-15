@@ -47,9 +47,8 @@ class MapIterationResultSetHandlerTest {
      */
     @Test
     void handle() throws Exception {
-        @SuppressWarnings("unchecked")
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                (Class<? extends Map<String, ?>>) Map.class, new StandardDialect(),
+                Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
                 new IterationCallback<Map<String, ?>, Integer>() {
 
@@ -91,7 +90,7 @@ class MapIterationResultSetHandlerTest {
     @Test
     void handle_WithLimit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
+                Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 2,
                 new IterationCallback<Map<String, ?>, Integer>() {
 
@@ -124,7 +123,7 @@ class MapIterationResultSetHandlerTest {
     @Test
     void handle_WithExit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
+                Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
                 new IterationCallback<Map<String, ?>, Integer>() {
 

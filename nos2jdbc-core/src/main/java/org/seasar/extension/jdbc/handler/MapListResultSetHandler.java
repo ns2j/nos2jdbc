@@ -50,7 +50,7 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
      * @param sql
      *            SQL
      */
-    public MapListResultSetHandler(Class<? extends Map<String, ?>> mapClass,
+    public MapListResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql) {
         this(mapClass, dialect, peristenceConvention, sql, 0);
@@ -70,7 +70,7 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
      * @param limit
      *            リミット
      */
-    public MapListResultSetHandler(Class<? extends Map<String, ?>> mapClass,
+    public MapListResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql, int limit) {
         super(mapClass, dialect, peristenceConvention, sql);
