@@ -37,8 +37,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
     protected int limit;
 
     /** 反復コールバック */
-    @SuppressWarnings("rawtypes")
-    protected IterationCallback<Map, ?> callback;
+    protected IterationCallback<Map<?, ?>, ?> callback;
 
     /**
      * {@link MapIterationResultSetHandler}を作成します。
@@ -56,10 +55,9 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
      * @param callback
      *            反復コールバック
      */
-    @SuppressWarnings({"rawtypes"})
-    public MapIterationResultSetHandler(Class<? extends java.util.Map> mapClass,
+    public MapIterationResultSetHandler(Class<? extends Map<?, ?>> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
-            String sql, int limit, final IterationCallback<Map, ?> callback) {
+            String sql, int limit, final IterationCallback<Map<?, ?>, ?> callback) {
         super(mapClass, dialect, peristenceConvention, sql);
         this.limit = limit;
         this.callback = callback;

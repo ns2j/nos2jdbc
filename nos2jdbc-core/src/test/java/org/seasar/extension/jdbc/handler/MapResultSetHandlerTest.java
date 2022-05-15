@@ -15,11 +15,13 @@
  */
 package org.seasar.extension.jdbc.handler;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Map;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.exception.SNonUniqueResultException;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
@@ -33,15 +35,10 @@ import org.seasar.framework.util.ArrayMap;
  * 
  */
 class MapResultSetHandlerTest {
-
-    /**
-     * @throws Exception
-     * 
-     */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings("unchecked")
     @Test
-    void testHandle() throws Exception {
-        MapResultSetHandler handler = new MapResultSetHandler(Map.class,
+    void handle() throws Exception {
+        MapResultSetHandler handler = new MapResultSetHandler((Class<? extends Map<?, ?>>)Map.class,
                 new StandardDialect(), new PersistenceConventionImpl(),
                 "select * from aaa");
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -52,11 +49,11 @@ class MapResultSetHandlerTest {
         columnMeta.setColumnLabel("AAA_BBB");
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
-        ArrayMap data = new ArrayMap();
+        ArrayMap<String, String> data = new ArrayMap<>();
         data.put("FOO", "111");
         data.put("AAA_BBB", "222");
         rs.addRowData(data);
-        Map map = (Map) handler.handle(rs);
+        Map<String, String> map = (Map<String, String>) handler.handle(rs);
         assertNotNull(map);
         assertEquals("111", map.get("foo"));
         assertEquals("222", map.get("aaaBbb"));
@@ -66,9 +63,10 @@ class MapResultSetHandlerTest {
      * @throws Exception
      */
     @Test
-    void testHandle_nonUniqueResult() throws Exception {
+    void handle_nonUniqueResult() throws Exception {
         String sql = "select * from aaa";
-        MapResultSetHandler handler = new MapResultSetHandler(Map.class,
+        @SuppressWarnings("unchecked")
+        MapResultSetHandler handler = new MapResultSetHandler((Class<? extends Map<?, ?>>)Map.class,
                 new StandardDialect(), new PersistenceConventionImpl(),
                 "select * from aaa");
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
@@ -79,7 +77,7 @@ class MapResultSetHandlerTest {
         columnMeta.setColumnLabel("AAA_BBB");
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
-        ArrayMap data = new ArrayMap();
+        ArrayMap<String, String> data = new ArrayMap<>();
         data.put("FOO", "111");
         data.put("AAA_BBB", "222");
         rs.addRowData(data);

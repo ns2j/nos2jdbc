@@ -44,7 +44,7 @@ public class MapResultSetHandler extends AbstractMapResultSetHandler {
      * @param sql
      *            SQL
      */
-    public MapResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
+    public MapResultSetHandler(Class<? extends Map<?, ?>> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql) {
         super(mapClass, dialect, peristenceConvention, sql);

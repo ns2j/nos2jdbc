@@ -79,7 +79,7 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
      * @param sql
      *            SQL
      */
-    public AbstractMapResultSetHandler(@SuppressWarnings("rawtypes") Class<? extends Map> mapClass,
+    public AbstractMapResultSetHandler(Class<? extends Map<?, ?>> mapClass,
             DbmsDialect dialect, PersistenceConvention persistenceConvention,
             String sql) {
         if (!ModifierUtil.isAbstract(mapClass)) {
@@ -130,8 +130,7 @@ public abstract class AbstractMapResultSetHandler implements ResultSetHandler {
     @SuppressWarnings("unchecked")
     protected Object createRow(ResultSet rs, PropertyType[] propertyTypes)
             throws SQLException {
-        @SuppressWarnings("rawtypes")
-        Map row = (Map) ClassUtil.newInstance(mapClass);
+        Map<String, Object> row = (Map<String, Object>) ClassUtil.newInstance(mapClass);
         for (int i = 0; i < propertyTypes.length; ++i) {
             PropertyType pt = propertyTypes[i];
             if (pt.getColumnName().equalsIgnoreCase("rownumber_")) {

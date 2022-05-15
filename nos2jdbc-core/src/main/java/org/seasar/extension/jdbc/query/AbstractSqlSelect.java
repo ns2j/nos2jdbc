@@ -68,7 +68,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         super(jdbcManager, baseClass);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
     @Override
     protected ResultSetHandler createResultListResultSetHandler() {
         DbmsDialect dialect = jdbcManager.getDialect();
@@ -82,7 +82,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         }
         if (Map.class.isAssignableFrom(baseClass)) {
             return new MapListResultSetHandler(
-                    (Class<? extends Map>) baseClass, dialect,
+                    (Class<? extends Map<?, ?>>) baseClass, dialect,
                     persistenceConvention, executedSql, limit);
         }
         if (baseClass.isAnnotationPresent(NonAuto.class)
@@ -95,7 +95,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
                 persistenceConvention, executedSql, limit);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
     @Override
     protected ResultSetHandler createSingleResultResultSetHandler() {
         DbmsDialect dialect = jdbcManager.getDialect();
@@ -107,7 +107,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
             return new ObjectResultSetHandler(valueType, executedSql);
         }
         if (Map.class.isAssignableFrom(baseClass)) {
-            return new MapResultSetHandler((Class<? extends Map>) baseClass,
+            return new MapResultSetHandler((Class<? extends Map<?, ?>>) baseClass,
                     dialect, persistenceConvention, executedSql);
         }
         if (baseClass.isAnnotationPresent(NonAuto.class)) {
@@ -119,7 +119,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
                 persistenceConvention, executedSql);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("unchecked")
     @Override
     protected ResultSetHandler createIterateResultSetHandler(
             final IterationCallback<T, ?> callback) {
@@ -136,8 +136,8 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         if (Map.class.isAssignableFrom(baseClass)) {
             
             return new MapIterationResultSetHandler(
-                    (Class<? extends Map>) baseClass, dialect,
-                    persistenceConvention, executedSql, limit, (IterationCallback<Map, ?>) callback);
+                    (Class<? extends Map<?, ?>>) baseClass, dialect,
+                    persistenceConvention, executedSql, limit, (IterationCallback<Map<?, ?>, ?>) callback);
         }
         if (baseClass.isAnnotationPresent(Entity.class)) {
             EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();

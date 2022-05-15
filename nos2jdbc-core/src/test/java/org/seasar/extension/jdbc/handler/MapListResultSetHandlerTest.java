@@ -15,12 +15,12 @@
  */
 package org.seasar.extension.jdbc.handler;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockColumnMetaData;
@@ -38,11 +38,11 @@ class MapListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings("unchecked")
     @Test
-    void testHandle() throws Exception {
+    void handle() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
-                Map.class, new StandardDialect(),
+                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa");
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -52,13 +52,13 @@ class MapListResultSetHandlerTest {
         columnMeta.setColumnLabel("AAA_BBB");
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
-        ArrayMap data = new ArrayMap();
+        ArrayMap<String, String> data = new ArrayMap<>();
         data.put("FOO", "111");
         data.put("AAA_BBB", "222");
         rs.addRowData(data);
-        List list = (List) handler.handle(rs);
+        List<Map<String, String>> list = (List<Map<String, String>>) handler.handle(rs);
         assertEquals(1, list.size());
-        Map map = (Map) list.get(0);
+        Map<String, String> map = list.get(0);
         assertEquals("111", map.get("foo"));
         assertEquals("222", map.get("aaaBbb"));
     }
@@ -67,11 +67,11 @@ class MapListResultSetHandlerTest {
      * @throws Exception
      * 
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings("unchecked")
     @Test
-    void testHandleWithLimit() throws Exception {
+    void handleWithLimit() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
-                Map.class, new StandardDialect(),
+                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 1);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -81,14 +81,14 @@ class MapListResultSetHandlerTest {
         columnMeta.setColumnLabel("AAA_BBB");
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
-        ArrayMap data = new ArrayMap();
+        ArrayMap<String, String> data = new ArrayMap<>();
         data.put("FOO", "111");
         data.put("AAA_BBB", "222");
         rs.addRowData(data);
         rs.addRowData(data);
-        List list = (List) handler.handle(rs);
+        List<Map<String, String>> list = (List<Map<String, String>>) handler.handle(rs);
         assertEquals(1, list.size());
-        Map map = (Map) list.get(0);
+        Map<String, String> map = list.get(0);
         assertEquals("111", map.get("foo"));
         assertEquals("222", map.get("aaaBbb"));
     }

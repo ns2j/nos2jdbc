@@ -15,13 +15,13 @@
  */
 package org.seasar.extension.jdbc.handler;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
@@ -46,12 +46,12 @@ class MapIterationResultSetHandlerTest {
      * 
      */
     @Test
-    void testHandle() throws Exception {
-        @SuppressWarnings("rawtypes")
+    void handle() throws Exception {
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                Map.class, new StandardDialect(),
+                (Class<? extends Map<?, ?>>) Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
-                new IterationCallback<Map, Integer>() {
+                new IterationCallback<Map<?, ?>, Integer>() {
 
                     @SuppressWarnings("unchecked")
                     @Override
@@ -89,17 +89,16 @@ class MapIterationResultSetHandlerTest {
      */
     @SuppressWarnings("unchecked")
     @Test
-    void testHandle_WithLimit() throws Exception {
-        @SuppressWarnings("rawtypes")
+    void handle_WithLimit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                Map.class, new StandardDialect(),
+                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 2,
-                new IterationCallback<Map, Integer>() {
+                new IterationCallback<Map<?, ?>, Integer>() {
 
                     @Override
-                    public Integer iterate(@SuppressWarnings("rawtypes") Map entity, IterationContext context) {
+                    public Integer iterate(Map<?, ?> entity, IterationContext context) {
                         ++count;
-                        list.add(entity);
+                        list.add((Map<String, String>)entity);
                         return count;
                     }
                 });
@@ -123,17 +122,16 @@ class MapIterationResultSetHandlerTest {
      */
     @SuppressWarnings("unchecked")
     @Test
-    void testHandle_WithExit() throws Exception {
-        @SuppressWarnings("rawtypes")
+    void handle_WithExit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                Map.class, new StandardDialect(),
+                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
-                new IterationCallback<Map, Integer>() {
+                new IterationCallback<Map<?, ?>, Integer>() {
 
                     @Override
-                    public Integer iterate(Map entity, IterationContext context) {
+                    public Integer iterate(Map<?, ?> entity, IterationContext context) {
                         ++count;
-                        list.add(entity);
+                        list.add((Map<String, String>)entity);
                         if (list.size() == 2) {
                             context.setExit(true);
                         }
@@ -166,22 +164,22 @@ class MapIterationResultSetHandlerTest {
         columnMeta.setColumnLabel("AAA_BBB");
         rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
-        ArrayMap data = new ArrayMap();
+        ArrayMap<String, String> data = new ArrayMap<>();
         data.put("FOO", "111");
         data.put("AAA_BBB", "AAA");
         rs.addRowData(data);
 
-        data = new ArrayMap();
+        data = new ArrayMap<>();
         data.put("FOO", "222");
         data.put("AAA_BBB", "BBB");
         rs.addRowData(data);
 
-        data = new ArrayMap();
+        data = new ArrayMap<>();
         data.put("FOO", "333");
         data.put("AAA_BBB", "CCC");
         rs.addRowData(data);
 
-        data = new ArrayMap();
+        data = new ArrayMap<>();
         data.put("FOO", "444");
         data.put("AAA_BBB", "DDD");
         rs.addRowData(data);
