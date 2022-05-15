@@ -47,17 +47,17 @@ class MapIterationResultSetHandlerTest {
      */
     @Test
     void handle() throws Exception {
-        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @SuppressWarnings("unchecked")
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                (Class<? extends Map<?, ?>>) Map.class, new StandardDialect(),
+                (Class<? extends Map<String, ?>>) Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
-                new IterationCallback<Map<?, ?>, Integer>() {
+                new IterationCallback<Map<String, ?>, Integer>() {
 
                     @SuppressWarnings("unchecked")
                     @Override
-                    public Integer iterate(Map entity, IterationContext context) {
+                    public Integer iterate(Map<String, ?> entity, IterationContext context) {
                         ++count;
-                        list.add(entity);
+                        list.add((Map<String, String>)entity);
                         return count;
                     }
                 });
@@ -91,12 +91,12 @@ class MapIterationResultSetHandlerTest {
     @Test
     void handle_WithLimit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
+                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 2,
-                new IterationCallback<Map<?, ?>, Integer>() {
+                new IterationCallback<Map<String, ?>, Integer>() {
 
                     @Override
-                    public Integer iterate(Map<?, ?> entity, IterationContext context) {
+                    public Integer iterate(Map<String, ?> entity, IterationContext context) {
                         ++count;
                         list.add((Map<String, String>)entity);
                         return count;
@@ -124,12 +124,12 @@ class MapIterationResultSetHandlerTest {
     @Test
     void handle_WithExit() throws Exception {
         MapIterationResultSetHandler handler = new MapIterationResultSetHandler(
-                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
+                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 0,
-                new IterationCallback<Map<?, ?>, Integer>() {
+                new IterationCallback<Map<String, ?>, Integer>() {
 
                     @Override
-                    public Integer iterate(Map<?, ?> entity, IterationContext context) {
+                    public Integer iterate(Map<String, ?> entity, IterationContext context) {
                         ++count;
                         list.add((Map<String, String>)entity);
                         if (list.size() == 2) {

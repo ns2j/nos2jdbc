@@ -37,7 +37,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
     protected int limit;
 
     /** 反復コールバック */
-    protected IterationCallback<Map<?, ?>, ?> callback;
+    protected IterationCallback<Map<String, ?>, ?> callback;
 
     /**
      * {@link MapIterationResultSetHandler}を作成します。
@@ -55,9 +55,9 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
      * @param callback
      *            反復コールバック
      */
-    public MapIterationResultSetHandler(Class<? extends Map<?, ?>> mapClass,
+    public MapIterationResultSetHandler(Class<? extends Map<String, ?>> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
-            String sql, int limit, final IterationCallback<Map<?, ?>, ?> callback) {
+            String sql, int limit, final IterationCallback<Map<String, ?>, ?> callback) {
         super(mapClass, dialect, peristenceConvention, sql);
         this.limit = limit;
         this.callback = callback;
@@ -70,7 +70,7 @@ public class MapIterationResultSetHandler extends AbstractMapResultSetHandler {
         final IterationContext iterationContext = new IterationContext();
         Object result = null;
         for (int i = 0; (limit <= 0 || i < limit) && rs.next(); i++) {
-            final Map<?, ?> entity = (Map<?, ?>) createRow(rs, propertyTypes);
+            final Map<String, Object> entity = createRow(rs, propertyTypes);
             result = callback.iterate(entity, iterationContext);
             if (iterationContext.isExit()) {
                 return result;

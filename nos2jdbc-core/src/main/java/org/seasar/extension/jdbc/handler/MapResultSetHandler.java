@@ -44,16 +44,16 @@ public class MapResultSetHandler extends AbstractMapResultSetHandler {
      * @param sql
      *            SQL
      */
-    public MapResultSetHandler(Class<? extends Map<?, ?>> mapClass,
+    public MapResultSetHandler(Class<? extends Map<String, ?>> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql) {
         super(mapClass, dialect, peristenceConvention, sql);
     }
 
     @Override
-    public Object handle(ResultSet rs) throws SQLException,
+    public Map<String, ?> handle(ResultSet rs) throws SQLException,
             SNonUniqueResultException {
-        Object ret = null;
+        Map<String, Object> ret = null;
         if (rs.next()) {
             ret = createRow(rs, createPropertyTypes(rs.getMetaData()));
             if (rs.next()) {

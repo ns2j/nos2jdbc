@@ -50,7 +50,7 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
      * @param sql
      *            SQL
      */
-    public MapListResultSetHandler(Class<? extends Map<?, ?>> mapClass,
+    public MapListResultSetHandler(Class<? extends Map<String, ?>> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql) {
         this(mapClass, dialect, peristenceConvention, sql, 0);
@@ -70,7 +70,7 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
      * @param limit
      *            リミット
      */
-    public MapListResultSetHandler(Class<? extends Map<?, ?>> mapClass,
+    public MapListResultSetHandler(Class<? extends Map<String, ?>> mapClass,
             DbmsDialect dialect, PersistenceConvention peristenceConvention,
             String sql, int limit) {
         super(mapClass, dialect, peristenceConvention, sql);
@@ -78,11 +78,11 @@ public class MapListResultSetHandler extends AbstractMapResultSetHandler {
     }
 
     @Override
-    public Object handle(ResultSet rs) throws SQLException {
+    public List<Map<String, ?>> handle(ResultSet rs) throws SQLException {
         PropertyType[] propertyTypes = createPropertyTypes(rs.getMetaData());
-        List<Object> list = new ArrayList<Object>(100);
+        List<Map<String, ?>> list = new ArrayList<>(100);
         for (int i = 0; (limit <= 0 || i < limit) && rs.next(); i++) {
-            Object row = createRow(rs, propertyTypes);
+            Map<String, Object> row = createRow(rs, propertyTypes);
             list.add(row);
         }
         return list;

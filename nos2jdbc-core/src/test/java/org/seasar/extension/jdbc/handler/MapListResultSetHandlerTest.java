@@ -42,7 +42,7 @@ class MapListResultSetHandlerTest {
     @Test
     void handle() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
-                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
+                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa");
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -56,9 +56,9 @@ class MapListResultSetHandlerTest {
         data.put("FOO", "111");
         data.put("AAA_BBB", "222");
         rs.addRowData(data);
-        List<Map<String, String>> list = (List<Map<String, String>>) handler.handle(rs);
+        List<Map<String, ?>> list = handler.handle(rs);
         assertEquals(1, list.size());
-        Map<String, String> map = list.get(0);
+        Map<String, String> map = (Map<String, String>)list.get(0);
         assertEquals("111", map.get("foo"));
         assertEquals("222", map.get("aaaBbb"));
     }
@@ -71,7 +71,7 @@ class MapListResultSetHandlerTest {
     @Test
     void handleWithLimit() throws Exception {
         MapListResultSetHandler handler = new MapListResultSetHandler(
-                (Class<? extends Map<?, ?>>)Map.class, new StandardDialect(),
+                (Class<? extends Map<String, ?>>)Map.class, new StandardDialect(),
                 new PersistenceConventionImpl(), "select * from aaa", 1);
         MockResultSetMetaData rsMeta = new MockResultSetMetaData();
         MockColumnMetaData columnMeta = new MockColumnMetaData();
@@ -86,9 +86,9 @@ class MapListResultSetHandlerTest {
         data.put("AAA_BBB", "222");
         rs.addRowData(data);
         rs.addRowData(data);
-        List<Map<String, String>> list = (List<Map<String, String>>) handler.handle(rs);
+        List<Map<String, ?>> list = handler.handle(rs);
         assertEquals(1, list.size());
-        Map<String, String> map = list.get(0);
+        Map<String, String> map = (Map<String, String>)list.get(0);
         assertEquals("111", map.get("foo"));
         assertEquals("222", map.get("aaaBbb"));
     }

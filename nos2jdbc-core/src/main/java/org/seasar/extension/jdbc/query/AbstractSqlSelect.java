@@ -27,9 +27,9 @@ import org.seasar.extension.jdbc.Select;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.handler.BeanIterationNonAutoResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanIterationResultSetHandler;
+import org.seasar.extension.jdbc.handler.BeanListNonAutoResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanListResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanNonAutoResultSetHandler;
-import org.seasar.extension.jdbc.handler.BeanListNonAutoResultSetHandler;
 import org.seasar.extension.jdbc.handler.BeanResultSetHandler;
 import org.seasar.extension.jdbc.handler.MapIterationResultSetHandler;
 import org.seasar.extension.jdbc.handler.MapListResultSetHandler;
@@ -82,7 +82,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         }
         if (Map.class.isAssignableFrom(baseClass)) {
             return new MapListResultSetHandler(
-                    (Class<? extends Map<?, ?>>) baseClass, dialect,
+                    (Class<? extends Map<String, Object>>) baseClass, dialect,
                     persistenceConvention, executedSql, limit);
         }
         if (baseClass.isAnnotationPresent(NonAuto.class)
@@ -107,7 +107,7 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
             return new ObjectResultSetHandler(valueType, executedSql);
         }
         if (Map.class.isAssignableFrom(baseClass)) {
-            return new MapResultSetHandler((Class<? extends Map<?, ?>>) baseClass,
+            return new MapResultSetHandler((Class<? extends Map<String, Object>>) baseClass,
                     dialect, persistenceConvention, executedSql);
         }
         if (baseClass.isAnnotationPresent(NonAuto.class)) {
@@ -136,8 +136,8 @@ public abstract class AbstractSqlSelect<T, S extends Select<T, S>> extends
         if (Map.class.isAssignableFrom(baseClass)) {
             
             return new MapIterationResultSetHandler(
-                    (Class<? extends Map<?, ?>>) baseClass, dialect,
-                    persistenceConvention, executedSql, limit, (IterationCallback<Map<?, ?>, ?>) callback);
+                    (Class<? extends Map<String, ?>>) baseClass, dialect,
+                    persistenceConvention, executedSql, limit, (IterationCallback<Map<String, ?>, ?>) callback);
         }
         if (baseClass.isAnnotationPresent(Entity.class)) {
             EntityMetaFactory entityMetaFactory = jdbcManager.getEntityMetaFactory();
