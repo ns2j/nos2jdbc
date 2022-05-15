@@ -64,6 +64,7 @@ public class DdlInfoFileImpl implements DdlInfoFile {
         this.file = file;
     }
 
+    @Override
     public int getCurrentVersionNo() {
         return getCurrentVersionNoInternal();
     }
@@ -100,6 +101,7 @@ public class DdlInfoFileImpl implements DdlInfoFile {
      * 
      * @return １行
      */
+    @SuppressWarnings("resource")
     protected String readLine() {
         BufferedReader reader = null;
         try {
@@ -111,6 +113,7 @@ public class DdlInfoFileImpl implements DdlInfoFile {
         }
     }
 
+    @Override
     public int getNextVersionNo() {
         return getNextVersionNoInternal();
     }
@@ -128,6 +131,7 @@ public class DdlInfoFileImpl implements DdlInfoFile {
         return (int) nextVersionNo;
     }
 
+    @Override
     public void applyNextVersionNo(String comment) {
         File temp = null;
         if (file.exists()) {

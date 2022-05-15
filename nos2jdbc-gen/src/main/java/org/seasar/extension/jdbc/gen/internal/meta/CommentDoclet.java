@@ -286,7 +286,6 @@ public class CommentDoclet implements Doclet {
     		int retChars = 0;        // how many characters we'll return
 
     		char[] cBuf = new char[len];
-    		int cOffset = 0;         // offset at which we'll start reading
     		boolean eof = false;
 
     		// copy trailing chars from previous invocation to input buffer

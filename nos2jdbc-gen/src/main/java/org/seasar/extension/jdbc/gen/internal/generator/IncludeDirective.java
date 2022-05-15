@@ -42,8 +42,9 @@ public class IncludeDirective implements TemplateDirectiveModel {
     /** ルートモデルのパラメータ名 */
     protected static final String PARAM_ROOT_MODEL = "rootModel";
 
+    @Override
     public void execute(Environment env,
-            @SuppressWarnings("unchecked") Map params,
+            @SuppressWarnings("rawtypes") Map params,
             TemplateModel[] loopVars, TemplateDirectiveBody body)
             throws TemplateException, IOException {
 

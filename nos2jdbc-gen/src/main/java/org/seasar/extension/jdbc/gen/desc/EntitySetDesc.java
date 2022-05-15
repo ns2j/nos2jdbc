@@ -33,8 +33,7 @@ public class EntitySetDesc {
     protected List<EntityDesc> entityDescList = new ArrayList<EntityDesc>();
 
     /** 完全なテーブル名をキー、エンティティ記述を値とするマップ */
-    @SuppressWarnings("unchecked")
-    protected Map<String, EntityDesc> entityDescMap = new ArrayMap();
+    protected Map<String, EntityDesc> entityDescMap = new ArrayMap<>();
 
     /**
      * エンティティ記述のリストを返します。

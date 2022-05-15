@@ -50,7 +50,7 @@ public class ArgumentTypeRegistry {
     }
 
     /** コレクション型のクラスをキー、 コレクション型の{@link ArgumentType}のコンストラクタを値とするマップ */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"rawtypes"})
     protected static Map<Class<? extends Collection>, Constructor<? extends CollectionType>> collectionArgTypeMap = new ConcurrentHashMap<Class<? extends Collection>, Constructor<? extends CollectionType>>();
     static {
         collectionArgTypeMap.put(List.class, ReflectionUtil.getConstructor(
@@ -89,7 +89,7 @@ public class ArgumentTypeRegistry {
      *            引数のクラス
      * @return {@link ArgumentType}
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected static <T> ArgumentType<T> getArgumentType(Class<?> clazz) {
         clazz = ClassUtil.getWrapperClassIfPrimitive(clazz);
         if (argTypeMap.containsKey(clazz)) {
@@ -123,6 +123,7 @@ public class ArgumentTypeRegistry {
             Class<?> collectioinClass, Class<?> elementClass) {
         ArgumentType<?> argumentType = getArgumentType(elementClass);
         if (collectionArgTypeMap.containsKey(collectioinClass)) {
+            @SuppressWarnings("rawtypes")
             Constructor<? extends CollectionType> constructor = collectionArgTypeMap
                     .get(collectioinClass);
             return ReflectionUtil.newInstance(constructor, argumentType);
@@ -172,16 +173,16 @@ public class ArgumentTypeRegistry {
      * @param argumentTypeClass
      *            引数の型を表すクラス
      */
-    @SuppressWarnings("unchecked")
     public static void registerCollectionArgumentType(
-            Class<? extends Collection> collectionClass,
-            Class<? extends CollectionType> argumentTypeClass) {
+            @SuppressWarnings("rawtypes") Class<? extends Collection> collectionClass,
+            @SuppressWarnings("rawtypes") Class<? extends CollectionType> argumentTypeClass) {
         if (collectionClass == null) {
             throw new NullPointerException("collectionClass");
         }
         if (argumentTypeClass == null) {
             throw new NullPointerException("argumentTypeClass");
         }
+        @SuppressWarnings("rawtypes")
         Constructor<? extends CollectionType> constructor = ReflectionUtil
                 .getConstructor(argumentTypeClass, ArgumentType.class);
         collectionArgTypeMap.put(collectionClass, constructor);
@@ -193,9 +194,8 @@ public class ArgumentTypeRegistry {
      * @param collectionClass
      *            コレクション型の引数のクラス
      */
-    @SuppressWarnings("unchecked")
     public static void deregisterCollectionArgumentType(
-            Class<? extends Collection> collectionClass) {
+            @SuppressWarnings("rawtypes") Class<? extends Collection> collectionClass) {
         if (collectionClass == null) {
             throw new NullPointerException("collectionClass");
         }

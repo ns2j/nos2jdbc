@@ -120,6 +120,7 @@ public class EntitySetDescFactoryImpl implements EntitySetDescFactory {
         entityDescFactory = createEntityDescFactory();
     }
 
+    @Override
     public EntitySetDesc getEntitySetDesc() {
         EntitySetDesc entitySetDesc = new EntitySetDesc();
         List<DbTableMeta> dbTableMetaList = dbTableMetaReader.read();
@@ -188,9 +189,8 @@ public class EntitySetDescFactoryImpl implements EntitySetDescFactory {
      */
     public LinkedHashMap<String, String> loadPluralFormFile() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(pluralFormFile), "UTF-8"));
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(pluralFormFile), "UTF-8"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.length() == 0) {
@@ -213,5 +213,4 @@ public class EntitySetDescFactoryImpl implements EntitySetDescFactory {
         }
         return map;
     }
-
 }

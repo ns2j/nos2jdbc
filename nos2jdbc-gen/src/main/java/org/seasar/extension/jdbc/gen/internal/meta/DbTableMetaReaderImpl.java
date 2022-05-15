@@ -114,6 +114,7 @@ public class DbTableMetaReaderImpl implements DbTableMetaReader {
         this.readComment = readComment;
     }
 
+    @Override
     public List<DbTableMeta> read() {
         Connection con = DataSourceUtil.getConnection(dataSource);
         try {
@@ -364,8 +365,7 @@ public class DbTableMetaReaderImpl implements DbTableMetaReader {
      */
     protected List<DbForeignKeyMeta> getDbForeignKeyMetaList(
             DatabaseMetaData metaData, DbTableMeta tableMeta) {
-        @SuppressWarnings("unchecked")
-        Map<String, DbForeignKeyMeta> map = new ArrayMap();
+        Map<String, DbForeignKeyMeta> map = new ArrayMap<>();
         try {
             ResultSet rs = metaData.getImportedKeys(tableMeta.getCatalogName(),
                     tableMeta.getSchemaName(), tableMeta.getName());
@@ -420,8 +420,7 @@ public class DbTableMetaReaderImpl implements DbTableMetaReader {
             return Collections.emptyList();
         }
 
-        @SuppressWarnings("unchecked")
-        Map<String, DbUniqueKeyMeta> map = new ArrayMap();
+        Map<String, DbUniqueKeyMeta> map = new ArrayMap<>();
         try {
             ResultSet rs = metaData
                     .getIndexInfo(tableMeta.getCatalogName(), tableMeta

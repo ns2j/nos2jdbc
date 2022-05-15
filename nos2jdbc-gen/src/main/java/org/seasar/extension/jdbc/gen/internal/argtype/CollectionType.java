@@ -51,6 +51,7 @@ public class CollectionType<T> implements ArgumentType<Collection<? extends T>> 
         this.argumentType = argumentType;
     }
 
+    @Override
     public Collection<? extends T> toObject(String value) {
         if (StringUtil.isEmpty(value)) {
             return null;
@@ -68,6 +69,10 @@ public class CollectionType<T> implements ArgumentType<Collection<? extends T>> 
                 break;
             case END:
                 break nextTokenLoop;
+            case DELIMITER:
+                break;
+            default:
+                break;
             }
         }
         return collection;
@@ -82,6 +87,7 @@ public class CollectionType<T> implements ArgumentType<Collection<? extends T>> 
         return new ArrayList<T>();
     }
 
+    @Override
     public String toText(Collection<? extends T> value) {
         if (value == null) {
             return "";
