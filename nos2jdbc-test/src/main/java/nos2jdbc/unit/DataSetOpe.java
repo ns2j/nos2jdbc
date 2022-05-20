@@ -52,12 +52,8 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.FileOutputStreamUtil;
 import org.seasar.framework.util.ResourceUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DataSetOpe {
-    final static private Logger logger = LoggerFactory.getLogger(DataSetOpe.class);
-
     private JdbcManagerImplementor jdbcManager;
 
     private DataSource dataSource;

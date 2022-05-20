@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.Optional;
+
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -183,6 +184,7 @@ public class SsDataSetExtension implements ParameterResolver, BeforeAllCallback,
     }
 
     public class SsDataSetExtensionException extends RuntimeException {
+        private static final long serialVersionUID = 1L;
         public SsDataSetExtensionException() {
             super();
         }

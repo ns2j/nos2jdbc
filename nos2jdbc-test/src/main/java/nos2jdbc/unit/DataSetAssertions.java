@@ -15,6 +15,8 @@
  */
 package nos2jdbc.unit;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +24,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.opentest4j.AssertionFailedError;
-
 import org.seasar.extension.dataset.ColumnType;
 import org.seasar.extension.dataset.DataRow;
 import org.seasar.extension.dataset.DataSet;
@@ -31,14 +32,8 @@ import org.seasar.extension.unit.BeanListReader;
 import org.seasar.extension.unit.BeanReader;
 import org.seasar.extension.unit.MapListReader;
 import org.seasar.extension.unit.MapReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class DataSetAssertions {
-    final static private Logger logger = LoggerFactory.getLogger(DataSetAssertions.class);
-    
     /**
      * 等しいことを表明します。
      * 
@@ -268,6 +263,7 @@ public abstract class DataSetAssertions {
      * @param message
      *            メッセージ
      */
+    @SuppressWarnings("unchecked")
     static public void assertDsEquals(DataSet expected, Object actual, String message) {
         if (expected == null || actual == null) {
             assertEquals(expected, actual, message);
