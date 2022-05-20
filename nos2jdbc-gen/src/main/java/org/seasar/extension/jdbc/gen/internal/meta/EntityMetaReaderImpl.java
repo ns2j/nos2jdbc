@@ -248,9 +248,9 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
     }
 
     /**
-     * {@link Doclet}の引数の配列を作成します。
+     * {@link jdk.javadoc.doclet.Doclet}の引数の配列を作成します。
      * 
-     * @return {@link Doclet}の引数の配列
+     * @return {@link jdk.javadoc.doclet.Doclet}の引数の配列
      */
     protected String[] createDocletArgs() {
         StringBuilder srcDirListBuf = new StringBuilder();

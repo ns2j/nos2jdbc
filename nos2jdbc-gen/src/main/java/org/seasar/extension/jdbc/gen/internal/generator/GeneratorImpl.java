@@ -45,7 +45,7 @@ import freemarker.template.TemplateException;
  * {@link Generator}の実装クラスです。
  * <p>
  * テンプレートエンジンのFreeMarkerを利用します。
- * <p>
+ * </p>
  * 
  * @author taedium
  */

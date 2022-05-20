@@ -148,7 +148,7 @@ public interface Select<T, S extends Select<T, S>> extends Query<S> {
      * {@link IterationCallback#iterate(Object, IterationContext)}メソッドに通知されます。
      * 問い合わせ結果全体のリストを作成しないため、 問い合わせ結果が膨大になる場合でもメモリ消費量を抑えることが出来ます。
      * </p>
-     * <h3>SQL自動生成による問い合わせの場合</h3>
+     * <h4>SQL自動生成による問い合わせの場合</h4>
      * <p>
      * 問い合わせ結果は基点となるエンティティでソートされている必要があります．
      * 基点となるエンティティがAで、1対多の関連を持つエンティティBを結合した問い合わせの場合、 結果セットは以下のような並びでなくてはなりません。
