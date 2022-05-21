@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 
@@ -33,17 +32,8 @@ class GenerateConditionCommandTest {
      * 
      * @throws Exception
      */
-    @AfterEach
-    public void tearDown() throws Exception {
-    //i        SingletonS2ContainerFactory.destroy();
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
     @Test
-    void testValidate() throws Exception {
+    void validate() throws Exception {
         GenerateConditionCommand command = new GenerateConditionCommand();
         try {
             command.validate();
@@ -57,7 +47,7 @@ class GenerateConditionCommandTest {
      * @throws Exception
      */
     @Test
-    void testInit() throws Exception {
+    void init() throws Exception {
         GenerateConditionCommand command = new GenerateConditionCommand();
         command.setClasspathDir(new File("dir"));
         command.validate();

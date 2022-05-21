@@ -17,7 +17,6 @@ package org.seasar.extension.jdbc.gen.internal.command;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,17 +29,8 @@ class DumpDbMetaCommandTest {
      * 
      * @throws Exception
      */
-    @AfterEach
-    public void tearDown() throws Exception {
-    //i        SingletonS2ContainerFactory.destroy();
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
     @Test
-    void testInit() throws Exception {
+    void init() throws Exception {
         DumpDbMetaCommand command = new DumpDbMetaCommand();
         command.validate();
         command.init();

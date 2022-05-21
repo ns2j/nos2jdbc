@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
@@ -34,17 +33,8 @@ class GenerateNamesCommandTest {
      * 
      * @throws Exception
      */
-    @AfterEach
-    public void tearDown() throws Exception {
-    //i        SingletonS2ContainerFactory.destroy();
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
     @Test
-    void testValidate() throws Exception {
+    void validate() throws Exception {
         GenerateNamesCommand command = new GenerateNamesCommand();
         try {
             command.validate();
@@ -58,7 +48,7 @@ class GenerateNamesCommandTest {
      * @throws Exception
      */
     @Test
-    void testInit() throws Exception {
+    void init() throws Exception {
         GenerateNamesCommand command = new GenerateNamesCommand();
         command.setClasspathDir(new File("dir"));
         command.validate();

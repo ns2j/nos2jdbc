@@ -17,7 +17,6 @@ package org.seasar.extension.jdbc.gen.internal.command;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,17 +29,8 @@ class GenerateEntityCommandTest {
      * 
      * @throws Exception
      */
-    @AfterEach
-    public void tearDown() throws Exception {
-    //i        SingletonS2ContainerFactory.destroy();
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
     @Test
-    void testValidate() throws Exception {
+    void validate() throws Exception {
         GenerateEntityCommand command = new GenerateEntityCommand();
         command.validate();
     }
@@ -50,7 +40,7 @@ class GenerateEntityCommandTest {
      * @throws Exception
      */
     @Test
-    void testInit() throws Exception {
+    void init() throws Exception {
         GenerateEntityCommand command = new GenerateEntityCommand();
         command.init();
         assertNotNull(command.entitySetDescFactory);

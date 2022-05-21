@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 
@@ -33,17 +32,8 @@ class GenerateEntityTestCommandTest {
      * 
      * @throws Exception
      */
-    @AfterEach
-    public void tearDown() throws Exception {
-    //i        SingletonS2ContainerFactory.destroy();
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
     @Test
-    void testValidate() throws Exception {
+    void validate() throws Exception {
         GenerateEntityTestCommand command = new GenerateEntityTestCommand();
         try {
             command.validate();
@@ -57,7 +47,7 @@ class GenerateEntityTestCommandTest {
      * @throws Exception
      */
     @Test
-    void testInit() throws Exception {
+    void init() throws Exception {
         GenerateEntityTestCommand command = new GenerateEntityTestCommand();
         command.setClasspathDir(new File("dir"));
         command.validate();
