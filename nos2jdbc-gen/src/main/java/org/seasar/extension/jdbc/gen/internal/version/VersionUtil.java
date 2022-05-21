@@ -12,9 +12,9 @@ import java.io.OutputStreamWriter;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDdlInfoVersionRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.NextVersionExceededRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.util.CloseableUtil;
-import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.FileUtil;
 
 public class VersionUtil {
     /** ロガー */

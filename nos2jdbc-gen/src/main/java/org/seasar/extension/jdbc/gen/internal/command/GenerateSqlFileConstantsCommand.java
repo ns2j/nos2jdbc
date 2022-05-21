@@ -24,7 +24,6 @@ import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRuleImpl;
-import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantNamingRule;
@@ -32,6 +31,7 @@ import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.FileUtil;
 
 /**
  * SQLファイルの定数クラスのJavaファイルを生成する{@link Command}の実装です。

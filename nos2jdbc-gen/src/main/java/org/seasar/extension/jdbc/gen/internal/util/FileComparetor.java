@@ -18,12 +18,15 @@ package org.seasar.extension.jdbc.gen.internal.util;
 import java.io.File;
 import java.util.Comparator;
 
+import org.seasar.framework.util.FileUtil;
+
 /**
  * @author taedium
  * 
  */
 public class FileComparetor implements Comparator<File> {
 
+    @Override
     public int compare(File file1, File file2) {
         String path1 = FileUtil.getCanonicalPath(file1);
         String path2 = FileUtil.getCanonicalPath(file2);

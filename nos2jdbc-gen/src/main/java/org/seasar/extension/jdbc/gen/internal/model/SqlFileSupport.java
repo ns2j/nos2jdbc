@@ -29,12 +29,12 @@ import java.util.Set;
 import java.util.jar.JarFile;
 
 import org.seasar.extension.jdbc.DbmsDialect;
-import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.framework.util.ClassLoaderUtil;
 //i import org.seasar.framework.container.S2Container;
 //i import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.util.ClassTraversal;
 import org.seasar.framework.util.ClassTraversal.ClassHandler;
+import org.seasar.framework.util.FileUtil;
 
 /**
  * SQLファイルのサポートクラスです。

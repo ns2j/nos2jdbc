@@ -27,13 +27,13 @@ import org.seasar.extension.jdbc.gen.event.GenDdlEvent;
 import org.seasar.extension.jdbc.gen.event.GenDdlListener;
 import org.seasar.extension.jdbc.gen.internal.exception.NextVersionDirectoryExistsRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.util.DefaultExcludesFilenameFilter;
-import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.internal.version.wrapper.DdlVersionDirectoryWrapper;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectory;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.DdlVersionIncrementer;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.FileUtil;
 
 /**
  * {@link DdlVersionIncrementer}の実装クラスです。
@@ -114,6 +114,7 @@ public class DdlVersionIncrementerImpl implements DdlVersionIncrementer {
         this.dropDirNameList.addAll(dropDirNameList);
     }
 
+    @Override
     public void increment(String comment, Callback callback) {
         try {
             DdlVersionDirectory currentVersionDir = getCurrentDdlVersionDirectory();
@@ -355,6 +356,7 @@ public class DdlVersionIncrementerImpl implements DdlVersionIncrementer {
             }
         }
 
+        @Override
         public boolean accept(File dir, String name) {
             if (!filenameFilter.accept(dir, name)) {
                 return false;

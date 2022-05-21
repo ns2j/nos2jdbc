@@ -18,7 +18,7 @@ package org.seasar.extension.jdbc.gen.internal.argtype;
 import java.io.File;
 
 import org.seasar.extension.jdbc.gen.internal.util.ArgumentUtil;
-import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
+import org.seasar.framework.util.FileUtil;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -28,6 +28,7 @@ import org.seasar.framework.util.StringUtil;
  */
 public class FileType implements ArgumentType<File> {
 
+    @Override
     public File toObject(String value) {
         if (StringUtil.isEmpty(value)) {
             return null;
@@ -36,6 +37,7 @@ public class FileType implements ArgumentType<File> {
         return new File(s);
     }
 
+    @Override
     public String toText(File value) {
         if (value == null) {
             return "";

@@ -17,10 +17,10 @@ package org.seasar.extension.jdbc.gen.internal.version;
 
 import java.io.File;
 
-import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectory;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
 import org.seasar.framework.conversion.StringConversionUtil;
+import org.seasar.framework.util.FileUtil;
 
 /**
  * {@link DdlVersionDirectory}の実装クラスです。
@@ -76,18 +76,22 @@ public class DdlVersionDirectoryImpl extends ManagedFileImpl implements
         return FileUtil.getCanonicalPath(versionDir);
     }
 
+    @Override
     public ManagedFile getCreateDirectory() {
         return createChildInternal(CREATE_DIR_NAME);
     }
 
+    @Override
     public ManagedFile getDropDirectory() {
         return createChildInternal(DROP_DIR_NAME);
     }
 
+    @Override
     public int getVersionNo() {
         return versionNo;
     }
 
+    @Override
     public boolean isFirstVersion() {
         return versionNo == 0;
     }

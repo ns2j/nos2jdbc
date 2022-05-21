@@ -26,8 +26,8 @@ import java.util.Map;
 
 import org.seasar.extension.jdbc.gen.internal.util.DefaultExcludesFilenameFilter;
 import org.seasar.extension.jdbc.gen.internal.util.FileComparetor;
-import org.seasar.extension.jdbc.gen.internal.util.FileUtil;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
+import org.seasar.framework.util.FileUtil;
 import org.seasar.framework.util.StringUtil;
 
 /**
@@ -88,46 +88,57 @@ public class ManagedFileImpl implements ManagedFile {
         }
     }
 
+    @Override
     public File asFile() {
         return getFile();
     }
 
+    @Override
     public String getRelativePath() {
         return getFileInfo().relativePath;
     }
 
+    @Override
     public String getName() {
         return getFile().getName();
     }
 
+    @Override
     public boolean delete() {
         return getFile().delete();
     }
 
+    @Override
     public boolean exists() {
         return getFile().exists();
     }
 
+    @Override
     public boolean isDirectory() {
         return getFile().isDirectory();
     }
 
+    @Override
     public ManagedFile getParent() {
         return parent;
     }
 
+    @Override
     public boolean mkdir() {
         return getFile().mkdir();
     }
 
+    @Override
     public boolean mkdirs() {
         return getFile().mkdirs();
     }
 
+    @Override
     public boolean createNewFile() {
         return FileUtil.createNewFile(getFile());
     }
 
+    @Override
     public List<ManagedFile> listManagedFiles() {
         File[] files = getFile().listFiles();
         if (files == null) {
@@ -140,6 +151,7 @@ public class ManagedFileImpl implements ManagedFile {
         return list;
     }
 
+    @Override
     public List<ManagedFile> listManagedFiles(FilenameFilter filter) {
         File[] files = getFile().listFiles(filter);
         if (files == null) {
@@ -152,6 +164,7 @@ public class ManagedFileImpl implements ManagedFile {
         return list;
     }
 
+    @Override
     public ManagedFile createChild(String childName) {
         return createChildInternal(childName);
     }
@@ -170,6 +183,7 @@ public class ManagedFileImpl implements ManagedFile {
         return file;
     }
 
+    @Override
     public List<File> listAllFiles() {
         final Map<String, File> fileMap = new LinkedHashMap<String, File>();
         if (envNamedFileInfo != null) {
@@ -226,6 +240,7 @@ public class ManagedFileImpl implements ManagedFile {
                 });
     }
 
+    @Override
     public boolean hasChild() {
         String[] paths = getFile().list();
         return paths != null && paths.length > 0;
