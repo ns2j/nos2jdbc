@@ -21,8 +21,15 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.CopyOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import org.seasar.framework.exception.IORuntimeException;
 
@@ -231,5 +238,35 @@ public class FileUtil {
          * @param file File
          */
         void handle(File file);
+    }
+
+    public static void copyFolder(Path source, Path target, CopyOption... options)
+            throws IOException {
+        Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+                    throws IOException {
+                Files.createDirectories(target.resolve(source.relativize(dir)));
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                    throws IOException {
+                Files.copy(file, target.resolve(source.relativize(file)), options);
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
+    
+    public static void rmdir(Path rootPath) {
+        try (Stream<Path> walk = Files.walk(rootPath)) {
+            walk.sorted(Comparator.reverseOrder())
+            .map(Path::toFile)
+            //.peek(System.out::println)
+            .forEach(File::delete);
+        } catch (IOException e) {
+        }
     }
 }
