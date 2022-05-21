@@ -22,6 +22,12 @@ import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
+import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
+import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionAttributeModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.ConditionModel;
@@ -396,7 +402,7 @@ public class GenerateConditionCommand extends AbstractCommand {
      * @return {@link EntityMetaReader}の実装
      */
     protected EntityMetaReader createEntityMetaReader() {
-        return factory.createEntityMetaReader(this, classpathDir, ClassUtil
+        return new EntityMetaReaderImpl(classpathDir, ClassUtil
                 .concatName(rootPackageName, entityPackageName), jdbcManager
                 .getEntityMetaFactory(), entityClassNamePattern,
                 ignoreEntityClassNamePattern, false, null, null);
@@ -408,9 +414,12 @@ public class GenerateConditionCommand extends AbstractCommand {
      * @return {@link ConditionModelFactory}の実装
      */
     protected ConditionModelFactory createConditionModelFactory() {
-        return factory.createConditionModelFactory(this, ClassUtil.concatName(
-                rootPackageName, conditionPackageName),
+        ConditionAttributeModelFactoryImpl attributeModelFactory = new ConditionAttributeModelFactoryImpl();
+        ConditionAssociationModelFactoryImpl associationModelFactory = new ConditionAssociationModelFactoryImpl(
                 conditionClassNameSuffix);
+        return new ConditionModelFactoryImpl(attributeModelFactory,
+                associationModelFactory, ClassUtil.concatName(
+                        rootPackageName, conditionPackageName), conditionClassNameSuffix);
     }
 
     /**
@@ -419,7 +428,7 @@ public class GenerateConditionCommand extends AbstractCommand {
      * @return {@link Generator}の実装
      */
     protected Generator createGenerator() {
-        return factory.createGenerator(this, templateFileEncoding,
+        return new GeneratorImpl(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 
@@ -436,7 +445,7 @@ public class GenerateConditionCommand extends AbstractCommand {
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return factory.createGenerationContext(this, model, file, templateName,
+        return new GenerationContextImpl(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 

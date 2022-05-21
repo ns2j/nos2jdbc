@@ -22,6 +22,10 @@ import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
+import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
+import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModel;
@@ -469,7 +473,7 @@ public class GenerateServiceTestCommand extends AbstractCommand {
      * @return {@link EntityMetaReader}の実装
      */
     protected EntityMetaReader createEntityMetaReader() {
-        return factory.createEntityMetaReader(this, classpathDir, ClassUtil
+        return new EntityMetaReaderImpl(classpathDir, ClassUtil
                 .concatName(rootPackageName, entityPackageName), jdbcManager
                 .getEntityMetaFactory(), entityClassNamePattern,
                 ignoreEntityClassNamePattern, false, null, null);
@@ -481,8 +485,7 @@ public class GenerateServiceTestCommand extends AbstractCommand {
      * @return {@link ServiceTestModelFactory}の実装
      */
     protected ServiceTestModelFactory createServiceTestModelFactory() {
-        return factory.createServiceTestModelFactory(this,
-                ClassUtil.concatName(rootPackageName, servicePackageName),
+        return new ServiceTestModelFactoryImpl(ClassUtil.concatName(rootPackageName, servicePackageName),
                 serviceClassNameSuffix, testClassNameSuffix,
                 rootPackageName, componentType);
     }
@@ -493,7 +496,7 @@ public class GenerateServiceTestCommand extends AbstractCommand {
      * @return {@link Generator}の実装
      */
     protected Generator createGenerator() {
-        return factory.createGenerator(this, templateFileEncoding,
+        return new GeneratorImpl(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 
@@ -510,7 +513,7 @@ public class GenerateServiceTestCommand extends AbstractCommand {
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return factory.createGenerationContext(this, model, file, templateName,
+        return new GenerationContextImpl(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 

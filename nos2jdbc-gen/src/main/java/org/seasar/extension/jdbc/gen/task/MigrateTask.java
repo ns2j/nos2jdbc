@@ -22,7 +22,6 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.command.MigrateCommand;
-import org.seasar.extension.jdbc.gen.internal.factory.Factory;
 
 /**
  * データベースのスキーマとデータを移行する{@link Task}です。
@@ -58,16 +57,6 @@ public class MigrateTask extends AbstractTask {
      */
     public void setJdbcManagerName(String jdbcManagerName) {
         command.setJdbcManagerName(jdbcManagerName);
-    }
-
-    /**
-     * {@link Factory}の実装クラス名を設定します。
-     * 
-     * @param factoryClassName
-     *            {@link Factory}の実装クラス名
-     */
-    public void setFactoryClassName(String factoryClassName) {
-        command.setFactoryClassName(factoryClassName);
     }
 
     /**

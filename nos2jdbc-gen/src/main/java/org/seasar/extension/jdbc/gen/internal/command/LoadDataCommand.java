@@ -28,9 +28,15 @@ import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.generator.Generator;
+import org.seasar.extension.jdbc.gen.internal.data.LoaderImpl;
+import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
+import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
+import org.seasar.extension.jdbc.gen.internal.sql.SqlUnitExecutorImpl;
 import org.seasar.extension.jdbc.gen.internal.util.DefaultExcludesFilenameFilter;
 import org.seasar.extension.jdbc.gen.internal.util.FileComparetor;
+import org.seasar.extension.jdbc.gen.internal.version.DdlVersionDirectoryTreeImpl;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
@@ -515,7 +521,7 @@ public class LoadDataCommand extends AbstractCommand {
      * @return {@link EntityMetaReader}の実装
      */
     protected EntityMetaReader createEntityMetaReader() {
-        return factory.createEntityMetaReader(this, classpathDir, ClassUtil
+        return new EntityMetaReaderImpl(classpathDir, ClassUtil
                 .concatName(rootPackageName, entityPackageName), jdbcManager
                 .getEntityMetaFactory(), entityClassNamePattern,
                 ignoreEntityClassNamePattern, false, null, null);
@@ -527,7 +533,7 @@ public class LoadDataCommand extends AbstractCommand {
      * @return {@link DatabaseDescFactory}の実装
      */
     protected DatabaseDescFactory createDatabaseDescFactory() {
-        return factory.createDatabaseDescFactory(this, jdbcManager
+        return new DatabaseDescFactoryImpl(jdbcManager
                 .getEntityMetaFactory(), entityMetaReader, dialect,
                 valueTypeProvider, true);
     }
@@ -538,7 +544,7 @@ public class LoadDataCommand extends AbstractCommand {
      * @return {@link SqlUnitExecutor}の実装
      */
     protected SqlUnitExecutor createSqlUnitExecutor() {
-        return factory.createSqlUnitExecutor(this, jdbcManager.getDataSource(),
+        return new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
                 userTransaction, true);
     }
 
@@ -548,8 +554,8 @@ public class LoadDataCommand extends AbstractCommand {
      * @return {@link Loader}の実装
      */
     protected Loader createLoader() {
-        return factory.createLoader(this, dialect, dumpFileEncoding,
-                loadBatchSize, delete, false);
+        return new LoaderImpl(dialect, dumpFileEncoding,
+                loadBatchSize, delete);
     }
 
     /**
@@ -558,8 +564,8 @@ public class LoadDataCommand extends AbstractCommand {
      * @return {@link DdlVersionDirectoryTree}の実装
      */
     protected DdlVersionDirectoryTree createDdlVersionDirectoryTree() {
-        return factory.createDdlVersionDirectoryTree(this, migrateDir,
-                ddlInfoFile, versionNoPattern, env, applyEnvToVersion);
+        return new DdlVersionDirectoryTreeImpl(migrateDir,
+                ddlInfoFile, versionNoPattern, applyEnvToVersion ? env: null);
     }
 
     /**
@@ -568,7 +574,7 @@ public class LoadDataCommand extends AbstractCommand {
      * @return {@link ValueTypeProvider}の実装
      */
     protected ValueTypeProvider createValueTypeProvider() {
-        return factory.createValueTypeProvider(this, jdbcManager.getDialect());
+        return new ValueTypeProviderImpl(jdbcManager.getDialect());
     }
 
     @Override

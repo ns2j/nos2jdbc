@@ -23,7 +23,10 @@ import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
+import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRuleImpl;
+import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantNamingRule;
@@ -357,7 +360,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
      * @return {@link SqlFileConstantsModelFactory}の実装
      */
     protected SqlFileConstantsModelFactory createSqlFileConstantsModelFactory() {
-        return factory.createSqlFileConstantsModelFactory(this, classpathDir,
+        return new SqlFileConstantsModelFactoryImpl(classpathDir,
                 sqlFileSet, sqlFileConstantNamingRule, ClassUtil.concatName(
                         rootPackageName, subPackageName), shortClassName);
     }
@@ -368,7 +371,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
      * @return {@link Generator}の実装
      */
     protected Generator createGenerator() {
-        return factory.createGenerator(this, templateFileEncoding,
+        return new GeneratorImpl(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 
@@ -385,7 +388,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return factory.createGenerationContext(this, model, file, templateName,
+        return new GenerationContextImpl(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 

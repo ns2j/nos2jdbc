@@ -22,6 +22,13 @@ import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
+import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
+import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceBaseQualifierModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
@@ -569,7 +576,7 @@ public class GenerateServiceCommand extends AbstractCommand {
             String templateName, boolean overwrite) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return factory.createGenerationContext(this, model, file, templateName,
+        return new GenerationContextImpl(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 
@@ -579,7 +586,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link EntityMetaReader}の実装
      */
     protected EntityMetaReader createEntityMetaReader() {
-        return factory.createEntityMetaReader(this, classpathDir, ClassUtil
+        return new EntityMetaReaderImpl(classpathDir, ClassUtil
                 .concatName(rootPackageName, entityPackageName), jdbcManager
                 .getEntityMetaFactory(), entityClassNamePattern,
                 ignoreEntityClassNamePattern, false, null, null);
@@ -591,7 +598,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link ServiceModelFactory}の実装
      */
     protected ServiceModelFactory createServiceModelFactory() {
-        return factory.createServiceModelFactory(this, ClassUtil.concatName(
+        return new ServiceModelFactoryImpl(ClassUtil.concatName(
                 rootPackageName, servicePackageName), serviceClassNameSuffix,
                 namesModelFactory, useNamesClass, jdbcManagerName, componentType);
     }
@@ -602,13 +609,13 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link NoS2AbstServiceModelFactory}の実装
      */
     protected NoS2AbstServiceModelFactory createAbstServiceModelFactory() {
-        return factory.createNoS2AbstServiceModelFactory(this, ClassUtil
+        return new NoS2AbstServiceModelFactoryImpl(ClassUtil
                 .concatName(rootPackageName, servicePackageName),
                 serviceClassNameSuffix, componentType);
     }
 
     protected ServiceBaseQualifierModelFactory createServiceBaseQualifierModelFactory() {
-        return factory.createServiceBaseQualifierModelFactory(this, ClassUtil
+        return new ServiceBaseQualifierModelFactoryImpl(ClassUtil
                 .concatName(rootPackageName, servicePackageName),
                 serviceClassNameSuffix, componentType);
     }
@@ -619,7 +626,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link NamesModelFactory}の実装
      */
     protected NamesModelFactory createNamesModelFactory() {
-        return factory.createNamesModelFactory(this, ClassUtil.concatName(
+        return new NamesModelFactoryImpl(ClassUtil.concatName(
                 rootPackageName, namesPackageName), namesClassNameSuffix);
     }
 
@@ -629,7 +636,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link Generator}の実装
      */
     protected Generator createGenerator() {
-        return factory.createGenerator(this, templateFileEncoding,
+        return new GeneratorImpl(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 

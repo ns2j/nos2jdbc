@@ -24,6 +24,11 @@ import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
+import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
+import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NamesAggregateModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModel;
@@ -501,7 +506,7 @@ public class GenerateNamesCommand extends AbstractCommand {
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return factory.createGenerationContext(this, model, file, templateName,
+        return new GenerationContextImpl(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 
@@ -511,7 +516,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      * @return {@link EntityMetaReader}の実装
      */
     protected EntityMetaReader createEntityMetaReader() {
-        return factory.createEntityMetaReader(this, classpathDir, ClassUtil
+        return new EntityMetaReaderImpl(classpathDir, ClassUtil
                 .concatName(rootPackageName, entityPackageName), jdbcManager
                 .getEntityMetaFactory(), entityClassNamePattern,
                 ignoreEntityClassNamePattern, false, null, null);
@@ -523,7 +528,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      * @return {@link NamesModelFactory}の実装
      */
     protected NamesModelFactory createNamesModelFactory() {
-        return factory.createNamesModelFactory(this, ClassUtil.concatName(
+        return new NamesModelFactoryImpl(ClassUtil.concatName(
                 rootPackageName, namesPackageName), namesClassNameSuffix);
     }
 
@@ -533,7 +538,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      * @return {@link NamesAggregateModelFactory}の実装
      */
     protected NamesAggregateModelFactory createNamesAggregateModelFactory() {
-        return factory.createNamesAggregateModelFactory(this, ClassUtil
+        return new NamesAggregateModelFactoryImpl(ClassUtil
                 .concatName(rootPackageName, namesPackageName),
                 namesAggregateShortClassName);
     }
@@ -544,7 +549,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      * @return {@link Generator}の実装
      */
     protected Generator createGenerator() {
-        return factory.createGenerator(this, templateFileEncoding,
+        return new GeneratorImpl(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 

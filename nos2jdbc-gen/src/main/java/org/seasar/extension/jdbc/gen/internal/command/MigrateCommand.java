@@ -25,7 +25,16 @@ import org.seasar.extension.jdbc.gen.data.Loader;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
+import org.seasar.extension.jdbc.gen.exception.LoadFailedRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
+import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
+import org.seasar.extension.jdbc.gen.internal.sql.SqlFileExecutorImpl;
+import org.seasar.extension.jdbc.gen.internal.sql.SqlUnitExecutorImpl;
+import org.seasar.extension.jdbc.gen.internal.version.DdlVersionDirectoryTreeImpl;
+import org.seasar.extension.jdbc.gen.internal.version.MigraterImpl;
+import org.seasar.extension.jdbc.gen.internal.version.SchemaInfoTableImpl;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
@@ -610,7 +619,7 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link EntityMetaReader}の実装
      */
     protected EntityMetaReader createEntityMetaReader() {
-        return factory.createEntityMetaReader(this, classpathDir, ClassUtil
+        return new EntityMetaReaderImpl(classpathDir, ClassUtil
                 .concatName(rootPackageName, entityPackageName), jdbcManager
                 .getEntityMetaFactory(), entityClassNamePattern,
                 ignoreEntityClassNamePattern, false, null, null);
@@ -622,7 +631,7 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link DatabaseDescFactory}の実装
      */
     protected DatabaseDescFactory createDatabaseDescFactory() {
-        return factory.createDatabaseDescFactory(this, jdbcManager
+        return new DatabaseDescFactoryImpl(jdbcManager
                 .getEntityMetaFactory(), entityMetaReader, dialect,
                 valueTypeProvider, true);
     }
@@ -633,7 +642,7 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link SchemaInfoTable}の実装
      */
     protected SchemaInfoTable createSchemaInfoTable() {
-        return factory.createSchemaInfoTable(this, jdbcManager.getDataSource(),
+        return new SchemaInfoTableImpl(jdbcManager.getDataSource(),
                 dialect, schemaInfoFullTableName, schemaInfoColumnName);
     }
 
@@ -643,8 +652,8 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link DdlVersionDirectoryTree}の実装
      */
     protected DdlVersionDirectoryTree createDdlVersionDirectoryTree() {
-        return factory.createDdlVersionDirectoryTree(this, migrateDir,
-                ddlInfoFile, versionNoPattern, env, applyEnvToVersion);
+        return new DdlVersionDirectoryTreeImpl(migrateDir,
+                ddlInfoFile, versionNoPattern, applyEnvToVersion ? env : null);
     }
 
     /**
@@ -653,7 +662,7 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link Migrater}の実装
      */
     protected Migrater createMigrater() {
-        return factory.createMigrater(this, sqlUnitExecutor, schemaInfoTable,
+        return new MigraterImpl(sqlUnitExecutor, schemaInfoTable,
                 ddlVersionDirectoryTree, version, env);
     }
 
@@ -663,7 +672,7 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link SqlFileExecutor}の実装
      */
     protected SqlFileExecutor createSqlFileExecutor() {
-        return factory.createSqlFileExecutor(this, dialect, ddlFileEncoding,
+        return new SqlFileExecutorImpl(dialect, ddlFileEncoding,
                 statementDelimiter, blockDelimiter);
     }
 
@@ -673,7 +682,7 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link SqlUnitExecutor}の実装
      */
     protected SqlUnitExecutor createSqlUnitExecutor() {
-        return factory.createSqlUnitExecutor(this, jdbcManager.getDataSource(),
+        return new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
                 userTransaction, haltOnError);
     }
 
@@ -683,9 +692,15 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link Loader}の実装
      */
     protected Loader createLoader() {
-        //
-        return factory.createLoader(this, dialect, dumpFileEncoding,
-                loadBatchSize, false, isTestDb);
+        return new Loader() {
+            @Override
+            public void load(SqlExecutionContext sqlExecutionContext, DatabaseDesc databaseDesc, File dumpFile)
+                    throws LoadFailedRuntimeException {}
+            @Override
+            public boolean isTarget(DatabaseDesc databaseDesc, File file) {
+                return false;
+            }
+        };
     }
 
     /**
@@ -694,7 +709,7 @@ public class MigrateCommand extends AbstractCommand {
      * @return {@link ValueTypeProvider}の実装
      */
     protected ValueTypeProvider createValueTypeProvider() {
-        return factory.createValueTypeProvider(this, jdbcManager.getDialect());
+        return new ValueTypeProviderImpl(jdbcManager.getDialect());
     }
 
     @Override

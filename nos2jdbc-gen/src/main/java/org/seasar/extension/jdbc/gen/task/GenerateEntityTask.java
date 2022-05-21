@@ -26,7 +26,6 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.command.GenerateEntityCommand;
-import org.seasar.extension.jdbc.gen.internal.factory.Factory;
 
 /**
  * エンティティクラスのJavaファイルを生成する{@link Task}です。
@@ -62,16 +61,6 @@ public class GenerateEntityTask extends AbstractTask {
      */
     public void setJdbcManagerName(String jdbcManagerName) {
         command.setJdbcManagerName(jdbcManagerName);
-    }
-
-    /**
-     * {@link Factory}の実装クラス名を設定します。
-     * 
-     * @param factoryClassName
-     *            {@link Factory}の実装クラス名
-     */
-    public void setFactoryClassName(String factoryClassName) {
-        command.setFactoryClassName(factoryClassName);
     }
 
     /**

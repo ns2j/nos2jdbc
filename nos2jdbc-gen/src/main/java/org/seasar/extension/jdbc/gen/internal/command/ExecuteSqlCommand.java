@@ -24,6 +24,8 @@ import javax.transaction.UserTransaction;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyEmptyRuntimeException;
+import org.seasar.extension.jdbc.gen.internal.sql.SqlFileExecutorImpl;
+import org.seasar.extension.jdbc.gen.internal.sql.SqlUnitExecutorImpl;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
@@ -244,6 +246,7 @@ public class ExecuteSqlCommand extends AbstractCommand {
     protected void doExecute() throws Throwable {
         sqlUnitExecutor.execute(new SqlUnitExecutor.Callback() {
 
+            @Override
             public void execute(SqlExecutionContext context) {
                 for (File sqlFile : sqlFileList) {
                     sqlFileExecutor.execute(context, sqlFile);
@@ -262,7 +265,7 @@ public class ExecuteSqlCommand extends AbstractCommand {
      * @return {@link SqlFileExecutor}の実装
      */
     protected SqlFileExecutor createSqlFileExecutor() {
-        return factory.createSqlFileExecutor(this, dialect, sqlFileEncoding,
+        return new SqlFileExecutorImpl(dialect, sqlFileEncoding,
                 statementDelimiter, blockDelimiter);
     }
 
@@ -272,7 +275,7 @@ public class ExecuteSqlCommand extends AbstractCommand {
      * @return {@link SqlUnitExecutor}の実装
      */
     protected SqlUnitExecutor createSqlUnitExecutor() {
-        return factory.createSqlUnitExecutor(this, jdbcManager.getDataSource(),
+        return new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
                 userTransaction, haltOnError);
     }
 

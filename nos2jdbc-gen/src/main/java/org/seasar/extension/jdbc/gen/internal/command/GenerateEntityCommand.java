@@ -28,6 +28,14 @@ import org.seasar.extension.jdbc.gen.desc.EntitySetDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
+import org.seasar.extension.jdbc.gen.internal.desc.EntitySetDescFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
+import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
+import org.seasar.extension.jdbc.gen.internal.meta.DbTableMetaReaderImpl;
+import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.CompositeUniqueConstraintModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.EntityModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.EntityModel;
@@ -717,7 +725,7 @@ public class GenerateEntityCommand extends AbstractCommand {
      * @return {@link DbTableMetaReader}の実装
      */
     protected DbTableMetaReader createDbTableMetaReader() {
-        return factory.createDbTableMetaReader(this, jdbcManager
+        return new DbTableMetaReaderImpl(jdbcManager
                 .getDataSource(), dialect, schemaName, tableNamePattern,
                 ignoreTableNamePattern, applyDbCommentToJava);
     }
@@ -728,7 +736,7 @@ public class GenerateEntityCommand extends AbstractCommand {
      * @return {@link EntitySetDescFactory}の実装
      */
     protected EntitySetDescFactory createEntitySetDescFactory() {
-        return factory.createEntitySetDescFactory(this, dbTableMetaReader,
+        return new EntitySetDescFactoryImpl(dbTableMetaReader,
                 jdbcManager.getPersistenceConvention(), dialect,
                 versionColumnNamePattern, pluralFormFile, generationType,
                 initialValue, allocationSize);
@@ -742,12 +750,14 @@ public class GenerateEntityCommand extends AbstractCommand {
     protected EntityModelFactory createEntityModelFactory() {
         Class<?> superClass = entitySuperclassName != null ? ClassUtil
                 .forName(entitySuperclassName) : null;
-        return factory.createEntityModelFactory(this, ClassUtil.concatName(
+        return new EntityModelFactoryImpl(ClassUtil.concatName(
                 rootPackageName, entityPackageName), superClass,
-                useTemporalType, useAccessor, applyDbCommentToJava,
-                showCatalogName, showSchemaName, showTableName, showColumnName,
-                showColumnDefinition, showJoinColumn, jdbcManager
-                        .getPersistenceConvention());
+                new AttributeModelFactoryImpl(showColumnName,
+                        showColumnDefinition, useTemporalType,
+                        jdbcManager.getPersistenceConvention()),
+                new AssociationModelFactoryImpl(showJoinColumn),
+                new CompositeUniqueConstraintModelFactoryImpl(), useAccessor,
+                applyDbCommentToJava, showCatalogName, showSchemaName, showTableName);
     }
 
     /**
@@ -756,7 +766,7 @@ public class GenerateEntityCommand extends AbstractCommand {
      * @return {@link Generator}の実装
      */
     protected Generator createGenerator() {
-        return factory.createGenerator(this, templateFileEncoding,
+        return new GeneratorImpl(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 
@@ -773,7 +783,7 @@ public class GenerateEntityCommand extends AbstractCommand {
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return factory.createGenerationContext(this, model, file, templateName,
+        return new GenerationContextImpl(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 

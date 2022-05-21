@@ -24,8 +24,6 @@ import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.dialect.GenDialectRegistry;
 import org.seasar.extension.jdbc.gen.exception.CommandFailedRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.factory.Factory;
-import org.seasar.extension.jdbc.gen.internal.factory.FactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.util.ConnectionUtil;
@@ -54,17 +52,8 @@ public abstract class AbstractCommand implements Command {
     /** {@link JdbcManager}のコンポーネント名 */
     protected String jdbcManagerName = "jdbcManager";
 
-    /** {@link Factory}の実装クラス名 */
-    protected String factoryClassName = FactoryImpl.class.getName();
-
-    /** {@link SingletonS2ContainerFactory}のサポート */
-//i    protected SingletonS2ContainerFactorySupport containerFactorySupport;
-
     /** 内部的なJDBCマネージャ */
     protected JdbcManagerImplementor jdbcManager;
-
-    /** S2JDBC-Genのインタフェースの実装を作成するファクトリ */
-    protected Factory factory;
 
     /**
      * インスタンスを構築します。
@@ -124,9 +113,9 @@ public abstract class AbstractCommand implements Command {
      * 
      * @return {@link Factory}の実装クラス名
      */
-    public String getFactoryClassName() {
-        return factoryClassName;
-    }
+//    public String getFactoryClassName() {
+  //      return factoryClassName;
+    //}
 
     /**
      * {@link Factory}の実装クラス名を設定します。
@@ -134,9 +123,9 @@ public abstract class AbstractCommand implements Command {
      * @param factoryClassName
      *            {@link Factory}の実装クラス名
      */
-    public void setFactoryClassName(String factoryClassName) {
-        this.factoryClassName = factoryClassName;
-    }
+//    public void setFactoryClassName(String factoryClassName) {
+  //      this.factoryClassName = factoryClassName;
+    //}
 
     @Override
     public final void execute() {
@@ -185,11 +174,6 @@ public abstract class AbstractCommand implements Command {
      * 初期化します。
      */
     protected final void init() {
-        factory = ReflectUtil.newInstance(Factory.class, factoryClassName);
-//i        containerFactorySupport = new SingletonS2ContainerFactorySupport(
-//i                configPath, env);
-//i        containerFactorySupport.init();
-//i        jdbcManager = SingletonS2Container.getComponent(jdbcManagerName);
         jdbcManager = (JdbcManagerImplementor)NoS2JdbcManager.getJdbcManager();
         doInit();
     }
@@ -199,9 +183,6 @@ public abstract class AbstractCommand implements Command {
      */
     protected final void destroy() {
         doDestroy();
-//i        if (containerFactorySupport != null) {
-//i            containerFactorySupport.destory();
-//i        }
     }
 
     /**
