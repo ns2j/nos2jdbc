@@ -15,11 +15,13 @@
  */
 package org.seasar.extension.jdbc.gen.internal.command;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -57,7 +59,6 @@ class DumpDataCommandTest {
     @Test
     void testInit() throws Exception {
         DumpDataCommand command = new DumpDataCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.setClasspathDir(new File("dir"));
         command.validate();
         command.init();

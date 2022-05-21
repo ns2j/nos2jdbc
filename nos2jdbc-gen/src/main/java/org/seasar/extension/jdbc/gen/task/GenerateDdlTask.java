@@ -45,16 +45,6 @@ public class GenerateDdlTask extends AbstractTask {
     }
 
     /**
-     * 設定ファイルのパスを設定します。
-     * 
-     * @param configPath
-     *            設定ファイルのパス
-     */
-    public void setConfigPath(String configPath) {
-        command.setConfigPath(configPath);
-    }
-
-    /**
      * 環境名を設定します。
      * 
      * @param env

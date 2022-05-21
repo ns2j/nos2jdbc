@@ -15,12 +15,13 @@
  */
 package org.seasar.extension.jdbc.gen.internal.command;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.command.ExecuteSqlCommand;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyEmptyRuntimeException;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -58,7 +59,6 @@ class ExecuteSqlCommandTest {
     @Test
     void testInit() throws Exception {
         ExecuteSqlCommand command = new ExecuteSqlCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.getSqlFileList().add(new File("aaa"));
         command.validate();
         command.init();

@@ -15,10 +15,10 @@
  */
 package org.seasar.extension.jdbc.gen.internal.command;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.command.DumpDbMetaCommand;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -42,7 +42,6 @@ class DumpDbMetaCommandTest {
     @Test
     void testInit() throws Exception {
         DumpDbMetaCommand command = new DumpDbMetaCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.validate();
         command.init();
         assertNotNull(command.dialect);

@@ -15,12 +15,14 @@
  */
 package org.seasar.extension.jdbc.gen.internal.command;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.model.ServiceModel;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -44,7 +46,6 @@ class GenerateServiceCommandTest {
     @Test
     void testValidate() throws Exception {
         GenerateServiceCommand command = new GenerateServiceCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         try {
             command.validate();
             fail();
@@ -59,7 +60,6 @@ class GenerateServiceCommandTest {
     @Test
     void testInit() throws Exception {
         GenerateServiceCommand command = new GenerateServiceCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.setClasspathDir(new File("dir"));
         command.validate();
         command.init();

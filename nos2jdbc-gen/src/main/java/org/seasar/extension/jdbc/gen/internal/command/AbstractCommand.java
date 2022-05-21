@@ -82,16 +82,6 @@ public abstract class AbstractCommand implements Command {
     }
 
     /**
-     * 設定ファイルのパスを設定します。
-     * 
-     * @param configPath
-     *            設定ファイルのパス
-     */
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
-    }
-
-    /**
      * 環境名を返します。
      * 
      * @return 環境名

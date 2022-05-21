@@ -15,9 +15,10 @@
  */
 package org.seasar.extension.jdbc.gen.internal.command;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -41,7 +42,6 @@ class GenerateEntityCommandTest {
     @Test
     void testValidate() throws Exception {
         GenerateEntityCommand command = new GenerateEntityCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.validate();
     }
 
@@ -52,7 +52,6 @@ class GenerateEntityCommandTest {
     @Test
     void testInit() throws Exception {
         GenerateEntityCommand command = new GenerateEntityCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.init();
         assertNotNull(command.entitySetDescFactory);
         assertNotNull(command.entityModelFactory);

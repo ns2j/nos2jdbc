@@ -15,12 +15,13 @@
  */
 package org.seasar.extension.jdbc.gen.internal.command;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.command.MigrateCommand;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -44,7 +45,6 @@ class MigrateCommandTest {
     @Test
     void testValidate() throws Exception {
         MigrateCommand command = new MigrateCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         try {
             command.validate();
             fail();
@@ -59,7 +59,6 @@ class MigrateCommandTest {
     @Test
     void testInit() throws Exception {
         MigrateCommand command = new MigrateCommand();
-        command.setConfigPath("s2jdbc-gen-core-test.dicon");
         command.setClasspathDir(new File("dir"));
         command.validate();
         command.init();

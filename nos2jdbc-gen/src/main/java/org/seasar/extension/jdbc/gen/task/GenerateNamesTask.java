@@ -36,16 +36,6 @@ public class GenerateNamesTask extends AbstractTask {
     protected GenerateNamesCommand command = new GenerateNamesCommand();
 
     /**
-     * 設定ファイルのパスを設定します。
-     * 
-     * @param configPath
-     *            設定ファイルのパス
-     */
-    public void setConfigPath(String configPath) {
-        command.setConfigPath(configPath);
-    }
-
-    /**
      * 環境名を設定します。
      * 
      * @param env
