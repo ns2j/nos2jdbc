@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.Writer;
 
 import org.seasar.framework.exception.IORuntimeException;
+import org.seasar.framework.util.CloseableUtil;
 import org.seasar.framework.util.FileInputStreamUtil;
 
 /**

@@ -27,10 +27,10 @@ import java.util.Locale;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.TemplateRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.util.CloseableUtil;
 import org.seasar.extension.jdbc.gen.internal.util.DeleteEmptyFileWriter;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.CloseableUtil;
 import org.seasar.framework.util.FileOutputStreamUtil;
 
 import freemarker.cache.FileTemplateLoader;
@@ -121,6 +121,7 @@ public class GeneratorImpl implements Generator {
                 secondary });
     }
 
+    @Override
     public void generate(GenerationContext context) {
         boolean exists = exists(context.getFile());
         if (!context.isOverwrite() && exists) {

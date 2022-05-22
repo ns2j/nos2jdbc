@@ -27,9 +27,9 @@ import java.util.List;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect.SqlBlockContext;
 import org.seasar.extension.jdbc.gen.internal.sql.SqlFileTokenizer.TokenType;
-import org.seasar.extension.jdbc.gen.internal.util.CloseableUtil;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.CloseableUtil;
 
 /**
  * SQLファイルのリーダです。
