@@ -16,11 +16,8 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
-import org.seasar.extension.jdbc.gen.desc.AttributeDescFactory;
 import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDesc;
-import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDescFactory;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
-import org.seasar.extension.jdbc.gen.desc.EntityDescFactory;
 import org.seasar.extension.jdbc.gen.meta.DbColumnMeta;
 import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.extension.jdbc.gen.meta.DbUniqueKeyMeta;
@@ -31,7 +28,7 @@ import org.seasar.framework.convention.PersistenceConvention;
  * 
  * @author taedium
  */
-public class EntityDescFactoryImpl implements EntityDescFactory {
+public class EntityDescFactory {
 
     /** 永続化層の命名規約 */
     protected PersistenceConvention persistenceConvention;
@@ -55,7 +52,7 @@ public class EntityDescFactoryImpl implements EntityDescFactory {
      * @param attributeDescFactory
      *            属性記述のファクトリ
      */
-    public EntityDescFactoryImpl(
+    public EntityDescFactory(
             PersistenceConvention persistenceConvention,
             AttributeDescFactory attributeDescFactory,
             CompositeUniqueConstraintDescFactory compositeUniqueConstraintDescFactory) {

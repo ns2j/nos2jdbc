@@ -23,10 +23,10 @@ import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.data.Loader;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
-import org.seasar.extension.jdbc.gen.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.exception.LoadFailedRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.data.LoaderImpl;
+import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
@@ -559,20 +559,28 @@ public class MigrateCommand extends AbstractCommand {
     @Override
     protected void doInit() {
         dialect = getGenDialect(genDialectClassName);
-        valueTypeProvider = createValueTypeProvider();
+        valueTypeProvider = new ValueTypeProviderImpl(jdbcManager.getDialect());
         if (transactional) {
-            //i            userTransaction = SingletonS2Container
-            //i                    .getComponent(UserTransaction.class);
             userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
-        sqlFileExecutor = createSqlFileExecutor();
-        schemaInfoTable = createSchemaInfoTable();
-        ddlVersionDirectoryTree = createDdlVersionDirectoryTree();
-        entityMetaReader = createEntityMetaReader();
-        databaseDescFactory = createDatabaseDescFactory();
-        sqlUnitExecutor = createSqlUnitExecutor();
+        sqlFileExecutor = new SqlFileExecutorImpl(dialect, ddlFileEncoding,
+                statementDelimiter, blockDelimiter);
+        schemaInfoTable = new SchemaInfoTableImpl(jdbcManager.getDataSource(),
+                dialect, schemaInfoFullTableName, schemaInfoColumnName);
+        ddlVersionDirectoryTree = new DdlVersionDirectoryTreeImpl(migrateDir,
+                ddlInfoFile, versionNoPattern, applyEnvToVersion ? env : null);
+        entityMetaReader = new EntityMetaReaderImpl(classpathDir, ClassUtil
+                .concatName(rootPackageName, entityPackageName), jdbcManager
+                .getEntityMetaFactory(), entityClassNamePattern,
+                ignoreEntityClassNamePattern, false, null, null);
+        databaseDescFactory = new DatabaseDescFactory(jdbcManager
+                .getEntityMetaFactory(), entityMetaReader, dialect,
+                valueTypeProvider, true);
+        sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
+                userTransaction, haltOnError);
         loader = createLoader();
-        migrater = createMigrater();
+        migrater = new MigraterImpl(sqlUnitExecutor, schemaInfoTable,
+                ddlVersionDirectoryTree, version, env);
 
         logRdbmsAndGenDialect(dialect);
     }
@@ -614,102 +622,25 @@ public class MigrateCommand extends AbstractCommand {
     }
 
     /**
-     * {@link EntityMetaReader}の実装を作成します。
-     * 
-     * @return {@link EntityMetaReader}の実装
-     */
-    protected EntityMetaReader createEntityMetaReader() {
-        return new EntityMetaReaderImpl(classpathDir, ClassUtil
-                .concatName(rootPackageName, entityPackageName), jdbcManager
-                .getEntityMetaFactory(), entityClassNamePattern,
-                ignoreEntityClassNamePattern, false, null, null);
-    }
-
-    /**
-     * {@link DatabaseDescFactory}の実装を作成します。
-     * 
-     * @return {@link DatabaseDescFactory}の実装
-     */
-    protected DatabaseDescFactory createDatabaseDescFactory() {
-        return new DatabaseDescFactoryImpl(jdbcManager
-                .getEntityMetaFactory(), entityMetaReader, dialect,
-                valueTypeProvider, true);
-    }
-
-    /**
-     * {@link SchemaInfoTable}の実装を作成します。
-     * 
-     * @return {@link SchemaInfoTable}の実装
-     */
-    protected SchemaInfoTable createSchemaInfoTable() {
-        return new SchemaInfoTableImpl(jdbcManager.getDataSource(),
-                dialect, schemaInfoFullTableName, schemaInfoColumnName);
-    }
-
-    /**
-     * {@link DdlVersionDirectoryTree}の実装を作成します。
-     * 
-     * @return {@link DdlVersionDirectoryTree}の実装
-     */
-    protected DdlVersionDirectoryTree createDdlVersionDirectoryTree() {
-        return new DdlVersionDirectoryTreeImpl(migrateDir,
-                ddlInfoFile, versionNoPattern, applyEnvToVersion ? env : null);
-    }
-
-    /**
-     * {@link Migrater}の実装を作成します。
-     * 
-     * @return {@link Migrater}の実装
-     */
-    protected Migrater createMigrater() {
-        return new MigraterImpl(sqlUnitExecutor, schemaInfoTable,
-                ddlVersionDirectoryTree, version, env);
-    }
-
-    /**
-     * {@link SqlFileExecutor}の実装を作成します。
-     * 
-     * @return {@link SqlFileExecutor}の実装
-     */
-    protected SqlFileExecutor createSqlFileExecutor() {
-        return new SqlFileExecutorImpl(dialect, ddlFileEncoding,
-                statementDelimiter, blockDelimiter);
-    }
-
-    /**
-     * {@link SqlUnitExecutor}の実装を作成します。
-     * 
-     * @return {@link SqlUnitExecutor}の実装
-     */
-    protected SqlUnitExecutor createSqlUnitExecutor() {
-        return new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
-                userTransaction, haltOnError);
-    }
-
-    /**
      * {@link Loader}の実装を作成します。
      * 
      * @return {@link Loader}の実装
      */
     protected Loader createLoader() {
-        return new Loader() {
+        if (!isTestDb)
+            return new LoaderImpl(dialect, dumpFileEncoding, loadBatchSize, false);
+        else
+            return new Loader() {
             @Override
             public void load(SqlExecutionContext sqlExecutionContext, DatabaseDesc databaseDesc, File dumpFile)
-                    throws LoadFailedRuntimeException {}
+                    throws LoadFailedRuntimeException {
+            }
+            
             @Override
             public boolean isTarget(DatabaseDesc databaseDesc, File file) {
                 return false;
             }
         };
-    }
-
-    /**
-     * {@link ValueTypeProvider}の実装を作成します。
-     * 
-     * @return {@link ValueTypeProvider}の実装
-     */
-    protected ValueTypeProvider createValueTypeProvider() {
-        return new ValueTypeProviderImpl(jdbcManager.getDialect());
     }
 
     @Override

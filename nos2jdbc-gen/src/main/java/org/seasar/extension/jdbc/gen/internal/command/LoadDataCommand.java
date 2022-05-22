@@ -25,11 +25,10 @@ import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.data.Loader;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
-import org.seasar.extension.jdbc.gen.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.data.LoaderImpl;
-import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
@@ -462,17 +461,23 @@ public class LoadDataCommand extends AbstractCommand {
     @Override
     protected void doInit() {
         dialect = getGenDialect(genDialectClassName);
-        valueTypeProvider = createValueTypeProvider();
+        valueTypeProvider = new ValueTypeProviderImpl(jdbcManager.getDialect());
         if (transactional) {
-//i            userTransaction = SingletonS2Container
-//i                    .getComponent(UserTransaction.class);
             userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
-        entityMetaReader = createEntityMetaReader();
-        databaseDescFactory = createDatabaseDescFactory();
-        sqlUnitExecutor = createSqlUnitExecutor();
-        loader = createLoader();
-        ddlVersionDirectoryTree = createDdlVersionDirectoryTree();
+        entityMetaReader = new EntityMetaReaderImpl(classpathDir, ClassUtil
+                .concatName(rootPackageName, entityPackageName), jdbcManager
+                .getEntityMetaFactory(), entityClassNamePattern,
+                ignoreEntityClassNamePattern, false, null, null);
+        databaseDescFactory = new DatabaseDescFactory(jdbcManager
+                .getEntityMetaFactory(), entityMetaReader, dialect,
+                valueTypeProvider, true);
+        sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
+                userTransaction, true);
+        loader = new LoaderImpl(dialect, dumpFileEncoding,
+                loadBatchSize, delete);
+        ddlVersionDirectoryTree = new DdlVersionDirectoryTreeImpl(migrateDir,
+                ddlInfoFile, versionNoPattern, applyEnvToVersion ? env: null);
 
         logRdbmsAndGenDialect(dialect);
     }
@@ -513,68 +518,6 @@ public class LoadDataCommand extends AbstractCommand {
 
     @Override
     protected void doDestroy() {
-    }
-
-    /**
-     * {@link EntityMetaReader}の実装を作成します。
-     * 
-     * @return {@link EntityMetaReader}の実装
-     */
-    protected EntityMetaReader createEntityMetaReader() {
-        return new EntityMetaReaderImpl(classpathDir, ClassUtil
-                .concatName(rootPackageName, entityPackageName), jdbcManager
-                .getEntityMetaFactory(), entityClassNamePattern,
-                ignoreEntityClassNamePattern, false, null, null);
-    }
-
-    /**
-     * {@link DatabaseDescFactory}の実装を作成します。
-     * 
-     * @return {@link DatabaseDescFactory}の実装
-     */
-    protected DatabaseDescFactory createDatabaseDescFactory() {
-        return new DatabaseDescFactoryImpl(jdbcManager
-                .getEntityMetaFactory(), entityMetaReader, dialect,
-                valueTypeProvider, true);
-    }
-
-    /**
-     * {@link SqlUnitExecutor}の実装を作成します。
-     * 
-     * @return {@link SqlUnitExecutor}の実装
-     */
-    protected SqlUnitExecutor createSqlUnitExecutor() {
-        return new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
-                userTransaction, true);
-    }
-
-    /**
-     * {@link Loader}の実装を作成します。
-     * 
-     * @return {@link Loader}の実装
-     */
-    protected Loader createLoader() {
-        return new LoaderImpl(dialect, dumpFileEncoding,
-                loadBatchSize, delete);
-    }
-
-    /**
-     * {@link DdlVersionDirectoryTree}の実装を作成します。
-     * 
-     * @return {@link DdlVersionDirectoryTree}の実装
-     */
-    protected DdlVersionDirectoryTree createDdlVersionDirectoryTree() {
-        return new DdlVersionDirectoryTreeImpl(migrateDir,
-                ddlInfoFile, versionNoPattern, applyEnvToVersion ? env: null);
-    }
-
-    /**
-     * {@link ValueTypeProvider}の実装を作成します。
-     * 
-     * @return {@link ValueTypeProvider}の実装
-     */
-    protected ValueTypeProvider createValueTypeProvider() {
-        return new ValueTypeProviderImpl(jdbcManager.getDialect());
     }
 
     @Override

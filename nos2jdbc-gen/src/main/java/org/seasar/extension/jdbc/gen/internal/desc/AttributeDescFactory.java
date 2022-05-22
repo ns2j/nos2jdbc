@@ -23,7 +23,6 @@ import javax.persistence.TableGenerator;
 import javax.persistence.Version;
 
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
-import org.seasar.extension.jdbc.gen.desc.AttributeDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.exception.IdentityNotSupportedRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.SequenceNotSupportedRuntimeException;
@@ -38,7 +37,7 @@ import org.seasar.framework.util.ClassUtil;
  * 
  * @author taedium
  */
-public class AttributeDescFactoryImpl implements AttributeDescFactory {
+public class AttributeDescFactory {
 
     /** 永続化層の命名規約 */
     protected PersistenceConvention persistenceConvention;
@@ -74,7 +73,7 @@ public class AttributeDescFactoryImpl implements AttributeDescFactory {
      * @param allocationSize
      *            エンティティの識別子の割り当てサイズ、指定しない場合は{@code null}
      */
-    public AttributeDescFactoryImpl(
+    public AttributeDescFactory(
             PersistenceConvention persistenceConvention, GenDialect dialect,
             String versionColumnNamePattern, GenerationType generationType,
             Integer initialValue, Integer allocationSize) {

@@ -39,7 +39,7 @@ class PrimaryKeyDescFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
-    private PrimaryKeyDescFactoryImpl primaryKeyDescFactory;
+    private PrimaryKeyDescFactory primaryKeyDescFactory;
 
     /**
      * 
@@ -59,7 +59,7 @@ class PrimaryKeyDescFactoryImplTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(pmf);
         entityMetaFactory.setTableMetaFactory(tmf);
-        primaryKeyDescFactory = new PrimaryKeyDescFactoryImpl(new HsqlGenDialect());
+        primaryKeyDescFactory = new PrimaryKeyDescFactory(new HsqlGenDialect());
     }
 
     /**

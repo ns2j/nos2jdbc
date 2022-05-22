@@ -16,7 +16,6 @@
 package org.seasar.extension.jdbc.gen.internal.desc;
 
 import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDesc;
-import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDescFactory;
 import org.seasar.extension.jdbc.gen.meta.DbUniqueKeyMeta;
 
 /**
@@ -24,8 +23,7 @@ import org.seasar.extension.jdbc.gen.meta.DbUniqueKeyMeta;
  * 
  * @author taedium
  */
-public class CompositeUniqueConstraintDescFactoryImpl implements
-        CompositeUniqueConstraintDescFactory {
+public class CompositeUniqueConstraintDescFactory {
 
     public CompositeUniqueConstraintDesc getCompositeUniqueConstraintDesc(
             DbUniqueKeyMeta uniqueKeyMeta) {

@@ -25,12 +25,8 @@ import java.util.List;
 
 import javax.persistence.GenerationType;
 
-import org.seasar.extension.jdbc.gen.desc.AttributeDescFactory;
-import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDescFactory;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
-import org.seasar.extension.jdbc.gen.desc.EntityDescFactory;
 import org.seasar.extension.jdbc.gen.desc.EntitySetDesc;
-import org.seasar.extension.jdbc.gen.desc.EntitySetDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.meta.DbForeignKeyMeta;
 import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
@@ -43,7 +39,7 @@ import org.seasar.framework.exception.IORuntimeException;
  * 
  * @author taedium
  */
-public class EntitySetDescFactoryImpl implements EntitySetDescFactory {
+public class EntitySetDescFactory {
 
     /** テーブルメタデータのリーダ */
     protected DbTableMetaReader dbTableMetaReader;
@@ -92,7 +88,7 @@ public class EntitySetDescFactoryImpl implements EntitySetDescFactory {
      * @param allocationSize
      *            エンティティの識別子の割り当てサイズ、指定しない場合は{@code null}
      */
-    public EntitySetDescFactoryImpl(DbTableMetaReader dbTableMetaReader,
+    public EntitySetDescFactory(DbTableMetaReader dbTableMetaReader,
             PersistenceConvention persistenceConvention, GenDialect dialect,
             String versionColumnNamePattern, File pluralFormFile,
             GenerationType generationType, Integer initialValue,
@@ -120,8 +116,7 @@ public class EntitySetDescFactoryImpl implements EntitySetDescFactory {
         entityDescFactory = createEntityDescFactory();
     }
 
-    @Override
-    public EntitySetDesc getEntitySetDesc() {
+        public EntitySetDesc getEntitySetDesc() {
         EntitySetDesc entitySetDesc = new EntitySetDesc();
         List<DbTableMeta> dbTableMetaList = dbTableMetaReader.read();
         for (DbTableMeta tableMeta : dbTableMetaList) {
@@ -146,11 +141,11 @@ public class EntitySetDescFactoryImpl implements EntitySetDescFactory {
      * @return {@link EntityDescFactory}の実装
      */
     protected EntityDescFactory createEntityDescFactory() {
-        AttributeDescFactory attributeDescFactory = new AttributeDescFactoryImpl(
+        AttributeDescFactory attributeDescFactory = new AttributeDescFactory(
                 persistenceConvention, dialect, versionColumnNamePattern,
                 generationType, initialValue, allocationSize);
-        CompositeUniqueConstraintDescFactory compositeUniqueConstraintDescFactory = new CompositeUniqueConstraintDescFactoryImpl();
-        return new EntityDescFactoryImpl(persistenceConvention,
+        CompositeUniqueConstraintDescFactory compositeUniqueConstraintDescFactory = new CompositeUniqueConstraintDescFactory();
+        return new EntityDescFactory(persistenceConvention,
                 attributeDescFactory, compositeUniqueConstraintDescFactory);
     }
 

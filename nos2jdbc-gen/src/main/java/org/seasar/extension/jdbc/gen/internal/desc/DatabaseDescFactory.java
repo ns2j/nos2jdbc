@@ -18,16 +18,8 @@ package org.seasar.extension.jdbc.gen.internal.desc;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.ValueType;
-import org.seasar.extension.jdbc.gen.desc.ColumnDescFactory;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
-import org.seasar.extension.jdbc.gen.desc.DatabaseDescFactory;
-import org.seasar.extension.jdbc.gen.desc.ForeignKeyDescFactory;
-import org.seasar.extension.jdbc.gen.desc.IdTableDescFactory;
-import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDescFactory;
-import org.seasar.extension.jdbc.gen.desc.SequenceDescFactory;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
-import org.seasar.extension.jdbc.gen.desc.TableDescFactory;
-import org.seasar.extension.jdbc.gen.desc.UniqueKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
@@ -37,7 +29,7 @@ import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
  * 
  * @author taedium
  */
-public class DatabaseDescFactoryImpl implements DatabaseDescFactory {
+public class DatabaseDescFactory {
 
     /** エンティティメタデータのファクトリ */
     protected EntityMetaFactory entityMetaFactory;
@@ -71,7 +63,7 @@ public class DatabaseDescFactoryImpl implements DatabaseDescFactory {
      * @param regardRelationshipAsFk
      *            関連を外部キーとみなす場合{@code true}、みなさない場合{@code false}
      */
-    public DatabaseDescFactoryImpl(EntityMetaFactory entityMetaFactory,
+    public DatabaseDescFactory(EntityMetaFactory entityMetaFactory,
             EntityMetaReader entityMetaReader, GenDialect dialect,
             ValueTypeProvider valueTypeProvider, boolean regardRelationshipAsFk) {
         if (entityMetaFactory == null) {
@@ -113,72 +105,14 @@ public class DatabaseDescFactoryImpl implements DatabaseDescFactory {
      * @return テーブル記述のファクトリ
      */
     protected TableDescFactory createTableDescFactory() {
-        ColumnDescFactory colFactory = createColumnDescFactory();
-        PrimaryKeyDescFactory pkFactory = createPrimaryKeyDescFactory();
-        UniqueKeyDescFactory ukFactory = createUniqueKeyDescFactory();
-        ForeignKeyDescFactory fkFactory = createForeignKeyDescFactory();
-        SequenceDescFactory seqFactory = createSequenceDescFactory();
-        IdTableDescFactory idTabFactory = createIdTableDescFactory(ukFactory);
-        return new TableDescFactoryImpl(dialect, colFactory, pkFactory,
+        ColumnDescFactory colFactory = new ColumnDescFactory(dialect, valueTypeProvider);
+        PrimaryKeyDescFactory pkFactory = new PrimaryKeyDescFactory(dialect);
+        UniqueKeyDescFactory ukFactory = new UniqueKeyDescFactory(dialect);
+        ForeignKeyDescFactory fkFactory = new ForeignKeyDescFactory(dialect, entityMetaFactory,
+                regardRelationshipAsFk);
+        SequenceDescFactory seqFactory = new SequenceDescFactory(dialect, valueTypeProvider);
+        IdTableDescFactory idTabFactory = new IdTableDescFactory(dialect, ukFactory);
+        return new TableDescFactory(dialect, colFactory, pkFactory,
                 ukFactory, fkFactory, seqFactory, idTabFactory);
     }
-
-    /**
-     * {@link ColumnDescFactory}の実装を返します。
-     * 
-     * @return {@link ColumnDescFactory}の実装
-     */
-    protected ColumnDescFactory createColumnDescFactory() {
-        return new ColumnDescFactoryImpl(dialect, valueTypeProvider);
-    }
-
-    /**
-     * {@link PrimaryKeyDescFactory}の実装を返します。
-     * 
-     * @return {@link PrimaryKeyDescFactory}の実装
-     */
-    protected PrimaryKeyDescFactory createPrimaryKeyDescFactory() {
-        return new PrimaryKeyDescFactoryImpl(dialect);
-    }
-
-    /**
-     * {@link UniqueKeyDescFactory}の実装を返します。
-     * 
-     * @return {@link UniqueKeyDescFactory}の実装
-     */
-    protected UniqueKeyDescFactory createUniqueKeyDescFactory() {
-        return new UniqueKeyDescFactoryImpl(dialect);
-    }
-
-    /**
-     * {@link ForeignKeyDescFactoryImpl}の実装を返します。
-     * 
-     * @return {@link ForeignKeyDescFactoryImpl}の実装
-     */
-    protected ForeignKeyDescFactory createForeignKeyDescFactory() {
-        return new ForeignKeyDescFactoryImpl(dialect, entityMetaFactory,
-                regardRelationshipAsFk);
-    }
-
-    /**
-     * {@link SequenceDescFactory}の実装を返します。
-     * 
-     * @return {@link SequenceDescFactory}の実装
-     */
-    protected SequenceDescFactory createSequenceDescFactory() {
-        return new SequenceDescFactoryImpl(dialect, valueTypeProvider);
-    }
-
-    /**
-     * {@link IdTableDescFactory}の実装を返します。
-     * 
-     * @param ukFactory
-     *            一意キー記述のファクトリ
-     * @return {@link IdTableDescFactory}の実装
-     */
-    protected IdTableDescFactory createIdTableDescFactory(
-            UniqueKeyDescFactory ukFactory) {
-        return new IdTableDescFactoryImpl(dialect, ukFactory);
-    }
-
 }

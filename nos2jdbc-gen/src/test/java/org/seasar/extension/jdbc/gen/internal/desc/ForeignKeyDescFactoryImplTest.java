@@ -49,7 +49,7 @@ class ForeignKeyDescFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
-    private ForeignKeyDescFactoryImpl foreignKeyDescFactory;
+    private ForeignKeyDescFactory foreignKeyDescFactory;
 
     /**
      * 
@@ -70,7 +70,7 @@ class ForeignKeyDescFactoryImplTest {
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
         GenDialect dialect = new StandardGenDialect();
-        foreignKeyDescFactory = new ForeignKeyDescFactoryImpl(dialect, entityMetaFactory, true);
+        foreignKeyDescFactory = new ForeignKeyDescFactory(dialect, entityMetaFactory, true);
     }
 
     /**
@@ -118,7 +118,7 @@ class ForeignKeyDescFactoryImplTest {
     @Test
     void testReferentialConstraint_true() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Eee.class);
-        foreignKeyDescFactory = new ForeignKeyDescFactoryImpl(new StandardGenDialect(), entityMetaFactory, false);
+        foreignKeyDescFactory = new ForeignKeyDescFactory(new StandardGenDialect(), entityMetaFactory, false);
         ForeignKeyDesc foreignKeyDesc = foreignKeyDescFactory.getForeignKeyDesc(entityMeta, entityMeta.getPropertyMeta("bbb"));
         assertNotNull(foreignKeyDesc);
     }

@@ -44,7 +44,7 @@ class IdTableDescFactoryImplTest {
 
     private PropertyMetaFactoryImpl propertyMetaFactory;
 
-    private IdTableDescFactoryImpl idTableDescFactory;
+    private IdTableDescFactory idTableDescFactory;
 
     @SuppressWarnings("unused")
     @Id
@@ -75,8 +75,8 @@ class IdTableDescFactoryImplTest {
         propertyMetaFactory.setPersistenceConvention(pc);
         propertyMetaFactory.setColumnMetaFactory(cmf);
         GenDialect dialect = new StandardGenDialect();
-        UniqueKeyDescFactoryImpl ukdf = new UniqueKeyDescFactoryImpl(dialect);
-        idTableDescFactory = new IdTableDescFactoryImpl(dialect, ukdf);
+        UniqueKeyDescFactory ukdf = new UniqueKeyDescFactory(dialect);
+        idTableDescFactory = new IdTableDescFactory(dialect, ukdf);
     }
 
     /**

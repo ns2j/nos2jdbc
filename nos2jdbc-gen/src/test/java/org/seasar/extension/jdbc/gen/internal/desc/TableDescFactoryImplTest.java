@@ -15,7 +15,10 @@
  */
 package org.seasar.extension.jdbc.gen.internal.desc;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,13 +28,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.dialect.H2Dialect;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
-import org.seasar.extension.jdbc.gen.desc.TableDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.H2GenDialect;
 import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
@@ -42,7 +45,6 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -74,13 +76,13 @@ class TableDescFactoryImplTest {
         entityMetaFactory.setTableMetaFactory(tmf);
         GenDialect dialect = new H2GenDialect();
         ValueTypeProvider valueTypeProvider = new ValueTypeProviderImpl(new H2Dialect());
-        ColumnDescFactoryImpl colFactory = new ColumnDescFactoryImpl(dialect, valueTypeProvider);
-        PrimaryKeyDescFactoryImpl pkFactory = new PrimaryKeyDescFactoryImpl(dialect);
-        UniqueKeyDescFactoryImpl ukFactory = new UniqueKeyDescFactoryImpl(dialect);
-        ForeignKeyDescFactoryImpl fkFactory = new ForeignKeyDescFactoryImpl(dialect, entityMetaFactory, true);
-        SequenceDescFactoryImpl seqFactory = new SequenceDescFactoryImpl(dialect, valueTypeProvider);
-        IdTableDescFactoryImpl idTabFactory = new IdTableDescFactoryImpl(dialect, ukFactory);
-        tableDescFactory = new TableDescFactoryImpl(dialect, colFactory, pkFactory, ukFactory, fkFactory, seqFactory, idTabFactory);
+        ColumnDescFactory colFactory = new ColumnDescFactory(dialect, valueTypeProvider);
+        PrimaryKeyDescFactory pkFactory = new PrimaryKeyDescFactory(dialect);
+        UniqueKeyDescFactory ukFactory = new UniqueKeyDescFactory(dialect);
+        ForeignKeyDescFactory fkFactory = new ForeignKeyDescFactory(dialect, entityMetaFactory, true);
+        SequenceDescFactory seqFactory = new SequenceDescFactory(dialect, valueTypeProvider);
+        IdTableDescFactory idTabFactory = new IdTableDescFactory(dialect, ukFactory);
+        tableDescFactory = new TableDescFactory(dialect, colFactory, pkFactory, ukFactory, fkFactory, seqFactory, idTabFactory);
     }
 
     /**

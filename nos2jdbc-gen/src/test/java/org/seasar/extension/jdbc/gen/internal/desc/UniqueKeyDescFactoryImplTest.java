@@ -21,7 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
-import org.seasar.extension.jdbc.gen.internal.desc.UniqueKeyDescFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.desc.UniqueKeyDescFactory;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class UniqueKeyDescFactoryImplTest {
 
-    private UniqueKeyDescFactoryImpl factory;
+    private UniqueKeyDescFactory factory;
 
     /**
      * 
@@ -39,7 +39,7 @@ class UniqueKeyDescFactoryImplTest {
      */
     @BeforeEach
     public void setUp() throws Exception {
-        factory = new UniqueKeyDescFactoryImpl(new StandardGenDialect());
+        factory = new UniqueKeyDescFactory(new StandardGenDialect());
     }
 
     /**

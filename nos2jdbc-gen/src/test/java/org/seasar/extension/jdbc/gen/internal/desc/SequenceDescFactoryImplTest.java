@@ -44,7 +44,7 @@ class SequenceDescFactoryImplTest {
 
     private PropertyMetaFactoryImpl propertyMetaFactory;
 
-    private SequenceDescFactoryImpl sequenceDescFactoryImpl;
+    private SequenceDescFactory sequenceDescFactoryImpl;
 
     @SuppressWarnings("unused")
     @Id
@@ -81,7 +81,7 @@ class SequenceDescFactoryImplTest {
         propertyMetaFactory = new PropertyMetaFactoryImpl();
         propertyMetaFactory.setPersistenceConvention(pc);
         propertyMetaFactory.setColumnMetaFactory(cmf);
-        sequenceDescFactoryImpl = new SequenceDescFactoryImpl(new OracleGenDialect(), new ValueTypeProviderImpl(new OracleDialect()));
+        sequenceDescFactoryImpl = new SequenceDescFactory(new OracleGenDialect(), new ValueTypeProviderImpl(new OracleDialect()));
     }
 
     /**

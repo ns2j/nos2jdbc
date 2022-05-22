@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class EntityDescFactoryImplTest {
 
-    private EntityDescFactoryImpl factory;
+    private EntityDescFactory factory;
 
     /**
      * 
@@ -45,9 +45,9 @@ class EntityDescFactoryImplTest {
     public void setUp() throws Exception {
         PersistenceConvention convention = new PersistenceConventionImpl();
         GenDialect dialect = new StandardGenDialect();
-        AttributeDescFactoryImpl attributeDescFactory = new AttributeDescFactoryImpl(convention, dialect, "VERSION", null, null, null);
-        CompositeUniqueConstraintDescFactoryImpl uniqueConstraintDescFactory = new CompositeUniqueConstraintDescFactoryImpl();
-        factory = new EntityDescFactoryImpl(convention, attributeDescFactory, uniqueConstraintDescFactory);
+        AttributeDescFactory attributeDescFactory = new AttributeDescFactory(convention, dialect, "VERSION", null, null, null);
+        CompositeUniqueConstraintDescFactory uniqueConstraintDescFactory = new CompositeUniqueConstraintDescFactory();
+        factory = new EntityDescFactory(convention, attributeDescFactory, uniqueConstraintDescFactory);
     }
 
     /**

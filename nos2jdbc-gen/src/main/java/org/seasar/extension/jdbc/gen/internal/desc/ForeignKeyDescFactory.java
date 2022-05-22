@@ -22,7 +22,6 @@ import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.TableMeta;
 import org.seasar.extension.jdbc.annotation.ReferentialConstraint;
 import org.seasar.extension.jdbc.gen.desc.ForeignKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.ForeignKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.util.AnnotationUtil;
 
@@ -31,7 +30,7 @@ import org.seasar.extension.jdbc.gen.internal.util.AnnotationUtil;
  * 
  * @author taedium
  */
-public class ForeignKeyDescFactoryImpl implements ForeignKeyDescFactory {
+public class ForeignKeyDescFactory {
 
     /** 方言 */
     protected GenDialect dialect;
@@ -52,7 +51,7 @@ public class ForeignKeyDescFactoryImpl implements ForeignKeyDescFactory {
      * @param regardRelationshipAsFk
      *            関連を外部キーとみなす場合{@code true}、みなさない場合{@code false}
      */
-    public ForeignKeyDescFactoryImpl(GenDialect dialect,
+    public ForeignKeyDescFactory(GenDialect dialect,
             EntityMetaFactory entityMetaFactory, boolean regardRelationshipAsFk) {
         if (dialect == null) {
             throw new NullPointerException("dialect");

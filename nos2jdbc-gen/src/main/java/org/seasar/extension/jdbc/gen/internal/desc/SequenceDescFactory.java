@@ -26,7 +26,6 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.desc.SequenceDesc;
-import org.seasar.extension.jdbc.gen.desc.SequenceDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.exception.UnsupportedGenerationTypeRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.util.AnnotationUtil;
@@ -39,11 +38,11 @@ import org.seasar.framework.util.StringUtil;
  * 
  * @author taedium
  */
-public class SequenceDescFactoryImpl implements SequenceDescFactory {
+public class SequenceDescFactory {
 
     /** ロガー */
     protected static Logger logger = Logger
-            .getLogger(SequenceDescFactoryImpl.class);
+            .getLogger(SequenceDescFactory.class);
 
     /** 方言 */
     protected GenDialect dialect;
@@ -59,7 +58,7 @@ public class SequenceDescFactoryImpl implements SequenceDescFactory {
      * @param valueTypeProvider
      *            {@link ValueType}の提供者
      */
-    public SequenceDescFactoryImpl(GenDialect dialect,
+    public SequenceDescFactory(GenDialect dialect,
             ValueTypeProvider valueTypeProvider) {
         if (dialect == null) {
             throw new NullPointerException("dialect");

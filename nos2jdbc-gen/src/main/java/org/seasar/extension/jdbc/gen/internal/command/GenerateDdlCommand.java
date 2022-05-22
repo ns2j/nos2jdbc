@@ -29,14 +29,13 @@ import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.data.Dumper;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
-import org.seasar.extension.jdbc.gen.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.event.GenDdlListener;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.data.DumperImpl;
-import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.event.GenDdlListenerImpl;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
@@ -1182,19 +1181,36 @@ public class GenerateDdlCommand extends AbstractCommand {
         genDdlListener = ReflectUtil.newInstance(GenDdlListener.class,
                 genDdlListenerClassName);
         if (transactional) {
-//i            userTransaction = SingletonS2Container
-//i                    .getComponent(UserTransaction.class);
             userTransaction = new UserTransactionImpl(TransactionManagerRegistry.get());
         }
-        valueTypeProvider = createValueTypeProvider();
-        ddlVersionDirectoryTree = createDdlVersionDirectoryTree();
-        ddlVersionIncrementer = createDdlVersionIncrementer();
-        tableModelFactory = createTableModelFactory();
-        generator = createGenerator();
-        entityMetaReader = createEntityMetaReader();
-        databaseDescFactory = createDatabaseDescFactory();
-        sqlUnitExecutor = createSqlUnitExecutor();
-        dumper = createDumper();
+        valueTypeProvider = new ValueTypeProviderImpl(jdbcManager.getDialect());
+        ddlVersionDirectoryTree = new DdlVersionDirectoryTreeImpl(migrateDir,
+                ddlInfoFile, versionNoPattern, null);
+        List<String> createDirNameList = Arrays.asList(createTableDirName,
+                createUniqueKeyDirName, createSequenceDirName,
+                createForeignKeyDirName, dumpDirName, createAuxiliaryDirName);
+        List<String> dropDirNameList = Arrays.asList(dropTableDirName,
+                dropUniqueKeyDirName, dropSequenceDirName,
+                dropForeignKeyDirName, dropAuxiliaryDirName);
+        ddlVersionIncrementer = new DdlVersionIncrementerImpl(ddlVersionDirectoryTree, genDdlListener,
+                dialect, jdbcManager
+                .getDataSource(), createDirNameList, dropDirNameList);
+        tableModelFactory = new TableModelFactoryImpl(dialect, jdbcManager
+                .getDataSource(), sqlIdentifierCaseType, sqlKeywordCaseType,
+                statementDelimiter, tableOption, applyJavaCommentToDdl);
+        generator = new GeneratorImpl(templateFileEncoding,
+            templateFilePrimaryDir);
+        entityMetaReader = new EntityMetaReaderImpl(classpathDir, ClassUtil
+                .concatName(rootPackageName, entityPackageName), jdbcManager
+                .getEntityMetaFactory(), entityClassNamePattern,
+                ignoreEntityClassNamePattern, applyJavaCommentToDdl,
+                javaFileSrcDirList, javaFileEncoding);
+        databaseDescFactory = new DatabaseDescFactory(jdbcManager
+                .getEntityMetaFactory(), entityMetaReader, dialect,
+                valueTypeProvider, autoGenerateForeignKey);
+        sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
+                userTransaction, true);
+        dumper = new DumperImpl(dialect, dumpFileEncoding);
 
         if (isDump())
             logRdbmsAndGenDialect(dialect);
@@ -1245,106 +1261,6 @@ public class GenerateDdlCommand extends AbstractCommand {
         file.createNewFile();
         return new GenerationContextImpl(model, file.asFile(),
                 templateName, ddlFileEncoding, true);
-    }
-
-    /**
-     * {@link EntityMetaReader}の実装を作成します。
-     * 
-     * @return {@link EntityMetaReader}の実装
-     */
-    protected EntityMetaReader createEntityMetaReader() {
-        return new EntityMetaReaderImpl(classpathDir, ClassUtil
-                .concatName(rootPackageName, entityPackageName), jdbcManager
-                .getEntityMetaFactory(), entityClassNamePattern,
-                ignoreEntityClassNamePattern, applyJavaCommentToDdl,
-                javaFileSrcDirList, javaFileEncoding);
-    }
-
-    /**
-     * {@link DatabaseDescFactory}の実装を作成します。
-     * 
-     * @return {@link DatabaseDescFactory}の実装
-     */
-    protected DatabaseDescFactory createDatabaseDescFactory() {
-        return new DatabaseDescFactoryImpl(jdbcManager
-                .getEntityMetaFactory(), entityMetaReader, dialect,
-                valueTypeProvider, autoGenerateForeignKey);
-    }
-
-    /**
-     * {@link DdlVersionDirectoryTree}の実装を作成します。
-     * 
-     * @return {@link DdlVersionDirectoryTree}の実装
-     */
-    protected DdlVersionDirectoryTree createDdlVersionDirectoryTree() {
-        return new DdlVersionDirectoryTreeImpl(migrateDir,
-                ddlInfoFile, versionNoPattern, null);
-    }
-
-    /**
-     * {@link DdlVersionIncrementer}の実装を作成します。
-     * 
-     * @return {@link DdlVersionIncrementer}の実装
-     */
-    protected DdlVersionIncrementer createDdlVersionIncrementer() {
-        List<String> createDirNameList = Arrays.asList(createTableDirName,
-                createUniqueKeyDirName, createSequenceDirName,
-                createForeignKeyDirName, dumpDirName, createAuxiliaryDirName);
-        List<String> dropDirNameList = Arrays.asList(dropTableDirName,
-                dropUniqueKeyDirName, dropSequenceDirName,
-                dropForeignKeyDirName, dropAuxiliaryDirName);
-        return new DdlVersionIncrementerImpl(ddlVersionDirectoryTree, genDdlListener,
-                dialect, jdbcManager
-                .getDataSource(), createDirNameList, dropDirNameList);
-    }
-
-    /**
-     * {@link TableModelFactory}の実装を作成します。
-     * 
-     * @return {@link TableModelFactory}の実装
-     */
-    protected TableModelFactory createTableModelFactory() {
-        return new TableModelFactoryImpl(dialect, jdbcManager
-                .getDataSource(), sqlIdentifierCaseType, sqlKeywordCaseType,
-                statementDelimiter, tableOption, applyJavaCommentToDdl);
-    }
-
-    /**
-     * {@link Dumper}の実装を作成します。
-     * 
-     * @return {@link Dumper}の実装
-     */
-    protected Dumper createDumper() {
-        return new DumperImpl(dialect, dumpFileEncoding);
-    }
-
-    /**
-     * {@link SqlUnitExecutor}の実装を返します。
-     * 
-     * @return {@link SqlUnitExecutor}の実装
-     */
-    protected SqlUnitExecutor createSqlUnitExecutor() {
-        return new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
-                userTransaction, true);
-    }
-
-    /**
-     * {@link Generator}の実装を作成します。
-     * 
-     * @return {@link Generator}の実装
-     */
-    protected Generator createGenerator() {
-        return new GeneratorImpl(templateFileEncoding,
-                templateFilePrimaryDir);
-    }
-
-    /**
-     * {@link ValueTypeProvider}の実装を作成します。
-     * 
-     * @return {@link ValueTypeProvider}の実装
-     */
-    protected ValueTypeProvider createValueTypeProvider() {
-        return new ValueTypeProviderImpl(jdbcManager.getDialect());
     }
 
     @Override

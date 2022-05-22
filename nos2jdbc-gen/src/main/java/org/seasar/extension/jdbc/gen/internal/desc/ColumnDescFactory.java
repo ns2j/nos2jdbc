@@ -25,7 +25,6 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
-import org.seasar.extension.jdbc.gen.desc.ColumnDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.exception.NullableUniqueNotSupportedRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.UnsupportedGenerationTypeRuntimeException;
@@ -40,7 +39,7 @@ import org.seasar.framework.util.StringUtil;
  * 
  * @author taedium
  */
-public class ColumnDescFactoryImpl implements ColumnDescFactory {
+public class ColumnDescFactory {
 
     /** 方言 */
     protected GenDialect dialect;
@@ -56,7 +55,7 @@ public class ColumnDescFactoryImpl implements ColumnDescFactory {
      * @param valueTypeProvider
      *            {@link ValueType}の提供者
      */
-    public ColumnDescFactoryImpl(GenDialect dialect,
+    public ColumnDescFactory(GenDialect dialect,
             ValueTypeProvider valueTypeProvider) {
         if (dialect == null) {
             throw new NullPointerException("dialect");

@@ -27,11 +27,9 @@ import javax.persistence.UniqueConstraint;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
-import org.seasar.extension.jdbc.gen.desc.IdTableDescFactory;
 import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.UniqueKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.util.AnnotationUtil;
 import org.seasar.extension.jdbc.gen.internal.util.TableUtil;
@@ -44,7 +42,7 @@ import org.seasar.framework.util.StringUtil;
  * 
  * @author taedium
  */
-public class IdTableDescFactoryImpl implements IdTableDescFactory {
+public class IdTableDescFactory {
 
     /** 方言 */
     protected GenDialect dialect;
@@ -58,7 +56,7 @@ public class IdTableDescFactoryImpl implements IdTableDescFactory {
      * @param uniqueKeyDescFactory
      *            一意キー記述のファクトリ
      */
-    public IdTableDescFactoryImpl(GenDialect dialect,
+    public IdTableDescFactory(GenDialect dialect,
             UniqueKeyDescFactory uniqueKeyDescFactory) {
         if (dialect == null) {
             throw new NullPointerException("dialect");
@@ -70,7 +68,6 @@ public class IdTableDescFactoryImpl implements IdTableDescFactory {
         this.uniqueKeyDescFactory = uniqueKeyDescFactory;
     }
 
-    @Override
     public TableDesc getTableDesc(EntityMeta entityMeta,
             PropertyMeta propertyMeta) {
         GenerationType generationType = propertyMeta.getGenerationType();

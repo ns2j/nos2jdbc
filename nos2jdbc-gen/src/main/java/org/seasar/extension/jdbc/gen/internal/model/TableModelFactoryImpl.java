@@ -29,7 +29,7 @@ import org.seasar.extension.jdbc.gen.desc.SequenceDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
-import org.seasar.extension.jdbc.gen.internal.desc.SequenceDescFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.desc.SequenceDescFactory;
 import org.seasar.extension.jdbc.gen.internal.exception.SequenceNextValFailedRuntimeException;
 import org.seasar.extension.jdbc.gen.model.ColumnModel;
 import org.seasar.extension.jdbc.gen.model.ForeignKeyModel;
@@ -56,7 +56,7 @@ public class TableModelFactoryImpl implements TableModelFactory {
 
     /** ロガー */
     protected static Logger logger = Logger
-            .getLogger(SequenceDescFactoryImpl.class);
+            .getLogger(SequenceDescFactory.class);
 
     /** 方言 */
     protected GenDialect dialect;

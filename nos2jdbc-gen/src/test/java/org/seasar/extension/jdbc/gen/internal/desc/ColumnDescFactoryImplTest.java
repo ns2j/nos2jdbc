@@ -45,7 +45,7 @@ class ColumnDescFactoryImplTest {
 
     private PropertyMetaFactoryImpl propertyMetaFactory;
 
-    private ColumnDescFactoryImpl columnDescFactory;
+    private ColumnDescFactory columnDescFactory;
 
     @SuppressWarnings("unused")
     private String string;
@@ -109,7 +109,7 @@ class ColumnDescFactoryImplTest {
         propertyMetaFactory = new PropertyMetaFactoryImpl();
         propertyMetaFactory.setPersistenceConvention(pc);
         propertyMetaFactory.setColumnMetaFactory(cmf);
-        columnDescFactory = new ColumnDescFactoryImpl(new H2GenDialect(), new ValueTypeProviderImpl(new H2Dialect()));
+        columnDescFactory = new ColumnDescFactory(new H2GenDialect(), new ValueTypeProviderImpl(new H2Dialect()));
     }
 
     /**

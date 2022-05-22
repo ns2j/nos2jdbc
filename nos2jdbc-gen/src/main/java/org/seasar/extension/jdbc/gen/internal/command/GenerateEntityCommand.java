@@ -24,11 +24,10 @@ import javax.persistence.TemporalType;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
 import org.seasar.extension.jdbc.gen.desc.EntitySetDesc;
-import org.seasar.extension.jdbc.gen.desc.EntitySetDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
-import org.seasar.extension.jdbc.gen.internal.desc.EntitySetDescFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.desc.EntitySetDescFactory;
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.DbTableMetaReaderImpl;
@@ -37,7 +36,6 @@ import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.CompositeUniqueConstraintModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.internal.model.EntityModelFactoryImpl;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
-import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.EntityModel;
 import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
 import org.seasar.framework.log.Logger;
@@ -686,10 +684,25 @@ public class GenerateEntityCommand extends AbstractCommand {
     @Override
     protected void doInit() {
         dialect = getGenDialect(genDialectClassName);
-        dbTableMetaReader = createDbTableMetaReader();
-        entitySetDescFactory = createEntitySetDescFactory();
-        generator = createGenerator();
-        entityModelFactory = createEntityModelFactory();
+        dbTableMetaReader = new DbTableMetaReaderImpl(jdbcManager
+                .getDataSource(), dialect, schemaName, tableNamePattern,
+                ignoreTableNamePattern, applyDbCommentToJava);
+        entitySetDescFactory = new EntitySetDescFactory(dbTableMetaReader,
+                jdbcManager.getPersistenceConvention(), dialect,
+                versionColumnNamePattern, pluralFormFile, generationType,
+                initialValue, allocationSize);
+        generator = new GeneratorImpl(templateFileEncoding,
+                templateFilePrimaryDir);
+        Class<?> superClass = entitySuperclassName != null ? ClassUtil
+                .forName(entitySuperclassName) : null;
+        entityModelFactory = new EntityModelFactoryImpl(ClassUtil.concatName(
+           rootPackageName, entityPackageName), superClass,
+           new AttributeModelFactoryImpl(showColumnName,
+                   showColumnDefinition, useTemporalType,
+                   jdbcManager.getPersistenceConvention()),
+           new AssociationModelFactoryImpl(showJoinColumn),
+           new CompositeUniqueConstraintModelFactoryImpl(), useAccessor,
+           applyDbCommentToJava, showCatalogName, showSchemaName, showTableName);
 
         logRdbmsAndGenDialect(dialect);
     }
@@ -714,77 +727,11 @@ public class GenerateEntityCommand extends AbstractCommand {
      */
     protected void generateEntity(EntityDesc entityDesc) {
         EntityModel model = entityModelFactory.getEntityModel(entityDesc);
-        GenerationContext context = createGenerationContext(model,
-                entityTemplateFileName);
-        generator.generate(context);
-    }
-
-    /**
-     * {@link DbTableMetaReader}の実装を作成します。
-     * 
-     * @return {@link DbTableMetaReader}の実装
-     */
-    protected DbTableMetaReader createDbTableMetaReader() {
-        return new DbTableMetaReaderImpl(jdbcManager
-                .getDataSource(), dialect, schemaName, tableNamePattern,
-                ignoreTableNamePattern, applyDbCommentToJava);
-    }
-
-    /**
-     * {@link EntitySetDescFactory}の実装を作成します。
-     * 
-     * @return {@link EntitySetDescFactory}の実装
-     */
-    protected EntitySetDescFactory createEntitySetDescFactory() {
-        return new EntitySetDescFactoryImpl(dbTableMetaReader,
-                jdbcManager.getPersistenceConvention(), dialect,
-                versionColumnNamePattern, pluralFormFile, generationType,
-                initialValue, allocationSize);
-    }
-
-    /**
-     * {@link EntityModelFactory}の実装を作成します。
-     * 
-     * @return {@link EntityModelFactory}の実装
-     */
-    protected EntityModelFactory createEntityModelFactory() {
-        Class<?> superClass = entitySuperclassName != null ? ClassUtil
-                .forName(entitySuperclassName) : null;
-        return new EntityModelFactoryImpl(ClassUtil.concatName(
-                rootPackageName, entityPackageName), superClass,
-                new AttributeModelFactoryImpl(showColumnName,
-                        showColumnDefinition, useTemporalType,
-                        jdbcManager.getPersistenceConvention()),
-                new AssociationModelFactoryImpl(showJoinColumn),
-                new CompositeUniqueConstraintModelFactoryImpl(), useAccessor,
-                applyDbCommentToJava, showCatalogName, showSchemaName, showTableName);
-    }
-
-    /**
-     * {@link Generator}の実装を作成します。
-     * 
-     * @return {@link Generator}の実装
-     */
-    protected Generator createGenerator() {
-        return new GeneratorImpl(templateFileEncoding,
-                templateFilePrimaryDir);
-    }
-
-    /**
-     * {@link GenerationContext}の実装を作成します。
-     * 
-     * @param model
-     *            モデル
-     * @param templateName
-     *            テンプレート名
-     * @return {@link GenerationContext}の実装
-     */
-    protected GenerationContext createGenerationContext(ClassModel model,
-            String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return new GenerationContextImpl(model, file, templateName,
+        GenerationContext context = new GenerationContextImpl(model, file, entityTemplateFileName,
                 javaFileEncoding, overwrite);
+        generator.generate(context);
     }
 
     @Override

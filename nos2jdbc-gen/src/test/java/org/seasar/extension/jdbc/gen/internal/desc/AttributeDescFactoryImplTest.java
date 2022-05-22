@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class AttributeDescFactoryImplTest {
 
-    private AttributeDescFactoryImpl factory;
+    private AttributeDescFactory factory;
 
     /**
      * 
@@ -43,7 +43,7 @@ class AttributeDescFactoryImplTest {
     public void setUp() {
         PersistenceConvention convention = new PersistenceConventionImpl();
         GenDialect dialect = new StandardGenDialect();
-        factory = new AttributeDescFactoryImpl(convention, dialect, "VERSION([_]?NO)?", GenerationType.TABLE, 100, 200);
+        factory = new AttributeDescFactory(convention, dialect, "VERSION([_]?NO)?", GenerationType.TABLE, 100, 200);
     }
 
     /**

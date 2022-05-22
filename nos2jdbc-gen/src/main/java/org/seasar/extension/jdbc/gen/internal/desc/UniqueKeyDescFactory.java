@@ -19,7 +19,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.UniqueKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 
 /**
@@ -27,7 +26,7 @@ import org.seasar.extension.jdbc.gen.dialect.GenDialect;
  * 
  * @author taedium
  */
-public class UniqueKeyDescFactoryImpl implements UniqueKeyDescFactory {
+public class UniqueKeyDescFactory {
 
     /** 方言 */
     protected GenDialect dialect;
@@ -38,7 +37,7 @@ public class UniqueKeyDescFactoryImpl implements UniqueKeyDescFactory {
      * @param dialect
      *            方言
      */
-    public UniqueKeyDescFactoryImpl(GenDialect dialect) {
+    public UniqueKeyDescFactory(GenDialect dialect) {
         if (dialect == null) {
             throw new NullPointerException("dialect");
         }

@@ -23,7 +23,6 @@ import org.seasar.extension.jdbc.ColumnMeta;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 
 /**
@@ -31,7 +30,7 @@ import org.seasar.extension.jdbc.gen.dialect.GenDialect;
  * 
  * @author taedium
  */
-public class PrimaryKeyDescFactoryImpl implements PrimaryKeyDescFactory {
+public class PrimaryKeyDescFactory {
 
     /** 方言 */
     protected GenDialect dialect;
@@ -42,14 +41,13 @@ public class PrimaryKeyDescFactoryImpl implements PrimaryKeyDescFactory {
      * @param dialect
      *            方言
      */
-    public PrimaryKeyDescFactoryImpl(GenDialect dialect) {
+    public PrimaryKeyDescFactory(GenDialect dialect) {
         if (dialect == null) {
             throw new NullPointerException("dialect");
         }
         this.dialect = dialect;
     }
 
-    @Override
     public PrimaryKeyDesc getPrimaryKeyDesc(EntityMeta entityMeta) {
         if (entityMeta.getIdPropertyMetaList().isEmpty()) {
             return null;

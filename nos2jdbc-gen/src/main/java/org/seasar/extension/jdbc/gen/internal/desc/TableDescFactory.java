@@ -29,18 +29,11 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.TableMeta;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
-import org.seasar.extension.jdbc.gen.desc.ColumnDescFactory;
 import org.seasar.extension.jdbc.gen.desc.ForeignKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.ForeignKeyDescFactory;
-import org.seasar.extension.jdbc.gen.desc.IdTableDescFactory;
 import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDescFactory;
 import org.seasar.extension.jdbc.gen.desc.SequenceDesc;
-import org.seasar.extension.jdbc.gen.desc.SequenceDescFactory;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
-import org.seasar.extension.jdbc.gen.desc.TableDescFactory;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.UniqueKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.internal.util.AnnotationUtil;
 import org.seasar.extension.jdbc.gen.internal.util.EntityMetaUtil;
@@ -51,7 +44,7 @@ import org.seasar.extension.jdbc.gen.internal.util.TableUtil;
  * 
  * @author taedium
  */
-public class TableDescFactoryImpl implements TableDescFactory {
+public class TableDescFactory {
 
     /** テーブルの完全修飾名をキー、テーブル記述を値とするマップ */
     protected ConcurrentMap<String, TableDesc> tableDescMap = new ConcurrentHashMap<String, TableDesc>(
@@ -96,7 +89,7 @@ public class TableDescFactoryImpl implements TableDescFactory {
      * @param idTableDescFactory
      *            識別子生成用のテーブル記述のファクトリ
      */
-    public TableDescFactoryImpl(GenDialect dialect,
+    public TableDescFactory(GenDialect dialect,
             ColumnDescFactory columnDescFactory,
             PrimaryKeyDescFactory primaryKeyDescFactory,
             UniqueKeyDescFactory uniqueKeyDescFactory,
@@ -409,6 +402,7 @@ public class TableDescFactoryImpl implements TableDescFactory {
         }
         return new Comparator<ColumnDescRef>() {
 
+            @Override
             public int compare(ColumnDescRef o1, ColumnDescRef o2) {
                 int index1 = pkColumnNameList.indexOf(o1.columnDesc.getName());
                 int index2 = pkColumnNameList.indexOf(o2.columnDesc.getName());
