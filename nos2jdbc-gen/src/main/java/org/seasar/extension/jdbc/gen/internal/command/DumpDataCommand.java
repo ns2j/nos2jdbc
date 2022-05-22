@@ -28,11 +28,11 @@ import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
-import org.seasar.extension.jdbc.gen.internal.sql.SqlUnitExecutorImpl;
 import org.seasar.extension.jdbc.gen.internal.version.DdlVersionDirectoryTreeImpl;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
+import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
@@ -413,7 +413,7 @@ public class DumpDataCommand extends AbstractCommand {
         databaseDescFactory = new DatabaseDescFactory(jdbcManager
                 .getEntityMetaFactory(), entityMetaReader, dialect,
                 valueTypeProvider, true);
-        sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
+        sqlUnitExecutor = new SqlUnitExecutor(jdbcManager.getDataSource(),
                 userTransaction, true);
         dumper = new Dumper(dialect, dumpFileEncoding);
         ddlVersionDirectoryTree = new DdlVersionDirectoryTreeImpl(migrateDir,

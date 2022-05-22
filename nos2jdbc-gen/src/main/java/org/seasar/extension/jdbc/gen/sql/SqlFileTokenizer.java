@@ -13,9 +13,9 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.sql;
+package org.seasar.extension.jdbc.gen.sql;
 
-import static org.seasar.extension.jdbc.gen.internal.sql.SqlFileTokenizer.TokenType.*;
+import static org.seasar.extension.jdbc.gen.sql.SqlFileTokenizer.TokenType.*;
 
 /**
  * SQLファイル内のトークンを認識するクラスです。

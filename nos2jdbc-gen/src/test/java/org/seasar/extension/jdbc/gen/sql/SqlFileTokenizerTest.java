@@ -13,13 +13,14 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.sql;
+package org.seasar.extension.jdbc.gen.sql;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.sql.SqlFileTokenizer;
+import org.seasar.extension.jdbc.gen.sql.SqlFileTokenizer;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.seasar.extension.jdbc.gen.internal.sql.SqlFileTokenizer.TokenType.*;
+import static org.seasar.extension.jdbc.gen.sql.SqlFileTokenizer.TokenType.*;
 
 /**
  * @author taedium

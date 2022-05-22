@@ -15,86 +15,279 @@
  */
 package org.seasar.extension.jdbc.gen.sql;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.seasar.extension.jdbc.util.ConnectionUtil;
+import org.seasar.extension.jdbc.util.DataSourceUtil;
+import org.seasar.framework.exception.SQLRuntimeException;
+import org.seasar.framework.log.Logger;
+
 /**
- * SQLの実行コンテキストです。
+ * {@link SqlExecutionContext}の実装クラスです。
  * 
  * @author taedium
  */
-public interface SqlExecutionContext {
+public class SqlExecutionContext {
+
+    /** ロガー */
+    protected static final Logger logger = Logger
+            .getLogger(SqlExecutionContext.class);
+
+    /** {@link RuntimeException}のリスト */
+    protected List<RuntimeException> exceptionList = new ArrayList<RuntimeException>();
+
+    /** データソース */
+    protected DataSource dataSource;
+
+    /** コネクション */
+    protected Connection connection;
+
+    /** エラー発生時に処理を即座に中断する場合{@code true}、中断しない場合{@code false} */
+    protected boolean haltOnError;
+
+    /** ステートメント */
+    protected Statement statement;
+
+    /** 準備されたステートメント */
+    protected PreparedStatement preparedStatement;
+
+    /** ローカルトランザクションの場合{@code true} */
+    protected boolean localTx;
+
+    /** SQLの実行に失敗した場合{@code true} */
+    protected boolean failed;
+
+    /** このコンテキストを開始した場合{@code true} */
+    protected boolean begun;
 
     /**
-     * エラー発生時に処理を即座に中断する場合{@code true}、中断しない場合{@code false}を返します。
+     * インスタンスを構築します。
      * 
-     * @return エラー発生時に処理を即座に中断する場合{@code true}、中断しない場合{@code false}
-     */
-    boolean isHaltOnError();
-
-    /**
-     * エラー発生時に処理を即座に中断する場合{@code true}、中断しない場合{@code false}を設定します。
-     * 
+     * @param dataSource
+     *            データソース
+     * @param localTx
+     *            ローカルトランザクションの場合 {@code true}
      * @param haltOnError
      *            エラー発生時に処理を即座に中断する場合{@code true}、中断しない場合{@code false}
      */
-    void setHaltOnError(boolean haltOnError);
+    public SqlExecutionContext(DataSource dataSource, boolean localTx,
+            boolean haltOnError) {
+        if (dataSource == null) {
+            throw new NullPointerException("dataSource");
+        }
+        this.dataSource = dataSource;
+        this.localTx = localTx;
+        this.haltOnError = haltOnError;
+        openConnection();
+    }
+
+    public boolean isHaltOnError() {
+        return haltOnError;
+    }
+
+    public void setHaltOnError(boolean haltOnError) {
+        this.haltOnError = haltOnError;
+    }
+
+    public Statement getStatement() {
+        assertBegun();
+        assertConnectionNotNull();
+        statement = ConnectionUtil.createStatement(connection);
+        return statement;
+    }
+
+    public PreparedStatement getPreparedStatement(String sql) {
+        assertBegun();
+        assertConnectionNotNull();
+        preparedStatement = ConnectionUtil.prepareStatement(connection, sql);
+        return preparedStatement;
+    }
+
+    public List<RuntimeException> getExceptionList() {
+        return Collections.unmodifiableList(exceptionList);
+    }
+
+    public void addException(RuntimeException exception) {
+        assertBegun();
+        assertConnectionNotNull();
+        failed = true;
+        if (haltOnError) {
+            throw exception;
+        }
+        logger.log("DS2JDBCGen0020", new Object[] { exception });
+        exceptionList.add(exception);
+    }
+
+    public void notifyException() {
+        assertBegun();
+        assertConnectionNotNull();
+        failed = true;
+    }
+
+    public void destroy() {
+        assertNotBegun();
+        exceptionList.clear();
+        closeConnection();
+    }
+
+    public void begin() {
+        assertNotBegun();
+        begun = true;
+        assertConnectionNotNull();
+        if (localTx) {
+            try {
+                connection.setAutoCommit(false);
+            } catch (SQLException e) {
+                throw new SQLRuntimeException(e);
+            }
+        }
+    }
+
+    public void end() {
+        assertBegun();
+        begun = false;
+        assertConnectionNotNull();
+        closeStatements();
+        if (localTx) {
+            if (failed) {
+                try {
+                    rollbackLocalTxInternal();
+                } catch (SQLException e) {
+                    closeConnection();
+                    throw new SQLRuntimeException(e);
+                }
+            } else {
+                try {
+                    commitLocalTxInternal();
+                } catch (SQLException e) {
+                    closeConnection();
+                    throw new SQLRuntimeException(e);
+                }
+            }
+            try {
+                if (!connection.isClosed()) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                closeConnection();
+                throw new SQLRuntimeException(e);
+            }
+        }
+        if (failed) {
+            closeConnection();
+            openConnection();
+        }
+        failed = false;
+    }
+
+    public void commitLocalTx() {
+        if (localTx) {
+            try {
+                commitLocalTxInternal();
+            } catch (SQLException e) {
+                throw new SQLRuntimeException(e);
+            }
+        }
+    }
 
     /**
-     * ステートメントを返します。
+     * 内部的にローカルトランザクションをロールバックします。
      * 
-     * @return ステートメント
+     * @throws SQLException SQLExceptiion
      */
-    Statement getStatement();
+    protected void rollbackLocalTxInternal() throws SQLException {
+        if (!connection.isClosed()) {
+            connection.rollback();
+        }
+    }
 
     /**
-     * 準備されたステートメントを返します。
+     * 内部的にローカルトランザクションをコミットします。
      * 
-     * @param sql
-     *            SQL
-     * @return 準備されたステートメント
+     * @throws SQLException SQLException
      */
-    PreparedStatement getPreparedStatement(String sql);
+    protected void commitLocalTxInternal() throws SQLException {
+        if (!connection.isClosed()) {
+            connection.commit();
+        }
+    }
 
     /**
-     * 例外のリストを返します。
-     * 
-     * @return 例外のリスト
+     * ステートメントをクローズします。
      */
-    List<RuntimeException> getExceptionList();
+    protected void closeStatements() {
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException ignore) {
+                logger.log(ignore);
+            }
+            statement = null;
+        }
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException ignore) {
+                logger.log(ignore);
+            }
+            preparedStatement = null;
+        }
+    }
 
     /**
-     * 例外を追加します。
-     * 
-     * @param exception
-     *            例外
+     * コネクションをクローズします。
      */
-    void addException(RuntimeException exception);
+    protected void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ignore) {
+                logger.log(ignore);
+            }
+            connection = null;
+        }
+    }
 
     /**
-     * 例外を通知します。
+     * コネクションをオープンします。
      */
-    void notifyException();
+    protected void openConnection() {
+        connection = DataSourceUtil.getConnection(dataSource);
+    }
 
     /**
-     * 破棄します。
+     * コネクションがnullでないことをアサートします。
      */
-    public void destroy();
+    protected void assertConnectionNotNull() {
+        if (connection == null) {
+            throw new AssertionError("connection must be opened.");
+        }
+    }
 
     /**
-     * 開始します。
+     * このコンテキストが開始されていることをアサートします。
      */
-    public void begin();
+    protected void assertBegun() {
+        if (!begun) {
+            throw new AssertionError("this context must has been begun.");
+        }
+    }
 
     /**
-     * 終了します。
+     * このコンテキストが開始されていないことをアサートします。
      */
-    public void end();
-
-    /**
-     * ローカルトランザクションをコミットします。
-     */
-    public void commitLocalTx();
+    protected void assertNotBegun() {
+        if (begun) {
+            throw new AssertionError("this context must not has been begun.");
+        }
+    }
 
 }

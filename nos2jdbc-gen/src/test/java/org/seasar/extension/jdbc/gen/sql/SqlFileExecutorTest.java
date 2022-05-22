@@ -13,20 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.sql;
+package org.seasar.extension.jdbc.gen.sql;
 
 import java.io.File;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
+import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-class SqlFileExecutorImplTest {
+class SqlFileExecutorTest {
 
     /**
      * 
@@ -34,7 +36,7 @@ class SqlFileExecutorImplTest {
      */
     @Test
     void testIsTarget() throws Exception {
-        SqlFileExecutorImpl executor = new SqlFileExecutorImpl(new StandardGenDialect(), "UTF-8", ';', null);
+        SqlFileExecutor executor = new SqlFileExecutor(new StandardGenDialect(), "UTF-8", ';', null);
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCanonicalName("aaa.bbb.ccc");
         DatabaseDesc databaseDesc = new DatabaseDesc();

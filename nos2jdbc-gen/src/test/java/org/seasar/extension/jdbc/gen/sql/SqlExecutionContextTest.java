@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.sql;
+package org.seasar.extension.jdbc.gen.sql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.exception.SqlFailedRuntimeException;
+import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.framework.mock.sql.MockDataSource;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,14 +29,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author taedium
  * 
  */
-class SqlExecutionContextImplTest {
+class SqlExecutionContextTest {
 
     /**
      * 
      */
     @Test
     void testGetStatement() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, false);
+        SqlExecutionContext context = new SqlExecutionContext(new MockDataSource(), true, false);
         context.begin();
         Statement statement = context.getStatement();
         assertNotNull(statement);
@@ -50,7 +51,7 @@ class SqlExecutionContextImplTest {
      */
     @Test
     void testAddException() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, false);
+        SqlExecutionContext context = new SqlExecutionContext(new MockDataSource(), true, false);
         Connection connection = context.connection;
         context.begin();
         assertEquals(0, context.getExceptionList().size());
@@ -67,7 +68,7 @@ class SqlExecutionContextImplTest {
      */
     @Test
     void testAddException_haltOnError() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, true);
+        SqlExecutionContext context = new SqlExecutionContext(new MockDataSource(), true, true);
         context.begin();
         SqlFailedRuntimeException exception = new SqlFailedRuntimeException(new SQLException(), "aaa", 1, "bbb");
         try {
@@ -84,7 +85,7 @@ class SqlExecutionContextImplTest {
      */
     @Test
     void testBeginEndDestroy() {
-        SqlExecutionContextImpl context = new SqlExecutionContextImpl(new MockDataSource(), true, false);
+        SqlExecutionContext context = new SqlExecutionContext(new MockDataSource(), true, false);
         context.begin();
         assertNotNull(context.getStatement());
         assertNotNull(context.connection);

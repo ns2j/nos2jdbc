@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.sql;
+package org.seasar.extension.jdbc.gen.sql;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect.SqlBlockContext;
-import org.seasar.extension.jdbc.gen.internal.sql.SqlFileTokenizer.TokenType;
+import org.seasar.extension.jdbc.gen.sql.SqlFileTokenizer.TokenType;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CloseableUtil;

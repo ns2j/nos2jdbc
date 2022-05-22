@@ -101,6 +101,7 @@ public class MigraterImpl implements Migrater {
         this.env = env;
     }
 
+    @Override
     public void migrate(Callback callback) {
         int from = schemaInfoTable.getVersionNo();
         int to = getDestVersion(from);

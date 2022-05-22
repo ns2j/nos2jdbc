@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.sql.SqlUnitExecutorImpl;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
+import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.Migrater;
 import org.seasar.extension.jdbc.gen.version.SchemaInfoTable;
 import org.seasar.framework.mock.sql.MockDataSource;
@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class MigraterImplTest {
 
-    private SqlUnitExecutorImpl sqlUnitExecutor;
+    private SqlUnitExecutor sqlUnitExecutor;
 
     private DdlVersionDirectoryTreeImpl directory;
 
@@ -45,7 +45,7 @@ class MigraterImplTest {
      */
     @BeforeEach
     public void setUp() {
-        sqlUnitExecutor = new SqlUnitExecutorImpl(new MockDataSource(), null, false);
+        sqlUnitExecutor = new SqlUnitExecutor(new MockDataSource(), null, false);
         String path = getClass().getPackage().getName().replace('.', '/') + "/migrate";
         baseDir = ResourceUtil.getResourceAsFile(path);
         File versionFile = new File(baseDir, "ddl-version.txt");

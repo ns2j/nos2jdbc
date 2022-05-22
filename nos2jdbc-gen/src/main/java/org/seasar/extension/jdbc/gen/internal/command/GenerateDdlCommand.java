@@ -41,7 +41,6 @@ import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRunt
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
-import org.seasar.extension.jdbc.gen.internal.sql.SqlUnitExecutorImpl;
 import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
 import org.seasar.extension.jdbc.gen.internal.version.DdlVersionDirectoryTreeImpl;
 import org.seasar.extension.jdbc.gen.internal.version.DdlVersionIncrementerImpl;
@@ -52,6 +51,7 @@ import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
+import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectory;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
@@ -1205,7 +1205,7 @@ public class GenerateDdlCommand extends AbstractCommand {
         databaseDescFactory = new DatabaseDescFactory(jdbcManager
                 .getEntityMetaFactory(), entityMetaReader, dialect,
                 valueTypeProvider, autoGenerateForeignKey);
-        sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
+        sqlUnitExecutor = new SqlUnitExecutor(jdbcManager.getDataSource(),
                 userTransaction, true);
         dumper = new Dumper(dialect, dumpFileEncoding);
 
