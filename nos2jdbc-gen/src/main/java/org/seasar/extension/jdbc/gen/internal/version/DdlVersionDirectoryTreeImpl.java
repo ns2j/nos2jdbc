@@ -49,7 +49,7 @@ public class DdlVersionDirectoryTreeImpl implements DdlVersionDirectoryTree {
     protected String env;
 
     /** DDLのバージョン */
-    protected DdlInfoFile ddlInfoFile;
+    protected DdlInfoFileImpl ddlInfoFile;
 
     /**
      * インスタンスを構築します。
@@ -80,19 +80,23 @@ public class DdlVersionDirectoryTreeImpl implements DdlVersionDirectoryTree {
         ddlInfoFile = createDdlInfoFile(versionFile);
     }
 
+    @Override
     public DdlVersionDirectory getCurrentVersionDirectory() {
         return createDdlVersionDirectory(ddlInfoFile.getCurrentVersionNo());
     }
 
+    @Override
     public DdlVersionDirectory getNextVersionDirectory() {
         return createDdlVersionDirectory(ddlInfoFile.getNextVersionNo());
     }
 
+    @Override
     public DdlVersionDirectory getVersionDirectory(int versionNo) {
         return createDdlVersionDirectory(versionNo);
     }
 
-    public DdlInfoFile getDdlInfoFile() {
+    @Override
+    public DdlInfoFileImpl getDdlInfoFile() {
         return ddlInfoFile;
     }
 
@@ -103,7 +107,7 @@ public class DdlVersionDirectoryTreeImpl implements DdlVersionDirectoryTree {
      *            ファイル
      * @return {@link DdlInfoFile}の実装
      */
-    protected DdlInfoFile createDdlInfoFile(File file) {
+    protected DdlInfoFileImpl createDdlInfoFile(File file) {
         return new DdlInfoFileImpl(file);
     }
 

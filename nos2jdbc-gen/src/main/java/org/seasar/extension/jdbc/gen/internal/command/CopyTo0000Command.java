@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import org.seasar.extension.jdbc.gen.internal.version.VersionUtil;
+import org.seasar.extension.jdbc.gen.internal.util.VersionUtil;
 import org.seasar.framework.conversion.StringConversionUtil;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.FileUtil;

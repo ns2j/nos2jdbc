@@ -1,4 +1,4 @@
-package org.seasar.extension.jdbc.gen.internal.version;
+package org.seasar.extension.jdbc.gen.internal.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,7 +11,6 @@ import java.io.OutputStreamWriter;
 
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDdlInfoVersionRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.NextVersionExceededRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.util.CloseableUtil;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.FileUtil;
@@ -24,11 +23,19 @@ public class VersionUtil {
     protected static final String ENCODING = "UTF-8";
 
     /** DDLのバージョンファイル */
-    protected static File file = new File("db", "ddl-info.txt");
+    protected static File defaultFile = new File("db", "ddl-info.txt");
 
     public static int getVersionNo() {
+        return getVersionNo(defaultFile);
+    }
+    public static int getVersionNo(File file) {
         Integer versionNo;
-        String line = readLine();
+        if (!file.exists()) {
+            logger.log("IS2JDBCGen0003", new Object[] { file.getPath() });
+            versionNo = 0;
+            return versionNo;
+        }
+        String line = readLine(file);
         if (line == null) {
             logger.log("IS2JDBCGen0007", new Object[] { file.getPath() });
             versionNo = 0;
@@ -36,12 +43,12 @@ public class VersionUtil {
         }
         int pos = line.indexOf("=");
         String value = pos > -1 ? line.substring(0, pos) : line;
-        versionNo = convertToInt(value.trim());
+        versionNo = convertToInt(file, value.trim());
         return versionNo;
     }
 
     @SuppressWarnings("resource")
-    protected static String readLine() {
+    protected static String readLine(File file) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(
@@ -53,6 +60,9 @@ public class VersionUtil {
     }
     
     protected static int convertToInt(String value) {
+        return convertToInt(defaultFile, value);
+    }
+    protected static int convertToInt(File file, String value) {
         int versionNo;
         try {
             versionNo = Integer.valueOf(value);
@@ -66,6 +76,10 @@ public class VersionUtil {
     }
 
     public static void applyNextVersionNo(String comment) {
+        applyNextVersionNo(defaultFile, comment);
+    }
+
+    public static void applyNextVersionNo(File file, String comment) {
         File temp = null;
         if (file.exists()) {
             temp = FileUtil.createTempFile("ddl-info", null);
@@ -73,15 +87,19 @@ public class VersionUtil {
             FileUtil.copy(file, temp);
         }
 
-        writeLine(getNextVersionNoInternal() + "=" + comment);
+        writeLine(getNextVersionNo() + "=" + comment);
 
         if (temp != null) {
             FileUtil.append(temp, file);
         }
     }
 
-    protected static int getNextVersionNoInternal() {
-        long nextVersionNo = (long) getVersionNo() + 1;
+    public static int getNextVersionNo() {
+        return getNextVersionNo(defaultFile);
+    }
+    
+    public static int getNextVersionNo(File file) {
+        long nextVersionNo = (long) getVersionNo(file) + 1;
         if (nextVersionNo > Integer.MAX_VALUE) {
             throw new NextVersionExceededRuntimeException(file.getPath());
         }
@@ -89,6 +107,9 @@ public class VersionUtil {
     }
 
     protected static void writeLine(String line) {
+        writeLine(defaultFile, line);
+    }
+    protected static void writeLine(File file, String line) {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new OutputStreamWriter(
@@ -98,7 +119,7 @@ public class VersionUtil {
         } catch (IOException e) {
             throw new IORuntimeException(e);
         } finally {
-            CloseableUtil.close(writer);
+            org.seasar.framework.util.CloseableUtil.close(writer);
         }
     }
 }

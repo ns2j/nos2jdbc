@@ -15,12 +15,14 @@
  */
 package org.seasar.extension.jdbc.gen.internal.version;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
+
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDdlInfoVersionRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.NextVersionExceededRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -77,68 +79,6 @@ class DdlInfoFileImplTest {
             ddlInfoFile.getNextVersionNo();
             fail();
         } catch (NextVersionExceededRuntimeException expected) {
-        }
-    }
-
-    /**
-     * 
-     */
-    @Test
-    void testConvertToInt() {
-        DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
-        assertEquals(10, ddlInfoFile.convertToInt("10"));
-    }
-
-    /**
-     * 
-     */
-    @Test
-    void testConvertToInt_null() {
-        DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
-        try {
-            ddlInfoFile.convertToInt(null);
-            fail();
-        } catch (IllegalDdlInfoVersionRuntimeException expected) {
-        }
-    }
-
-    /**
-     * 
-     */
-    @Test
-    void testConvertToInt_notNumber() {
-        DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
-        try {
-            ddlInfoFile.convertToInt("aaa");
-            fail();
-        } catch (IllegalDdlInfoVersionRuntimeException expected) {
-        }
-    }
-
-    /**
-     * 
-     */
-    @Test
-    void testConvertToInt_minus() {
-        DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
-        try {
-            ddlInfoFile.convertToInt("-10");
-            fail();
-        } catch (IllegalDdlInfoVersionRuntimeException expected) {
-        }
-    }
-
-    /**
-     * 
-     */
-    @Test
-    void testToInt_greaterThanInteger() {
-        DdlInfoFileImpl ddlInfoFile = new DdlInfoFileImpl(new File("file"));
-        long value = (long) Integer.MAX_VALUE + 1;
-        try {
-            ddlInfoFile.convertToInt(String.valueOf(value));
-            fail();
-        } catch (IllegalDdlInfoVersionRuntimeException expected) {
         }
     }
 }
