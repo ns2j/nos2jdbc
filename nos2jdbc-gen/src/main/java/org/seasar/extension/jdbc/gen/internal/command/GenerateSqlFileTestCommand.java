@@ -21,10 +21,10 @@ import java.util.Set;
 
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
+import org.seasar.extension.jdbc.gen.generator.GenerationContext;
+import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
-import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
@@ -369,7 +369,7 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
      * @return {@link Generator}の実装
      */
     protected Generator createGenerator() {
-        return new GeneratorImpl(templateFileEncoding,
+        return new Generator(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 
@@ -386,7 +386,7 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return new GenerationContextImpl(model, file, templateName,
+        return new GenerationContext(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 

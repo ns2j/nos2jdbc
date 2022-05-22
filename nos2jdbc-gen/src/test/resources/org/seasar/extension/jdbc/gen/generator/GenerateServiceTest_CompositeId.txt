@@ -1,0 +1,55 @@
+package hoge.service;
+
+import java.math.BigDecimal;
+import java.util.List;
+import javax.annotation.Generated;
+import org.seasar.extension.jdbc.gen.generator.Ccc;
+
+import static hoge.entity.CccNames.*;
+import static org.seasar.extension.jdbc.operation.Operations.*;
+
+
+/**
+ * {@link Ccc}のサービスクラスです。
+ * 
+ */
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.ServiceModelFactory"}, date = "2009/04/01 13:12:11")
+public class CccService extends NoS2AbstractService<Ccc> {
+
+    /**
+     * 識別子でエンティティを検索します。
+     * 
+     * @param id1
+     *            識別子
+     * @param id2
+     *            識別子
+     * @return エンティティ
+     */
+    public Ccc findById(String id1, BigDecimal id2) {
+        return select().id(id1, id2).getSingleResult();
+    }
+
+    /**
+     * 識別子とバージョン番号でエンティティを検索します。
+     * 
+     * @param id1
+     *            識別子
+     * @param id2
+     *            識別子
+     * @param version
+     *            バージョン番号
+     * @return エンティティ
+     */
+    public Ccc findByIdVersion(String id1, BigDecimal id2, Integer version) {
+        return select().id(id1, id2).version(version).getSingleResult();
+    }
+
+    /**
+     * 識別子の昇順ですべてのエンティティを検索します。
+     * 
+     * @return エンティティのリスト
+     */
+    public List<Ccc> findAllOrderById() {
+        return select().orderBy(asc(id1()), asc(id2())).getResultList();
+    }
+}

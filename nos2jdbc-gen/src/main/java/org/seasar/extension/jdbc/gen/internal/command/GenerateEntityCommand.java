@@ -28,8 +28,6 @@ import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.desc.EntitySetDescFactory;
-import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
-import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.DbTableMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactory;
 import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactory;
@@ -690,7 +688,7 @@ public class GenerateEntityCommand extends AbstractCommand {
                 jdbcManager.getPersistenceConvention(), dialect,
                 versionColumnNamePattern, pluralFormFile, generationType,
                 initialValue, allocationSize);
-        generator = new GeneratorImpl(templateFileEncoding,
+        generator = new Generator(templateFileEncoding,
                 templateFilePrimaryDir);
         Class<?> superClass = entitySuperclassName != null ? ClassUtil
                 .forName(entitySuperclassName) : null;
@@ -728,7 +726,7 @@ public class GenerateEntityCommand extends AbstractCommand {
         EntityModel model = entityModelFactory.getEntityModel(entityDesc);
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        GenerationContext context = new GenerationContextImpl(model, file, entityTemplateFileName,
+        GenerationContext context = new GenerationContext(model, file, entityTemplateFileName,
                 javaFileEncoding, overwrite);
         generator.generate(context);
     }

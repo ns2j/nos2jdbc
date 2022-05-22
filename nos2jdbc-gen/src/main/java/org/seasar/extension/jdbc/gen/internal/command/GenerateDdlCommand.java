@@ -33,12 +33,11 @@ import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.event.GenDdlListener;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
+import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.event.GenDdlListenerImpl;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
-import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
@@ -1196,7 +1195,7 @@ public class GenerateDdlCommand extends AbstractCommand {
         tableModelFactory = new TableModelFactory(dialect, jdbcManager
                 .getDataSource(), sqlIdentifierCaseType, sqlKeywordCaseType,
                 statementDelimiter, tableOption, applyJavaCommentToDdl);
-        generator = new GeneratorImpl(templateFileEncoding,
+        generator = new Generator(templateFileEncoding,
             templateFilePrimaryDir);
         entityMetaReader = new EntityMetaReaderImpl(classpathDir, ClassUtil
                 .concatName(rootPackageName, entityPackageName), jdbcManager
@@ -1257,7 +1256,7 @@ public class GenerateDdlCommand extends AbstractCommand {
         String fileName = model.getCanonicalTableName() + ".sql";
         ManagedFile file = dir.createChild(fileName);
         file.createNewFile();
-        return new GenerationContextImpl(model, file.asFile(),
+        return new GenerationContext(model, file.asFile(),
                 templateName, ddlFileEncoding, true);
     }
 

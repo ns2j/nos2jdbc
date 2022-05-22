@@ -20,10 +20,10 @@ import java.io.File;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
+import org.seasar.extension.jdbc.gen.generator.GenerationContext;
+import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
-import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
 import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactory;
@@ -135,7 +135,7 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected NamesModelFactory namesModelFactory;
 
     /** ジェネレータ */
-    protected GeneratorImpl generator;
+    protected Generator generator;
 
     /**
      * インスタンスを構築します。
@@ -572,7 +572,7 @@ public class GenerateServiceCommand extends AbstractCommand {
             String templateName, boolean overwrite) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
                 .getPackageName(), model.getShortClassName());
-        return new GenerationContextImpl(model, file, templateName,
+        return new GenerationContext(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
 
@@ -631,8 +631,8 @@ public class GenerateServiceCommand extends AbstractCommand {
      * 
      * @return {@link Generator}の実装
      */
-    protected GeneratorImpl createGenerator() {
-        return new GeneratorImpl(templateFileEncoding,
+    protected Generator createGenerator() {
+        return new Generator(templateFileEncoding,
                 templateFilePrimaryDir);
     }
 

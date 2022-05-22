@@ -57,7 +57,7 @@ public class SqlFileSupport {
         List<String> sqlFilePathList = new ArrayList<String>();
         Set<String> dbmsNameSet = getDbmsNameSet();
         String basePath = FileUtil.getCanonicalPath(classpathDir) + File.separator;
-
+System.out.println("basePath: " + basePath);
         for (File sqlFile : sqlFileSet) {
             String path = FileUtil.getCanonicalPath(sqlFile);
             if (!path.startsWith(basePath)) {

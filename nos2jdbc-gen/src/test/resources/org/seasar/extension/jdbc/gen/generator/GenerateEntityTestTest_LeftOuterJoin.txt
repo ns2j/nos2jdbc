@@ -1,0 +1,34 @@
+package org.seasar.extension.jdbc.gen.generator;
+
+import javax.annotation.Generated;
+import org.seasar.extension.jdbc.JdbcManager;
+
+/**
+ * {@link Aaa}のテストクラスです。
+ * 
+ */
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactory"}, date = "2009/04/01 13:12:11")
+public class AaaTest {
+    private JdbcManager jdbcManager;
+
+    /**
+     * 識別子による取得をテストします。
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testFindById() throws Exception {
+        jdbcManager.from(Aaa.class).id(1).getSingleResult();
+    }
+
+    /**
+     * bbbとの外部結合をテストします。
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testLeftOuterJoin_bbb() throws Exception {
+        jdbcManager.from(Aaa.class).leftOuterJoin("bbb").id(1).getSingleResult();
+    }
+
+}
