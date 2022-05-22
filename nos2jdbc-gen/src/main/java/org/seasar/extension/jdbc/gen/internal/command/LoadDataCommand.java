@@ -27,7 +27,6 @@ import org.seasar.extension.jdbc.gen.data.Loader;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.generator.Generator;
-import org.seasar.extension.jdbc.gen.internal.data.LoaderImpl;
 import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
@@ -474,7 +473,7 @@ public class LoadDataCommand extends AbstractCommand {
                 valueTypeProvider, true);
         sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
                 userTransaction, true);
-        loader = new LoaderImpl(dialect, dumpFileEncoding,
+        loader = new Loader(dialect, dumpFileEncoding,
                 loadBatchSize, delete);
         ddlVersionDirectoryTree = new DdlVersionDirectoryTreeImpl(migrateDir,
                 ddlInfoFile, versionNoPattern, applyEnvToVersion ? env: null);

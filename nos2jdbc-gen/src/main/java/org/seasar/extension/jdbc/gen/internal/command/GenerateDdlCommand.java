@@ -34,7 +34,6 @@ import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.event.GenDdlListener;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.generator.Generator;
-import org.seasar.extension.jdbc.gen.internal.data.DumperImpl;
 import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.event.GenDdlListenerImpl;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
@@ -1209,7 +1208,7 @@ public class GenerateDdlCommand extends AbstractCommand {
                 valueTypeProvider, autoGenerateForeignKey);
         sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
                 userTransaction, true);
-        dumper = new DumperImpl(dialect, dumpFileEncoding);
+        dumper = new Dumper(dialect, dumpFileEncoding);
 
         if (isDump())
             logRdbmsAndGenDialect(dialect);

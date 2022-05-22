@@ -13,11 +13,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.data;
+package org.seasar.extension.jdbc.gen.data;
 
 import java.io.File;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
+import org.seasar.extension.jdbc.gen.data.DumpFileReader;
+import org.seasar.extension.jdbc.gen.data.DumpFileTokenizer;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpColumnSizeRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpValueRuntimeException;
 import org.seasar.framework.util.ResourceUtil;

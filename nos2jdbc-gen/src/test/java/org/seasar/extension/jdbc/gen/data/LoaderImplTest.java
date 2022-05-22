@@ -13,11 +13,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.data;
+package org.seasar.extension.jdbc.gen.data;
 
 import java.io.File;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
+import org.seasar.extension.jdbc.gen.data.Loader;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
@@ -30,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class LoaderImplTest {
 
-    private LoaderImpl loader = new LoaderImpl(new StandardGenDialect(), "UTF-8", 10, false);
+    private Loader loader = new Loader(new StandardGenDialect(), "UTF-8", 10, false);
 
     /**
      * 

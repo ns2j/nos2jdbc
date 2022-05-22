@@ -25,7 +25,6 @@ import org.seasar.extension.jdbc.gen.data.Loader;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.exception.LoadFailedRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.data.LoaderImpl;
 import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
@@ -628,7 +627,7 @@ public class MigrateCommand extends AbstractCommand {
      */
     protected Loader createLoader() {
         if (!isTestDb)
-            return new LoaderImpl(dialect, dumpFileEncoding, loadBatchSize, false);
+            return new Loader(dialect, dumpFileEncoding, loadBatchSize, false);
         else
             return new Loader() {
             @Override

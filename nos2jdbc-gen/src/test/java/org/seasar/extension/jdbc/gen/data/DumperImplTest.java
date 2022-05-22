@@ -13,10 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.gen.internal.data;
+package org.seasar.extension.jdbc.gen.data;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.seasar.extension.jdbc.gen.data.Dumper;
 import org.seasar.extension.jdbc.gen.desc.PrimaryKeyDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
@@ -31,7 +32,7 @@ class DumperImplTest {
 
     private GenDialect dialect;
 
-    private DumperImpl dumper;
+    private Dumper dumper;
 
     /**
      * 
@@ -39,7 +40,7 @@ class DumperImplTest {
     @BeforeEach
     public void setUp() {
         dialect = new StandardGenDialect();
-        dumper = new DumperImpl(dialect, "UTF-8");
+        dumper = new Dumper(dialect, "UTF-8");
     }
 
     /**

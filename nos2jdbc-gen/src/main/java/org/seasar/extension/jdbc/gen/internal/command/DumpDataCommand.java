@@ -24,7 +24,6 @@ import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.data.Dumper;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
-import org.seasar.extension.jdbc.gen.internal.data.DumperImpl;
 import org.seasar.extension.jdbc.gen.internal.desc.DatabaseDescFactory;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
@@ -416,7 +415,7 @@ public class DumpDataCommand extends AbstractCommand {
                 valueTypeProvider, true);
         sqlUnitExecutor = new SqlUnitExecutorImpl(jdbcManager.getDataSource(),
                 userTransaction, true);
-        dumper = new DumperImpl(dialect, dumpFileEncoding);
+        dumper = new Dumper(dialect, dumpFileEncoding);
         ddlVersionDirectoryTree = new DdlVersionDirectoryTreeImpl(migrateDir,
                 ddlInfoFile, versionNoPattern, applyEnvToVersion ? env : null);
 
