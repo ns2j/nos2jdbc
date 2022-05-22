@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class EntityTestModelFactoryImplTest {
 
-    private EntityTestModelFactoryImpl factory;
+    private EntityTestModelFactory factory;
 
     /**
      * 
@@ -42,7 +42,7 @@ class EntityTestModelFactoryImplTest {
     @BeforeEach
     public void setUp() throws Exception {
         //i	
-        factory = new EntityTestModelFactoryImpl("jdbcManager", "Test", new NamesModelFactoryImpl("hoge.entity", "Names"), true, "rootpackagename", "none");
+        factory = new EntityTestModelFactory("jdbcManager", "Test", new NamesModelFactory("hoge.entity", "Names"), true, "rootpackagename", "none");
     }
 
     /**

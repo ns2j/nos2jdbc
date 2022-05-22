@@ -22,7 +22,6 @@ import javax.persistence.Column;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.internal.util.AnnotationUtil;
 import org.seasar.extension.jdbc.gen.model.ConditionAttributeModel;
-import org.seasar.extension.jdbc.gen.model.ConditionAttributeModelFactory;
 import org.seasar.extension.jdbc.where.condition.NotNullableCondition;
 import org.seasar.extension.jdbc.where.condition.NotNullableStringCondition;
 import org.seasar.extension.jdbc.where.condition.NullableCondition;
@@ -34,8 +33,7 @@ import org.seasar.framework.util.ClassUtil;
  * 
  * @author taedium
  */
-public class ConditionAttributeModelFactoryImpl implements
-        ConditionAttributeModelFactory {
+public class ConditionAttributeModelFactory {
 
     public ConditionAttributeModel getConditionAttributeModel(
             PropertyMeta propertyMeta) {

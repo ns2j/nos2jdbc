@@ -27,14 +27,12 @@ import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRunt
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.NamesAggregateModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NamesAggregateModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModel;
-import org.seasar.extension.jdbc.gen.model.NamesAggregateModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
-import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -528,7 +526,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      * @return {@link NamesModelFactory}の実装
      */
     protected NamesModelFactory createNamesModelFactory() {
-        return new NamesModelFactoryImpl(ClassUtil.concatName(
+        return new NamesModelFactory(ClassUtil.concatName(
                 rootPackageName, namesPackageName), namesClassNameSuffix);
     }
 
@@ -538,7 +536,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      * @return {@link NamesAggregateModelFactory}の実装
      */
     protected NamesAggregateModelFactory createNamesAggregateModelFactory() {
-        return new NamesAggregateModelFactoryImpl(ClassUtil
+        return new NamesAggregateModelFactory(ClassUtil
                 .concatName(rootPackageName, namesPackageName),
                 namesAggregateShortClassName);
     }

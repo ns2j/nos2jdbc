@@ -28,10 +28,10 @@ import org.seasar.extension.jdbc.gen.desc.EntitySetDesc;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.desc.AssociationResolver;
 import org.seasar.extension.jdbc.gen.internal.desc.PluralFormDictinary;
-import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.CompositeUniqueConstraintModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.EntityModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.CompositeUniqueConstraintModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.EntityModelFactory;
 import org.seasar.extension.jdbc.gen.meta.DbForeignKeyMeta;
 import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.extension.jdbc.gen.model.EntityModel;
@@ -47,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class GenerateEntityTest {
 
-    private EntityModelFactoryImpl factory;
+    private EntityModelFactory factory;
 
     private GeneratorImplStub generator;
 
@@ -57,7 +57,7 @@ class GenerateEntityTest {
      */
     @BeforeEach
     public void setUp() throws Exception {
-        factory = new EntityModelFactoryImpl("hoge.entity", null, new AttributeModelFactoryImpl(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(false), new CompositeUniqueConstraintModelFactoryImpl(), false, false, true, true, false);
+        factory = new EntityModelFactory("hoge.entity", null, new AttributeModelFactory(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactory(false), new CompositeUniqueConstraintModelFactory(), false, false, true, true, false);
         generator = new GeneratorImplStub();
     }
 
@@ -429,7 +429,7 @@ class GenerateEntityTest {
      */
     @Test
     void testSuperclass() throws Exception {
-        factory = new EntityModelFactoryImpl("hoge.entity", Eee.class, new AttributeModelFactoryImpl(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(false), new CompositeUniqueConstraintModelFactoryImpl(), false, false, true, true, false);
+        factory = new EntityModelFactory("hoge.entity", Eee.class, new AttributeModelFactory(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactory(false), new CompositeUniqueConstraintModelFactory(), false, false, true, true, false);
         AttributeDesc id = new AttributeDesc();
         id.setName("id");
         id.setId(true);
@@ -474,7 +474,7 @@ class GenerateEntityTest {
      */
     @Test
     void testAccessor() throws Exception {
-        factory = new EntityModelFactoryImpl("hoge.entity", null, new AttributeModelFactoryImpl(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(false), new CompositeUniqueConstraintModelFactoryImpl(), true, false, true, true, false);
+        factory = new EntityModelFactory("hoge.entity", null, new AttributeModelFactory(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactory(false), new CompositeUniqueConstraintModelFactory(), true, false, true, true, false);
         AttributeDesc id = new AttributeDesc();
         id.setName("id");
         id.setId(true);
@@ -512,7 +512,7 @@ class GenerateEntityTest {
      */
     @Test
     void testComment() throws Exception {
-        factory = new EntityModelFactoryImpl("hoge.entity", null, new AttributeModelFactoryImpl(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(false), new CompositeUniqueConstraintModelFactoryImpl(), false, true, true, true, false);
+        factory = new EntityModelFactory("hoge.entity", null, new AttributeModelFactory(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactory(false), new CompositeUniqueConstraintModelFactory(), false, true, true, true, false);
         AttributeDesc id = new AttributeDesc();
         id.setName("id");
         id.setId(true);
@@ -553,7 +553,7 @@ class GenerateEntityTest {
      */
     @Test
     void testTemporal() throws Exception {
-        factory = new EntityModelFactoryImpl("hoge.entity", null, new AttributeModelFactoryImpl(false, true, false, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(false), new CompositeUniqueConstraintModelFactoryImpl(), false, true, true, true, false);
+        factory = new EntityModelFactory("hoge.entity", null, new AttributeModelFactory(false, true, false, new PersistenceConventionImpl()), new AssociationModelFactory(false), new CompositeUniqueConstraintModelFactory(), false, true, true, true, false);
         AttributeDesc id = new AttributeDesc();
         id.setName("id");
         id.setId(true);
@@ -601,7 +601,7 @@ class GenerateEntityTest {
      */
     @Test
     void testTemporal_useTemporalType() throws Exception {
-        factory = new EntityModelFactoryImpl("hoge.entity", null, new AttributeModelFactoryImpl(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(false), new CompositeUniqueConstraintModelFactoryImpl(), false, true, true, true, false);
+        factory = new EntityModelFactory("hoge.entity", null, new AttributeModelFactory(false, true, true, new PersistenceConventionImpl()), new AssociationModelFactory(false), new CompositeUniqueConstraintModelFactory(), false, true, true, true, false);
         AttributeDesc id = new AttributeDesc();
         id.setName("id");
         id.setId(true);
@@ -649,7 +649,7 @@ class GenerateEntityTest {
      */
     @Test
     void testTemporal_primaryTemporalType() throws Exception {
-        factory = new EntityModelFactoryImpl("hoge.entity", null, new AttributeModelFactoryImpl(false, true, false, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(false), new CompositeUniqueConstraintModelFactoryImpl(), false, true, true, true, false);
+        factory = new EntityModelFactory("hoge.entity", null, new AttributeModelFactory(false, true, false, new PersistenceConventionImpl()), new AssociationModelFactory(false), new CompositeUniqueConstraintModelFactory(), false, true, true, true, false);
         AttributeDesc id = new AttributeDesc();
         id.setName("id");
         id.setId(true);

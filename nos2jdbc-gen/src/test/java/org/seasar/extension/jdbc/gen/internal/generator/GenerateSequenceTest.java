@@ -26,7 +26,7 @@ import org.seasar.extension.jdbc.gen.desc.SequenceDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.dialect.HsqlGenDialect;
-import org.seasar.extension.jdbc.gen.internal.model.TableModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
@@ -88,7 +88,7 @@ class GenerateSequenceTest {
         TableDesc tableDesc = new TableDesc();
         tableDesc.setCanonicalName("aaa");
         tableDesc.addSequenceDesc(sequenceDesc);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new HsqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactory factory = new TableModelFactory(new HsqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {

@@ -22,7 +22,6 @@ import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.NamesAssociationModel;
 import org.seasar.extension.jdbc.gen.model.NamesAttributeModel;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
-import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.extension.jdbc.name.PropertyName;
 import org.seasar.framework.util.ClassUtil;
 
@@ -31,7 +30,7 @@ import org.seasar.framework.util.ClassUtil;
  * 
  * @author taedium
  */
-public class NamesModelFactoryImpl implements NamesModelFactory {
+public class NamesModelFactory {
 
     /** 内部クラスのプレフィックス */
     protected static String INNER_CLASS_NAME_PREFIX = "_";
@@ -56,7 +55,7 @@ public class NamesModelFactoryImpl implements NamesModelFactory {
      * @param packageName
      *            パッケージ名、デフォルトパッケージの場合は{@code null}
      */
-    public NamesModelFactoryImpl(String packageName, String namesClassNameSuffix) {
+    public NamesModelFactory(String packageName, String namesClassNameSuffix) {
         if (namesClassNameSuffix == null) {
             throw new NullPointerException("namesClassNameSuffix");
         }

@@ -22,17 +22,14 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantFieldModel;
-import org.seasar.extension.jdbc.gen.model.SqlFileConstantNamingRule;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
-import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModelFactory;
 
 /**
  * {@link SqlFileConstantsModelFactory}の実装クラスです。
  * 
  * @author taedium
  */
-public class SqlFileConstantsModelFactoryImpl implements
-        SqlFileConstantsModelFactory {
+public class SqlFileConstantsModelFactory {
 
     /** SQLファイルのパスを表す定数の名前付けルール */
     protected SqlFileConstantNamingRule sqlFileConstantNamingRule;
@@ -69,7 +66,7 @@ public class SqlFileConstantsModelFactoryImpl implements
      * @param shortClassName
      *            テストクラスの単純名
      */
-    public SqlFileConstantsModelFactoryImpl(File classpathDir,
+    public SqlFileConstantsModelFactory(File classpathDir,
             Set<File> sqlFileSet,
             SqlFileConstantNamingRule sqlFileConstantNamingRule,
             String packageName, String shortClassName) {

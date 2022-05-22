@@ -42,7 +42,7 @@ class SqlFileTestModelFactoryImplTest {
         sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath), "bbb.sql"));
         sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath), "bbb_oracle.sql"));
         sqlFileSet.add(new File(ResourceUtil.getResourceAsFile(basePath), "aaa_oracle.sql"));
-        SqlFileTestModelFactoryImpl factory = new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", new SqlFileSupport() {
+        SqlFileTestModelFactory factory = new SqlFileTestModelFactory(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", new SqlFileSupport() {
 
             @Override
             protected Set<String> getDbmsNameSet() {

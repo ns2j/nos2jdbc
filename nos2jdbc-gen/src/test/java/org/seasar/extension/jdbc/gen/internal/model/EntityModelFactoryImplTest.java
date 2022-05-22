@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class EntityModelFactoryImplTest {
 
-    private EntityModelFactoryImpl factory = new EntityModelFactoryImpl("aaa.bbb", Superclass.class, new AttributeModelFactoryImpl(true, true, true, new PersistenceConventionImpl()), new AssociationModelFactoryImpl(true), new CompositeUniqueConstraintModelFactoryImpl(), false, false, true, true, true);
+    private EntityModelFactory factory = new EntityModelFactory("aaa.bbb", Superclass.class, new AttributeModelFactory(true, true, true, new PersistenceConventionImpl()), new AssociationModelFactory(true), new CompositeUniqueConstraintModelFactory(), false, false, true, true, true);
 
     /**
      * 

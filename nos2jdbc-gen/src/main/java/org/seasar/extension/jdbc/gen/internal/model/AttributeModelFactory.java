@@ -23,7 +23,6 @@ import javax.persistence.TemporalType;
 
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
 import org.seasar.extension.jdbc.gen.model.AttributeModel;
-import org.seasar.extension.jdbc.gen.model.AttributeModelFactory;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.ClassUtil;
 
@@ -32,7 +31,7 @@ import org.seasar.framework.util.ClassUtil;
  * 
  * @author taedium
  */
-public class AttributeModelFactoryImpl implements AttributeModelFactory {
+public class AttributeModelFactory {
 
     /** カラム名を表示する場合{@code true} */
     protected boolean showColumnName;
@@ -58,7 +57,7 @@ public class AttributeModelFactoryImpl implements AttributeModelFactory {
      * @param persistenceConvention
      *            永続化層の命名規約
      */
-    public AttributeModelFactoryImpl(boolean showColumnName,
+    public AttributeModelFactory(boolean showColumnName,
             boolean showColumnDefinition, boolean useTemporalType,
             PersistenceConvention persistenceConvention) {
         if (persistenceConvention == null) {

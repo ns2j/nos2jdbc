@@ -12,7 +12,7 @@ import static org.seasar.extension.jdbc.operation.Operations.*;
  * {@link Aaa}のサービスクラスです。
  * 
  */
-@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.ServiceModelFactoryImpl"}, date = "2009/04/01 13:12:11")
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.ServiceModelFactory"}, date = "2009/04/01 13:12:11")
 public class AaaService extends NoS2AbstractService<Aaa> {
 
     /**

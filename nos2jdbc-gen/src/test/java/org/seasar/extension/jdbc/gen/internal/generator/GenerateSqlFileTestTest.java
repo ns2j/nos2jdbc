@@ -22,7 +22,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.TextUtil;
@@ -56,7 +56,7 @@ class GenerateSqlFileTestTest {
         Set<File> sqlFileSet = new HashSet<File>();
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/aaa.sql"));
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/bbb.sql"));
-        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none");
+        SqlFileTestModelFactory sqlFileTestModelFactory = new SqlFileTestModelFactory(classpathDir, sqlFileSet, "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none");
         SqlFileTestModel model = sqlFileTestModelFactory.getSqlFileTestModel();
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/sqlfiletest.ftl", "UTF-8", false);
         generator.generate(context);
@@ -97,7 +97,7 @@ class GenerateSqlFileTestTest {
     @Test
     void testNoSqlFile() throws Exception {
         File classpathDir = ResourceUtil.getBuildDir(getClass());
-        SqlFileTestModelFactoryImpl sqlFileTestModelFactory = new SqlFileTestModelFactoryImpl(classpathDir, Collections.<File>emptySet(), "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none");
+        SqlFileTestModelFactory sqlFileTestModelFactory = new SqlFileTestModelFactory(classpathDir, Collections.<File>emptySet(), "jdbcManager", "hoge", "SqlFileTest", "rootpackagename", "none");
         SqlFileTestModel model = sqlFileTestModelFactory.getSqlFileTestModel();
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/sqlfiletest.ftl", "UTF-8", false);
         generator.generate(context);

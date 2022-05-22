@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModel;
 import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.EntityMetaFactoryImpl;
@@ -68,7 +68,7 @@ class GenerateServiceTestTest {
     @Test
     void test() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ServiceTestModelFactoryImpl serviceTestModelFactory = new ServiceTestModelFactoryImpl("hoge.service", "Service", "Test", "rootpackagename", "none");
+        ServiceTestModelFactory serviceTestModelFactory = new ServiceTestModelFactory("hoge.service", "Service", "Test", "rootpackagename", "none");
         ServiceTestModel model = serviceTestModelFactory.getServiceTestModel(entityMeta);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "java/servicetest.ftl", "UTF-8", false);
         generator.generate(context);

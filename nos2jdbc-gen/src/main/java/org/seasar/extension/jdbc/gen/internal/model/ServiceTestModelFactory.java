@@ -17,20 +17,15 @@ package org.seasar.extension.jdbc.gen.internal.model;
 
 import javax.annotation.Generated;
 
-//i import org.junit.Assert;
-//i import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModel;
-import org.seasar.extension.jdbc.gen.model.ServiceTestModelFactory;
-//i import org.seasar.extension.unit.S2TestCase;
-//i import org.seasar.framework.unit.Seasar2;
 
 /**
  * {@link ServiceTestModelFactory}の実装クラスです。
  * 
  * @author taedium
  */
-public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
+public class ServiceTestModelFactory {
     /** パッケージ名、デフォルトパッケージの場合は{@code null} */
     protected String packageName;
   //i
@@ -45,9 +40,6 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
     /** 設定ファイルのパス */
     protected String configPath;
 
-    /** S2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false} */
-//i    protected boolean useS2junit4;
-//i
     protected String componentType = "none";
     
     /** クラスモデルのサポート */
@@ -70,7 +62,7 @@ public class ServiceTestModelFactoryImpl implements ServiceTestModelFactory {
      * @param componentType
      *            コンポーネントタイプ
      */
-    public ServiceTestModelFactoryImpl(String packageName,
+    public ServiceTestModelFactory(String packageName,
             String serviceClassNameSuffix, String testClassNameSuffix,
             String rootPackageName, String componentType) {
 //i        if (configPath == null) {

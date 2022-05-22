@@ -43,7 +43,7 @@ class NamesModelFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
-    private NamesModelFactoryImpl namesModelFactory;
+    private NamesModelFactory namesModelFactory;
 
     /**
      * 
@@ -63,7 +63,7 @@ class NamesModelFactoryImplTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
-        namesModelFactory = new NamesModelFactoryImpl("aaa.bbb", "Names");
+        namesModelFactory = new NamesModelFactory("aaa.bbb", "Names");
     }
 
     /**

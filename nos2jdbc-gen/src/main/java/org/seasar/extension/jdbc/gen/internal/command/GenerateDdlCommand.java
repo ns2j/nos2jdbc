@@ -41,7 +41,7 @@ import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRunt
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.TableModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.internal.provider.ValueTypeProviderImpl;
 import org.seasar.extension.jdbc.gen.internal.sql.SqlUnitExecutorImpl;
 import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
@@ -52,7 +52,6 @@ import org.seasar.extension.jdbc.gen.model.DdlModel;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
-import org.seasar.extension.jdbc.gen.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
@@ -1195,7 +1194,7 @@ public class GenerateDdlCommand extends AbstractCommand {
         ddlVersionIncrementer = new DdlVersionIncrementerImpl(ddlVersionDirectoryTree, genDdlListener,
                 dialect, jdbcManager
                 .getDataSource(), createDirNameList, dropDirNameList);
-        tableModelFactory = new TableModelFactoryImpl(dialect, jdbcManager
+        tableModelFactory = new TableModelFactory(dialect, jdbcManager
                 .getDataSource(), sqlIdentifierCaseType, sqlKeywordCaseType,
                 statementDelimiter, tableOption, applyJavaCommentToDdl);
         generator = new GeneratorImpl(templateFileEncoding,

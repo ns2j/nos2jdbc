@@ -20,7 +20,6 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModel;
-import org.seasar.extension.jdbc.gen.model.NamesAggregateModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.framework.util.ClassUtil;
 
@@ -29,8 +28,7 @@ import org.seasar.framework.util.ClassUtil;
  * 
  * @author taedium
  */
-public class NamesAggregateModelFactoryImpl implements
-        NamesAggregateModelFactory {
+public class NamesAggregateModelFactory {
 
     /** パッケージ名、デフォルトパッケージの場合は{@code null} */
     protected String packageName;
@@ -52,7 +50,7 @@ public class NamesAggregateModelFactoryImpl implements
      * @param shortClassName
      *            クラスの単純名
      */
-    public NamesAggregateModelFactoryImpl(String packageName,
+    public NamesAggregateModelFactory(String packageName,
             String shortClassName) {
         if (shortClassName == null) {
             throw new NullPointerException("shortClassName");

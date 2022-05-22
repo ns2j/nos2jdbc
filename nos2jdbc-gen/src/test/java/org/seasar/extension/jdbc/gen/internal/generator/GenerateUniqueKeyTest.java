@@ -26,7 +26,7 @@ import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
-import org.seasar.extension.jdbc.gen.internal.model.TableModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
@@ -93,7 +93,7 @@ class GenerateUniqueKeyTest {
         tableDesc.setCanonicalName("aaa.bbb.hoge");
         tableDesc.addUniqueKeyDesc(uniqueKeyDesc);
         tableDesc.addUniqueKeyDesc(uniqueKeyDesc2);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new StandardGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactory factory = new TableModelFactory(new StandardGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {

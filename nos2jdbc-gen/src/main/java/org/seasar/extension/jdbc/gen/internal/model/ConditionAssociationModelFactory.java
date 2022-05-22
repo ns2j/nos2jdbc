@@ -17,15 +17,13 @@ package org.seasar.extension.jdbc.gen.internal.model;
 
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.ConditionAssociationModel;
-import org.seasar.extension.jdbc.gen.model.ConditionAssociationModelFactory;
 
 /**
  * {@link ConditionAssociationModelFactory}の実装クラスです。
  * 
  * @author taedium
  */
-public class ConditionAssociationModelFactoryImpl implements
-        ConditionAssociationModelFactory {
+public class ConditionAssociationModelFactory {
 
     /** 条件クラス名のサフィックス */
     protected String conditionClassNameSuffix;
@@ -36,7 +34,7 @@ public class ConditionAssociationModelFactoryImpl implements
      * @param conditionClassNameSuffix
      *            条件クラス名のサフィックス
      */
-    public ConditionAssociationModelFactoryImpl(String conditionClassNameSuffix) {
+    public ConditionAssociationModelFactory(String conditionClassNameSuffix) {
         if (conditionClassNameSuffix == null) {
             throw new NullPointerException("conditionClassNameSuffix");
         }

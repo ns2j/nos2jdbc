@@ -15,20 +15,21 @@
  */
 package org.seasar.extension.jdbc.gen.internal.generator;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRuleImpl;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRule;
+import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
-import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModelFactory;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.TextUtil;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -51,7 +52,7 @@ class GenerateSqlFileConstantsTest {
         Set<File> sqlFileSet = new HashSet<File>();
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/aaa.sql"));
         sqlFileSet.add(ResourceUtil.getResourceAsFile(basePath + "/bbb.sql"));
-        factory = new SqlFileConstantsModelFactoryImpl(classpathDir, sqlFileSet, new SqlFileConstantNamingRuleImpl(), "hoge", "SqlFileTest");
+        factory = new SqlFileConstantsModelFactory(classpathDir, sqlFileSet, new SqlFileConstantNamingRule(), "hoge", "SqlFileTest");
         generator = new GeneratorImplStub();
     }
 

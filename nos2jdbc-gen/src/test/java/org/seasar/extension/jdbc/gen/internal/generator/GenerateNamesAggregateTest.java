@@ -20,7 +20,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.internal.model.NamesAggregateModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NamesAggregateModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModel;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.framework.util.TextUtil;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class GenerateNamesAggregateTest {
 
-    private NamesAggregateModelFactoryImpl namesAggregateModelFactory;
+    private NamesAggregateModelFactory namesAggregateModelFactory;
 
     private GeneratorImplStub generator;
 
@@ -42,7 +42,7 @@ class GenerateNamesAggregateTest {
      */
     @BeforeEach
     public void setUp() throws Exception {
-        namesAggregateModelFactory = new NamesAggregateModelFactoryImpl("hoge.entity", "Names");
+        namesAggregateModelFactory = new NamesAggregateModelFactory("hoge.entity", "Names");
         generator = new GeneratorImplStub();
     }
 

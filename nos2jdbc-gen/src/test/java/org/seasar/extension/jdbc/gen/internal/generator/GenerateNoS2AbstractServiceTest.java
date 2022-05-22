@@ -19,7 +19,7 @@ import java.io.File;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactory;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
 import org.seasar.framework.util.TextUtil;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class GenerateNoS2AbstractServiceTest {
 
-    private NoS2AbstServiceModelFactoryImpl abstServiceModelFactory;
+    private NoS2AbstServiceModelFactory abstServiceModelFactory;
 
     private GeneratorImplStub generator;
 
@@ -40,7 +40,7 @@ class GenerateNoS2AbstractServiceTest {
      */
     @BeforeEach
     public void setUp() throws Exception {
-        abstServiceModelFactory = new NoS2AbstServiceModelFactoryImpl("hoge.service", "Service", "none");
+        abstServiceModelFactory = new NoS2AbstServiceModelFactory("hoge.service", "Service", "none");
         generator = new GeneratorImplStub();
     }
 

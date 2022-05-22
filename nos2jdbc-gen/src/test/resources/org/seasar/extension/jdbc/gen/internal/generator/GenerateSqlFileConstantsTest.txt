@@ -6,7 +6,7 @@ import javax.annotation.Generated;
  * SQLファイルの定数クラスです。
  * 
  */
-@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactoryImpl"}, date = "2009/04/01 13:12:11")
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactory"}, date = "2009/04/01 13:12:11")
 public final class SqlFileTest {
 
     /**

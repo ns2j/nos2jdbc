@@ -27,7 +27,7 @@ import org.seasar.extension.jdbc.gen.desc.ForeignKeyDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
-import org.seasar.extension.jdbc.gen.internal.model.TableModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
@@ -49,7 +49,7 @@ class GenerateForeignKeyTest {
 
     private DataSource dataSource;
 
-    private TableModelFactoryImpl factory;
+    private TableModelFactory factory;
 
     /**
      * 
@@ -81,7 +81,7 @@ class GenerateForeignKeyTest {
                 };
             }
         };
-        factory = new TableModelFactoryImpl(new StandardGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        factory = new TableModelFactory(new StandardGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {

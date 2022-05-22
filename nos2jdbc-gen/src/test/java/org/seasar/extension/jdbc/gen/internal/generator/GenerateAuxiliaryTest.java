@@ -22,7 +22,7 @@ import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.dialect.PostgreGenDialect;
-import org.seasar.extension.jdbc.gen.internal.model.TableModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
@@ -78,7 +78,7 @@ class GenerateAuxiliaryTest {
         tableDesc.addColumnDesc(no1);
         tableDesc.addColumnDesc(no2);
         tableDesc.addColumnDesc(name);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new PostgreGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactory factory = new TableModelFactory(new PostgreGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {
@@ -124,7 +124,7 @@ class GenerateAuxiliaryTest {
         tableDesc.addColumnDesc(no1);
         tableDesc.addColumnDesc(no2);
         tableDesc.addColumnDesc(name);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new PostgreGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactory factory = new TableModelFactory(new PostgreGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {

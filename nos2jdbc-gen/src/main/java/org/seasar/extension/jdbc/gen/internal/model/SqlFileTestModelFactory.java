@@ -21,14 +21,13 @@ import java.util.Set;
 
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
-import org.seasar.extension.jdbc.gen.model.SqlFileTestModelFactory;
 
 /**
  * {@link SqlFileTestModelFactory}の実装クラスです。
  * 
  * @author taedium
  */
-public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
+public class SqlFileTestModelFactory {
 
     /** 設定ファイルのパス */
 //i    protected String configPath;
@@ -73,7 +72,7 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
      * @param rootPackageName String
      * @param componentType String
      */
-    public SqlFileTestModelFactoryImpl(File classpathDir, Set<File> sqlFileSet,
+    public SqlFileTestModelFactory(File classpathDir, Set<File> sqlFileSet,
             String jdbcManagerName, String packageName,
             String shortClassName, String rootPackageName, String componentType) {
         this(classpathDir, sqlFileSet, jdbcManagerName,
@@ -99,7 +98,7 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
      * @param rootPackageName String
      * @param componentType String
      */
-    protected SqlFileTestModelFactoryImpl(File classpathDir,
+    protected SqlFileTestModelFactory(File classpathDir,
             Set<File> sqlFileSet, String jdbcManagerName,
             String packageName, String shortClassName,
             SqlFileSupport sqlFileSupport,
@@ -151,7 +150,6 @@ public class SqlFileTestModelFactoryImpl implements SqlFileTestModelFactory {
         return sqlFileSupport.createSqlFilePathList(classpathDir, sqlFileSet);
     }
 
-    @Override
     public SqlFileTestModel getSqlFileTestModel() {
         SqlFileTestModel model = new SqlFileTestModel();
 //i        model.setConfigPath(configPath);

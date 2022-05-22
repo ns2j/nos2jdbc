@@ -29,7 +29,7 @@ import org.seasar.extension.jdbc.gen.generator.GenerationContext;
 import org.seasar.extension.jdbc.gen.internal.dialect.MssqlGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.MysqlGenDialect;
 import org.seasar.extension.jdbc.gen.internal.dialect.OracleGenDialect;
-import org.seasar.extension.jdbc.gen.internal.model.TableModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
@@ -110,7 +110,7 @@ class GenerateTableTest {
         tableDesc.addColumnDesc(no);
         tableDesc.addColumnDesc(name);
         tableDesc.setPrimaryKeyDesc(primaryKeyDesc);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new MssqlGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
+        TableModelFactory factory = new TableModelFactory(new MssqlGenDialect(), new MockDataSource(), SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false) {
 
             @Override
             protected Long getNextValue(String sequenceName, int allocationSize) {
@@ -151,7 +151,7 @@ class GenerateTableTest {
         tableDesc.addColumnDesc(no);
         tableDesc.addColumnDesc(name);
         tableDesc.setPrimaryKeyDesc(primaryKeyDesc);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false);
+        TableModelFactory factory = new TableModelFactory(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false);
         TableModel model = factory.getTableModel(tableDesc);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/create-table.ftl", "UTF-8", false);
         generator.generate(context);
@@ -182,7 +182,7 @@ class GenerateTableTest {
         tableDesc.setCanonicalName("aaa.bbb.bar");
         tableDesc.addColumnDesc(no);
         tableDesc.addColumnDesc(name);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false);
+        TableModelFactory factory = new TableModelFactory(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false);
         TableModel model = factory.getTableModel(tableDesc);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/create-table.ftl", "UTF-8", false);
         generator.generate(context);
@@ -217,7 +217,7 @@ class GenerateTableTest {
         tableDesc.addColumnDesc(no);
         tableDesc.addColumnDesc(name);
         tableDesc.setPrimaryKeyDesc(primaryKeyDesc);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', "ENGINE = INNODB", false);
+        TableModelFactory factory = new TableModelFactory(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', "ENGINE = INNODB", false);
         TableModel model = factory.getTableModel(tableDesc);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/create-table.ftl", "UTF-8", false);
         generator.generate(context);
@@ -254,7 +254,7 @@ class GenerateTableTest {
         tableDesc.addColumnDesc(no);
         tableDesc.addColumnDesc(name);
         tableDesc.setPrimaryKeyDesc(primaryKeyDesc);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new OracleGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, true);
+        TableModelFactory factory = new TableModelFactory(new OracleGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, true);
         TableModel model = factory.getTableModel(tableDesc);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/create-table.ftl", "UTF-8", false);
         generator.generate(context);
@@ -291,7 +291,7 @@ class GenerateTableTest {
         tableDesc.addColumnDesc(no);
         tableDesc.addColumnDesc(name);
         tableDesc.setPrimaryKeyDesc(primaryKeyDesc);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new MysqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, true);
+        TableModelFactory factory = new TableModelFactory(new MysqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, true);
         TableModel model = factory.getTableModel(tableDesc);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/create-table.ftl", "UTF-8", false);
         generator.generate(context);
@@ -326,7 +326,7 @@ class GenerateTableTest {
         tableDesc.addColumnDesc(no);
         tableDesc.addColumnDesc(name);
         tableDesc.setPrimaryKeyDesc(primaryKeyDesc);
-        TableModelFactoryImpl factory = new TableModelFactoryImpl(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false);
+        TableModelFactory factory = new TableModelFactory(new MssqlGenDialect(), dataSource, SqlIdentifierCaseType.ORIGINALCASE, SqlKeywordCaseType.ORIGINALCASE, ';', null, false);
         TableModel model = factory.getTableModel(tableDesc);
         GenerationContext context = new GenerationContextImpl(model, new File("file"), "sql/drop-table.ftl", "UTF-8", false);
         generator.generate(context);

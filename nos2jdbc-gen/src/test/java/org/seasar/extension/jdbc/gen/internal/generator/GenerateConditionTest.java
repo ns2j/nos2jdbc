@@ -20,9 +20,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ConditionAttributeModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ConditionModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionAttributeModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionModel;
 import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.EntityMetaFactoryImpl;
@@ -40,7 +40,7 @@ class GenerateConditionTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
-    private ConditionModelFactoryImpl conditionModelfactory;
+    private ConditionModelFactory conditionModelfactory;
 
     private GeneratorImplStub generator;
 
@@ -62,9 +62,9 @@ class GenerateConditionTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
-        ConditionAttributeModelFactoryImpl attrFactory = new ConditionAttributeModelFactoryImpl();
-        ConditionAssociationModelFactoryImpl assoFactory = new ConditionAssociationModelFactoryImpl("Condition");
-        conditionModelfactory = new ConditionModelFactoryImpl(attrFactory, assoFactory, "hoge.condition", "Condition");
+        ConditionAttributeModelFactory attrFactory = new ConditionAttributeModelFactory();
+        ConditionAssociationModelFactory assoFactory = new ConditionAssociationModelFactory("Condition");
+        conditionModelfactory = new ConditionModelFactory(attrFactory, assoFactory, "hoge.condition", "Condition");
         generator = new GeneratorImplStub();
     }
 

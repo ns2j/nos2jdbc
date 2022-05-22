@@ -18,14 +18,13 @@ package org.seasar.extension.jdbc.gen.internal.model;
 import javax.annotation.Generated;
 
 import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModel;
-import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
 
 /**
  * {@link ServiceBaseQualifierModelFactory}の実装クラスです。
  * 
  * @author taedium
  */
-public class ServiceBaseQualifierModelFactoryImpl implements ServiceBaseQualifierModelFactory {
+public class ServiceBaseQualifierModelFactory {
 
     /** パッケージ名 */
     protected String packageName;
@@ -51,7 +50,7 @@ public class ServiceBaseQualifierModelFactoryImpl implements ServiceBaseQualifie
      *            サービスクラス名のサフィックス
      * @param componentType String
      */
-    public ServiceBaseQualifierModelFactoryImpl(String packageName,
+    public ServiceBaseQualifierModelFactory(String packageName,
             String serviceClassNameSuffix, String componentType) {
         if (serviceClassNameSuffix == null) {
             throw new NullPointerException("serviceClassNameSuffix");
@@ -62,7 +61,6 @@ public class ServiceBaseQualifierModelFactoryImpl implements ServiceBaseQualifie
 
     }
 
-    @Override
     public ServiceBaseQualifierModel getServiceBaseQualifierModel() {
         ServiceBaseQualifierModel serviceBaseQualifierModel = new ServiceBaseQualifierModel();
         serviceBaseQualifierModel.setPackageName(packageName);

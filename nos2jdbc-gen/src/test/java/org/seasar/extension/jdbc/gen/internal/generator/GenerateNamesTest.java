@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.EntityMetaFactoryImpl;
@@ -38,7 +38,7 @@ class GenerateNamesTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
-    private NamesModelFactoryImpl namesModelFactory;
+    private NamesModelFactory namesModelFactory;
 
     private GeneratorImplStub generator;
 
@@ -60,7 +60,7 @@ class GenerateNamesTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
-        namesModelFactory = new NamesModelFactoryImpl("hoge.entity", "Names");
+        namesModelFactory = new NamesModelFactory("hoge.entity", "Names");
         generator = new GeneratorImplStub();
     }
 

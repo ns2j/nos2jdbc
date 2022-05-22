@@ -25,16 +25,13 @@ import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRunt
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ArchiveTestUtilModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ArchiveTestUtilModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModel;
-import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.EntityTestModel;
-import org.seasar.extension.jdbc.gen.model.EntityTestModelFactory;
-import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -510,13 +507,13 @@ public class GenerateEntityTestCommand extends AbstractCommand {
      * @return {@link NamesModelFactory}の実装
      */
     protected NamesModelFactory createNamesModelFactory() {
-        return new NamesModelFactoryImpl(ClassUtil.concatName(
+        return new NamesModelFactory(ClassUtil.concatName(
                 rootPackageName, namesPackageName), namesClassNameSuffix);
     }
     
     //i
     protected ArchiveTestUtilModelFactory createArchiveTestUtilModelFactory() {
-        return new ArchiveTestUtilModelFactoryImpl(rootPackageName);
+        return new ArchiveTestUtilModelFactory(rootPackageName);
     }
     
     /**
@@ -525,7 +522,7 @@ public class GenerateEntityTestCommand extends AbstractCommand {
      * @return {@link EntityTestModelFactory}の実装
      */
     protected EntityTestModelFactory createEntityTestModelFactory() {
-        return new EntityTestModelFactoryImpl(jdbcManagerName, testClassNameSuffix, namesModelFactory,
+        return new EntityTestModelFactory(jdbcManagerName, testClassNameSuffix, namesModelFactory,
                 useNamesClass, rootPackageName, componentType);
     }
 

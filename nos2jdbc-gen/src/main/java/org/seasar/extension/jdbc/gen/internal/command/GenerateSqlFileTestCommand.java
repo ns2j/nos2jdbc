@@ -25,10 +25,9 @@ import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
-import org.seasar.extension.jdbc.gen.model.SqlFileTestModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -358,7 +357,7 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
      * @return {@link SqlFileTestModelFactory}の実装
      */
     protected SqlFileTestModelFactory createSqlFileTestModelFactory() {
-        return new SqlFileTestModelFactoryImpl(classpathDir,
+        return new SqlFileTestModelFactory(classpathDir,
                 sqlFileSet, jdbcManagerName, ClassUtil.concatName(
                         rootPackageName, subPackageName), shortClassName,
                 rootPackageName, componentType);

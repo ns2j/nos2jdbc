@@ -25,13 +25,12 @@ import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRunt
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ConditionAttributeModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ConditionModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionAttributeModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.ConditionModel;
-import org.seasar.extension.jdbc.gen.model.ConditionModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -414,10 +413,10 @@ public class GenerateConditionCommand extends AbstractCommand {
      * @return {@link ConditionModelFactory}の実装
      */
     protected ConditionModelFactory createConditionModelFactory() {
-        ConditionAttributeModelFactoryImpl attributeModelFactory = new ConditionAttributeModelFactoryImpl();
-        ConditionAssociationModelFactoryImpl associationModelFactory = new ConditionAssociationModelFactoryImpl(
+        ConditionAttributeModelFactory attributeModelFactory = new ConditionAttributeModelFactory();
+        ConditionAssociationModelFactory associationModelFactory = new ConditionAssociationModelFactory(
                 conditionClassNameSuffix);
-        return new ConditionModelFactoryImpl(attributeModelFactory,
+        return new ConditionModelFactory(attributeModelFactory,
                 associationModelFactory, ClassUtil.concatName(
                         rootPackageName, conditionPackageName), conditionClassNameSuffix);
     }

@@ -30,7 +30,7 @@ class SqlFileConstantNamingRuleImplTest {
      */
     @Test
     void test() throws Exception {
-        SqlFileConstantNamingRuleImpl namingRule = new SqlFileConstantNamingRuleImpl();
+        SqlFileConstantNamingRule namingRule = new SqlFileConstantNamingRule();
         assertEquals("AAA", namingRule.fromPathToConstantName("aaa"));
         assertEquals("AAA", namingRule.fromPathToConstantName("aaa.sql"));
         assertEquals("AAA_BBB", namingRule.fromPathToConstantName("aaa/bbb.sql"));

@@ -31,13 +31,12 @@ import org.seasar.extension.jdbc.gen.internal.desc.EntitySetDescFactory;
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.DbTableMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.CompositeUniqueConstraintModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.EntityModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.AssociationModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.AttributeModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.CompositeUniqueConstraintModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.EntityModelFactory;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.extension.jdbc.gen.model.EntityModel;
-import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -695,13 +694,13 @@ public class GenerateEntityCommand extends AbstractCommand {
                 templateFilePrimaryDir);
         Class<?> superClass = entitySuperclassName != null ? ClassUtil
                 .forName(entitySuperclassName) : null;
-        entityModelFactory = new EntityModelFactoryImpl(ClassUtil.concatName(
+        entityModelFactory = new EntityModelFactory(ClassUtil.concatName(
            rootPackageName, entityPackageName), superClass,
-           new AttributeModelFactoryImpl(showColumnName,
+           new AttributeModelFactory(showColumnName,
                    showColumnDefinition, useTemporalType,
                    jdbcManager.getPersistenceConvention()),
-           new AssociationModelFactoryImpl(showJoinColumn),
-           new CompositeUniqueConstraintModelFactoryImpl(), useAccessor,
+           new AssociationModelFactory(showJoinColumn),
+           new CompositeUniqueConstraintModelFactory(), useAccessor,
            applyDbCommentToJava, showCatalogName, showSchemaName, showTableName);
 
         logRdbmsAndGenDialect(dialect);

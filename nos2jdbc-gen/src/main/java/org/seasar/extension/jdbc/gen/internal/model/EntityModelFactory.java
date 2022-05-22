@@ -43,13 +43,9 @@ import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
 import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDesc;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
 import org.seasar.extension.jdbc.gen.model.AssociationModel;
-import org.seasar.extension.jdbc.gen.model.AssociationModelFactory;
 import org.seasar.extension.jdbc.gen.model.AttributeModel;
-import org.seasar.extension.jdbc.gen.model.AttributeModelFactory;
 import org.seasar.extension.jdbc.gen.model.CompositeUniqueConstraintModel;
-import org.seasar.extension.jdbc.gen.model.CompositeUniqueConstraintModelFactory;
 import org.seasar.extension.jdbc.gen.model.EntityModel;
-import org.seasar.extension.jdbc.gen.model.EntityModelFactory;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 
@@ -58,7 +54,7 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
  * 
  * @author taedium
  */
-public class EntityModelFactoryImpl implements EntityModelFactory {
+public class EntityModelFactory {
 
     /** パッケージ名、デフォルトパッケージの場合は{@code null} */
     protected String packageName;
@@ -126,7 +122,7 @@ public class EntityModelFactoryImpl implements EntityModelFactory {
      * @param showTableName
      *            テーブル名を表示する場合{@code true}
      */
-    public EntityModelFactoryImpl(
+    public EntityModelFactory(
             String packageName,
             Class<?> superclass,
             AttributeModelFactory attributeModelFactory,

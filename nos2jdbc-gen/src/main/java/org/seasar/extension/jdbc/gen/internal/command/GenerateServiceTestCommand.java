@@ -25,11 +25,10 @@ import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRunt
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactory;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModel;
-import org.seasar.extension.jdbc.gen.model.ServiceTestModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -485,7 +484,7 @@ public class GenerateServiceTestCommand extends AbstractCommand {
      * @return {@link ServiceTestModelFactory}の実装
      */
     protected ServiceTestModelFactory createServiceTestModelFactory() {
-        return new ServiceTestModelFactoryImpl(ClassUtil.concatName(rootPackageName, servicePackageName),
+        return new ServiceTestModelFactory(ClassUtil.concatName(rootPackageName, servicePackageName),
                 serviceClassNameSuffix, testClassNameSuffix,
                 rootPackageName, componentType);
     }

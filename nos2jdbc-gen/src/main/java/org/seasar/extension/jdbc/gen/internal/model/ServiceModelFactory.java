@@ -26,9 +26,7 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
-import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceModel;
-import org.seasar.extension.jdbc.gen.model.ServiceModelFactory;
 import org.seasar.extension.jdbc.operation.Operations;
 import org.seasar.framework.util.ClassUtil;
 
@@ -37,7 +35,7 @@ import org.seasar.framework.util.ClassUtil;
  * 
  * @author taedium
  */
-public class ServiceModelFactoryImpl implements ServiceModelFactory {
+public class ServiceModelFactory {
 
     /** デフォルトの{@link JdbcManager}のコンポーネント名 */
     protected static String DEFAULT_JDBC_MANAGER_NAME = "jdbcManager";
@@ -81,7 +79,7 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
      *            {@link JdbcManager}のコンポーネント名
      * @param componentType String
      */
-    public ServiceModelFactoryImpl(String packageName,
+    public ServiceModelFactory(String packageName,
             String serviceClassNameSuffix, NamesModelFactory namesModelFactory,
             boolean useNamesClass, String jdbcManagerName, String componentType) {
         if (jdbcManagerName == null) {
@@ -101,7 +99,6 @@ public class ServiceModelFactoryImpl implements ServiceModelFactory {
         this.componentType = componentType;
     }
 
-    @Override
     public ServiceModel getServiceModel(EntityMeta entityMeta) {
         ServiceModel serviceModel = new ServiceModel();
         serviceModel.setPackageName(packageName);

@@ -17,15 +17,13 @@ package org.seasar.extension.jdbc.gen.internal.model;
 
 import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDesc;
 import org.seasar.extension.jdbc.gen.model.CompositeUniqueConstraintModel;
-import org.seasar.extension.jdbc.gen.model.CompositeUniqueConstraintModelFactory;
 
 /**
  * {@link CompositeUniqueConstraintModelFactory}の実装クラスです。
  * 
  * @author taedium
  */
-public class CompositeUniqueConstraintModelFactoryImpl implements
-        CompositeUniqueConstraintModelFactory {
+public class CompositeUniqueConstraintModelFactory {
 
     public CompositeUniqueConstraintModel getUniqueConstraintModel(
             CompositeUniqueConstraintDesc compositeUniqueConstraintDesc) {

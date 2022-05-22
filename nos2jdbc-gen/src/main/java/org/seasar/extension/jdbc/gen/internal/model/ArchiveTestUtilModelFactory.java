@@ -18,14 +18,13 @@ package org.seasar.extension.jdbc.gen.internal.model;
 import javax.annotation.Generated;
 
 import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModel;
-import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModelFactory;
 
 /**
  * {@link ArchiveTestUtilModelFactory}の実装クラスです。
  * 
  * @author gari
  */
-public class ArchiveTestUtilModelFactoryImpl implements ArchiveTestUtilModelFactory {
+public class ArchiveTestUtilModelFactory {
 
     /** パッケージ名 */
     protected String packageName;
@@ -42,12 +41,11 @@ public class ArchiveTestUtilModelFactoryImpl implements ArchiveTestUtilModelFact
      * @param packageName
      *            パッケージ名
      */
-    public ArchiveTestUtilModelFactoryImpl(String packageName) {
+    public ArchiveTestUtilModelFactory(String packageName) {
         this.packageName = packageName;
 
     }
 
-    @Override
     public ArchiveTestUtilModel getArchiveTestUtilModel() {
         ArchiveTestUtilModel archiveTestUtilModel = new ArchiveTestUtilModel();
         archiveTestUtilModel.setPackageName(packageName);

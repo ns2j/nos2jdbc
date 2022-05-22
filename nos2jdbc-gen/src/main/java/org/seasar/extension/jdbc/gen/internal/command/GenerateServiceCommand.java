@@ -25,19 +25,15 @@ import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRunt
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
 import org.seasar.extension.jdbc.gen.internal.meta.EntityMetaReaderImpl;
-import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ServiceBaseQualifierModelFactoryImpl;
-import org.seasar.extension.jdbc.gen.internal.model.ServiceModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.NamesModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceBaseQualifierModelFactory;
+import org.seasar.extension.jdbc.gen.internal.model.ServiceModelFactory;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
-import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
-import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModel;
-import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModelFactory;
 import org.seasar.extension.jdbc.gen.model.ServiceModel;
-import org.seasar.extension.jdbc.gen.model.ServiceModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -139,7 +135,7 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected NamesModelFactory namesModelFactory;
 
     /** ジェネレータ */
-    protected Generator generator;
+    protected GeneratorImpl generator;
 
     /**
      * インスタンスを構築します。
@@ -598,7 +594,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link ServiceModelFactory}の実装
      */
     protected ServiceModelFactory createServiceModelFactory() {
-        return new ServiceModelFactoryImpl(ClassUtil.concatName(
+        return new ServiceModelFactory(ClassUtil.concatName(
                 rootPackageName, servicePackageName), serviceClassNameSuffix,
                 namesModelFactory, useNamesClass, jdbcManagerName, componentType);
     }
@@ -609,13 +605,13 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link NoS2AbstServiceModelFactory}の実装
      */
     protected NoS2AbstServiceModelFactory createAbstServiceModelFactory() {
-        return new NoS2AbstServiceModelFactoryImpl(ClassUtil
+        return new NoS2AbstServiceModelFactory(ClassUtil
                 .concatName(rootPackageName, servicePackageName),
                 serviceClassNameSuffix, componentType);
     }
 
     protected ServiceBaseQualifierModelFactory createServiceBaseQualifierModelFactory() {
-        return new ServiceBaseQualifierModelFactoryImpl(ClassUtil
+        return new ServiceBaseQualifierModelFactory(ClassUtil
                 .concatName(rootPackageName, servicePackageName),
                 serviceClassNameSuffix, componentType);
     }
@@ -626,7 +622,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * @return {@link NamesModelFactory}の実装
      */
     protected NamesModelFactory createNamesModelFactory() {
-        return new NamesModelFactoryImpl(ClassUtil.concatName(
+        return new NamesModelFactory(ClassUtil.concatName(
                 rootPackageName, namesPackageName), namesClassNameSuffix);
     }
 
@@ -635,7 +631,7 @@ public class GenerateServiceCommand extends AbstractCommand {
      * 
      * @return {@link Generator}の実装
      */
-    protected Generator createGenerator() {
+    protected GeneratorImpl createGenerator() {
         return new GeneratorImpl(templateFileEncoding,
                 templateFilePrimaryDir);
     }

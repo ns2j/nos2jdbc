@@ -49,7 +49,7 @@ class ServiceModelFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
-    private NamesModelFactoryImpl namesModelFactory;
+    private NamesModelFactory namesModelFactory;
 
     /**
      * 
@@ -69,7 +69,7 @@ class ServiceModelFactoryImplTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
-        namesModelFactory = new NamesModelFactoryImpl("aaa.ccc", "Names");
+        namesModelFactory = new NamesModelFactory("aaa.ccc", "Names");
     }
 
     /**
@@ -79,7 +79,7 @@ class ServiceModelFactoryImplTest {
     @Test
     void testSingleId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Aaa.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("aaa.bbb", "Service", namesModelFactory, true, "jdbcManager", "cdi");
+        ServiceModelFactory serviceModelFactory = new ServiceModelFactory("aaa.bbb", "Service", namesModelFactory, true, "jdbcManager", "cdi");
         ServiceModel serviceModel = serviceModelFactory.getServiceModel(entityMeta);
         assertNotNull(serviceModel);
         assertEquals("aaa.bbb", serviceModel.getPackageName());
@@ -106,7 +106,7 @@ class ServiceModelFactoryImplTest {
     @Test
     void testCompositeId() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Bbb.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("aaa.bbb", "Service", namesModelFactory, true, "jdbcManager", "cdi");
+        ServiceModelFactory serviceModelFactory = new ServiceModelFactory("aaa.bbb", "Service", namesModelFactory, true, "jdbcManager", "cdi");
         ServiceModel serviceModel = serviceModelFactory.getServiceModel(entityMeta);
         assertNotNull(serviceModel);
         assertEquals("aaa.bbb", serviceModel.getPackageName());
@@ -133,7 +133,7 @@ class ServiceModelFactoryImplTest {
     @Test
     void testJdbcManagerName() throws Exception {
         EntityMeta entityMeta = entityMetaFactory.getEntityMeta(Bbb.class);
-        ServiceModelFactoryImpl serviceModelFactory = new ServiceModelFactoryImpl("aaa.bbb", "Service", namesModelFactory, true, "myJdbcManager", "cdi");
+        ServiceModelFactory serviceModelFactory = new ServiceModelFactory("aaa.bbb", "Service", namesModelFactory, true, "myJdbcManager", "cdi");
         ServiceModel serviceModel = serviceModelFactory.getServiceModel(entityMeta);
         assertNotNull(serviceModel);
         assertEquals("aaa.bbb", serviceModel.getPackageName());

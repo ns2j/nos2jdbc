@@ -18,14 +18,13 @@ package org.seasar.extension.jdbc.gen.internal.model;
 import javax.annotation.Generated;
 
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
-import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModelFactory;
 
 /**
  * {@link NoS2AbstServiceModelFactory}の実装クラスです。
  * 
  * @author taedium
  */
-public class NoS2AbstServiceModelFactoryImpl implements NoS2AbstServiceModelFactory {
+public class NoS2AbstServiceModelFactory {
 
     /** パッケージ名 */
     protected String packageName;
@@ -51,7 +50,7 @@ public class NoS2AbstServiceModelFactoryImpl implements NoS2AbstServiceModelFact
      *            サービスクラス名のサフィックス
      * @param componentType String
      */
-    public NoS2AbstServiceModelFactoryImpl(String packageName,
+    public NoS2AbstServiceModelFactory(String packageName,
             String serviceClassNameSuffix, String componentType) {
         if (serviceClassNameSuffix == null) {
             throw new NullPointerException("serviceClassNameSuffix");
@@ -62,7 +61,6 @@ public class NoS2AbstServiceModelFactoryImpl implements NoS2AbstServiceModelFact
 
     }
 
-    @Override
     public NoS2AbstServiceModel getAbstServiceModel() {
         NoS2AbstServiceModel noS2AbstServiceModel = new NoS2AbstServiceModel();
         noS2AbstServiceModel.setPackageName(packageName);

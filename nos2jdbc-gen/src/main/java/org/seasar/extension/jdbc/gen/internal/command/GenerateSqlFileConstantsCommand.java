@@ -25,13 +25,11 @@ import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.internal.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.internal.generator.GenerationContextImpl;
 import org.seasar.extension.jdbc.gen.internal.generator.GeneratorImpl;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRuleImpl;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRule;
+import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactory;
 import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
-import org.seasar.extension.jdbc.gen.model.SqlFileConstantNamingRule;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
-import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
@@ -81,7 +79,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
     protected boolean overwrite = true;
 
     /** {@link SqlFileConstantNamingRule}の実装クラス名 */
-    protected String sqlFileConstantNamingRuleClassName = SqlFileConstantNamingRuleImpl.class
+    protected String sqlFileConstantNamingRuleClassName = SqlFileConstantNamingRule.class
             .getName();
 
     /** SQLファイルのパスを表す定数の名前付けルール */
@@ -360,7 +358,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
      * @return {@link SqlFileConstantsModelFactory}の実装
      */
     protected SqlFileConstantsModelFactory createSqlFileConstantsModelFactory() {
-        return new SqlFileConstantsModelFactoryImpl(classpathDir,
+        return new SqlFileConstantsModelFactory(classpathDir,
                 sqlFileSet, sqlFileConstantNamingRule, ClassUtil.concatName(
                         rootPackageName, subPackageName), shortClassName);
     }

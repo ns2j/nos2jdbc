@@ -51,7 +51,7 @@ class ConditionModelFactoryImplTest {
 
     private EntityMetaFactoryImpl entityMetaFactory;
 
-    private ConditionModelFactoryImpl conditionModelfactory;
+    private ConditionModelFactory conditionModelfactory;
 
     /**
      * 
@@ -71,9 +71,9 @@ class ConditionModelFactoryImplTest {
         entityMetaFactory.setPersistenceConvention(pc);
         entityMetaFactory.setPropertyMetaFactory(propertyMetaFactory);
         entityMetaFactory.setTableMetaFactory(tmf);
-        ConditionAttributeModelFactoryImpl attrFactory = new ConditionAttributeModelFactoryImpl();
-        ConditionAssociationModelFactoryImpl assoFactory = new ConditionAssociationModelFactoryImpl("Condition");
-        conditionModelfactory = new ConditionModelFactoryImpl(attrFactory, assoFactory, "aaa.bbb", "Condition");
+        ConditionAttributeModelFactory attrFactory = new ConditionAttributeModelFactory();
+        ConditionAssociationModelFactory assoFactory = new ConditionAssociationModelFactory("Condition");
+        conditionModelfactory = new ConditionModelFactory(attrFactory, assoFactory, "aaa.bbb", "Condition");
     }
 
     /**

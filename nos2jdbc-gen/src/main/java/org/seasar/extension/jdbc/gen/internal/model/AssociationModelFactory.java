@@ -20,7 +20,6 @@ import javax.persistence.JoinColumn;
 import org.seasar.extension.jdbc.gen.desc.AssociationDesc;
 import org.seasar.extension.jdbc.gen.desc.AssociationType;
 import org.seasar.extension.jdbc.gen.model.AssociationModel;
-import org.seasar.extension.jdbc.gen.model.AssociationModelFactory;
 import org.seasar.extension.jdbc.gen.model.JoinColumnModel;
 import org.seasar.extension.jdbc.gen.model.JoinColumnsModel;
 
@@ -29,7 +28,7 @@ import org.seasar.extension.jdbc.gen.model.JoinColumnsModel;
  * 
  * @author taedium
  */
-public class AssociationModelFactoryImpl implements AssociationModelFactory {
+public class AssociationModelFactory {
 
     /** {@link JoinColumn}を表示する場合{@code true} */
     protected boolean showJoinColumn;
@@ -40,7 +39,7 @@ public class AssociationModelFactoryImpl implements AssociationModelFactory {
      * @param showJoinColumn
      *            {@link JoinColumn}を表示する場合{@code true}
      */
-    public AssociationModelFactoryImpl(boolean showJoinColumn) {
+    public AssociationModelFactory(boolean showJoinColumn) {
         this.showJoinColumn = showJoinColumn;
     }
 

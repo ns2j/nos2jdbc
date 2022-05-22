@@ -20,11 +20,8 @@ import javax.annotation.Generated;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.ConditionAssociationModel;
-import org.seasar.extension.jdbc.gen.model.ConditionAssociationModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionAttributeModel;
-import org.seasar.extension.jdbc.gen.model.ConditionAttributeModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionModel;
-import org.seasar.extension.jdbc.gen.model.ConditionModelFactory;
 import org.seasar.extension.jdbc.where.ComplexWhere;
 import org.seasar.extension.jdbc.where.condition.AbstractEntityCondition;
 
@@ -33,7 +30,7 @@ import org.seasar.extension.jdbc.where.condition.AbstractEntityCondition;
  * 
  * @author taedium
  */
-public class ConditionModelFactoryImpl implements ConditionModelFactory {
+public class ConditionModelFactory {
 
     /** 条件クラスの属性モデルのファクトリ */
     protected ConditionAttributeModelFactory conditionAttributeModelFactory;
@@ -65,7 +62,7 @@ public class ConditionModelFactoryImpl implements ConditionModelFactory {
      * @param conditionClassNameSuffix
      *            条件クラス名のサフィックス
      */
-    public ConditionModelFactoryImpl(
+    public ConditionModelFactory(
             ConditionAttributeModelFactory conditionAttributeModelFactory,
             ConditionAssociationModelFactory conditionAssociationModelFactory,
             String packageName, String conditionClassNameSuffix) {

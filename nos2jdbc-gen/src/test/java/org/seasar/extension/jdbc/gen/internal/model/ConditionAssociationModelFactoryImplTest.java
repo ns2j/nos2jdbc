@@ -17,7 +17,7 @@ package org.seasar.extension.jdbc.gen.internal.model;
 
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMeta;
-import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactoryImpl;
+import org.seasar.extension.jdbc.gen.internal.model.ConditionAssociationModelFactory;
 import org.seasar.extension.jdbc.gen.model.ConditionAssociationModel;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ConditionAssociationModelFactoryImplTest {
 
-    private ConditionAssociationModelFactoryImpl factory = new ConditionAssociationModelFactoryImpl("Condition");
+    private ConditionAssociationModelFactory factory = new ConditionAssociationModelFactory("Condition");
 
     @SuppressWarnings("unused")
     private String property;

@@ -15,14 +15,13 @@
  */
 package org.seasar.extension.jdbc.gen.internal.model;
 
-import org.seasar.extension.jdbc.gen.model.SqlFileConstantNamingRule;
 import org.seasar.framework.util.StringUtil;
 
 /**
  * @author taedium
  * 
  */
-public class SqlFileConstantNamingRuleImpl implements SqlFileConstantNamingRule {
+public class SqlFileConstantNamingRule {
 
     public String fromPathToConstantName(String path) {
         if (path == null) {

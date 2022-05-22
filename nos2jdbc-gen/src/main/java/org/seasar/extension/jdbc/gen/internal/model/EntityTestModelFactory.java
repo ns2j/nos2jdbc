@@ -24,17 +24,11 @@ import java.util.Date;
 
 import javax.annotation.Generated;
 
-//i import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.EntityTestModel;
-import org.seasar.extension.jdbc.gen.model.EntityTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
-import org.seasar.extension.jdbc.gen.model.NamesModelFactory;
-//i import org.seasar.extension.unit.S2TestCase;
-//i import org.seasar.framework.unit.Seasar2;
-//i import org.seasar.framework.unit.TestContext;
 import org.seasar.framework.util.ClassUtil;
 
 /**
@@ -42,7 +36,7 @@ import org.seasar.framework.util.ClassUtil;
  * 
  * @author taedium
  */
-public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
+public class EntityTestModelFactory {
 
     /** 設定ファイルのパス */
 //i    protected String configPath;
@@ -86,13 +80,10 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
      * @param rootPackageName String
      * @param componentType String
      */
-    public EntityTestModelFactoryImpl(String jdbcManagerName, String testClassNameSuffix,
+    public EntityTestModelFactory(String jdbcManagerName, String testClassNameSuffix,
             NamesModelFactory namesModelFactory, boolean useNamesClass,
             String rootPackageName,
             String componentType) {
-//i        if (configPath == null) {
-//i            throw new NullPointerException("configPath");
-//i        }
         if (jdbcManagerName == null) {
             throw new NullPointerException("jdbcManagerName");
         }
@@ -106,7 +97,7 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
         if (rootPackageName == null) {
             throw new NullPointerException("rootPackageName");
         }
-//i        this.configPath = configPath;
+
         this.jdbcManagerName = jdbcManagerName;
         this.testClassNameSuffix = testClassNameSuffix;
         this.namesModelFactory = namesModelFactory;
@@ -116,7 +107,6 @@ public class EntityTestModelFactoryImpl implements EntityTestModelFactory {
         this.componentType = componentType;
     }
 
-    @Override
     public EntityTestModel getEntityTestModel(EntityMeta entityMeta) {
         EntityTestModel entityTestModel = new EntityTestModel();
 //i        entityTestModel.setConfigPath(configPath);

@@ -38,7 +38,6 @@ import org.seasar.extension.jdbc.gen.model.SequenceModel;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 import org.seasar.extension.jdbc.gen.model.TableModel;
-import org.seasar.extension.jdbc.gen.model.TableModelFactory;
 import org.seasar.extension.jdbc.gen.model.UniqueKeyModel;
 import org.seasar.extension.jdbc.util.ConnectionUtil;
 import org.seasar.extension.jdbc.util.DataSourceUtil;
@@ -52,7 +51,7 @@ import org.seasar.framework.util.StatementUtil;
  * 
  * @author taedium
  */
-public class TableModelFactoryImpl implements TableModelFactory {
+public class TableModelFactory {
 
     /** ロガー */
     protected static Logger logger = Logger
@@ -98,7 +97,7 @@ public class TableModelFactoryImpl implements TableModelFactory {
      * @param useComment
      *            コメントを使用する場合{@code true}
      */
-    public TableModelFactoryImpl(GenDialect dialect, DataSource dataSource,
+    public TableModelFactory(GenDialect dialect, DataSource dataSource,
             SqlIdentifierCaseType sqlIdentifierCaseType,
             SqlKeywordCaseType sqlKeywordCaseType, char delimiter,
             String tableOption, boolean useComment) {
@@ -123,7 +122,6 @@ public class TableModelFactoryImpl implements TableModelFactory {
         this.useComment = useComment;
     }
 
-    @Override
     public TableModel getTableModel(TableDesc tableDesc) {
         TableModel tableModel = new TableModel();
         tableModel.setCanonicalTableName(tableDesc.getCanonicalName());

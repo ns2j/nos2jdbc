@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ServiceTestModelFactoryImplTest {
 
-    private ServiceTestModelFactoryImpl factory;
+    private ServiceTestModelFactory factory;
 
     /**
      * 
@@ -36,7 +36,7 @@ class ServiceTestModelFactoryImplTest {
     @BeforeEach
     public void setUp() throws Exception {
         //i	
-        factory = new ServiceTestModelFactoryImpl("hoge", "Service", "Test", "rootpackagename", "none");
+        factory = new ServiceTestModelFactory("hoge", "Service", "Test", "rootpackagename", "none");
     }
 
     /**
