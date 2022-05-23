@@ -24,8 +24,8 @@ import javax.persistence.TemporalType;
 import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
+import org.seasar.extension.jdbc.gen.command.GenerateEntityCommand;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateEntityCommand;
 
 /**
  * エンティティクラスのJavaファイルを生成する{@link Task}です。

@@ -20,7 +20,7 @@ import java.io.File;
 import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateServiceTestCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateServiceTestCommand;
 
 /**
  * サービスに対するテストクラスのJavaファイルを生成する{@link Task}です。

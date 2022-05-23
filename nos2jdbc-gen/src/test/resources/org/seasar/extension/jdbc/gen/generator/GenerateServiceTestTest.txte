@@ -1,0 +1,26 @@
+package hoge.service;
+
+import javax.annotation.Generated;
+
+
+/**
+ * {@link AaaService}のテストクラスです。
+ * 
+ */
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.ServiceTestModelFactory"}, date = "2009/04/01 13:12:11")
+public class AaaServiceTest {
+
+    private AaaService aaaService;
+
+    /**
+     * {@link #aaaService}が利用可能であることをテストします。
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testAvailable() throws Exception {
+        assertNotNull(aaaService);
+    }
+    
+
+}

@@ -1,0 +1,64 @@
+package hoge.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.persistence.Version;
+
+/**
+ * Fooエンティティクラス
+ * 
+ */
+@Entity
+@Table(catalog = "AAA", schema = "BBB")
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityModelFactory"}, date = "2009/04/01 13:12:11")
+public class Foo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /** idプロパティ */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+    @SequenceGenerator(name = "generator", initialValue = 100, allocationSize = 50)
+    @Column(columnDefinition = "integer", nullable = false, unique = false)
+    public int id;
+
+    /** nameプロパティ */
+    @Column(columnDefinition = "varchar(10)", nullable = false, unique = true)
+    public String name;
+
+    /** salプロパティ */
+    @Column(columnDefinition = "decimal(15,5)", nullable = false, unique = false)
+    public BigDecimal sal;
+
+    /** lobプロパティ */
+    @Lob
+    @Column(columnDefinition = "blob", nullable = true, unique = false)
+    public byte[] lob;
+
+    /** dateプロパティ */
+    @Temporal(TemporalType.DATE)
+    @Column(columnDefinition = "date", nullable = true, unique = false)
+    public Date date;
+
+    /** tempプロパティ */
+    @Transient
+    public String temp;
+
+    /** versionプロパティ */
+    @Version
+    @Column(columnDefinition = "integer", nullable = false, unique = false)
+    public Integer version;
+}

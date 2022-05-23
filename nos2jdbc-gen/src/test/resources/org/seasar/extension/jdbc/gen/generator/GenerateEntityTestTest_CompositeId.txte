@@ -1,0 +1,25 @@
+package org.seasar.extension.jdbc.gen.generator;
+
+import java.math.BigDecimal;
+import javax.annotation.Generated;
+import org.seasar.extension.jdbc.JdbcManager;
+
+/**
+ * {@link Ccc}のテストクラスです。
+ * 
+ */
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactory"}, date = "2009/04/01 13:12:11")
+public class CccTest {
+    private JdbcManager jdbcManager;
+
+    /**
+     * 識別子による取得をテストします。
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testFindById() throws Exception {
+        jdbcManager.from(Ccc.class).id("aaa", BigDecimal.ONE).getSingleResult();
+    }
+
+}

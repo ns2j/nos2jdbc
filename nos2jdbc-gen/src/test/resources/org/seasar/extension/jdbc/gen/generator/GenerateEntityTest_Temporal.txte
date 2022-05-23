@@ -1,0 +1,40 @@
+package hoge.entity;
+
+import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import javax.annotation.Generated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * Fooエンティティクラス
+ * 
+ */
+@Entity
+@Table(catalog = "AAA", schema = "BBB")
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityModelFactory"}, date = "2009/04/01 13:12:11")
+public class Foo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /** idプロパティ */
+    @Id
+    @Column(columnDefinition = "integer", nullable = false, unique = false)
+    public int id;
+
+    /** dateプロパティ */
+    @Column(columnDefinition = "date", nullable = true, unique = false)
+    public Date date;
+
+    /** timeプロパティ */
+    @Column(columnDefinition = "time", nullable = true, unique = false)
+    public Time time;
+
+    /** timestampプロパティ */
+    @Column(columnDefinition = "timestamp", nullable = true, unique = false)
+    public Timestamp timestamp;
+}

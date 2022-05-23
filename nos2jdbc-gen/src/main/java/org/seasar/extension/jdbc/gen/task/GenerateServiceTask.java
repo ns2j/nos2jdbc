@@ -20,7 +20,7 @@ import java.io.File;
 import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateServiceCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateServiceCommand;
 
 /**
  * エンティティに対するサービスクラスのJavaファイルを生成する{@link Task}です。

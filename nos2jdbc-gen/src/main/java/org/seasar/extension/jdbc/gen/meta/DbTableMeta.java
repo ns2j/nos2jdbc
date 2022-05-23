@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.seasar.extension.jdbc.gen.internal.util.TableUtil;
+import org.seasar.extension.jdbc.gen.util.TableUtil;
 
 /**
  * データベースのテーブルメタデータです。

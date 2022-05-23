@@ -22,9 +22,9 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.model.NamesAggregateModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModel;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
+import org.seasar.extension.jdbc.gen.model.factory.NamesAggregateModelFactory;
 import org.seasar.framework.util.TextUtil;
 
 /**

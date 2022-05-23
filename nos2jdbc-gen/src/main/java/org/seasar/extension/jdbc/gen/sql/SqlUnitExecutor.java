@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import javax.transaction.Status;
 import javax.transaction.UserTransaction;
 
-import org.seasar.extension.jdbc.gen.internal.exception.TransactionRuntimeException;
+import org.seasar.extension.jdbc.gen.exception.TransactionRuntimeException;
 import org.seasar.framework.log.Logger;
 
 /**

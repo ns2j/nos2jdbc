@@ -24,10 +24,10 @@ import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.Environment;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.Reference;
+import org.seasar.extension.jdbc.gen.arg.ArgumentsBuilder;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.command.CommandAdapter;
-import org.seasar.extension.jdbc.gen.internal.arg.ArgumentsBuilder;
-import org.seasar.extension.jdbc.gen.internal.command.CommandInvokerImpl;
+import org.seasar.extension.jdbc.gen.command.CommandInvokerImpl;
 
 /**
  * {@link Task}の抽象クラスです。

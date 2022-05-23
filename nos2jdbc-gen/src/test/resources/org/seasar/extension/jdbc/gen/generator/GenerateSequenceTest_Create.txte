@@ -1,0 +1,1 @@
+create sequence HOGE as integer start with 200 increment By 50;

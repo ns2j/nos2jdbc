@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.dialect.MssqlGenDialect;
+import org.seasar.extension.jdbc.gen.dialect.MssqlGenDialect;
 import org.seasar.extension.jdbc.gen.sql.SqlFileReader;
 import org.seasar.extension.jdbc.gen.sql.SqlFileTokenizer;
 

@@ -24,8 +24,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileTestModelFactory;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
+import org.seasar.extension.jdbc.gen.model.factory.SqlFileTestModelFactory;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.TextUtil;
 

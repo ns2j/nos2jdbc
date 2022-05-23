@@ -23,10 +23,10 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantNamingRule;
-import org.seasar.extension.jdbc.gen.internal.model.SqlFileConstantsModelFactory;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
+import org.seasar.extension.jdbc.gen.model.factory.SqlFileConstantNamingRule;
+import org.seasar.extension.jdbc.gen.model.factory.SqlFileConstantsModelFactory;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.TextUtil;
 

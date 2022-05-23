@@ -21,8 +21,8 @@ import java.io.File;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.internal.model.NoS2AbstServiceModelFactory;
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
+import org.seasar.extension.jdbc.gen.model.factory.NoS2AbstServiceModelFactory;
 import org.seasar.framework.util.TextUtil;
 
 /**

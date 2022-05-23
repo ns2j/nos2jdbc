@@ -20,8 +20,8 @@ import java.io.File;
 import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateNamesCommand;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateServiceCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateNamesCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateServiceCommand;
 
 /**
  * エンティティに対する名前クラスのJavaファイルを生成する{@link Task}です。

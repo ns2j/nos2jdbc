@@ -22,8 +22,8 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateSqlFileConstantsCommand;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateSqlFileTestCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateSqlFileConstantsCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateSqlFileTestCommand;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantNamingRule;
 
 /**

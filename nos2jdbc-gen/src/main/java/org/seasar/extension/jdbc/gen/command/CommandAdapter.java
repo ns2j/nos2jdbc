@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.gen.command;
 
-import org.seasar.extension.jdbc.gen.internal.arg.ArgumentsParser;
-import org.seasar.extension.jdbc.gen.internal.exception.SystemPropertyNotFoundRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.util.ReflectUtil;
+import org.seasar.extension.jdbc.gen.arg.ArgumentsParser;
+import org.seasar.extension.jdbc.gen.exception.SystemPropertyNotFoundRuntimeException;
+import org.seasar.extension.jdbc.gen.util.ReflectUtil;
 
 /**
  * {@link Command}のアダプタとなるクラスです。

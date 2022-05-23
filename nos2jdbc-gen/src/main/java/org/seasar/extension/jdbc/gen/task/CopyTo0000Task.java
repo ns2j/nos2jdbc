@@ -1,7 +1,7 @@
 package org.seasar.extension.jdbc.gen.task;
 
 import org.seasar.extension.jdbc.gen.command.Command;
-import org.seasar.extension.jdbc.gen.internal.command.CopyTo0000Command;
+import org.seasar.extension.jdbc.gen.command.CopyTo0000Command;
 
 public class CopyTo0000Task extends AbstractTask {
 

@@ -1,0 +1,34 @@
+package hoge.entity;
+
+import java.io.Serializable;
+import javax.annotation.Generated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+/**
+ * FOOテーブル
+ * 
+ */
+@Entity
+@Table(catalog = "AAA", schema = "BBB")
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityModelFactory"}, date = "2009/04/01 13:12:11")
+public class Foo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /** 識別子 */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+    @SequenceGenerator(name = "generator", initialValue = 100, allocationSize = 50)
+    @Column(columnDefinition = "integer", nullable = false, unique = false)
+    public int id;
+
+    /** 性別を表す。男ならばtrue */
+    @Column(columnDefinition = "bool", nullable = false, unique = true)
+    public Boolean man;
+}

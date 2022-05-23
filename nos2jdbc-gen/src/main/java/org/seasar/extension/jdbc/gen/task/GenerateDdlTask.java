@@ -21,9 +21,9 @@ import java.util.StringTokenizer;
 import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
+import org.seasar.extension.jdbc.gen.command.GenerateDdlCommand;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.event.GenDdlListener;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateDdlCommand;
 import org.seasar.extension.jdbc.gen.model.SqlIdentifierCaseType;
 import org.seasar.extension.jdbc.gen.model.SqlKeywordCaseType;
 

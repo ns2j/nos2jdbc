@@ -7,7 +7,7 @@ import org.seasar.extension.jdbc.JdbcManager;
  * {@link Aaa}のテストクラスです。
  * 
  */
-@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.internal.model.EntityTestModelFactory"}, date = "2009/04/01 13:12:11")
+@Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.model.factory.EntityTestModelFactory"}, date = "2009/04/01 13:12:11")
 public class AaaTest {
     private JdbcManager jdbcManager;
 

@@ -34,22 +34,6 @@ import org.seasar.extension.jdbc.dialect.OracleDialect;
 import org.seasar.extension.jdbc.dialect.PostgreDialect;
 import org.seasar.extension.jdbc.dialect.SqliteDialect;
 import org.seasar.extension.jdbc.dialect.SybaseDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.Db2390GenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.Db2400GenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.Db2GenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.DerbyGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.FirebirdGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.H2GenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.HsqlGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.InterbaseGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.MaxdbGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.MssqlGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.MysqlGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.OracleGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.PostgreGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.SqliteGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.SybaseGenDialect;
 
 /**
  * S2JDBC-Genのデータベースごとの方言を管理するクラスです。

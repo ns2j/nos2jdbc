@@ -22,7 +22,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
-import org.seasar.extension.jdbc.gen.internal.command.GenerateSqlFileTestCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateSqlFileTestCommand;
 
 /**
  * SQLファイルに対するテストクラスのJavaファイルを生成する{@link Task}です。

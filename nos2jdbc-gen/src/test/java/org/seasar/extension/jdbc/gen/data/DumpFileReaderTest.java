@@ -20,8 +20,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.data.DumpFileReader;
 import org.seasar.extension.jdbc.gen.data.DumpFileTokenizer;
-import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpColumnSizeRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpValueRuntimeException;
+import org.seasar.extension.jdbc.gen.exception.IllegalDumpColumnSizeRuntimeException;
+import org.seasar.extension.jdbc.gen.exception.IllegalDumpValueRuntimeException;
 import org.seasar.framework.util.ResourceUtil;
 import static org.junit.jupiter.api.Assertions.*;
 

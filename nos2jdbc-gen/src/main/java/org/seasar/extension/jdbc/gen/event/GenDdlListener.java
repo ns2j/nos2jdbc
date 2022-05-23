@@ -17,7 +17,7 @@ package org.seasar.extension.jdbc.gen.event;
 
 import java.util.EventListener;
 
-import org.seasar.extension.jdbc.gen.internal.command.GenerateDdlCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateDdlCommand;
 
 /**
  * {@link GenerateDdlCommand}がバージョンディレクトリやファイルが生成されたイベントを受け取るためのリスナーインタフェースです。

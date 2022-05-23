@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.dialect.MssqlDialect;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
-import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

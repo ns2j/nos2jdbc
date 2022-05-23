@@ -17,7 +17,7 @@ package org.seasar.extension.jdbc.gen.event;
 
 import java.util.EventObject;
 
-import org.seasar.extension.jdbc.gen.internal.command.GenerateDdlCommand;
+import org.seasar.extension.jdbc.gen.command.GenerateDdlCommand;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectory;
 
 /**

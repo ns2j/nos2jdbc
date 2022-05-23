@@ -20,8 +20,8 @@ import java.io.File;
 import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
+import org.seasar.extension.jdbc.gen.command.MigrateCommand;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
-import org.seasar.extension.jdbc.gen.internal.command.MigrateCommand;
 
 /**
  * データベースのスキーマとデータを移行する{@link Task}です。

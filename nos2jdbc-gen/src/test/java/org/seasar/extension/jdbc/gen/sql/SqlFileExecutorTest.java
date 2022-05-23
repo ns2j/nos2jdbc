@@ -19,7 +19,7 @@ import java.io.File;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
-import org.seasar.extension.jdbc.gen.internal.dialect.StandardGenDialect;
+import org.seasar.extension.jdbc.gen.dialect.StandardGenDialect;
 import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.seasar.extension.jdbc.gen.data.DumpFileTokenizer.TokenType;
-import org.seasar.extension.jdbc.gen.internal.exception.IllegalDumpColumnSizeRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.util.DumpUtil;
+import org.seasar.extension.jdbc.gen.exception.IllegalDumpColumnSizeRuntimeException;
+import org.seasar.extension.jdbc.gen.util.DumpUtil;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.CloseableUtil;
 import org.seasar.framework.util.StringUtil;

@@ -24,8 +24,8 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-import org.seasar.extension.jdbc.gen.internal.exception.TemplateRuntimeException;
-import org.seasar.extension.jdbc.gen.internal.util.DeleteEmptyFileWriter;
+import org.seasar.extension.jdbc.gen.exception.TemplateRuntimeException;
+import org.seasar.extension.jdbc.gen.util.DeleteEmptyFileWriter;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.CloseableUtil;
