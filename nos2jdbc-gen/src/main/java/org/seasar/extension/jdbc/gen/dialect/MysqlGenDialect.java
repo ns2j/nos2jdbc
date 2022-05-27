@@ -17,8 +17,8 @@ package org.seasar.extension.jdbc.gen.dialect;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import javax.persistence.GenerationType;
@@ -30,6 +30,7 @@ import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.sqltype.FloatType;
 import org.seasar.extension.jdbc.gen.sqltype.IntegerType;
+import org.seasar.extension.jdbc.gen.sqltype.MysqlTimestampWithTimezoneType;
 
 /**
  * MySQLの方言を扱うクラスです。
@@ -83,6 +84,7 @@ public class MysqlGenDialect extends StandardGenDialect {
         sqlTypeMap.put(Types.DOUBLE, new DoubleType("double($p,$s)"));
         sqlTypeMap.put(Types.FLOAT, new FloatType("float($p,$s)"));
         sqlTypeMap.put(Types.INTEGER, new IntegerType("int"));
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new MysqlTimestampWithTimezoneType());
 
         columnTypeMap.put("bigint unsigned", MysqlColumnType.BIGINT_UNSIGNED);
         columnTypeMap.put("binary", MysqlColumnType.BINARY);
@@ -218,7 +220,7 @@ public class MysqlGenDialect extends StandardGenDialect {
                 byte[].class, true);
 
         private static MysqlColumnType DATETIME = new MysqlColumnType(
-                "datetime", Timestamp.class);
+                "datetime", LocalDateTime.class);
 
         private static MysqlColumnType DECIMAL = new MysqlColumnType(
                 "decimal($p,$s)", BigDecimal.class);
