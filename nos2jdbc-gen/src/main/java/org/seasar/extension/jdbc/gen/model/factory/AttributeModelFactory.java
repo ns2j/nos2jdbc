@@ -79,6 +79,8 @@ public class AttributeModelFactory {
         attributeModel.setLob(attributeDesc.isLob());
         attributeModel.setTransient(attributeDesc.isTransient());
         attributeModel.setVersion(attributeDesc.isVersion());
+        attributeModel.setCreatedAt(attributeDesc.isCreatedAt());
+        attributeModel.setUpdatedAt(attributeDesc.isUpdatedAt());
         attributeModel.setNullable(attributeDesc.isNullable());
         attributeModel.setUnique(attributeDesc.isUnique());
         attributeModel.setColumnTypeName(attributeDesc.getColumnTypeName());

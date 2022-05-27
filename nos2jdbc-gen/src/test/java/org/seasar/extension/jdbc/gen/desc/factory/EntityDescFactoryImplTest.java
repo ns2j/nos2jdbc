@@ -15,14 +15,14 @@
  */
 package org.seasar.extension.jdbc.gen.desc.factory;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.CompositeUniqueConstraintDesc;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
-import org.seasar.extension.jdbc.gen.desc.factory.AttributeDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.CompositeUniqueConstraintDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.EntityDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.dialect.StandardGenDialect;
 import org.seasar.extension.jdbc.gen.meta.DbColumnMeta;
@@ -30,7 +30,6 @@ import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.extension.jdbc.gen.meta.DbUniqueKeyMeta;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -48,7 +47,7 @@ class EntityDescFactoryImplTest {
     public void setUp() throws Exception {
         PersistenceConvention convention = new PersistenceConventionImpl();
         GenDialect dialect = new StandardGenDialect();
-        AttributeDescFactory attributeDescFactory = new AttributeDescFactory(convention, dialect, "VERSION", null, null, null);
+        AttributeDescFactory attributeDescFactory = new AttributeDescFactory(convention, dialect, "VERSION", "CREATED_AT", "UPDATED_AT", null, null, null);
         CompositeUniqueConstraintDescFactory uniqueConstraintDescFactory = new CompositeUniqueConstraintDescFactory();
         factory = new EntityDescFactory(convention, attributeDescFactory, uniqueConstraintDescFactory);
     }

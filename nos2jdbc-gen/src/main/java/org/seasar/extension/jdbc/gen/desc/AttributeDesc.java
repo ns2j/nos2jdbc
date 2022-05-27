@@ -46,6 +46,10 @@ public class AttributeDesc {
     /** バージョンの場合{@code true} */
     protected boolean version;
 
+    protected boolean createdAt;
+    
+    protected boolean updatedAt;
+
     /** 一時的の場合{@code true} */
     protected boolean trnsient;
 
@@ -192,6 +196,20 @@ public class AttributeDesc {
      */
     public void setVersion(boolean version) {
         this.version = version;
+    }
+
+    public boolean isCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(boolean createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public boolean isUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(boolean updatedAt) {
+        this.updatedAt= updatedAt;
     }
 
     /**

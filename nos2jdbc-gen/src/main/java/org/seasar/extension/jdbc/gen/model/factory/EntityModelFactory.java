@@ -49,6 +49,9 @@ import org.seasar.extension.jdbc.gen.model.EntityModel;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 
+import nos2jdbc.annotation.CreatedAt;
+import nos2jdbc.annotation.UpdatedAt;
+
 /**
  * {@link EntityModelFactory}の実装クラスです。
  * 
@@ -300,6 +303,12 @@ public class EntityModelFactory {
             }
             if (attr.isVersion()) {
                 classModelSupport.addImportName(model, Version.class);
+            }
+            if (attr.isCreatedAt()) {
+                classModelSupport.addImportName(model, CreatedAt.class);
+            }
+            if (attr.isUpdatedAt()) {
+                classModelSupport.addImportName(model, UpdatedAt.class);
             }
             classModelSupport.addImportName(model, attr.getAttributeClass());
         }

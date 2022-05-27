@@ -15,6 +15,9 @@
  */
 package org.seasar.extension.jdbc.gen.desc.factory;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.regex.Pattern;
 
 import javax.persistence.GenerationType;
@@ -48,6 +51,10 @@ public class AttributeDescFactory {
     /** バージョンカラム名のパターン */
     protected Pattern versionColumnNamePattern;
 
+    protected Pattern createdAtColumnNamePattern;
+
+    protected Pattern updatedAtColumnNamePattern;
+
     /** エンティティの識別子の生成方法を示す列挙型 、生成しない場合は{@code null} */
     protected GenerationType generationType;
 
@@ -75,7 +82,8 @@ public class AttributeDescFactory {
      */
     public AttributeDescFactory(
             PersistenceConvention persistenceConvention, GenDialect dialect,
-            String versionColumnNamePattern, GenerationType generationType,
+            String versionColumnNamePattern, String createdAtColumnNamePattern, String updatedAtColumnNamePattern, 
+            GenerationType generationType,
             Integer initialValue, Integer allocationSize) {
         if (persistenceConvention == null) {
             throw new NullPointerException("persistenceConvention");
@@ -90,6 +98,10 @@ public class AttributeDescFactory {
         this.dialect = dialect;
         this.versionColumnNamePattern = Pattern.compile(
                 versionColumnNamePattern, Pattern.CASE_INSENSITIVE);
+        this.createdAtColumnNamePattern = Pattern.compile(
+                createdAtColumnNamePattern, Pattern.CASE_INSENSITIVE);
+        this.updatedAtColumnNamePattern = Pattern.compile(
+                updatedAtColumnNamePattern, Pattern.CASE_INSENSITIVE);
 
         this.generationType = generationType == GenerationType.AUTO ? dialect
                 .getDefaultGenerationType() : generationType;
@@ -125,6 +137,8 @@ public class AttributeDescFactory {
         doTransient(tableMeta, columnMeta, attributeDesc);
         doColumn(tableMeta, columnMeta, attributeDesc);
         doVersion(tableMeta, columnMeta, attributeDesc);
+        doCreatedAt(tableMeta, columnMeta, attributeDesc);
+        doUpdatedAt(tableMeta, columnMeta, attributeDesc);
         doGenerationType(tableMeta, columnMeta, attributeDesc);
         return attributeDesc;
     }
@@ -192,6 +206,27 @@ public class AttributeDescFactory {
             if (versionColumnNamePattern.matcher(columnMeta.getName())
                     .matches()) {
                 attributeDesc.setVersion(true);
+            }
+        }
+    }
+    protected void doCreatedAt(DbTableMeta tableMeta, DbColumnMeta columnMeta,
+            AttributeDesc attributeDesc) {
+        if (isTimestampAnnotatable(attributeDesc.getAttributeClass())) {
+            if (createdAtColumnNamePattern.matcher(columnMeta.getName())
+                    .matches()) {
+                attributeDesc.setAttributeClass(OffsetDateTime.class);
+                attributeDesc.setCreatedAt(true);
+            }
+        }
+    }
+
+    protected void doUpdatedAt(DbTableMeta tableMeta, DbColumnMeta columnMeta,
+            AttributeDesc attributeDesc) {
+        if (isTimestampAnnotatable(attributeDesc.getAttributeClass())) {
+            if (updatedAtColumnNamePattern.matcher(columnMeta.getName())
+                    .matches()) {
+                attributeDesc.setAttributeClass(OffsetDateTime.class);
+                attributeDesc.setUpdatedAt(true);
             }
         }
     }
@@ -275,6 +310,11 @@ public class AttributeDescFactory {
     protected boolean isVersionAnnotatable(Class<?> clazz) {
         Class<?> wrapperClass = ClassUtil.getWrapperClassIfPrimitive(clazz);
         return wrapperClass == Integer.class || wrapperClass == Long.class;
+    }
+    
+    protected boolean isTimestampAnnotatable(Class<?> clazz) {
+        return (clazz == OffsetDateTime.class || clazz == Timestamp.class || clazz == LocalDateTime.class) ? true : false; 
+            
     }
 
 }

@@ -53,6 +53,10 @@ public class EntitySetDescFactory {
     /** バージョンカラム名のパターン */
     protected String versionColumnNamePattern;
 
+    protected String createdAtColumnNamePattern;
+
+    protected String updatedAtColumnNamePattern;
+
     /** 単語を複数系に変換するための辞書ファイル、使用しない場合は{@code null} */
     protected File pluralFormFile;
 
@@ -90,7 +94,8 @@ public class EntitySetDescFactory {
      */
     public EntitySetDescFactory(DbTableMetaReader dbTableMetaReader,
             PersistenceConvention persistenceConvention, GenDialect dialect,
-            String versionColumnNamePattern, File pluralFormFile,
+            String versionColumnNamePattern, String createdAtColumnNamePattern, String updatedAtColumnNamePattern,
+            File pluralFormFile,
             GenerationType generationType, Integer initialValue,
             Integer allocationSize) {
         if (dbTableMetaReader == null) {
@@ -109,6 +114,8 @@ public class EntitySetDescFactory {
         this.dialect = dialect;
         this.persistenceConvention = persistenceConvention;
         this.versionColumnNamePattern = versionColumnNamePattern;
+        this.createdAtColumnNamePattern = createdAtColumnNamePattern;
+        this.updatedAtColumnNamePattern = updatedAtColumnNamePattern;
         this.pluralFormFile = pluralFormFile;
         this.generationType = generationType;
         this.initialValue = initialValue;
@@ -142,7 +149,7 @@ public class EntitySetDescFactory {
      */
     protected EntityDescFactory createEntityDescFactory() {
         AttributeDescFactory attributeDescFactory = new AttributeDescFactory(
-                persistenceConvention, dialect, versionColumnNamePattern,
+                persistenceConvention, dialect, versionColumnNamePattern, createdAtColumnNamePattern, updatedAtColumnNamePattern,
                 generationType, initialValue, allocationSize);
         CompositeUniqueConstraintDescFactory compositeUniqueConstraintDescFactory = new CompositeUniqueConstraintDescFactory();
         return new EntityDescFactory(persistenceConvention,

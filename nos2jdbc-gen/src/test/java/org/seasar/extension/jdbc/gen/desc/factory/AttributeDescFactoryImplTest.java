@@ -15,19 +15,20 @@
  */
 package org.seasar.extension.jdbc.gen.desc.factory;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import javax.persistence.GenerationType;
 import javax.persistence.TemporalType;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
-import org.seasar.extension.jdbc.gen.desc.factory.AttributeDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.dialect.StandardGenDialect;
 import org.seasar.extension.jdbc.gen.meta.DbColumnMeta;
 import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -44,7 +45,7 @@ class AttributeDescFactoryImplTest {
     public void setUp() {
         PersistenceConvention convention = new PersistenceConventionImpl();
         GenDialect dialect = new StandardGenDialect();
-        factory = new AttributeDescFactory(convention, dialect, "VERSION([_]?NO)?", GenerationType.TABLE, 100, 200);
+        factory = new AttributeDescFactory(convention, dialect, "VERSION([_]?NO)?", "CREATED_AT", "UPDATED_AT", GenerationType.TABLE, 100, 200);
     }
 
     /**

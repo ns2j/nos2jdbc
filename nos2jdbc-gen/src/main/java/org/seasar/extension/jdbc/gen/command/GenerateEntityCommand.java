@@ -67,6 +67,10 @@ public class GenerateEntityCommand extends AbstractCommand {
     /** バージョンカラム名のパターン */
     protected String versionColumnNamePattern = "VERSION([_]?NO)?";
 
+    protected String createdAtColumnNamePattern = "CREATED?_?(AT|ON)";
+
+    protected String updatedAtColumnNamePattern = "UPDATED?_?(AT|ON)";
+
     /** 単語を複数系に変換するための辞書ファイル */
     protected File pluralFormFile = null;
 
@@ -385,6 +389,20 @@ public class GenerateEntityCommand extends AbstractCommand {
         this.versionColumnNamePattern = versionColumnNamePattern;
     }
 
+    public String getCreatedAtColumnNamePattern() {
+        return createdAtColumnNamePattern;
+    }
+    public void setCreatedAtColumnNamePattern(String createdAtColumnNamePattern) {
+        this.createdAtColumnNamePattern = createdAtColumnNamePattern;
+    }
+
+    public String getUpdatedAtColumnNamePattern() {
+        return updatedAtColumnNamePattern;
+    }
+    public void setUpdatedAtColumnNamePattern(String updatedAtColumnNamePattern) {
+        this.updatedAtColumnNamePattern = updatedAtColumnNamePattern;
+    }
+
     /**
      * 単語を複数系に変換するための辞書ファイルを返します。
      * 
@@ -685,7 +703,8 @@ public class GenerateEntityCommand extends AbstractCommand {
                 ignoreTableNamePattern, applyDbCommentToJava);
         entitySetDescFactory = new EntitySetDescFactory(dbTableMetaReader,
                 jdbcManager.getPersistenceConvention(), dialect,
-                versionColumnNamePattern, pluralFormFile, generationType,
+                versionColumnNamePattern, createdAtColumnNamePattern, updatedAtColumnNamePattern, 
+                pluralFormFile, generationType,
                 initialValue, allocationSize);
         generator = new Generator(templateFileEncoding,
                 templateFilePrimaryDir);

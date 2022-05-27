@@ -74,6 +74,12 @@ public class ${shortClassName}<#if shortSuperclassName??> extends ${shortSupercl
   <#if attr.version>
     @Version
   </#if>
+  <#if attr.createdAt>
+    @CreatedAt
+  </#if>
+  <#if attr.updatedAt>
+    @UpdatedAt
+  </#if>
   <#if !attr.transient>
     @Column(<#if attr.columnName??>name = "${attr.columnName}", </#if><#if attr.columnDefinition??>columnDefinition = "${attr.columnDefinition}", <#else><#if attr.length??>length = ${attr.length}, </#if><#if attr.precision??>precision = ${attr.precision}, </#if><#if attr.scale??>scale = ${attr.scale}, </#if></#if>nullable = ${attr.nullable?string}, unique = ${attr.unique?string})
   </#if>
