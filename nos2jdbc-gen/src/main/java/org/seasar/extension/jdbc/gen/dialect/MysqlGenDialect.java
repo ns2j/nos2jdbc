@@ -30,7 +30,7 @@ import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.sqltype.FloatType;
 import org.seasar.extension.jdbc.gen.sqltype.IntegerType;
-import org.seasar.extension.jdbc.gen.sqltype.MysqlTimestampWithTimezoneType;
+import org.seasar.extension.jdbc.gen.sqltype.TimestampWithTimezoneType;
 
 /**
  * MySQLの方言を扱うクラスです。
@@ -181,6 +181,12 @@ public class MysqlGenDialect extends StandardGenDialect {
         return false;
     }
 
+    public class MysqlTimestampWithTimezoneType extends TimestampWithTimezoneType {
+        public MysqlTimestampWithTimezoneType() {
+            super("datetime");
+        }
+    }
+    
     /**
      * MySQL用の{@link ColumnType}の実装です。
      * 
