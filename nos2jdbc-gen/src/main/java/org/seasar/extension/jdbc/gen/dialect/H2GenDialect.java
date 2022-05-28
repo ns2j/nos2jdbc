@@ -22,6 +22,7 @@ import javax.persistence.GenerationType;
 
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
+import org.seasar.extension.jdbc.gen.sqltype.Jdbc42TimestampWithTimezoneType;
 
 /**
  * H2の方言を扱うクラスです。
@@ -31,7 +32,8 @@ import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 public class H2GenDialect extends StandardGenDialect {
 
     /** テーブルが見つからないことを示すエラーコード */
-    protected static int TABLE_NOT_FOUND_ERROR_CODE = 42102;
+    //protected static int TABLE_NOT_FOUND_ERROR_CODE = 42102;
+    protected static int TABLE_NOT_FOUND_ERROR_CODE = 42104;
 
     /** カラムが見つからないことを示すエラーコード */
     protected static int COLUMN_NOT_FOUND_ERROR_CODE = 42122;
@@ -45,6 +47,7 @@ public class H2GenDialect extends StandardGenDialect {
     public H2GenDialect() {
         sqlTypeMap.put(Types.BINARY, new BinaryType("binary($l)"));
         sqlTypeMap.put(Types.DECIMAL, new DecimalType("decimal($p,$s)"));
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new Jdbc42TimestampWithTimezoneType());
 
         columnTypeMap.put("binary", H2ColumnType.BINARY);
         columnTypeMap.put("decimal", H2ColumnType.DECIMAL);

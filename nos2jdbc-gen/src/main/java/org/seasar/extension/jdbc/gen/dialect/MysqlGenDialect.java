@@ -84,7 +84,7 @@ public class MysqlGenDialect extends StandardGenDialect {
         sqlTypeMap.put(Types.DOUBLE, new DoubleType("double($p,$s)"));
         sqlTypeMap.put(Types.FLOAT, new FloatType("float($p,$s)"));
         sqlTypeMap.put(Types.INTEGER, new IntegerType("int"));
-        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new MysqlTimestampWithTimezoneType());
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new TimestampWithTimezoneType("datetime"));
 
         columnTypeMap.put("bigint unsigned", MysqlColumnType.BIGINT_UNSIGNED);
         columnTypeMap.put("binary", MysqlColumnType.BINARY);
@@ -181,12 +181,6 @@ public class MysqlGenDialect extends StandardGenDialect {
         return false;
     }
 
-    public class MysqlTimestampWithTimezoneType extends TimestampWithTimezoneType {
-        public MysqlTimestampWithTimezoneType() {
-            super("datetime");
-        }
-    }
-    
     /**
      * MySQL用の{@link ColumnType}の実装です。
      * 

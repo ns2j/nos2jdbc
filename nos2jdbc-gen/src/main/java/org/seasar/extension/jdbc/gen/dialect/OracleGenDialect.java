@@ -40,6 +40,7 @@ import org.seasar.extension.jdbc.gen.sqltype.ClobType;
 import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.sqltype.IntegerType;
+import org.seasar.extension.jdbc.gen.sqltype.Jdbc42TimestampWithTimezoneType;
 import org.seasar.extension.jdbc.gen.sqltype.SmallIntType;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
 import org.seasar.extension.jdbc.gen.sqltype.TimeType;
@@ -87,6 +88,7 @@ public class OracleGenDialect extends StandardGenDialect {
         sqlTypeMap.put(Types.SMALLINT, new SmallIntType("number($p,0)"));
         sqlTypeMap.put(Types.TIME, new TimeType("date"));
         sqlTypeMap.put(Types.VARCHAR, new VarcharType("varchar2($l)"));
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new Jdbc42TimestampWithTimezoneType());
 
         columnTypeMap.put("binary_double", OracleColumnType.BINARY_DOUBLE);
         columnTypeMap.put("binary_float", OracleColumnType.BINARY_FLOAT);

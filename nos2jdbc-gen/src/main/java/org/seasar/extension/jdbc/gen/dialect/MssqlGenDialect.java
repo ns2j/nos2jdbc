@@ -31,6 +31,7 @@ import org.seasar.extension.jdbc.gen.sqltype.DateType;
 import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.sqltype.IntegerType;
+import org.seasar.extension.jdbc.gen.sqltype.Jdbc42TimestampWithTimezoneType;
 import org.seasar.extension.jdbc.gen.sqltype.TimeType;
 import org.seasar.extension.jdbc.gen.sqltype.TimestampType;
 import org.seasar.extension.jdbc.gen.sqltype.VarcharType;
@@ -64,6 +65,7 @@ public class MssqlGenDialect extends StandardGenDialect {
         sqlTypeMap.put(Types.INTEGER, new IntegerType("int"));
         sqlTypeMap.put(Types.TIME, new TimeType("datetime"));
         sqlTypeMap.put(Types.TIMESTAMP, new TimestampType("datetime"));
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new Jdbc42TimestampWithTimezoneType("datetimeoffset"));
 
         columnTypeMap.put("binary", MssqlColumnType.BINARY);
         columnTypeMap.put("bit", MssqlColumnType.BIT);

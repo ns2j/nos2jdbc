@@ -22,6 +22,7 @@ import javax.persistence.GenerationType;
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.BlobType;
 import org.seasar.extension.jdbc.gen.sqltype.ClobType;
+import org.seasar.extension.jdbc.gen.sqltype.Jdbc42TimestampWithTimezoneType;
 
 /**
  * HSQLDBの方言を扱うクラスです。
@@ -47,6 +48,7 @@ public class HsqlGenDialect extends StandardGenDialect {
         sqlTypeMap.put(Types.BINARY, new BinaryType("varbinary($l)"));
         sqlTypeMap.put(Types.BLOB, new BlobType("longvarbinary"));
         sqlTypeMap.put(Types.CLOB, new ClobType("longvarchar"));
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new Jdbc42TimestampWithTimezoneType());
 
         columnTypeMap.put("int", HsqlColumnType.INT);
         columnTypeMap.put("varchar_ignorecase",
