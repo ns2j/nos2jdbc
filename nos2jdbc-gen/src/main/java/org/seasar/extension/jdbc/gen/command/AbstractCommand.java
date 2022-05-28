@@ -175,6 +175,7 @@ public abstract class AbstractCommand implements Command {
      * 初期化します。
      */
     protected final void init() {
+        System.setProperty("database", getDatabase());
         jdbcManager = (JdbcManagerImplementor)NoS2JdbcManager.getJdbcManager();
         doInit();
     }
