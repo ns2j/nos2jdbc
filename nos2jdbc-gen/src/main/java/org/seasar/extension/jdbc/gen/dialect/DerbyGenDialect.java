@@ -26,6 +26,7 @@ import org.seasar.extension.jdbc.gen.sqltype.BooleanType;
 import org.seasar.extension.jdbc.gen.sqltype.ClobType;
 import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.sqltype.FloatType;
+import org.seasar.extension.jdbc.gen.sqltype.TimestampWithTimezoneType;
 
 /**
  * Derbyの方言を扱うクラスです。
@@ -51,6 +52,7 @@ public class DerbyGenDialect extends StandardGenDialect {
         sqlTypeMap.put(Types.CLOB, new ClobType("clob($l)"));
         sqlTypeMap.put(Types.DECIMAL, new DecimalType("decimal($p,$s)"));
         sqlTypeMap.put(Types.FLOAT, new FloatType("real"));
+        sqlTypeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new TimestampWithTimezoneType("timestamp"));
 
         columnTypeMap.put("blob", DerbyColumnType.BLOB);
         columnTypeMap.put("char () for bit data", DerbyColumnType.CHAR_BIT);
