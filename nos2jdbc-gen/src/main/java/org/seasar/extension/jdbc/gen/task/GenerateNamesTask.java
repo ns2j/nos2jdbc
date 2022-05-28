@@ -34,6 +34,10 @@ public class GenerateNamesTask extends AbstractTask {
     /** コマンド */
     protected GenerateNamesCommand command = new GenerateNamesCommand();
 
+    public void setDatabase(String database) {
+        command.setDatabase(database);
+    }
+
     /**
      * 環境名を設定します。
      * 

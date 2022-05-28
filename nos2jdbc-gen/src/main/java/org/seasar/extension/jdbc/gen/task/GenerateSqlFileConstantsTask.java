@@ -42,7 +42,11 @@ public class GenerateSqlFileConstantsTask extends AbstractTask {
         return command;
     }
 
-    /**
+    public void setDatabase(String database) {
+        command.setDatabase(database);
+    }
+
+   /**
      * 環境名を設定します。
      * 
      * @param env

@@ -33,6 +33,10 @@ public class GenerateServiceTask extends AbstractTask {
     /** コマンド */
     protected GenerateServiceCommand command = new GenerateServiceCommand();
 
+    public void setDatabase(String database) {
+        command.setDatabase(database);
+    }
+
     /**
      * 環境名を設定します。
      * 

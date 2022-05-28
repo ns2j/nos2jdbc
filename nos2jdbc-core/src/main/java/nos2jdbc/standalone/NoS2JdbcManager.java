@@ -15,6 +15,8 @@
  */
 package nos2jdbc.standalone;
 
+import static org.seasar.framework.util.StringUtil.*;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,19 +41,23 @@ import org.seasar.framework.exception.InstantiationRuntimeException;
 import org.seasar.framework.exception.InvocationTargetRuntimeException;
 import org.seasar.framework.exception.NoSuchMethodRuntimeException;
 
-import static org.seasar.framework.util.StringUtil.*;
-
 import nos2jdbc.ManagerSetter;
 import nos2jdbc.TransactionManagerRegistry;
 
 public class NoS2JdbcManager {
     private JdbcManager jdbcManager; 
 
-    final static String PROPS_NAME = "nos2jdbc-datasource.properties";  
+    final static String PROPS_NAME_PREFIX = "nos2jdbc-datasource";
+    final static String PROPS_NAME_SUFFIX = ".properties";  
 
     private NoS2JdbcManager(String propertiesFilename, DataSource ds) {
-        if (propertiesFilename == null)
-            propertiesFilename = PROPS_NAME;
+        if (propertiesFilename == null) {
+            String database = System.getProperty("database");
+            if (database != null && !database.isBlank())
+                propertiesFilename = PROPS_NAME_PREFIX + "-" + database + PROPS_NAME_SUFFIX;
+            else
+                propertiesFilename = PROPS_NAME_PREFIX + PROPS_NAME_SUFFIX;
+        }
         InputStream is = NoS2JdbcManager.class.getClassLoader().getResourceAsStream(propertiesFilename);
         if (is == null)
             throw new RuntimeException(new FileNotFoundException(propertiesFilename));

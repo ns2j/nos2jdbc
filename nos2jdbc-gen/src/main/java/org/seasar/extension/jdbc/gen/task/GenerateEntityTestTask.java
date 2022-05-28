@@ -38,6 +38,10 @@ public class GenerateEntityTestTask extends AbstractTask {
         return command;
     }
 
+    public void setDatabase(String database) {
+        command.setDatabase(database);
+    }
+
     /**
      * 環境名を設定します。
      * 

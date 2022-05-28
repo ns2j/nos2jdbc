@@ -32,8 +32,6 @@ import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProviderImpl;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
-import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
-import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTreeImpl;

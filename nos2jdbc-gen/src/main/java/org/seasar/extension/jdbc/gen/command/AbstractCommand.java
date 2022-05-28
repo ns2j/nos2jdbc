@@ -42,8 +42,8 @@ import nos2jdbc.standalone.NoS2JdbcManager;
  */
 public abstract class AbstractCommand implements Command {
 
-    /** 設定ファイルのパス */
-    protected String configPath = "s2jdbc.dicon";
+    /** Database名 */
+    protected String database = "";
 
     /** 環境名 */
     protected String env = "ut";
@@ -61,14 +61,16 @@ public abstract class AbstractCommand implements Command {
     }
 
     /**
-     * 設定ファイルのパスを返します。
+     * Database名を返します。
      * 
-     * @return 設定ファイルのパス
+     * @return Database名 
      */
-    public String getConfigPath() {
-        return configPath;
+    public String getDatabase() {
+        return database;
     }
-
+    public void setDatabase(String database) {
+        this.database = database;
+    }
     /**
      * 環境名を返します。
      * 
