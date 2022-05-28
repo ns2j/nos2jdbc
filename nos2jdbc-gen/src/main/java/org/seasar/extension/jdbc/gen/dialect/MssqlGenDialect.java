@@ -196,6 +196,11 @@ public class MssqlGenDialect extends StandardGenDialect {
         return true;
     }
 
+    @Override
+    public String getDefaultTimestamp() {
+        return " default sysutcdatetime() ";
+    }
+
     /**
      * MS SQL Server用の{@link ColumnType}の実装です。
      * 

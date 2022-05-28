@@ -181,6 +181,11 @@ public class MysqlGenDialect extends StandardGenDialect {
         return false;
     }
 
+    @Override
+    public String getDefaultTimestamp() {
+        return " default utc_timestamp ";
+    }
+
     /**
      * MySQL用の{@link ColumnType}の実装です。
      * 

@@ -395,6 +395,8 @@ public interface GenDialect {
             String schemaName, String tableName, String columnName)
             throws SQLException;
 
+    String getDefaultTimestamp();
+
     /**
      * カラム型です。
      * <p>
