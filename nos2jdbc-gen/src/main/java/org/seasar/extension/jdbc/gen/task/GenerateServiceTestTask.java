@@ -92,6 +92,10 @@ public class GenerateServiceTestTask extends AbstractTask {
         command.setTestClassNameSuffix(testClassNameSuffix);
     }
 
+    public void setJvmLang(String lang) {
+        command.setJvmLang(lang);
+    }
+    
     /**
      * テストクラスのテンプレート名を設定します。
      * 
@@ -184,16 +188,6 @@ public class GenerateServiceTestTask extends AbstractTask {
     }
 
     /**
-     * アプリケーション用の設定ファイルのパスを設定します。
-     * 
-     * @param appConfigPath
-     *            アプリケーション用の設定ファイルのパス
-     */
-    public void setAppConfigPath(String appConfigPath) {
-        command.setAppConfigPath(appConfigPath);
-    }
-
-    /**
      * サービスクラス名のサフィックスを設定します。
      * 
      * @param serviceClassNameSuffix
@@ -213,15 +207,6 @@ public class GenerateServiceTestTask extends AbstractTask {
         command.setServicePackageName(servicePackageName);
     }
 
-    /**
-     * テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}を設定します。
-     * 
-     * @param useS2junit4
-     *            テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
-     */
-    public void setUseS2junit4(boolean useS2junit4) {
-        command.setUseS2junit4(useS2junit4);
-    }
   //i
     public void setComponentType(String componentType) {
         command.setComponentType(componentType);

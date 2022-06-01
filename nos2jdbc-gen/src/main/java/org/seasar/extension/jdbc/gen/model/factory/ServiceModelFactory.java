@@ -58,6 +58,8 @@ public class ServiceModelFactory {
     /** 名前クラスを使用する場合{@code true} */
     protected boolean useNamesClass;
 
+    protected boolean isKotlin;
+    
     /** クラスモデルのサポート */
     protected ClassModelSupport classModelSupport = new ClassModelSupport();
 
@@ -82,6 +84,13 @@ public class ServiceModelFactory {
     public ServiceModelFactory(String packageName,
             String serviceClassNameSuffix, NamesModelFactory namesModelFactory,
             boolean useNamesClass, String jdbcManagerName, String componentType) {
+        this(packageName,
+                serviceClassNameSuffix, namesModelFactory,
+                useNamesClass, jdbcManagerName, componentType, false);
+    }
+    public ServiceModelFactory(String packageName,
+            String serviceClassNameSuffix, NamesModelFactory namesModelFactory,
+            boolean useNamesClass, String jdbcManagerName, String componentType, boolean isKotlin) {
         if (jdbcManagerName == null) {
             throw new NullPointerException("jdbcManagerName");
         }
@@ -97,6 +106,7 @@ public class ServiceModelFactory {
         this.useNamesClass = useNamesClass;
         this.jdbcManagerName = jdbcManagerName;
         this.componentType = componentType;
+        this.isKotlin = isKotlin;
     }
 
     public ServiceModel getServiceModel(EntityMeta entityMeta) {
@@ -171,7 +181,7 @@ public class ServiceModelFactory {
             classModelSupport.addStaticImportName(serviceModel, namesClassName);
             classModelSupport.addStaticImportName(serviceModel,
                     Operations.class);
-            classModelSupport.addImportName(serviceModel, List.class);
+            if (!isKotlin) classModelSupport.addImportName(serviceModel, List.class);
         }
         if (serviceModel.isJdbcManagerSetterNecessary()) {
             classModelSupport.addImportName(serviceModel, Resource.class);

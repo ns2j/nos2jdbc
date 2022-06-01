@@ -21,8 +21,6 @@ import java.util.Set;
 
 import org.seasar.extension.jdbc.gen.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileTestModel;
@@ -57,11 +55,8 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
     /** 生成するテストクラスの単純名 */
     protected String shortClassName = "SqlFileTest";
 
-    /** テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false} */
-    protected boolean useS2junit4;
-
     /** テストクラスのテンプレート名 */
-    protected String templateFileName = "java/sqlfiletest.ftl";
+    protected String templateFileName = "/sqlfiletest.ftl";
 
     /** テンプレートファイルのエンコーディング */
     protected String templateFileEncoding = "UTF-8";
@@ -69,8 +64,10 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
     /** テンプレートファイルを格納するプライマリディレクトリ */
     protected File templateFilePrimaryDir = null;
 
+    protected String jvmLang = "java";
+    
     /** 生成するJavaファイルの出力先ディレクトリ */
-    protected File javaFileDestDir = new File(new File("src", "main"), "java");
+    protected File javaFileDestDir = new File(new File("src", "test"), "java");
 
     /** Javaファイルのエンコーディング */
     protected String javaFileEncoding = "UTF-8";
@@ -105,6 +102,13 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
         this.subPackageName = subPackageName;
     }
 
+    public String getJvmLang() {
+        return jvmLang;
+    }
+    public void setJvmLang(String lang) {
+        jvmLang = lang;
+    }
+    
     /**
      * テストクラスのテンプレート名を返します。
      * 
@@ -130,7 +134,7 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
      * @return 生成するJavaファイルの出力先ディレクトリ
      */
     public File getJavaFileDestDir() {
-        return javaFileDestDir;
+        return new File(new File("src", "test"), jvmLang);
     }
 
     /**
@@ -295,24 +299,6 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
         this.shortClassName = shortClassName;
     }
 
-    /**
-     * テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}を返します。
-     * 
-     * @return テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
-     */
-    public boolean isUseS2junit4() {
-        return useS2junit4;
-    }
-
-    /**
-     * テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}を設定します。
-     * 
-     * @param useS2junit4
-     *            テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
-     */
-    public void setUseS2junit4(boolean useS2junit4) {
-        this.useS2junit4 = useS2junit4;
-    }
     //i    
     public String getComponentType() {
         return componentType;
@@ -320,6 +306,10 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
 //i
     public void setComponentType(String componentType) {
         this.componentType = componentType;
+    }
+
+    protected boolean isKotlin() {
+        return jvmLang.equals("kotlin");
     }
 
     @Override
@@ -384,8 +374,8 @@ public class GenerateSqlFileTestCommand extends AbstractCommand {
     protected GenerationContext createGenerationContext(ClassModel model,
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
-                .getPackageName(), model.getShortClassName());
-        return new GenerationContext(model, file, templateName,
+                .getPackageName(), model.getShortClassName(), isKotlin());
+        return new GenerationContext(model, file, jvmLang + templateName,
                 javaFileEncoding, overwrite);
     }
 

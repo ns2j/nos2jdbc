@@ -20,8 +20,6 @@ import java.io.File;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReaderImpl;
@@ -81,13 +79,13 @@ public class GenerateServiceCommand extends AbstractCommand {
 
     /** 抽象サービスクラスのテンプレート名 */
     //i protected String abstractServiceTemplateFileName = "java/abstract-service.ftl";
-    protected String abstractServiceTemplateFileName = "java/nos2-abstract-service.ftl";
+    protected String abstractServiceTemplateFileName = "/nos2-abstract-service.ftl";
 //i
-    protected String serviceBaseQuailfierTemplateFileName = "java/service-base-qualifier.ftl";
+    protected String serviceBaseQuailfierTemplateFileName = "/service-base-qualifier.ftl";
     
     
     /** サービスクラスのテンプレート名 */
-    protected String serviceTemplateFileName = "java/service.ftl";
+    protected String serviceTemplateFileName = "/service.ftl";
 
     /** 名前クラスを使用する場合{@code true} */
     protected boolean useNamesClass = true;
@@ -98,6 +96,8 @@ public class GenerateServiceCommand extends AbstractCommand {
     /** 名前クラスのパッケージ名 */
     protected String namesPackageName = "entity";
 
+    protected String jvmLang = "java";
+    
     /** 生成するJavaファイルの出力先ディレクトリ */
     protected File javaFileDestDir = new File(new File("src", "main"), "java");
 
@@ -105,10 +105,10 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected String javaFileEncoding = "UTF-8";
 
     /** サービスクラスを上書きをする場合{@code true}、しない場合{@code false} */
-    protected boolean overwrite = false;
+    protected boolean overwrite = true;
 
     /** 抽象サービスクラスを上書きをする場合{@code true}、しない場合{@code false} */
-    protected boolean overwriteAbstractService = false;
+    protected boolean overwriteAbstractService = true;
 
     /** テンプレートファイルのエンコーディング */
     protected String templateFileEncoding = "UTF-8";
@@ -334,13 +334,21 @@ public class GenerateServiceCommand extends AbstractCommand {
         this.ignoreEntityClassNamePattern = ignoreEntityClassNamePattern;
     }
 
+    public String getJvmLang() {
+        return jvmLang;
+    }
+    public void setJvmLang(String lang) {
+        jvmLang = lang;
+    }
+    
+
     /**
      * 生成するJavaファイルの出力先ディレクトリを返します。
      * 
      * @return 生成するJavaファイルの出力先ディレクトリ
      */
     public File getJavaFileDestDir() {
-        return javaFileDestDir;
+        return new File(new File("src", "main"), jvmLang);
     }
 
     /**
@@ -495,6 +503,10 @@ public class GenerateServiceCommand extends AbstractCommand {
         this.componentType = componentType;
     }
 
+    protected boolean isKotlin() {
+        return jvmLang.equals("kotlin");
+    }
+
     @Override
     protected void doValidate() {
         if (classpathDir == null) {
@@ -532,14 +544,14 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected void generateAbstractService() {
         NoS2AbstServiceModel model = noS2AbstServiceModelFactory.getAbstServiceModel();
         GenerationContext context = createGenerationContext(model,
-                abstractServiceTemplateFileName, overwriteAbstractService);
+                jvmLang + abstractServiceTemplateFileName, overwriteAbstractService);
         generator.generate(context);
     }
     
     protected void generateServiceBaseQualifier() {
         ServiceBaseQualifierModel model = serviceBaseQualifierModelFactory.getServiceBaseQualifierModel();
         GenerationContext context = createGenerationContext(model,
-                serviceBaseQuailfierTemplateFileName, overwriteAbstractService);
+                jvmLang + serviceBaseQuailfierTemplateFileName, overwriteAbstractService);
         generator.generate(context);
     }
 
@@ -552,7 +564,7 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected void generateService(EntityMeta entityMeta) {
         ServiceModel model = serviceModelFactory.getServiceModel(entityMeta);
         GenerationContext context = createGenerationContext(model,
-                serviceTemplateFileName, overwrite);
+                jvmLang + serviceTemplateFileName, overwrite);
         generator.generate(context);
     }
 
@@ -569,8 +581,8 @@ public class GenerateServiceCommand extends AbstractCommand {
      */
     protected GenerationContext createGenerationContext(ClassModel model,
             String templateName, boolean overwrite) {
-        File file = FileUtil.createJavaFile(javaFileDestDir, model
-                .getPackageName(), model.getShortClassName());
+        File file = FileUtil.createJavaFile(getJavaFileDestDir(), model
+                    .getPackageName(), model.getShortClassName(), isKotlin());
         return new GenerationContext(model, file, templateName,
                 javaFileEncoding, overwrite);
     }
@@ -595,7 +607,7 @@ public class GenerateServiceCommand extends AbstractCommand {
     protected ServiceModelFactory createServiceModelFactory() {
         return new ServiceModelFactory(ClassUtil.concatName(
                 rootPackageName, servicePackageName), serviceClassNameSuffix,
-                namesModelFactory, useNamesClass, jdbcManagerName, componentType);
+                namesModelFactory, useNamesClass, jdbcManagerName, componentType, isKotlin());
     }
 
     /**

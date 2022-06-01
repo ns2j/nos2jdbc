@@ -22,8 +22,6 @@ import java.util.List;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReaderImpl;
@@ -77,7 +75,7 @@ public class GenerateNamesCommand extends AbstractCommand {
     protected String namesClassNameSuffix = "Names";
 
     /** 名前クラスのテンプレート名 */
-    protected String namesTemplateFileName = "java/names.ftl";
+    protected String namesTemplateFileName = "/names.ftl";
 
     /** テンプレートファイルのエンコーディング */
     protected String templateFileEncoding = "UTF-8";
@@ -101,8 +99,10 @@ public class GenerateNamesCommand extends AbstractCommand {
     protected String namesAggregateShortClassName = "Names";
 
     /** 名前集約クラスのテンプレート名 */
-    protected String namesAggregateTemplateFileName = "java/names-aggregate.ftl";
+    protected String namesAggregateTemplateFileName = "/names-aggregate.ftl";
 
+    protected String jvmLang = "java";
+    
     /** エンティティメタデータのリーダ */
     protected EntityMetaReader entityMetaReader;
 
@@ -216,6 +216,13 @@ public class GenerateNamesCommand extends AbstractCommand {
         this.entityPackageName = entityPackageName;
     }
 
+    public String getJvmLang() {
+        return jvmLang;
+    }
+    public void setJvmLang(String lang) {
+        jvmLang = lang;
+    }
+    
     /**
      * 対象とするエンティティクラス名の正規表現を返します。
      * 
@@ -261,7 +268,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      * @return 生成するJavaファイルの出力先ディレクトリ
      */
     public File getJavaFileDestDir() {
-        return javaFileDestDir;
+        return new File(new File("src", "main"), jvmLang);
     }
 
     /**
@@ -428,6 +435,10 @@ public class GenerateNamesCommand extends AbstractCommand {
             String namesAggregateTemplateFileName) {
         this.namesAggregateTemplateFileName = namesAggregateTemplateFileName;
     }
+    
+    protected boolean isKotlin() {
+        return jvmLang.equals("kotlin");
+    }
 
     @Override
     protected void doValidate() {
@@ -473,7 +484,7 @@ public class GenerateNamesCommand extends AbstractCommand {
      */
     protected void generateNames(NamesModel namesModel) {
         GenerationContext context = createGenerationContext(namesModel,
-                namesTemplateFileName);
+                jvmLang + namesTemplateFileName);
         generator.generate(context);
     }
 
@@ -486,7 +497,7 @@ public class GenerateNamesCommand extends AbstractCommand {
     protected void generateNamesAggregate(
             NamesAggregateModel namesAggregateModel) {
         GenerationContext context = createGenerationContext(
-                namesAggregateModel, namesAggregateTemplateFileName);
+                namesAggregateModel, jvmLang + namesAggregateTemplateFileName);
         generator.generate(context);
     }
 
@@ -501,8 +512,8 @@ public class GenerateNamesCommand extends AbstractCommand {
      */
     protected GenerationContext createGenerationContext(ClassModel model,
             String templateName) {
-        File file = FileUtil.createJavaFile(javaFileDestDir, model
-                .getPackageName(), model.getShortClassName());
+        File file = FileUtil.createJavaFile(getJavaFileDestDir(), model
+                    .getPackageName(), model.getShortClassName(), isKotlin());
         return new GenerationContext(model, file, templateName,
                 javaFileEncoding, overwrite);
     }

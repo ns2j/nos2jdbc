@@ -86,6 +86,11 @@ public class GenerateSqlFileConstantsTask extends AbstractTask {
         command.setSubPackageName(subPackageName);
     }
 
+    public void setJvmLang(String lang) {
+        command.setJvmLang(lang);
+    }
+
+
     /**
      * テストクラスのテンプレート名を設定します。
      * 

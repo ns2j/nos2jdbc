@@ -140,6 +140,10 @@ public class GenerateServiceTask extends AbstractTask {
         command.setEntityPackageName(entityPackageName);
     }
 
+    public void setJvmLang(String lang) {
+        command.setJvmLang(lang);
+    }
+
     /**
      * 生成するJavaファイルの出力先ディレクトリを設定します。
      * 

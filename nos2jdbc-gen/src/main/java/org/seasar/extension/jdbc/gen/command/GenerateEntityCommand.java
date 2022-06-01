@@ -107,8 +107,10 @@ public class GenerateEntityCommand extends AbstractCommand {
     /** {@link JoinColumn}を表示する場合{@code true} */
     protected boolean showJoinColumn = false;
 
+    protected String jvmLang = "java";
+    
     /** エンティティクラスのテンプレート名 */
-    protected String entityTemplateFileName = "java/entity.ftl";
+    protected String entityTemplateFileName = "/entity.ftl";
 
     /** テンプレートファイルのエンコーディング */
     protected String templateFileEncoding = "UTF-8";
@@ -205,7 +207,7 @@ public class GenerateEntityCommand extends AbstractCommand {
      * @return 生成するJavaファイルの出力先ディレクトリ
      */
     public File getJavaFileDestDir() {
-        return javaFileDestDir;
+        return new File(new File("src", "main"), jvmLang);
     }
 
     /**
@@ -688,6 +690,16 @@ public class GenerateEntityCommand extends AbstractCommand {
         this.useTemporalType = useTemporalType;
     }
 
+    public String getJvmLang() {
+        return jvmLang;
+    }
+    public void setJvmLang(String lang) {
+        jvmLang = lang;
+    }
+    protected boolean isKotlin() {
+        return jvmLang.equals("kotlin");
+    }
+
     @Override
     protected void doValidate() {
     }
@@ -717,7 +729,7 @@ public class GenerateEntityCommand extends AbstractCommand {
                    jdbcManager.getPersistenceConvention()),
            new AssociationModelFactory(showJoinColumn),
            new CompositeUniqueConstraintModelFactory(), useAccessor,
-           applyDbCommentToJava, showCatalogName, showSchemaName, showTableName);
+           applyDbCommentToJava, showCatalogName, showSchemaName, showTableName, isKotlin());
 
         logRdbmsAndGenDialect(dialect);
     }
@@ -743,8 +755,8 @@ public class GenerateEntityCommand extends AbstractCommand {
     protected void generateEntity(EntityDesc entityDesc) {
         EntityModel model = entityModelFactory.getEntityModel(entityDesc);
         File file = FileUtil.createJavaFile(javaFileDestDir, model
-                .getPackageName(), model.getShortClassName());
-        GenerationContext context = new GenerationContext(model, file, entityTemplateFileName,
+                .getPackageName(), model.getShortClassName(), isKotlin());
+        GenerationContext context = new GenerationContext(model, file, jvmLang + entityTemplateFileName,
                 javaFileEncoding, overwrite);
         generator.generate(context);
     }

@@ -83,6 +83,10 @@ public class GenerateSqlFileTestTask extends AbstractTask {
     public void setSubPackageName(String subPackageName) {
         command.setSubPackageName(subPackageName);
     }
+    
+    public void setJvmLang(String lang) {
+        command.setJvmLang(lang);
+    }
 
     /**
      * テストクラスのテンプレート名を設定します。
@@ -162,16 +166,6 @@ public class GenerateSqlFileTestTask extends AbstractTask {
      */
     public void setShortClassName(String shortClassName) {
         command.setShortClassName(shortClassName);
-    }
-
-    /**
-     * テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}を設定します。
-     * 
-     * @param useS2junit4
-     *            テストクラスでS2JUnit4を使用する場合{@code true}、S2Unitを使用する場合{@code false}
-     */
-    public void setUseS2junit4(boolean useS2junit4) {
-        command.setUseS2junit4(useS2junit4);
     }
 
     /**

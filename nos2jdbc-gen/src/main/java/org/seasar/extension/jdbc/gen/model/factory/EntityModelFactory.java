@@ -101,6 +101,8 @@ public class EntityModelFactory {
     /** 生成モデルのサポート */
     protected GeneratedModelSupport generatedModelSupport = new GeneratedModelSupport();
 
+    protected boolean isKotlin = false;
+    
     /**
      * インスタンスを構築しますｌ
      * 
@@ -133,6 +135,19 @@ public class EntityModelFactory {
             CompositeUniqueConstraintModelFactory compositeUniqueConstraintModelFactory,
             boolean useAccessor, boolean useComment, boolean showCatalogName,
             boolean showSchemaName, boolean showTableName) {
+        this(packageName, superclass, attributeModelFactory, associationModelFactory,
+                compositeUniqueConstraintModelFactory,
+                useAccessor, useComment, showCatalogName,
+                showSchemaName, showTableName, false);
+    }
+    public EntityModelFactory(
+            String packageName,
+            Class<?> superclass,
+            AttributeModelFactory attributeModelFactory,
+            AssociationModelFactory associationModelFactory,
+            CompositeUniqueConstraintModelFactory compositeUniqueConstraintModelFactory,
+            boolean useAccessor, boolean useComment, boolean showCatalogName,
+            boolean showSchemaName, boolean showTableName, boolean isKotlin) {
         if (attributeModelFactory == null) {
             throw new NullPointerException("attributeModelFactory");
         }
@@ -159,6 +174,7 @@ public class EntityModelFactory {
                         .getBeanDesc(superclass);
             }
         }
+        this.isKotlin = isKotlin;
     }
 
     public EntityModel getEntityModel(EntityDesc entityDesc) {
@@ -315,7 +331,7 @@ public class EntityModelFactory {
         for (AssociationModel asso : model.getAssociationModelList()) {
             AssociationType associationType = asso.getAssociationType();
             if (associationType == AssociationType.ONE_TO_MANY) {
-                classModelSupport.addImportName(model, List.class);
+                if (!isKotlin) classModelSupport.addImportName(model, List.class);
             }
             classModelSupport.addImportName(model, associationType
                     .getAnnotation());

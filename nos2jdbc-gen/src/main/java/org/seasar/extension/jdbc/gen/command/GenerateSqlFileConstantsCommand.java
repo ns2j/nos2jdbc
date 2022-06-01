@@ -21,8 +21,6 @@ import java.util.Set;
 
 import org.seasar.extension.jdbc.gen.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.model.ClassModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
@@ -60,7 +58,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
     protected String shortClassName = "SqlFiles";
 
     /** テストクラスのテンプレート名 */
-    protected String templateFileName = "java/sqlfileconstants.ftl";
+    protected String templateFileName = "/sqlfileconstants.ftl";
 
     /** テンプレートファイルのエンコーディング */
     protected String templateFileEncoding = "UTF-8";
@@ -71,6 +69,8 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
     /** 生成するJavaファイルの出力先ディレクトリ */
     protected File javaFileDestDir = new File(new File("src", "main"), "java");
 
+    protected String jvmLang = "java";
+    
     /** Javaファイルのエンコーディング */
     protected String javaFileEncoding = "UTF-8";
 
@@ -134,7 +134,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
      * @return 生成するJavaファイルの出力先ディレクトリ
      */
     public File getJavaFileDestDir() {
-        return javaFileDestDir;
+        return new File(new File("src", "main"), jvmLang);
     }
 
     /**
@@ -319,6 +319,17 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
         this.sqlFileConstantNamingRuleClassName = sqlFileConstantNamingRuleClassName;
     }
 
+    public String getJvmLang() {
+        return jvmLang;
+    }
+    public void setJvmLang(String lang) {
+        jvmLang = lang;
+    }
+    
+    protected boolean isKotlin() {
+        return jvmLang.equals("kotlin");
+    }
+
     @Override
     protected void doValidate() {
         if (classpathDir == null) {
@@ -343,7 +354,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
         SqlFileConstantsModel model = sqlFileConstantsModelFactory
                 .getSqlFileConstantsModel();
         GenerationContext context = createGenerationContext(model,
-                templateFileName);
+                jvmLang + templateFileName);
         generator.generate(context);
     }
 
@@ -384,7 +395,7 @@ public class GenerateSqlFileConstantsCommand extends AbstractCommand {
     protected GenerationContext createGenerationContext(ClassModel model,
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
-                .getPackageName(), model.getShortClassName());
+                .getPackageName(), model.getShortClassName(), isKotlin());
         return new GenerationContext(model, file, templateName,
                 javaFileEncoding, overwrite);
     }

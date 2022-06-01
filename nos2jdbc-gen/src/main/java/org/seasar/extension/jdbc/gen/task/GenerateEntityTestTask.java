@@ -92,6 +92,9 @@ public class GenerateEntityTestTask extends AbstractTask {
         command.setTestClassNameSuffix(testClassNameSuffix);
     }
 
+    public void setJvmLang(String lang) {
+        command.setJvmLang(lang);
+    }
     /**
      * テストクラスのテンプレート名を設定します。
      * 

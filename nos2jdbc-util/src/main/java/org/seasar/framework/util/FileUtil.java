@@ -296,6 +296,11 @@ public class FileUtil {
      */
     public static File createJavaFile(File baseDir, String packageName,
             String shortClassName) {
+        return createJavaFile(baseDir, packageName, shortClassName, false);
+    }
+    
+    public static File createJavaFile(File baseDir, String packageName,
+            String shortClassName, boolean isKotlin) {
         File packageDir;
         if (packageName == null) {
             packageDir = baseDir;
@@ -303,9 +308,10 @@ public class FileUtil {
             packageDir = new File(baseDir, packageName.replace('.',
                     File.separatorChar));
         }
-        return new File(packageDir, shortClassName + ".java");
+        return isKotlin ? new File(packageDir, shortClassName + ".kt") :
+            new File(packageDir, shortClassName + ".java");
     }
-
+    
     /**
      * ファイルを扱うインタフェースです・
      * 

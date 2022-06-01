@@ -20,8 +20,6 @@ import java.io.File;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.exception.RequiredPropertyNullRuntimeException;
 import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.GenerationContext;
-import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.generator.Generator;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReader;
 import org.seasar.extension.jdbc.gen.meta.EntityMetaReaderImpl;
@@ -76,10 +74,10 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     protected boolean useS2junit4;
 
     //i
-    protected String archiveTestUtilTemplateFileName = "java/archivetestutil.ftl";
+    protected String archiveTestUtilTemplateFileName = "/archivetestutil.ftl";
     
     /** テストクラスのテンプレート名 */
-    protected String templateFileName = "java/entitytest.ftl";
+    protected String templateFileName = "/entitytest.ftl";
 
     /** テンプレートファイルのエンコーディング */
     protected String templateFileEncoding = "UTF-8";
@@ -96,6 +94,8 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     /** 名前クラスのパッケージ名 */
     protected String namesPackageName = "entity";
 
+    protected String jvmLang = "java";
+    
     /** 生成するJavaファイルの出力先ディレクトリ */
     protected File javaFileDestDir = new File(new File("src", "test"), "java");
 
@@ -198,6 +198,13 @@ public class GenerateEntityTestCommand extends AbstractCommand {
         this.ignoreEntityClassNamePattern = ignoreEntityClassNamePattern;
     }
 
+    public String getJvmLang() {
+        return jvmLang;
+    }
+    public void setJvmLang(String lang) {
+        jvmLang = lang;
+    }
+    
     /**
      * テストクラスのテンプレート名を返します。
      * 
@@ -223,7 +230,7 @@ public class GenerateEntityTestCommand extends AbstractCommand {
      * @return 生成するJavaファイルの出力先ディレクトリ
      */
     public File getJavaFileDestDir() {
-        return javaFileDestDir;
+        return new File(new File("src", "test"), jvmLang);
     }
 
     /**
@@ -434,6 +441,10 @@ public class GenerateEntityTestCommand extends AbstractCommand {
         this.componentType = componentType;
     }
 
+    protected boolean isKotlin() {
+        return jvmLang.equals("kotlin");
+    }
+
     @Override
     protected void doValidate() {
         if (classpathDir == null) {
@@ -547,8 +558,8 @@ public class GenerateEntityTestCommand extends AbstractCommand {
     protected GenerationContext createGenerationContext(ClassModel model,
             String templateName) {
         File file = FileUtil.createJavaFile(javaFileDestDir, model
-                .getPackageName(), model.getShortClassName());
-        return new GenerationContext(model, file, templateName,
+                .getPackageName(), model.getShortClassName(), isKotlin());
+        return new GenerationContext(model, file, jvmLang + templateName,
                 javaFileEncoding, overwrite);
     }
 

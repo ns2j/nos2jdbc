@@ -153,6 +153,10 @@ public class GenerateEntityTask extends AbstractTask {
         command.setIgnoreTableNamePattern(ignoreTableNamePattern);
     }
 
+    public void setJvmLang(String lang) {
+        command.setJvmLang(lang);
+    }
+    
     /**
      * テンプレートファイルのエンコーディングを設定します。
      * 
