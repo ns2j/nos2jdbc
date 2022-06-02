@@ -1,5 +1,0 @@
-create table AAA.BBB.FOO (
-    no integer not null,
-    name varchar not null,
-    constraint FOO_PK primary key(no, name)
-);
