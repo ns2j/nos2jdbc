@@ -397,6 +397,8 @@ public interface GenDialect {
 
     String getDefaultTimestamp();
 
+    boolean supportsConstraintKey();
+    
     /**
      * カラム型です。
      * <p>

@@ -133,9 +133,11 @@ public class TableModelFactory {
         tableModel.setSqlKeywordCaseType(sqlKeywordCaseType);
         tableModel.setComment(normalizeComment(tableDesc.getComment()));
         tableModel.setUseComment(useComment);
-        doPrimaryKeyModel(tableModel, tableDesc);
-        doUniqueKeyModel(tableModel, tableDesc);
-        doForeignKeyModel(tableModel, tableDesc);
+        if (dialect.supportsConstraintKey()) {
+            doPrimaryKeyModel(tableModel, tableDesc);
+            doUniqueKeyModel(tableModel, tableDesc);
+            doForeignKeyModel(tableModel, tableDesc);
+        }
         doSequenceModel(tableModel, tableDesc);
         doColumnModel(tableModel, tableDesc);
         doGeneratedInfo(tableModel, tableDesc);

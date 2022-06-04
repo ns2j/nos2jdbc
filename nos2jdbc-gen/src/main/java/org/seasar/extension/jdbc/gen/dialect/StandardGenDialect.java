@@ -388,6 +388,11 @@ public class StandardGenDialect implements GenDialect {
         return " default current_timestamp ";
     }
     
+    @Override
+    public boolean supportsConstraintKey() {
+        return true;
+    }
+    
     /**
      * 例外チェーンをたどって原因となった{@link SQLException#getSQLState() SQLステート}を返します。
      * <p>
