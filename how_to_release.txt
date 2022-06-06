@@ -1,5 +1,0 @@
-ioctl error when ssh
-     export GPG_TTY=$(tty)
-
-mvn versions:set -DnewVersion=1.2.3
-mvn clean deploy -P release
