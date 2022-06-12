@@ -109,24 +109,6 @@ public abstract class AbstractCommand implements Command {
         this.jdbcManagerName = jdbcManagerName;
     }
 
-    /**
-     * {@link Factory}の実装クラス名を返します。
-     * 
-     * @return {@link Factory}の実装クラス名
-     */
-//    public String getFactoryClassName() {
-  //      return factoryClassName;
-    //}
-
-    /**
-     * {@link Factory}の実装クラス名を設定します。
-     * 
-     * @param factoryClassName
-     *            {@link Factory}の実装クラス名
-     */
-//    public void setFactoryClassName(String factoryClassName) {
-  //      this.factoryClassName = factoryClassName;
-    //}
 
     @Override
     public final void execute() {
