@@ -74,9 +74,8 @@ public class HsqlDialect extends StandardDialect {
     }
 
     @Override
-    public String getIdentitySelectString(final String tableName,
-            final String columnName) {
-        return "call identity()";
+    public boolean supportsGetGeneratedKeys() {
+        return true;
     }
 
     @Override
