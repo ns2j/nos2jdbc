@@ -15,6 +15,8 @@
  */
 package org.seasar.extension.jdbc.dialect;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,14 +27,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.exception.SQLRuntimeException;
+
+import jakarta.persistence.TemporalType;
 
 /**
  * @author higa

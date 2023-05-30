@@ -27,17 +27,17 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SelectForUpdateType;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.types.BytesType;
 import org.seasar.extension.jdbc.types.BytesType.Trait;
-import org.seasar.framework.util.Pair;
 import org.seasar.extension.jdbc.types.SerializableType;
 import org.seasar.extension.jdbc.types.ValueTypes;
+import org.seasar.framework.util.Pair;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * PostgreSQL用の方言をあつかうクラスです。

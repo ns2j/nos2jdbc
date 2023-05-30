@@ -18,8 +18,6 @@ package org.seasar.extension.jdbc.gen.dialect;
 import java.math.BigDecimal;
 import java.sql.Types;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.BlobType;
 import org.seasar.extension.jdbc.gen.sqltype.BooleanType;
@@ -27,6 +25,8 @@ import org.seasar.extension.jdbc.gen.sqltype.ClobType;
 import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.sqltype.FloatType;
 import org.seasar.extension.jdbc.gen.sqltype.TimestampWithTimezoneType;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * Derbyの方言を扱うクラスです。

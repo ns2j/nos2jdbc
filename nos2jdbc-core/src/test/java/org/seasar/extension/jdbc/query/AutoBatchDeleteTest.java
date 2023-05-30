@@ -15,16 +15,16 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.OptimisticLockException;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
 import org.seasar.extension.jdbc.SqlLogRegistry;
@@ -42,6 +42,8 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
+
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * @author koichik
@@ -261,16 +263,19 @@ class AutoBatchDeleteTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -304,16 +309,19 @@ class AutoBatchDeleteTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -341,16 +349,19 @@ class AutoBatchDeleteTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 0, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -379,16 +390,19 @@ class AutoBatchDeleteTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 0, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }
@@ -418,16 +432,19 @@ class AutoBatchDeleteTest {
                 entities) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 0, 1 };
                     }
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addBatchCalled;
                     }

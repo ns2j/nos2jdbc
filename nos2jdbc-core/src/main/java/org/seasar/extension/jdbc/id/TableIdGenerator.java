@@ -15,9 +15,7 @@
  */
 package org.seasar.extension.jdbc.id;
 
-import javax.persistence.TableGenerator;
 import javax.sql.DataSource;
-import javax.transaction.TransactionManager;
 
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
@@ -35,6 +33,8 @@ import org.seasar.extension.tx.adapter.JTATransactionManagerAdapter;
 //i import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.util.StringUtil;
 
+import jakarta.persistence.TableGenerator;
+import jakarta.transaction.TransactionManager;
 import nos2jdbc.TransactionManagerRegistry;
 
 /**

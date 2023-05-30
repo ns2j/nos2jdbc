@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.query;
 
 import java.util.Map;
 
-import javax.persistence.Entity;
-
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.IterationCallback;
@@ -41,6 +39,7 @@ import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.convention.PersistenceConvention;
 
+import jakarta.persistence.Entity;
 import nos2jdbc.annotation.NonAuto;
 
 /**

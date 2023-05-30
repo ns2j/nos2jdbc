@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.spi.ToolProvider;
 
-import javax.persistence.Entity;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.gen.exception.DocletUnavailableRuntimeException;
@@ -33,6 +31,7 @@ import org.seasar.framework.util.ClassTraversal.ClassHandler;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
 
+import jakarta.persistence.Entity;
 import nos2jdbc.annotation.NonAuto;
 
 /**

@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jdbc;
 
-import javax.persistence.OptimisticLockException;
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * SQLを自動生成するバッチ更新です。

@@ -17,12 +17,12 @@ package org.seasar.extension.jdbc.gen.dialect;
 
 import java.sql.Types;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.BlobType;
 import org.seasar.extension.jdbc.gen.sqltype.ClobType;
 import org.seasar.extension.jdbc.gen.sqltype.Jdbc42TimestampWithTimezoneType;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * HSQLDBの方言を扱うクラスです。

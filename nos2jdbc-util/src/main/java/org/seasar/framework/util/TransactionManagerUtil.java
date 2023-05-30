@@ -15,12 +15,12 @@
  */
 package org.seasar.framework.util;
 
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-
 import org.seasar.framework.exception.SystemRuntimeException;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
 
 /**
  * {@link TransactionManager}用のユーティリティクラスです。

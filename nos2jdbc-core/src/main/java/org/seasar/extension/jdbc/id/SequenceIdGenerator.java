@@ -18,9 +18,6 @@ package org.seasar.extension.jdbc.id;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.PropertyMeta;
@@ -29,6 +26,9 @@ import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.ResultSetUtil;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
 
 /**
  * {@link GenerationType#SEQUENCE}方式で識別子の値を自動生成するIDジェネレータです。

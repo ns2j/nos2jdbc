@@ -15,15 +15,15 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map;
 
-import javax.persistence.OptimisticLockException;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
 import org.seasar.extension.jdbc.SqlLogRegistry;
@@ -44,6 +44,8 @@ import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
 import org.seasar.framework.util.CollectionsUtil;
+
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * @author koichik

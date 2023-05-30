@@ -15,9 +15,9 @@
  */
 package org.seasar.framework.exception;
 
-import javax.transaction.RollbackException;
-
 import org.seasar.framework.message.MessageFormatter;
+
+import jakarta.transaction.RollbackException;
 
 /**
  * Seasar2用の{@link RollbackException}です。

@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jdbc.gen.dialect;
 
-import javax.persistence.GenerationType;
+import jakarta.persistence.GenerationType;
 
 /**
  * Interbaseの方言を扱うクラスです。

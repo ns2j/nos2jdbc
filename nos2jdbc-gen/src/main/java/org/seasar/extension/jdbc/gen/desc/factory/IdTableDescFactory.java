@@ -18,12 +18,6 @@ package org.seasar.extension.jdbc.gen.desc.factory;
 import java.lang.reflect.Field;
 import java.sql.Types;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.TableGenerator;
-import javax.persistence.UniqueConstraint;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
@@ -36,6 +30,12 @@ import org.seasar.extension.jdbc.gen.util.AnnotationUtil;
 import org.seasar.extension.jdbc.gen.util.TableUtil;
 import org.seasar.extension.jdbc.id.TableIdGenerator;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * {@link IdTableDescFactory}の実装クラスです。

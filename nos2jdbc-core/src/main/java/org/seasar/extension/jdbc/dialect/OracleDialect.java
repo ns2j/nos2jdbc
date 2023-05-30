@@ -19,9 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.SelectForUpdateType;
 import org.seasar.extension.jdbc.ValueType;
@@ -29,6 +26,9 @@ import org.seasar.extension.jdbc.types.OracleDateCalendarType;
 import org.seasar.extension.jdbc.types.OracleDateType;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.util.Pair;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * Oracle用の方言をあつかうクラスです。

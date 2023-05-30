@@ -15,32 +15,31 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
-import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
 import org.seasar.extension.jdbc.gen.model.EntityModel;
-import org.seasar.extension.jdbc.gen.model.factory.AssociationModelFactory;
-import org.seasar.extension.jdbc.gen.model.factory.AttributeModelFactory;
-import org.seasar.extension.jdbc.gen.model.factory.CompositeUniqueConstraintModelFactory;
-import org.seasar.extension.jdbc.gen.model.factory.EntityModelFactory;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
-import static org.junit.jupiter.api.Assertions.*;
+
+import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Version;
 
 /**
  * @author taedium
@@ -99,8 +98,6 @@ class EntityModelFactoryTest {
         Set<String> set = model.getImportNameSet();
         assertEquals(15, set.size());
         Iterator<String> iterator = set.iterator();
-        assertEquals(Serializable.class.getCanonicalName(), iterator.next());
-        assertEquals(Date.class.getCanonicalName(), iterator.next());
         assertEquals(Generated.class.getCanonicalName(), iterator.next());
         assertEquals(Column.class.getCanonicalName(), iterator.next());
         assertEquals(Entity.class.getCanonicalName(), iterator.next());
@@ -113,6 +110,8 @@ class EntityModelFactoryTest {
         assertEquals(TemporalType.class.getCanonicalName(), iterator.next());
         assertEquals(Transient.class.getCanonicalName(), iterator.next());
         assertEquals(Version.class.getCanonicalName(), iterator.next());
+        assertEquals(Serializable.class.getCanonicalName(), iterator.next());
+        assertEquals(Date.class.getCanonicalName(), iterator.next());
         assertEquals(Superclass.class.getCanonicalName(), iterator.next());
     }
 

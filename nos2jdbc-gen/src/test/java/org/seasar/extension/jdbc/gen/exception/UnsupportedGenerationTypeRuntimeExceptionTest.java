@@ -15,11 +15,11 @@
  */
 package org.seasar.extension.jdbc.gen.exception;
 
-import javax.persistence.GenerationType;
-import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.exception.UnsupportedGenerationTypeRuntimeException;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * @author taedium

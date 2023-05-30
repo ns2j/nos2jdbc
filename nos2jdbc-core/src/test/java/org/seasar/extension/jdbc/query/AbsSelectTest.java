@@ -15,17 +15,17 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.NoResultException;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
@@ -57,6 +57,8 @@ import org.seasar.framework.mock.sql.MockResultSet;
 import org.seasar.framework.mock.sql.MockResultSetMetaData;
 import org.seasar.framework.util.ArrayMap;
 
+import jakarta.persistence.NoResultException;
+
 /**
  * @author higa
  * 
@@ -73,6 +75,7 @@ class AbsSelectTest {
         manager = new JdbcManagerImpl() {
 
             
+            @Override
             public JdbcContext getJdbcContext() {
                 jdbcContext = (JdbcContextImpl) super.getJdbcContext();
                 return jdbcContext;
@@ -186,6 +189,7 @@ class AbsSelectTest {
         query.processPreparedStatement(jdbcContext,
                 new StatementHandler<Object, PreparedStatement>() {
 
+                    @Override
                     public Object handle(PreparedStatement ps) {
                         try {
                             assertNotNull(ps);
@@ -218,6 +222,7 @@ class AbsSelectTest {
         query.processCursorPreparedStatement(jdbcContext,
                 new StatementHandler<Object, PreparedStatement>() {
 
+                    @Override
                     public Object handle(PreparedStatement ps) {
                         try {
                             assertEquals(ResultSet.TYPE_SCROLL_INSENSITIVE, ps
@@ -243,6 +248,7 @@ class AbsSelectTest {
         JdbcContext jdbcContext = manager.getJdbcContext();
         query.processResultSet(jdbcContext, new ResultSetHandler() {
 
+            @Override
             public Object handle(ResultSet rs) throws SQLException {
                 assertEquals(ResultSet.TYPE_FORWARD_ONLY, rs.getType());
                 assertEquals(0, rs.getRow());
@@ -265,6 +271,7 @@ class AbsSelectTest {
         JdbcContext jdbcContext = manager.getJdbcContext();
         query.processResultSet(jdbcContext, new ResultSetHandler() {
 
+            @Override
             public Object handle(ResultSet rs) throws SQLException {
                 assertEquals(ResultSet.TYPE_FORWARD_ONLY, rs.getType());
                 assertEquals(0, rs.getRow());
@@ -287,6 +294,7 @@ class AbsSelectTest {
         JdbcContext jdbcContext = manager.getJdbcContext();
         query.processResultSet(jdbcContext, new ResultSetHandler() {
 
+            @Override
             public Object handle(ResultSet rs) throws SQLException {
                 assertEquals(ResultSet.TYPE_FORWARD_ONLY, rs.getType());
                 assertEquals(0, rs.getRow());
@@ -309,12 +317,14 @@ class AbsSelectTest {
             MockResultSet rs = new MockResultSet();
 
             
+            @Override
             protected Object processCursorPreparedStatement(
                     final JdbcContext jdbcContext,
                     final StatementHandler<Object, PreparedStatement> handler) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public ResultSet executeQuery() throws SQLException {
                         rs.addRowData(new ArrayMap());
                         rs.addRowData(new ArrayMap());
@@ -336,6 +346,7 @@ class AbsSelectTest {
         JdbcContext jdbcContext = manager.getJdbcContext();
         query.processResultSet(jdbcContext, new ResultSetHandler() {
 
+            @Override
             public Object handle(ResultSet rs) throws SQLException {
                 assertEquals(ResultSet.TYPE_SCROLL_INSENSITIVE, rs.getType());
                 assertEquals(1, rs.getRow());
@@ -356,12 +367,14 @@ class AbsSelectTest {
             MockResultSet rs = new MockResultSet();
 
             
+            @Override
             protected Object processCursorPreparedStatement(
                     final JdbcContext jdbcContext,
                     final StatementHandler<Object, PreparedStatement> handler) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public ResultSet executeQuery() throws SQLException {
                         rs.addRowData(new ArrayMap());
                         rs.addRowData(new ArrayMap());
@@ -384,6 +397,7 @@ class AbsSelectTest {
         JdbcContext jdbcContext = manager.getJdbcContext();
         query.processResultSet(jdbcContext, new ResultSetHandler() {
 
+            @Override
             public Object handle(ResultSet rs) throws SQLException {
                 assertEquals(ResultSet.TYPE_SCROLL_INSENSITIVE, rs.getType());
                 assertEquals(1, rs.getRow());
@@ -401,6 +415,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createResultListResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanListResultSetHandler(baseClass, dialect, manager
@@ -408,6 +423,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -447,6 +463,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createResultListResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanListResultSetHandler(baseClass, dialect, manager
@@ -454,6 +471,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -485,6 +503,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createResultListResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanListResultSetHandler(baseClass, dialect, manager
@@ -492,6 +511,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -525,6 +545,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createSingleResultResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanResultSetHandler(baseClass, dialect, manager
@@ -532,6 +553,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -568,6 +590,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createSingleResultResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanResultSetHandler(baseClass, dialect, manager
@@ -575,6 +598,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -605,6 +629,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createSingleResultResultSetHandler() {
                 DbmsDialect dialect = jdbcManager.getDialect();
                 return new BeanResultSetHandler(baseClass, dialect, manager
@@ -612,6 +637,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -647,6 +673,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createIterateResultSetHandler(
                     IterationCallback callback) {
                 DbmsDialect dialect = jdbcManager.getDialect();
@@ -656,6 +683,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -680,6 +708,7 @@ class AbsSelectTest {
         };
         query.iterateInternal(new IterationCallback<AaaDto, Integer>() {
 
+            @Override
             public Integer iterate(AaaDto entity, IterationContext context) {
                 list.add(entity);
                 return null;
@@ -702,6 +731,7 @@ class AbsSelectTest {
         MySelect<AaaDto> query = new MySelect<AaaDto>(manager, AaaDto.class) {
 
             
+            @Override
             protected ResultSetHandler createIterateResultSetHandler(
                     IterationCallback callback) {
                 DbmsDialect dialect = jdbcManager.getDialect();
@@ -711,6 +741,7 @@ class AbsSelectTest {
             }
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -731,6 +762,7 @@ class AbsSelectTest {
         };
         query.iterateInternal(new IterationCallback<AaaDto, Integer>() {
 
+            @Override
             public Integer iterate(AaaDto entity, IterationContext context) {
                 list.add(entity);
                 return null;
@@ -798,22 +830,26 @@ class AbsSelectTest {
         }
 
         
+        @Override
         protected ResultSetHandler createResultListResultSetHandler() {
             return null;
         }
 
         
+        @Override
         protected ResultSetHandler createSingleResultResultSetHandler() {
             return null;
         }
 
         
+        @Override
         protected ResultSetHandler createIterateResultSetHandler(
                 IterationCallback<T, ?> callback) {
             return null;
         }
 
         
+        @Override
         protected void prepare(String methodName) {
         }
     }

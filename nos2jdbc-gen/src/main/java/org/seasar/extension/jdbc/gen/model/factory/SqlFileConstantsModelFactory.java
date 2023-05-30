@@ -19,10 +19,10 @@ import java.io.File;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantFieldModel;
 import org.seasar.extension.jdbc.gen.model.SqlFileConstantsModel;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link SqlFileConstantsModelFactory}の実装クラスです。

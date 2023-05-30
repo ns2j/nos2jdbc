@@ -21,8 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.AutoBatchInsert;
 import org.seasar.extension.jdbc.AutoBatchUpdate;
 import org.seasar.extension.jdbc.IdGenerator;
@@ -37,6 +35,8 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.PreparedStatementUtil;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * {@link AutoBatchUpdate}の実装クラスです。

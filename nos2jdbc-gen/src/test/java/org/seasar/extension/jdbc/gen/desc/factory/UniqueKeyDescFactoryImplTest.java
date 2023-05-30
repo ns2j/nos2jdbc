@@ -15,16 +15,16 @@
  */
 package org.seasar.extension.jdbc.gen.desc.factory;
 
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
-import org.seasar.extension.jdbc.gen.desc.factory.UniqueKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.StandardGenDialect;
 
-import static org.junit.jupiter.api.Assertions.*;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * @author taedium

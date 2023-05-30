@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.gen.exception;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.framework.exception.SRuntimeException;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * サポートされていない{@link GenerationType}が指定された場合にスローされる例外です。

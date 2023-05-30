@@ -17,15 +17,15 @@ package org.seasar.extension.jdbc.gen.task;
 
 import java.io.File;
 
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.TemporalType;
-
 import org.apache.tools.ant.Task;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.gen.command.Command;
 import org.seasar.extension.jdbc.gen.command.GenerateEntityCommand;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.TemporalType;
 
 /**
  * エンティティクラスのJavaファイルを生成する{@link Task}です。

@@ -15,10 +15,10 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-
 import org.seasar.framework.message.MessageFormatter;
+
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 
 /**
  * <p>

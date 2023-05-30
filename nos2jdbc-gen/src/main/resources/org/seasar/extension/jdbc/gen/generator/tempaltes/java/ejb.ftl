@@ -1,5 +1,5 @@
 <#macro importForService>
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 </#macro>
 <#macro annotationForService>
 @Stateless

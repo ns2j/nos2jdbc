@@ -15,17 +15,18 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.EntityExistsException;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
 import org.seasar.extension.jdbc.SqlLogRegistry;
@@ -40,7 +41,7 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
 
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
+import jakarta.persistence.EntityExistsException;
 
 /**
  * @author higa
@@ -132,6 +133,7 @@ class SqlUpdateImplTest {
                 String.class, byte[].class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 return new MockPreparedStatement(null, null);
@@ -157,6 +159,7 @@ class SqlUpdateImplTest {
                 Date.class, Date.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 return new MockPreparedStatement(null, null);
@@ -182,6 +185,7 @@ class SqlUpdateImplTest {
                 Integer.class) {
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 super.prepareInParams(ps);
                 preparedBindVariables = true;
@@ -207,11 +211,13 @@ class SqlUpdateImplTest {
                 Integer.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -242,11 +248,13 @@ class SqlUpdateImplTest {
         SqlUpdateImpl query = new SqlUpdateImpl(manager, sql, String.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         throw new SQLException("hoge", "23");
                     }

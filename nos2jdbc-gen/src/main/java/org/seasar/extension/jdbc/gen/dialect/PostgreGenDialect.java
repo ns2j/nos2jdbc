@@ -24,8 +24,6 @@ import java.sql.Time;
 import java.sql.Types;
 import java.time.OffsetDateTime;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.dialect.PostgreDialect.BlobImpl;
@@ -42,6 +40,8 @@ import org.seasar.extension.jdbc.gen.sqltype.Jdbc42TimestampWithTimezoneType;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
 import org.seasar.extension.jdbc.gen.sqltype.VarcharType;
 import org.seasar.framework.util.Base64Util;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * PostgreSQLの方言を扱うクラスです。

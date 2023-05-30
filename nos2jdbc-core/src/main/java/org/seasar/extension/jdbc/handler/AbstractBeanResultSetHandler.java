@@ -21,11 +21,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 
-import javax.persistence.Column;
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.PropertyType;
 import org.seasar.extension.jdbc.ResultSetHandler;
@@ -38,6 +33,11 @@ import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.CaseInsensitiveMap;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * JavaBeans用の {@link ResultSetHandler}の抽象クラスです。

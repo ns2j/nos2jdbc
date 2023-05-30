@@ -1,6 +1,6 @@
 <#macro importForService>
-import javax.enterprise.context.Dependent;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.Dependent;
+import jakarta.transaction.Transactional;
 </#macro>
 <#macro annotationForService>
 @Dependent
@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 </#macro>
 
 <#macro importForTest>
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;

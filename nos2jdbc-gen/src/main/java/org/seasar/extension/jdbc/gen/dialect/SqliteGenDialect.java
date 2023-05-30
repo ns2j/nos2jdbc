@@ -17,13 +17,13 @@ package org.seasar.extension.jdbc.gen.dialect;
 
 import java.sql.Types;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.gen.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.sqltype.FloatType;
 import org.seasar.extension.jdbc.gen.sqltype.IntegerType;
 import org.seasar.extension.jdbc.gen.sqltype.VarcharType;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 
 /**

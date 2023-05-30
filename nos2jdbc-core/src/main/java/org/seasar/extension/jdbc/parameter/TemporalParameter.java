@@ -18,9 +18,9 @@ package org.seasar.extension.jdbc.parameter;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.sql.SqlArgWrapper;
+
+import jakarta.persistence.TemporalType;
 
 /**
  * {@link Date}または{@link Calendar}型の値と{@link TemporalType}の組み合わせをラップするクラスです。

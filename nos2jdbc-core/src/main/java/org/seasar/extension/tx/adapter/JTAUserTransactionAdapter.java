@@ -15,14 +15,14 @@
  */
 package org.seasar.extension.tx.adapter;
 
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
-
 import org.seasar.extension.tx.TransactionCallback;
 import org.seasar.extension.tx.TransactionManagerAdapter;
 import org.seasar.framework.exception.SIllegalStateException;
 import org.seasar.framework.log.Logger;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.UserTransaction;
 
 /**
  * JTAの{@link UserTransaction}を使用してトランザクションを制御する、
@@ -50,6 +50,7 @@ public class JTAUserTransactionAdapter implements TransactionManagerAdapter,
         this.userTransaction = userTransaction;
     }
 
+    @Override
     public Object required(final TransactionCallback callback) throws Throwable {
         final boolean began = begin();
         try {
@@ -61,11 +62,13 @@ public class JTAUserTransactionAdapter implements TransactionManagerAdapter,
         }
     }
 
+    @Override
     public Object requiresNew(final TransactionCallback callback)
             throws Throwable {
         throw new UnsupportedOperationException("REQUIRES_NEW");
     }
 
+    @Override
     public Object mandatory(final TransactionCallback callback)
             throws Throwable {
         if (!hasTransaction()) {
@@ -74,11 +77,13 @@ public class JTAUserTransactionAdapter implements TransactionManagerAdapter,
         return callback.execute(this);
     }
 
+    @Override
     public Object notSupported(final TransactionCallback callback)
             throws Throwable {
         throw new UnsupportedOperationException("NOT_SUPPORTED");
     }
 
+    @Override
     public Object never(final TransactionCallback callback) throws Throwable {
         if (hasTransaction()) {
             throw new SIllegalStateException("ESSR0317", null);
@@ -86,6 +91,7 @@ public class JTAUserTransactionAdapter implements TransactionManagerAdapter,
         return callback.execute(this);
     }
 
+    @Override
     public void setRollbackOnly() {
         try {
             if (userTransaction.getStatus() == STATUS_ACTIVE) {
@@ -102,7 +108,7 @@ public class JTAUserTransactionAdapter implements TransactionManagerAdapter,
      * @return 現在のスレッド上でトランザクションがアクティブな場合は<code>true</code>
      * @throws SystemException
      *             ユーザトランザクションで例外が発生した場合にスローされます
-     * @see javax.transaction.UserTransaction#getStatus()
+     * @see jakarta.transaction.UserTransaction#getStatus()
      */
     protected boolean hasTransaction() throws SystemException {
         final int status = userTransaction.getStatus();
@@ -118,7 +124,7 @@ public class JTAUserTransactionAdapter implements TransactionManagerAdapter,
      * @return 新しいトランザクションを開始した場合は<code>true</code>
      * @throws Exception
      *             ユーザトランザクションで例外が発生した場合にスローされます
-     * @see javax.transaction.UserTransaction#begin()
+     * @see jakarta.transaction.UserTransaction#begin()
      */
     protected boolean begin() throws Exception {
         if (hasTransaction()) {
@@ -137,8 +143,8 @@ public class JTAUserTransactionAdapter implements TransactionManagerAdapter,
      * 
      * @throws Exception
      *             ユーザトランザクションャで例外が発生した場合にスローされます
-     * @see javax.transaction.UserTransaction#commit()
-     * @see javax.transaction.UserTransaction#rollback()
+     * @see jakarta.transaction.UserTransaction#commit()
+     * @see jakarta.transaction.UserTransaction#rollback()
      */
     protected void end() throws Exception {
         if (userTransaction.getStatus() == STATUS_ACTIVE) {

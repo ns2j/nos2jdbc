@@ -1,6 +1,6 @@
 package hoge;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 /**
  * SQLファイルの定数クラスです。

@@ -1,8 +1,8 @@
 package nos2jdbc;
 
-import javax.transaction.TransactionManager;
-
 import org.seasar.extension.jta.TransactionManagerImpl;
+
+import jakarta.transaction.TransactionManager;
 
 public class TransactionManagerRegistry {
     static TransactionManager transactionManager;

@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jdbc.gen.generator;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * @author taedium

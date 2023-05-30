@@ -21,14 +21,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
@@ -45,6 +37,14 @@ import org.seasar.extension.jdbc.where.condition.NullableCondition;
 import org.seasar.extension.jdbc.where.condition.NullableStringCondition;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+
+import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author taedium
@@ -94,8 +94,8 @@ class ConditionModelFactoryTest {
         Set<String> set = model.getImportNameSet();
         assertEquals(8, set.size());
         Iterator<String> iterator = set.iterator();
-        assertEquals(Date.class.getCanonicalName(), iterator.next());
         assertEquals(Generated.class.getCanonicalName(), iterator.next());
+        assertEquals(Date.class.getCanonicalName(), iterator.next());
         assertEquals(ComplexWhere.class.getCanonicalName(), iterator.next());
         assertEquals(AbstractEntityCondition.class.getCanonicalName(), iterator.next());
         assertEquals(NotNullableCondition.class.getCanonicalName(), iterator.next());

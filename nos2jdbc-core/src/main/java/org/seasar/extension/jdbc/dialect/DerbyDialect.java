@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jdbc.dialect;
 
-import javax.persistence.GenerationType;
+import jakarta.persistence.GenerationType;
 
 /**
  * Derby用の方言をあつかうクラスです。

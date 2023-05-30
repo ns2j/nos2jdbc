@@ -15,9 +15,9 @@
  */
 package org.seasar.framework.exception;
 
-import javax.transaction.NotSupportedException;
-
 import org.seasar.framework.message.MessageFormatter;
+
+import jakarta.transaction.NotSupportedException;
 
 /**
  * Seasar2用の{@link NotSupportedException}を返します。

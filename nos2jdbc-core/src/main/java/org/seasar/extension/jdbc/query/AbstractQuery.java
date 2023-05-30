@@ -21,8 +21,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.ParamType;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.Query;
@@ -42,6 +40,8 @@ import org.seasar.extension.sql.SqlArgWrapper;
 import org.seasar.framework.exception.SQLRuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ResultSetUtil;
+
+import jakarta.persistence.TemporalType;
 
 /**
  * @author higa
@@ -107,24 +107,28 @@ public abstract class AbstractQuery<S extends Query<S>> implements Query<S>,
         this.jdbcManager = jdbcManager;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S callerClass(Class<?> callerClass) {
         this.callerClass = callerClass;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S callerMethodName(String callerMethodName) {
         this.callerMethodName = callerMethodName;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S queryTimeout(int queryTimeout) {
         this.queryTimeout = queryTimeout;
         return (S) this;
     }
 
+    @Override
     public void logSql(String sql, Object... vars) {
         String completeSql = null;
         if (logger.isDebugEnabled()) {

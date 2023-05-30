@@ -38,7 +38,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.util.ElementFilter;
-import javax.persistence.MappedSuperclass;
 import javax.tools.Diagnostic.Kind;
 
 import org.seasar.extension.jdbc.EntityMeta;
@@ -50,6 +49,7 @@ import org.seasar.framework.log.Logger;
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.util.DocTrees;
 
+import jakarta.persistence.MappedSuperclass;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;

@@ -4,7 +4,7 @@ import DepartmentNames._Department;
 import EmployeeNames._EmployeeNames;
 import entity.Department;
 import entity.Employee;
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 /**
  * 名前クラスの集約です。

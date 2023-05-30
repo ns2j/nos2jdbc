@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.gen.command;
 
 import java.io.File;
 
-import javax.transaction.UserTransaction;
-
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.data.Loader;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
@@ -44,6 +42,7 @@ import org.seasar.extension.jta.UserTransactionImpl;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 
+import jakarta.transaction.UserTransaction;
 import nos2jdbc.TransactionManagerRegistry;
 
 /**

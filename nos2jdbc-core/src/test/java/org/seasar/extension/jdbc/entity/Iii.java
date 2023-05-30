@@ -15,8 +15,8 @@
  */
 package org.seasar.extension.jdbc.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
 /**
  * @author taedium

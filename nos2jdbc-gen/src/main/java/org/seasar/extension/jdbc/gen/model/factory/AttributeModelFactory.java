@@ -19,12 +19,12 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
 import org.seasar.extension.jdbc.gen.model.AttributeModel;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.ClassUtil;
+
+import jakarta.persistence.TemporalType;
 
 /**
  * {@link AttributeModelFactory}の実装クラスです。

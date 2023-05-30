@@ -21,8 +21,6 @@ import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.BlobType;
 import org.seasar.extension.jdbc.gen.sqltype.ClobType;
@@ -31,6 +29,8 @@ import org.seasar.extension.jdbc.gen.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.sqltype.FloatType;
 import org.seasar.extension.jdbc.gen.sqltype.IntegerType;
 import org.seasar.extension.jdbc.gen.sqltype.TimestampWithTimezoneType;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * MySQLの方言を扱うクラスです。

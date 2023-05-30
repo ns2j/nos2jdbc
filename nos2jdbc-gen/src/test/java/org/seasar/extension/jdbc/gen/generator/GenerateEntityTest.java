@@ -20,9 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.math.BigDecimal;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
@@ -42,6 +39,9 @@ import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.TextUtil;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author taedium

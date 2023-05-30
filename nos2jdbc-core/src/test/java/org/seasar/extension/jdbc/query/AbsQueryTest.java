@@ -15,14 +15,14 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.SQLException;
 import java.util.Date;
 
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.SqlLog;
 import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
@@ -41,6 +41,8 @@ import org.seasar.framework.mock.sql.MockPreparedStatement;
 import org.seasar.framework.mock.sql.MockResultSet;
 import org.seasar.framework.mock.sql.MockResultSetMetaData;
 import org.seasar.framework.util.ArrayMap;
+
+import jakarta.persistence.TemporalType;
 
 /**
  * @author higa
@@ -253,6 +255,7 @@ class AbsQueryTest {
         MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
             
+            @Override
             public void setString(int index, String x) throws SQLException {
                 bindVariable = x;
                 parameterIndex = index;
@@ -350,6 +353,7 @@ class AbsQueryTest {
         }
 
         
+        @Override
         protected void prepare(String methodName) {
         }
     }

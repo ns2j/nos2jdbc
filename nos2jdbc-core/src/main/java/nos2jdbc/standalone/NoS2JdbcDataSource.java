@@ -15,11 +15,11 @@
  */
 package nos2jdbc.standalone;
 
-import javax.transaction.TransactionManager;
-
 import org.seasar.extension.dbcp.impl.ConnectionPoolImpl;
 import org.seasar.extension.dbcp.impl.DataSourceImpl;
 import org.seasar.extension.dbcp.impl.XADataSourceImpl;
+
+import jakarta.transaction.TransactionManager;
 
 public class NoS2JdbcDataSource extends DataSourceImpl {
     private static final long serialVersionUID = 1L;

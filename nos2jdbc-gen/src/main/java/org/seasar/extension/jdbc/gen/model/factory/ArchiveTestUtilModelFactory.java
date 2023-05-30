@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.gen.model.ArchiveTestUtilModel;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link ArchiveTestUtilModelFactory}の実装クラスです。

@@ -1,6 +1,6 @@
 package hoge.service;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 import org.seasar.extension.jdbc.gen.generator.Ddd;
 
 

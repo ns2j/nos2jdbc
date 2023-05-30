@@ -15,8 +15,6 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.NamesAssociationModel;
@@ -24,6 +22,8 @@ import org.seasar.extension.jdbc.gen.model.NamesAttributeModel;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.extension.jdbc.name.PropertyName;
 import org.seasar.framework.util.ClassUtil;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link NamesModelFactory}の実装クラスです。

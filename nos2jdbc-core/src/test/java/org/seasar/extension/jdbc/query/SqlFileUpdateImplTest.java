@@ -15,20 +15,18 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
 import org.seasar.extension.jdbc.SqlLogRegistry;
@@ -46,7 +44,10 @@ import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
 import org.seasar.framework.util.CollectionsUtil;
 
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author taedium
@@ -362,11 +363,13 @@ class SqlFileUpdateImplTest {
                 "foo") {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         return 1;
                     }
@@ -397,11 +400,13 @@ class SqlFileUpdateImplTest {
                 "foo") {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int executeUpdate() throws SQLException {
                         throw new SQLException("hoge", "23");
                     }

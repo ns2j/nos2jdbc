@@ -15,17 +15,18 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.EntityExistsException;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLog;
 import org.seasar.extension.jdbc.SqlLogRegistry;
@@ -40,7 +41,7 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
 
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
+import jakarta.persistence.EntityExistsException;
 
 /**
  * @author higa
@@ -140,11 +141,13 @@ class SqlBatchUpdateImplTest {
                 String.class, String.class, byte[].class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 return new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
 
                         return new int[] { 1 };
@@ -153,6 +156,7 @@ class SqlBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(3, getParamSize());
                 assertEquals(ValueTypes.CLOB, getParam(0).valueType);
@@ -177,11 +181,13 @@ class SqlBatchUpdateImplTest {
                 String.class, String.class, Date.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 return new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
 
                         return new int[] { 1 };
@@ -190,6 +196,7 @@ class SqlBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(3, getParamSize());
                 assertEquals(ValueTypes.CALENDAR_TIME, getParam(0).valueType);
@@ -230,17 +237,20 @@ class SqlBatchUpdateImplTest {
                 String.class, Integer.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return new int[] { 1, 1 };
@@ -250,6 +260,7 @@ class SqlBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -288,11 +299,13 @@ class SqlBatchUpdateImplTest {
                 String.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         throw new SQLException("hoge", "23");
                     }
@@ -301,6 +314,7 @@ class SqlBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -326,17 +340,20 @@ class SqlBatchUpdateImplTest {
                 String.class, Integer.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return executedBatch == 1 ? new int[] { 1, 2 }
@@ -347,6 +364,7 @@ class SqlBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -386,17 +404,20 @@ class SqlBatchUpdateImplTest {
                 String.class, Integer.class) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return executedBatch == 1 ? new int[] { 1, 2 }
@@ -407,6 +428,7 @@ class SqlBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);

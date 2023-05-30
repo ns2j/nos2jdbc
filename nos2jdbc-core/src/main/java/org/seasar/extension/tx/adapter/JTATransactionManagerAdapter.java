@@ -15,16 +15,16 @@
  */
 package org.seasar.extension.tx.adapter;
 
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-import javax.transaction.UserTransaction;
-
 import org.seasar.extension.tx.TransactionCallback;
 import org.seasar.extension.tx.TransactionManagerAdapter;
 import org.seasar.framework.exception.SIllegalStateException;
 import org.seasar.framework.log.Logger;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.UserTransaction;
 
 /**
  * JTAの{@link TransactionManager}を使用してトランザクションを制御する、
@@ -59,6 +59,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
         this.transactionManager = transactionManager;
     }
 
+    @Override
     public Object required(final TransactionCallback callback) throws Throwable {
         final boolean began = begin();
         try {
@@ -70,6 +71,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
         }
     }
 
+    @Override
     public Object requiresNew(final TransactionCallback callback)
             throws Throwable {
         final Transaction tx = suspend();
@@ -87,6 +89,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
         }
     }
 
+    @Override
     public Object mandatory(final TransactionCallback callback)
             throws Throwable {
         if (!hasTransaction()) {
@@ -95,6 +98,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
         return callback.execute(this);
     }
 
+    @Override
     public Object notSupported(final TransactionCallback callback)
             throws Throwable {
         final Transaction tx = suspend();
@@ -107,6 +111,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
         }
     }
 
+    @Override
     public Object never(final TransactionCallback callback) throws Throwable {
         if (hasTransaction()) {
             throw new SIllegalStateException("ESSR0317", null);
@@ -114,6 +119,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
         return callback.execute(this);
     }
 
+    @Override
     public void setRollbackOnly() {
         try {
             if (userTransaction.getStatus() == STATUS_ACTIVE) {
@@ -130,7 +136,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
      * @return 現在のスレッド上でトランザクションがアクティブな場合は<code>true</code>
      * @throws SystemException
      *             トランザクションマネージャで例外が発生した場合にスローされます
-     * @see javax.transaction.UserTransaction#getStatus()
+     * @see jakarta.transaction.UserTransaction#getStatus()
      */
     protected boolean hasTransaction() throws SystemException {
         final int status = userTransaction.getStatus();
@@ -146,7 +152,7 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
      * @return 新しいトランザクションを開始した場合は<code>true</code>
      * @throws Exception
      *             トランザクションマネージャで例外が発生した場合にスローされます
-     * @see javax.transaction.TransactionManager#begin()
+     * @see jakarta.transaction.TransactionManager#begin()
      */
     protected boolean begin() throws Exception {
         if (hasTransaction()) {
@@ -165,8 +171,8 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
      * 
      * @throws Exception
      *             トランザクションマネージャで例外が発生した場合にスローされます
-     * @see javax.transaction.TransactionManager#commit()
-     * @see javax.transaction.TransactionManager#rollback()
+     * @see jakarta.transaction.TransactionManager#commit()
+     * @see jakarta.transaction.TransactionManager#rollback()
      */
     protected void end() throws Exception {
         if (userTransaction.getStatus() == STATUS_ACTIVE) {
@@ -182,10 +188,10 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
      * 現在のスレッド上でトランザクションが開始されていなければ<code>null</code>を返します。
      * </p>
      * 
-     * @return 中断された{@link javax.transaction.Transaction トランザクション}
+     * @return 中断された{@link jakarta.transaction.Transaction トランザクション}
      * @throws Exception
      *             トランザクションマネージャで例外が発生した場合にスローされます
-     * @see javax.transaction.TransactionManager#suspend()
+     * @see jakarta.transaction.TransactionManager#suspend()
      */
     protected Transaction suspend() throws Exception {
         return hasTransaction() ? transactionManager.suspend() : null;
@@ -195,10 +201,10 @@ public class JTATransactionManagerAdapter implements TransactionManagerAdapter,
      * トランザクションを再開します。
      * 
      * @param transaction
-     *            再開する{@link javax.transaction.Transaction トランザクション}
+     *            再開する{@link jakarta.transaction.Transaction トランザクション}
      * @throws Exception
      *             トランザクションマネージャで例外が発生した場合にスローされます
-     * @see javax.transaction.TransactionManager#resume(Transaction)
+     * @see jakarta.transaction.TransactionManager#resume(Transaction)
      */
     protected void resume(final Transaction transaction) throws Exception {
         transactionManager.resume(transaction);

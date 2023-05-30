@@ -29,9 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.exception.UnsupportedSqlTypeRuntimeException;
@@ -61,6 +58,9 @@ import org.seasar.framework.util.CaseInsensitiveMap;
 import org.seasar.framework.util.ResultSetUtil;
 import org.seasar.framework.util.StatementUtil;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * 標準的な方言をあつかうクラスです。

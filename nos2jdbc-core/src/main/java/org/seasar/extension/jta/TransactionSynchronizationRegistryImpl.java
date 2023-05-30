@@ -21,16 +21,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.transaction.Status;
-import javax.transaction.Synchronization;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionSynchronizationRegistry;
-
 import org.seasar.framework.exception.SIllegalStateException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.TransactionManagerUtil;
 import org.seasar.framework.util.TransactionUtil;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionSynchronizationRegistry;
 
 /**
  * {@link TransactionSynchronizationRegistry}の実装クラスです。

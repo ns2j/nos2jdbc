@@ -19,29 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.dialect.H2Dialect;
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.TableDesc;
-import org.seasar.extension.jdbc.gen.desc.factory.ColumnDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.ForeignKeyDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.IdTableDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.PrimaryKeyDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.SequenceDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.TableDescFactory;
-import org.seasar.extension.jdbc.gen.desc.factory.UniqueKeyDescFactory;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.dialect.H2GenDialect;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
@@ -52,6 +35,16 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * @author taedium

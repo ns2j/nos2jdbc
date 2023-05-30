@@ -4,9 +4,9 @@ import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.PropertyMeta;
+
+import jakarta.persistence.TemporalType;
 
 public class TimestampUtil {
     public static Object getTimestamp(PropertyMeta pm) {

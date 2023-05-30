@@ -28,10 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.FromClause;
 import org.seasar.extension.jdbc.JoinColumnMeta;
@@ -46,6 +42,10 @@ import org.seasar.extension.jdbc.util.QueryTokenizer;
 import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.Pair;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * 標準的な方言をあつかうクラスです

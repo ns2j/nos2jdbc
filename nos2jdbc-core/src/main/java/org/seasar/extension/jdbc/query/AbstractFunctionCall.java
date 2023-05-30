@@ -20,8 +20,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.FunctionCall;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
@@ -29,6 +27,8 @@ import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.framework.exception.SQLRuntimeException;
 import org.seasar.framework.util.PreparedStatementUtil;
+
+import jakarta.persistence.TemporalType;
 
 /**
  * ファンクションを呼び出す抽象クラスです。
@@ -68,6 +68,7 @@ public abstract class AbstractFunctionCall<T, S extends FunctionCall<T, S>>
         this.resultClass = resultClass;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S lob() {
         resultLob = true;
@@ -80,6 +81,7 @@ public abstract class AbstractFunctionCall<T, S extends FunctionCall<T, S>>
         return (S) this;
     }
 
+    @Override
     public T getSingleResult() {
         resultList = false;
         prepare("getSingleResult");
@@ -91,6 +93,7 @@ public abstract class AbstractFunctionCall<T, S extends FunctionCall<T, S>>
         }
     }
 
+    @Override
     public List<T> getResultList() {
         resultList = true;
         prepare("getResultList");

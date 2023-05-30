@@ -20,9 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
-import javax.transaction.Status;
-import javax.transaction.Synchronization;
-import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.seasar.extension.datasource.DataSourceFactory;
 import org.seasar.extension.datasource.impl.SelectableDataSourceProxy;
@@ -75,6 +72,10 @@ import org.seasar.extension.jdbc.util.DataSourceUtil;
 //i import org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.exception.EmptyRuntimeException;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.TransactionSynchronizationRegistry;
 
 /**
  * {@link JdbcManager}の実装クラスです。

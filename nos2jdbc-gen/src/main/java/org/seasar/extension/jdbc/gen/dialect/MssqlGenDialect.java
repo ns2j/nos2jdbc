@@ -21,8 +21,6 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.BlobType;
 import org.seasar.extension.jdbc.gen.sqltype.BooleanType;
@@ -36,6 +34,8 @@ import org.seasar.extension.jdbc.gen.sqltype.TimeType;
 import org.seasar.extension.jdbc.gen.sqltype.TimestampType;
 import org.seasar.extension.jdbc.gen.sqltype.VarcharType;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * MS SQL Serverの方言を扱うクラスです。

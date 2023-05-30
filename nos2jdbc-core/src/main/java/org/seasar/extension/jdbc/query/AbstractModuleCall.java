@@ -23,10 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ModuleCall;
 import org.seasar.extension.jdbc.ParamType;
@@ -53,6 +49,10 @@ import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.ModifierUtil;
 import org.seasar.framework.util.ReflectionUtil;
 import org.seasar.framework.util.StatementUtil;
+
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * 永続格納モジュール(ストアドプロシージャまたはストアドファンクション)を呼び出す抽象クラスです。

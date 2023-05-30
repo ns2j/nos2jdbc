@@ -37,7 +37,6 @@ import java.util.concurrent.Executor;
 import javax.sql.ConnectionEvent;
 import javax.sql.ConnectionEventListener;
 import javax.sql.XAConnection;
-import javax.transaction.Transaction;
 import javax.transaction.xa.XAResource;
 
 import org.seasar.extension.dbcp.ConnectionPool;
@@ -45,6 +44,8 @@ import org.seasar.extension.dbcp.ConnectionWrapper;
 import org.seasar.extension.jdbc.impl.PreparedStatementWrapper;
 import org.seasar.framework.exception.SSQLException;
 import org.seasar.framework.log.Logger;
+
+import jakarta.transaction.Transaction;
 
 /**
  * {@link ConnectionWrapper}の実装クラスです。

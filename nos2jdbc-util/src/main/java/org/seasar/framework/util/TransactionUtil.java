@@ -15,14 +15,15 @@
  */
 package org.seasar.framework.util;
 
-import javax.transaction.RollbackException;
-import javax.transaction.Synchronization;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
 import javax.transaction.xa.XAResource;
 
 import org.seasar.framework.exception.RollbackRuntimeException;
 import org.seasar.framework.exception.SystemRuntimeException;
+
+import jakarta.transaction.RollbackException;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
 
 /**
  * {@link Transaction}用のユーティリティクラスです。

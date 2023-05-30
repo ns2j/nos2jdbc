@@ -15,10 +15,10 @@
  */
 package org.seasar.extension.jdbc.dialect;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.SelectForUpdateType;
 import org.seasar.framework.util.Pair;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * Interbase用の方言をあつかうクラスです。

@@ -15,13 +15,13 @@
  */
 package org.seasar.extension.jdbc.gen.util;
 
-import javax.persistence.Column;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-
 import org.seasar.extension.jdbc.annotation.ReferentialConstraint;
 import org.seasar.framework.util.ReflectionUtil;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 
 /**
  * アノテーションに関するユーティリティクラスです。

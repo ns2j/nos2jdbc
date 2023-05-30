@@ -26,10 +26,6 @@ import java.util.Set;
 
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
-import javax.transaction.Status;
-import javax.transaction.Synchronization;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
 
 import org.seasar.extension.dbcp.ConnectionPool;
 import org.seasar.extension.dbcp.ConnectionWrapper;
@@ -44,6 +40,11 @@ import org.seasar.framework.util.SLinkedList;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.util.TransactionManagerUtil;
 import org.seasar.framework.util.TransactionUtil;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
 
 /**
  * {@link ConnectionPool}の実装クラスです。

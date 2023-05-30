@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.query;
 
 import java.sql.PreparedStatement;
 
-import javax.persistence.OptimisticLockException;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.Update;
@@ -27,6 +25,8 @@ import org.seasar.extension.jdbc.exception.SOptimisticLockException;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.StatementUtil;
+
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * 更新の抽象クラスです。
@@ -84,6 +84,7 @@ public abstract class AbstractAutoUpdate<T, S extends Update<S>> extends
         return entityMeta;
     }
 
+    @Override
     public int execute() {
         prepare("execute");
         try {

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 <#if componentType == "cdi">
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 </#if>
 <#if componentType == "spring">
 import org.springframework.beans.factory.annotation.Autowired;

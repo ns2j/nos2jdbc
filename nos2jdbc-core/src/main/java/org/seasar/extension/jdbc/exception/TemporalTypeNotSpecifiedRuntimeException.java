@@ -18,9 +18,9 @@ package org.seasar.extension.jdbc.exception;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.TemporalType;
-
 import org.seasar.framework.exception.SRuntimeException;
+
+import jakarta.persistence.TemporalType;
 
 /**
  * {@link Date} や {@link Calendar} 型のプロパティに {@link TemporalType}

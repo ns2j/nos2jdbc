@@ -1,7 +1,8 @@
 package nos2jdbc;
 
+import static org.seasar.framework.util.StringUtil.*;
+
 import javax.sql.DataSource;
-import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.JdbcManager;
@@ -13,7 +14,7 @@ import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 
-import static org.seasar.framework.util.StringUtil.*;
+import jakarta.transaction.TransactionSynchronizationRegistry;
 
 public class ManagerSetter {
     static synchronized public JdbcManager setToJdbcManagerImpl(JdbcManagerImpl jdbcManagerImpl, 

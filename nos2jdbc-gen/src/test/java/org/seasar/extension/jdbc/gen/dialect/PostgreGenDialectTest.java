@@ -15,16 +15,17 @@
  */
 package org.seasar.extension.jdbc.gen.dialect;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Types;
-import javax.persistence.Lob;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.dialect.PostgreDialect;
-import org.seasar.extension.jdbc.gen.dialect.PostgreGenDialect;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect.SqlBlockContext;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProviderImpl;
 import org.seasar.extension.jdbc.gen.sqltype.SqlType;
@@ -33,7 +34,8 @@ import org.seasar.extension.jdbc.meta.PropertyMetaFactoryImpl;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockConnection;
-import static org.junit.jupiter.api.Assertions.*;
+
+import jakarta.persistence.Lob;
 
 /**
  * @author taedium

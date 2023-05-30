@@ -18,13 +18,12 @@ package org.seasar.extension.jdbc.entity;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
-import javax.persistence.Version;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Version;
 import nos2jdbc.annotation.CreatedAt;
 import nos2jdbc.annotation.UpdatedAt;
 

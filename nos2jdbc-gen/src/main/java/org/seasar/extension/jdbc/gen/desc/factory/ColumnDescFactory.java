@@ -17,9 +17,6 @@ package org.seasar.extension.jdbc.gen.desc.factory;
 
 import java.lang.reflect.Field;
 
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.ColumnMeta;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
@@ -33,6 +30,9 @@ import org.seasar.extension.jdbc.gen.sqltype.SqlType;
 import org.seasar.extension.jdbc.gen.util.AnnotationUtil;
 import org.seasar.extension.jdbc.gen.util.PropertyMetaUtil;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
 
 /**
  * {@link ColumnDescFactory}の実装クラスです。

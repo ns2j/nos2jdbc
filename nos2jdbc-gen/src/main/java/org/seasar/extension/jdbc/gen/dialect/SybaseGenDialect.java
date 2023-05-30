@@ -20,8 +20,6 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Arrays;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.BlobType;
 import org.seasar.extension.jdbc.gen.sqltype.BooleanType;
@@ -32,6 +30,8 @@ import org.seasar.extension.jdbc.gen.sqltype.DoubleType;
 import org.seasar.extension.jdbc.gen.sqltype.IntegerType;
 import org.seasar.extension.jdbc.gen.sqltype.TimeType;
 import org.seasar.extension.jdbc.gen.sqltype.TimestampType;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * Sybaseの方言を扱うクラスです。

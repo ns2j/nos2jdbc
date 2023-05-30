@@ -21,12 +21,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.util.Maps;
+
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * 値をラップし特別な意味を持たせるクラスです。

@@ -26,9 +26,6 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.Map;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
@@ -53,6 +50,9 @@ import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.ResultSetUtil;
 import org.seasar.framework.util.StatementUtil;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * Oracleの方言を扱うクラスです。

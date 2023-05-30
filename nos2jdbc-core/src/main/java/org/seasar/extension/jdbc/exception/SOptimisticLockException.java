@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import javax.persistence.OptimisticLockException;
-
 import org.seasar.framework.message.MessageFormatter;
+
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * 楽観的ロックで競合が発生した場合にスローされる例外です。

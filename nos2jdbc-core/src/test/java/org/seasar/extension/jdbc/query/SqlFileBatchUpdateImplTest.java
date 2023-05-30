@@ -15,6 +15,10 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static java.util.Arrays.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -22,14 +26,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
@@ -48,8 +47,10 @@ import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
 import org.seasar.framework.util.CollectionsUtil;
 
-import static java.util.Arrays.*;
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author taedium
@@ -198,18 +199,21 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_SIMPLE, asList("foo", "bar")) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return new int[] { 1, 1 };
@@ -219,6 +223,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -255,12 +260,14 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_SIMPLE, asList(lob("hoge"), lob("foo"))) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1 };
                     }
@@ -269,6 +276,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(1, getParamSize());
                 assertEquals(ValueTypes.CLOB, getParam(0).valueType);
@@ -290,12 +298,14 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_SIMPLE, asList(time(date), time(date))) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1 };
                     }
@@ -304,6 +314,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(1, getParamSize());
                 assertEquals(ValueTypes.DATE_TIME, getParam(0).valueType);
@@ -323,18 +334,21 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_SIMPLE, asList("foo", "bar")) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return new int[] { 1, 1 };
@@ -344,6 +358,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -372,18 +387,21 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_DTO, asList(dto, dto2)) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return new int[] { 1, 1 };
@@ -393,6 +411,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -429,12 +448,14 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_DTO, asList(dto, dto2)) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1 };
                     }
@@ -443,6 +464,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(2, getParamSize());
                 assertEquals(ValueTypes.CLOB, getParam(0).valueType);
@@ -471,12 +493,14 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_DTO, asList(dto, dto2)) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1 };
                     }
@@ -485,6 +509,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(2, getParamSize());
                 assertEquals(ValueTypes.DATE_TIME, getParam(0).valueType);
@@ -512,18 +537,21 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_DTO, asList(map1, map2)) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return new int[] { 1, 1 };
@@ -533,6 +561,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -570,12 +599,14 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_DTO, asList(map1, map2)) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1 };
                     }
@@ -584,6 +615,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(2, getParamSize());
                 assertEquals(ValueTypes.CLOB, getParam(0).valueType);
@@ -613,12 +645,14 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_DTO, asList(map1, map2)) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         return new int[] { 1, 1 };
                     }
@@ -627,6 +661,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void resetParams() {
                 assertEquals(2, getParamSize());
                 assertEquals(ValueTypes.DATE_TIME, getParam(0).valueType);
@@ -647,12 +682,14 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_SIMPLE, asList("foo", "bar")) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         throw new SQLException("hoge", "23");
                     }
@@ -661,6 +698,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -684,18 +722,21 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_SIMPLE, asList("foo", "bar", "baz")) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return executedBatch == 1 ? new int[] { 1, 2 }
@@ -706,6 +747,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);
@@ -741,18 +783,21 @@ class SqlFileBatchUpdateImplTest {
                 manager, PATH_SIMPLE, asList("hoge", "foo", "bar", "baz")) {
 
             
+            @Override
             protected PreparedStatement getPreparedStatement(
                     JdbcContext jdbcContext) {
                 assertNotNull(executedSql);
                 MockPreparedStatement ps = new MockPreparedStatement(null, null) {
 
                     
+                    @Override
                     public void addBatch() throws SQLException {
                         ++addedBatch;
                         super.addBatch();
                     }
 
                     
+                    @Override
                     public int[] executeBatch() throws SQLException {
                         ++executedBatch;
                         return executedBatch == 1 ? new int[] { 1, 2 }
@@ -763,6 +808,7 @@ class SqlFileBatchUpdateImplTest {
             }
 
             
+            @Override
             protected void prepareInParams(PreparedStatement ps) {
                 preparedBindVariables = true;
                 super.prepareInParams(ps);

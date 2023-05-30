@@ -15,17 +15,17 @@
  */
 package org.seasar.extension.jta;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.InvalidTransactionException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionSynchronizationRegistry;
-import javax.transaction.UserTransaction;
+import jakarta.transaction.HeuristicMixedException;
+import jakarta.transaction.HeuristicRollbackException;
+import jakarta.transaction.InvalidTransactionException;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.RollbackException;
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionSynchronizationRegistry;
+import jakarta.transaction.UserTransaction;
 
 /**
  * 機能が限定された{@link TransactionManager}の実装クラスです。
@@ -90,20 +90,24 @@ public class RestrictedTransactionManagerImpl implements TransactionManager {
         this.synchronizationRegistry = synchronizationRegistry;
     }
 
+    @Override
     public void begin() throws NotSupportedException, SystemException {
         userTransaction.begin();
     }
 
+    @Override
     public void commit() throws HeuristicMixedException,
             HeuristicRollbackException, IllegalStateException,
             RollbackException, SecurityException, SystemException {
         userTransaction.commit();
     }
 
+    @Override
     public int getStatus() throws SystemException {
         return userTransaction.getStatus();
     }
 
+    @Override
     public Transaction getTransaction() throws SystemException {
         final int status = getStatus();
         if (status == Status.STATUS_NO_TRANSACTION
@@ -120,24 +124,29 @@ public class RestrictedTransactionManagerImpl implements TransactionManager {
         return tx;
     }
 
+    @Override
     public void resume(final Transaction tx) throws IllegalStateException,
             InvalidTransactionException, SystemException {
         throw new UnsupportedOperationException("resume");
     }
 
+    @Override
     public void rollback() throws IllegalStateException, SecurityException,
             SystemException {
         userTransaction.rollback();
     }
 
+    @Override
     public void setRollbackOnly() throws IllegalStateException, SystemException {
         userTransaction.setRollbackOnly();
     }
 
+    @Override
     public void setTransactionTimeout(final int seconds) throws SystemException {
         userTransaction.setTransactionTimeout(seconds);
     }
 
+    @Override
     public Transaction suspend() throws SystemException {
         throw new UnsupportedOperationException("suspend");
     }

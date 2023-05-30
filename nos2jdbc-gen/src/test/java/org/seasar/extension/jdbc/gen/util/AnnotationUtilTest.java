@@ -15,11 +15,11 @@
  */
 package org.seasar.extension.jdbc.gen.util;
 
-import javax.persistence.Column;
-import org.junit.jupiter.api.Test;
-import org.seasar.extension.jdbc.gen.util.AnnotationUtil;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import jakarta.persistence.Column;
 
 /**
  * @author taedium

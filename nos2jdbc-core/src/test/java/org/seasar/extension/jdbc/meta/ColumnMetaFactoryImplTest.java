@@ -15,16 +15,17 @@
  */
 package org.seasar.extension.jdbc.meta;
 
-import java.lang.reflect.Field;
-
-import javax.persistence.Column;
-
-import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Field;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.ColumnMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+
+import jakarta.persistence.Column;
 
 /**
  * @author higa

@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jta;
 
-import javax.transaction.NotSupportedException;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
 
 /**
  * {Transaction}を拡張したインタフェースです。

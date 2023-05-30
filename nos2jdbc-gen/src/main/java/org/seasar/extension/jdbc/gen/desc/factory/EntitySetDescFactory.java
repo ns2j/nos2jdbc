@@ -23,8 +23,6 @@ import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
 import org.seasar.extension.jdbc.gen.desc.EntitySetDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
@@ -33,6 +31,8 @@ import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.extension.jdbc.gen.meta.DbTableMetaReader;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.exception.IORuntimeException;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * {@link EntitySetDescFactory}の実装クラスです。

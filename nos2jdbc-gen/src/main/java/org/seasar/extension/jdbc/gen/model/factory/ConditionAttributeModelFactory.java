@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.gen.model.factory;
 
 import java.lang.reflect.Field;
 
-import javax.persistence.Column;
-
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.ConditionAttributeModel;
 import org.seasar.extension.jdbc.gen.util.AnnotationUtil;
@@ -27,6 +25,8 @@ import org.seasar.extension.jdbc.where.condition.NotNullableStringCondition;
 import org.seasar.extension.jdbc.where.condition.NullableCondition;
 import org.seasar.extension.jdbc.where.condition.NullableStringCondition;
 import org.seasar.framework.util.ClassUtil;
+
+import jakarta.persistence.Column;
 
 /**
  * {@link ConditionAttributeModelFactory}の実装クラスです。

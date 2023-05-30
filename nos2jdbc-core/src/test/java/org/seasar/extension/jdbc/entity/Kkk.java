@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jdbc.entity;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 /**
  * @author taedium

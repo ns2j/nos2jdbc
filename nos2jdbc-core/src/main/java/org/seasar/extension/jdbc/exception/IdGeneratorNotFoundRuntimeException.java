@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import javax.persistence.GeneratedValue;
-
 import org.seasar.framework.exception.SRuntimeException;
+
+import jakarta.persistence.GeneratedValue;
 
 /**
  * {@link GeneratedValue#generator()}で指定されたIDジェネレータが見つからなかった場合の例外です。

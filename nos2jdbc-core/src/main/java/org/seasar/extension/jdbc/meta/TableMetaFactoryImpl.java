@@ -15,8 +15,6 @@
  */
 package org.seasar.extension.jdbc.meta;
 
-import javax.persistence.Table;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.TableMeta;
 import org.seasar.extension.jdbc.TableMetaFactory;
@@ -24,6 +22,8 @@ import org.seasar.extension.jdbc.TableMetaFactory;
 //iimport org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.Table;
 
 /**
  * {@link TableMetaFactory}の実装クラスです。
@@ -35,6 +35,7 @@ public class TableMetaFactoryImpl implements TableMetaFactory {
 
     private PersistenceConvention persistenceConvention;
 
+    @Override
     public TableMeta createTableMeta(Class<?> entityClass, EntityMeta entityMeta) {
         TableMeta tableMeta = new TableMeta();
         String defaultName = persistenceConvention

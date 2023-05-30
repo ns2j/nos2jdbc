@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.gen.command;
 
 import java.io.File;
 
-import javax.transaction.UserTransaction;
-
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.gen.data.Dumper;
 import org.seasar.extension.jdbc.gen.desc.DatabaseDesc;
@@ -31,7 +29,6 @@ import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProviderImpl;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
-import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTree;
 import org.seasar.extension.jdbc.gen.version.DdlVersionDirectoryTreeImpl;
 import org.seasar.extension.jdbc.gen.version.ManagedFile;
@@ -40,6 +37,7 @@ import org.seasar.extension.jta.UserTransactionImpl;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 
+import jakarta.transaction.UserTransaction;
 import nos2jdbc.TransactionManagerRegistry;
 
 /**

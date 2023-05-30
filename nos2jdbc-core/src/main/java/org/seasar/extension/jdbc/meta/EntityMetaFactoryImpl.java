@@ -19,9 +19,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JoinColumnMeta;
@@ -51,6 +48,8 @@ import org.seasar.framework.util.DisposableUtil;
 import org.seasar.framework.util.ModifierUtil;
 import org.seasar.framework.util.StringUtil;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import nos2jdbc.annotation.NoFk;
 
 /**

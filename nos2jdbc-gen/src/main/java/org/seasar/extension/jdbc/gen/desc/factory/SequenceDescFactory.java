@@ -17,11 +17,6 @@ package org.seasar.extension.jdbc.gen.desc.factory;
 
 import java.lang.reflect.Field;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
@@ -32,6 +27,11 @@ import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
 import org.seasar.extension.jdbc.gen.util.AnnotationUtil;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
 
 /**
  * {@link SequenceDescFactory}の実装クラスです。

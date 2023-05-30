@@ -15,20 +15,18 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-import nos2jdbc.ManagerSetter;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ResultSetHandler;
 import org.seasar.extension.jdbc.SqlLog;
@@ -44,7 +42,6 @@ import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.extension.jta.TransactionManagerImpl;
 import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.extension.sql.cache.NodeCache;
-import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.exception.SQLRuntimeException;
 import org.seasar.framework.mock.sql.MockColumnMetaData;
@@ -54,7 +51,10 @@ import org.seasar.framework.mock.sql.MockResultSetMetaData;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.CollectionsUtil;
 
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import nos2jdbc.ManagerSetter;
 
 /**
  * @author higa
@@ -453,6 +453,7 @@ class SqlFileSelectImplTest {
                 Aaa.class, PATH, dto) {
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {
@@ -510,6 +511,7 @@ class SqlFileSelectImplTest {
                 Aaa.class, PATH, dto) {
 
             
+            @Override
             protected Object processResultSet(final JdbcContext jdbcContext,
                     final ResultSetHandler handler) {
                 try {

@@ -15,8 +15,8 @@
  */
 package org.seasar.extension.jdbc.gen.desc;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * エンティティの属性記述です。

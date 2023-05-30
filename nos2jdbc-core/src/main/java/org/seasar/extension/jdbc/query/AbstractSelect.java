@@ -19,9 +19,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.JdbcContext;
@@ -34,6 +31,9 @@ import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.ResultSetUtil;
 import org.seasar.framework.util.StatementUtil;
+
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TemporalType;
 
 /**
  * 検索の抽象クラスです。
@@ -109,36 +109,42 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
 
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S maxRows(int maxRows) {
         this.maxRows = maxRows;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S fetchSize(int fetchSize) {
         this.fetchSize = fetchSize;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S limit(int limit) {
         this.limit = limit;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S offset(int offset) {
         this.offset = offset;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S disallowNoResult() {
         this.disallowNoResult = true;
         return (S) this;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S lob() {
         resultLob = true;
@@ -168,6 +174,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         return sql;
     }
 
+    @Override
     public List<T> getResultList() {
     	shouldSetInverseField = true;
         prepare("getResultList");
@@ -179,6 +186,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         }
     }
 //i
+    @Override
     public List<T> getResultListWithoutInverseField() {
     	shouldSetInverseField = false;
         prepare("getResultListWithoutIverseField");
@@ -190,6 +198,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         }
     }
 
+    @Override
     public T getSingleResult() throws SNonUniqueResultException {
     	shouldSetInverseField = true;
         prepare("getSingleResult");
@@ -201,6 +210,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         }
     }
 //i
+    @Override
     public T getSingleResultWithoutInverseField() throws SNonUniqueResultException {
     	shouldSetInverseField = false;
         prepare("getSingleResultWithoutInverseField");
@@ -212,6 +222,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         }
     }
 
+    @Override
     public <RESULT> RESULT iterate(IterationCallback<T, RESULT> callback) {
     	shouldSetInverseField = true;
         prepare("iterate");
@@ -223,6 +234,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         }
     }
 //i
+    @Override
     public <RESULT> RESULT iterateWithoutInverseField(IterationCallback<T, RESULT> callback) {
     	shouldSetInverseField = false;
         prepare("iterateWithoutInverseField");
@@ -333,6 +345,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         return jdbcContext.usingPreparedStatement(executedSql,
                 new StatementHandler<Object, PreparedStatement>() {
 
+                    @Override
                     public Object handle(final PreparedStatement ps) {
                         setupPreparedStatement(ps);
                         return handler.handle(ps);
@@ -355,6 +368,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         return jdbcContext.usingCursorPreparedStatement(executedSql,
                 new StatementHandler<Object, PreparedStatement>() {
 
+                    @Override
                     public Object handle(final PreparedStatement ps) {
                         setupPreparedStatement(ps);
                         return handler.handle(ps);
@@ -425,6 +439,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
                 return processPreparedStatement(jdbcContext,
                         new StatementHandler<Object, PreparedStatement>() {
 
+                            @Override
                             public Object handle(final PreparedStatement ps) {
                                 final ResultSet rs = PreparedStatementUtil
                                         .executeQuery(ps);
@@ -435,6 +450,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
                 return processCursorPreparedStatement(jdbcContext,
                         new StatementHandler<Object, PreparedStatement>() {
 
+                            @Override
                             public Object handle(final PreparedStatement ps) {
                                 final ResultSet rs = PreparedStatementUtil
                                         .executeQuery(ps);
@@ -446,6 +462,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
                 return processPreparedStatement(jdbcContext,
                         new StatementHandler<Object, PreparedStatement>() {
 
+                            @Override
                             public Object handle(final PreparedStatement ps) {
                                 final ResultSet rs = PreparedStatementUtil
                                         .executeQuery(ps);
@@ -462,6 +479,7 @@ public abstract class AbstractSelect<T, S extends Select<T, S>> extends
         return processPreparedStatement(jdbcContext,
                 new StatementHandler<Object, PreparedStatement>() {
 
+                    @Override
                     public Object handle(final PreparedStatement ps) {
                         final ResultSet rs = PreparedStatementUtil
                                 .executeQuery(ps);

@@ -15,11 +15,11 @@
  */
 package org.seasar.extension.jdbc.gen.desc.factory;
 
-import javax.persistence.UniqueConstraint;
-
 import org.seasar.extension.jdbc.gen.desc.ColumnDesc;
 import org.seasar.extension.jdbc.gen.desc.UniqueKeyDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
+
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * {@link UniqueKeyDescFactory}の実装クラスです。

@@ -19,11 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
@@ -37,6 +32,11 @@ import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.extension.jdbc.name.PropertyName;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+
+import jakarta.annotation.Generated;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 /**
  * @author taedium

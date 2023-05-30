@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import javax.persistence.EntityExistsException;
-
 import org.seasar.framework.message.MessageFormatter;
+
+import jakarta.persistence.EntityExistsException;
 
 /**
  * 一意制約違反のためにエンティティを永続化できなかった場合の例外です。

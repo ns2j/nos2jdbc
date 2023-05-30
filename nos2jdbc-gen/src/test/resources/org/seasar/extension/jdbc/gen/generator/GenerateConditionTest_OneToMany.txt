@@ -1,6 +1,6 @@
 package hoge.condition;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 import org.seasar.extension.jdbc.where.ComplexWhere;
 import org.seasar.extension.jdbc.where.condition.AbstractEntityCondition;
 import org.seasar.extension.jdbc.where.condition.NotNullableCondition;

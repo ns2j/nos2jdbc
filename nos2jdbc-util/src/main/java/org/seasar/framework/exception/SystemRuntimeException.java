@@ -15,7 +15,7 @@
  */
 package org.seasar.framework.exception;
 
-import javax.transaction.SystemException;
+import jakarta.transaction.SystemException;
 
 /**
  * {@link SystemException}をラップする例外です。

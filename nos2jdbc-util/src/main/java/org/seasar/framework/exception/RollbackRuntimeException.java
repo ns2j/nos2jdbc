@@ -15,7 +15,7 @@
  */
 package org.seasar.framework.exception;
 
-import javax.transaction.RollbackException;
+import jakarta.transaction.RollbackException;
 
 /**
  * {@link RollbackException}をラップする例外です。

@@ -1,6 +1,6 @@
 package org.seasar.extension.jdbc.gen.generator;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 import org.seasar.extension.jdbc.JdbcManager;
 
 /**

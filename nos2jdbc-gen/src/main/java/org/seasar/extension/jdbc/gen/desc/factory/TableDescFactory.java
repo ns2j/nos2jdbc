@@ -22,9 +22,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.TableMeta;
@@ -38,6 +35,9 @@ import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.util.AnnotationUtil;
 import org.seasar.extension.jdbc.gen.util.EntityMetaUtil;
 import org.seasar.extension.jdbc.gen.util.TableUtil;
+
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 /**
  * {@link TableDescFactory}の実装クラスです。

@@ -20,8 +20,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.PropertyMeta;
@@ -30,6 +28,8 @@ import org.seasar.extension.jdbc.exception.IdGenerationFailedRuntimeException;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * {@link GenerationType#IDENTITY}方式で識別子の値を自動生成するIDジェネレータです。
@@ -51,23 +51,28 @@ public class IdentityIdGenerator extends AbstractIdGenerator {
         super(entityMeta, propertyMeta);
     }
 
+    @Override
     public boolean supportBatch(final JdbcManagerImplementor jdbcManager) {
         return false;
     }
 
+    @Override
     public boolean useGetGeneratedKeys(final JdbcManagerImplementor jdbcManager) {
         return jdbcManager.getDialect().supportsGetGeneratedKeys();
     }
 
+    @Override
     public boolean isInsertInto(final JdbcManagerImplementor jdbcManager) {
         return jdbcManager.getDialect().isInsertIdentityColumn();
     }
 
+    @Override
     public Object preInsert(final JdbcManagerImplementor jdbcManager,
             final Object entity, final SqlLogger sqlLogger) {
         return null;
     }
 
+    @Override
     public void postInsert(final JdbcManagerImplementor jdbcManager,
             final Object entity, final Statement statement,
             final SqlLogger sqlLogger) {

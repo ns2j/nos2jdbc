@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import javax.persistence.NonUniqueResultException;
-
 import org.seasar.framework.message.MessageFormatter;
+
+import jakarta.persistence.NonUniqueResultException;
 
 /**
  * <p>

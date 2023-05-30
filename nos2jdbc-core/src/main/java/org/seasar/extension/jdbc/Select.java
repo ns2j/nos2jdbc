@@ -20,11 +20,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.exception.OrderByNotFoundRuntimeException;
 import org.seasar.extension.jdbc.exception.SNonUniqueResultException;
+
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TemporalType;
 
 /**
  * 検索のベースとなるインターフェースです。

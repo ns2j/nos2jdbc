@@ -16,11 +16,12 @@
 package org.seasar.extension.jdbc.gen.sql;
 
 import javax.sql.DataSource;
-import javax.transaction.Status;
-import javax.transaction.UserTransaction;
 
 import org.seasar.extension.jdbc.gen.exception.TransactionRuntimeException;
 import org.seasar.framework.log.Logger;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.UserTransaction;
 
 /**
  * {@link SqlUnitExecutor}の実装クラスです。

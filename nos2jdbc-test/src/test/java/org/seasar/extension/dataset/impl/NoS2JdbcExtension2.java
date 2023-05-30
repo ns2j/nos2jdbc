@@ -1,7 +1,6 @@
 package org.seasar.extension.dataset.impl;
 
 import java.lang.reflect.Field;
-import javax.transaction.UserTransaction;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -11,6 +10,8 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jta.UserTransactionImpl;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.transaction.UserTransaction;
 import nos2jdbc.TransactionManagerRegistry;
 import nos2jdbc.standalone.NoS2JdbcManager;
 

@@ -17,11 +17,6 @@ package org.seasar.extension.jdbc.gen.model.factory;
 
 import java.util.List;
 
-import javax.annotation.Generated;
-import javax.annotation.Resource;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
@@ -29,6 +24,11 @@ import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.extension.jdbc.gen.model.ServiceModel;
 import org.seasar.extension.jdbc.operation.Operations;
 import org.seasar.framework.util.ClassUtil;
+
+import jakarta.annotation.Generated;
+import jakarta.annotation.Resource;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 
 /**
  * {@link ServiceModelFactory}の実装クラスです。

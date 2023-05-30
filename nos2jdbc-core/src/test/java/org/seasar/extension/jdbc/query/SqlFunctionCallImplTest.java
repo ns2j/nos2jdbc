@@ -15,19 +15,18 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
 import org.seasar.extension.jdbc.SqlLog;
@@ -46,7 +45,9 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.mock.sql.MockCallableStatement;
 import org.seasar.framework.mock.sql.MockDataSource;
 
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author koichik
@@ -300,11 +301,13 @@ class SqlFunctionCallImplTest {
                 manager, String.class, "{? = call hoge(?, ?, ?)}", dto) {
 
             
+            @Override
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
                     
+                    @Override
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

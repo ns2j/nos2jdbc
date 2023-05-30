@@ -19,13 +19,13 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Set;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.util.CollectionsUtil;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * MySQL用の方言をあつかうクラスです。

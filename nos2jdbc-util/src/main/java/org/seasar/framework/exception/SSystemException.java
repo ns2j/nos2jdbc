@@ -15,9 +15,9 @@
  */
 package org.seasar.framework.exception;
 
-import javax.transaction.SystemException;
-
 import org.seasar.framework.message.MessageFormatter;
+
+import jakarta.transaction.SystemException;
 
 /**
  * Seasar2用の{@link SystemException}です。

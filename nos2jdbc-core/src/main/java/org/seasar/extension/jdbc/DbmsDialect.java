@@ -18,11 +18,11 @@ package org.seasar.extension.jdbc;
 import java.sql.Statement;
 import java.util.List;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.seasar.framework.util.Pair;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * データベースごとの方言をあつかうインターフェースです。

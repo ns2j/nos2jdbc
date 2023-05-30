@@ -15,18 +15,13 @@
  */
 package org.seasar.extension.jdbc.handler;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.PropertyType;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
@@ -42,6 +37,11 @@ import org.seasar.framework.mock.sql.MockResultSet;
 import org.seasar.framework.mock.sql.MockResultSetMetaData;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.CaseInsensitiveMap;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author higa
@@ -254,6 +254,7 @@ class AbstBeanResultSetHandlerTest {
                     "select * from aaa");
         }
 
+        @Override
         public Object handle(ResultSet resultSet) throws SQLException {
             return null;
         }

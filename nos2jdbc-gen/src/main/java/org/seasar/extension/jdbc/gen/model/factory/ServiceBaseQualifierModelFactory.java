@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.gen.model.ServiceBaseQualifierModel;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link ServiceBaseQualifierModelFactory}の実装クラスです。

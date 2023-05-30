@@ -17,10 +17,6 @@ package org.seasar.extension.jdbc.gen.command;
 
 import java.io.File;
 
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.TemporalType;
-
 import org.seasar.extension.jdbc.gen.desc.EntityDesc;
 import org.seasar.extension.jdbc.gen.desc.EntitySetDesc;
 import org.seasar.extension.jdbc.gen.desc.factory.EntitySetDescFactory;
@@ -37,6 +33,10 @@ import org.seasar.extension.jdbc.gen.model.factory.EntityModelFactory;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileUtil;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.TemporalType;
 
 /**
  * エンティティクラスのJavaファイルを生成する{@link Command}の実装クラスです。

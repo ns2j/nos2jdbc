@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.meta;
 
 import java.lang.reflect.Field;
 
-import javax.persistence.Column;
-
 import org.seasar.extension.jdbc.ColumnMeta;
 import org.seasar.extension.jdbc.ColumnMetaFactory;
 import org.seasar.extension.jdbc.EntityMeta;
@@ -27,6 +25,8 @@ import org.seasar.extension.jdbc.PropertyMeta;
 //i import org.seasar.framework.container.annotation.tiger.BindingType;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.StringUtil;
+
+import jakarta.persistence.Column;
 
 /**
  * {@link ColumnMetaFactory}の実装クラスです。
@@ -38,6 +38,7 @@ public class ColumnMetaFactoryImpl implements ColumnMetaFactory {
 
     private PersistenceConvention persistenceConvention;
 
+    @Override
     public ColumnMeta createColumnMeta(Field field, EntityMeta entityMeta,
             PropertyMeta propertyMeta) {
         ColumnMeta columnMeta = new ColumnMeta();

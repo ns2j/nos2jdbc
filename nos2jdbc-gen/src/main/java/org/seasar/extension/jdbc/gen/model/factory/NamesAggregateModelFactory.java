@@ -17,11 +17,11 @@ package org.seasar.extension.jdbc.gen.model.factory;
 
 import java.util.List;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.gen.model.NamesAggregateModel;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.framework.util.ClassUtil;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link NamesAggregateModelFactory}の実装クラスです。

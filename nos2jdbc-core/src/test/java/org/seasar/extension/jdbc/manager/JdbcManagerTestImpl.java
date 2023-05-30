@@ -1,7 +1,5 @@
 package org.seasar.extension.jdbc.manager;
 
-import javax.transaction.TransactionManager;
-
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.meta.ColumnMetaFactoryImpl;
 import org.seasar.extension.jdbc.meta.EntityMetaFactoryImpl;
@@ -11,6 +9,8 @@ import org.seasar.extension.jta.TransactionManagerImpl;
 import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.mock.sql.MockDataSource;
+
+import jakarta.transaction.TransactionManager;
 
 public class JdbcManagerTestImpl extends JdbcManagerImpl {
     private TransactionManager transactionManager;

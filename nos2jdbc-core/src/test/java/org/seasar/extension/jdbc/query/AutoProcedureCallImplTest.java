@@ -15,18 +15,16 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.JdbcContext;
 import org.seasar.extension.jdbc.ParamType;
 import org.seasar.extension.jdbc.SqlLog;
@@ -44,6 +42,10 @@ import org.seasar.extension.jta.TransactionManagerImpl;
 import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.mock.sql.MockCallableStatement;
 import org.seasar.framework.mock.sql.MockDataSource;
+
+import jakarta.persistence.Lob;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author koichik
@@ -209,11 +211,13 @@ class AutoProcedureCallImplTest {
                 "hoge", dto) {
 
             
+            @Override
             protected CallableStatement getCallableStatement(
                     JdbcContext jdbcContext) {
                 MockCallableStatement cs = new MockCallableStatement(null, null) {
 
                     
+                    @Override
                     public String getString(int parameterIndex)
                             throws SQLException {
                         return "aaa" + parameterIndex;

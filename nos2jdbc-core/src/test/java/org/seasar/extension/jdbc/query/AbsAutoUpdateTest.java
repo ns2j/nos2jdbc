@@ -15,13 +15,13 @@
  */
 package org.seasar.extension.jdbc.query;
 
-import java.sql.SQLException;
-
-import javax.persistence.EntityExistsException;
-
-import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
@@ -37,6 +37,8 @@ import org.seasar.extension.jta.TransactionSynchronizationRegistryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.exception.SQLRuntimeException;
 import org.seasar.framework.mock.sql.MockDataSource;
+
+import jakarta.persistence.EntityExistsException;
 
 /**
  * @author higa
@@ -107,25 +109,30 @@ class AbsAutoUpdateTest {
         }
 
         
+        @Override
         protected int executeInternal() {
             throw new SQLRuntimeException(new SQLException("hoge", "23"));
         }
 
         
+        @Override
         protected boolean isOptimisticLock() {
             return false;
         }
 
         
+        @Override
         protected String toSql() {
             return null;
         }
 
         
+        @Override
         protected void prepare(String methodName) {
         }
 
         
+        @Override
         protected void logSql() {
         }
 

@@ -15,17 +15,16 @@
  */
 package org.seasar.extension.jdbc.query;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.OptimisticLockException;
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
@@ -43,6 +42,9 @@ import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.exception.SQLRuntimeException;
 import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.mock.sql.MockPreparedStatement;
+
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * @author koichik
@@ -117,11 +119,13 @@ class AbsAutoBatchUpdateTest {
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
             
+            @Override
             public void addBatch() throws SQLException {
                 ++added;
             }
 
             
+            @Override
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return executed == 1 ? new int[] { 1, 2 } : new int[] { 3 };
@@ -150,11 +154,13 @@ class AbsAutoBatchUpdateTest {
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
             
+            @Override
             public void addBatch() throws SQLException {
                 ++added;
             }
 
             
+            @Override
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return executed == 1 ? new int[] { 1, 2 } : new int[] { 3, 4 };
@@ -182,11 +188,13 @@ class AbsAutoBatchUpdateTest {
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
             
+            @Override
             public void addBatch() throws SQLException {
                 ++added;
             }
 
             
+            @Override
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return new int[] { 1, 2, 3 };
@@ -216,11 +224,13 @@ class AbsAutoBatchUpdateTest {
             query.executeBatch(new MockPreparedStatement(null, null) {
 
                 
+                @Override
                 public void addBatch() throws SQLException {
                     ++added;
                 }
 
                 
+                @Override
                 public int[] executeBatch() throws SQLException {
                     ++executed;
                     return executed == 1 ? new int[] { 1, 0 } : new int[] { 1 };
@@ -247,11 +257,13 @@ class AbsAutoBatchUpdateTest {
         int[] rows = query.executeBatch(new MockPreparedStatement(null, null) {
 
             
+            @Override
             public void addBatch() throws SQLException {
                 ++added;
             }
 
             
+            @Override
             public int[] executeBatch() throws SQLException {
                 ++executed;
                 return executed == 1 ? new int[] { Statement.SUCCESS_NO_INFO,
@@ -260,6 +272,7 @@ class AbsAutoBatchUpdateTest {
             }
 
             
+            @Override
             public int getUpdateCount() throws SQLException {
                 return executed == 1 ? 2 : 1;
             }
@@ -289,11 +302,13 @@ class AbsAutoBatchUpdateTest {
             query.executeBatch(new MockPreparedStatement(null, null) {
 
                 
+                @Override
                 public void addBatch() throws SQLException {
                     ++added;
                 }
 
                 
+                @Override
                 public int[] executeBatch() throws SQLException {
                     ++executed;
                     return executed == 1 ? new int[] {
@@ -303,6 +318,7 @@ class AbsAutoBatchUpdateTest {
                 }
 
                 
+                @Override
                 public int getUpdateCount() throws SQLException {
                     return executed == 1 ? 1 : 1;
                 }
@@ -328,29 +344,35 @@ class AbsAutoBatchUpdateTest {
         }
 
         
+        @Override
         protected int[] executeInternal() {
             throw new SQLRuntimeException(new SQLException("hoge", "23"));
         }
 
         
+        @Override
         protected boolean isOptimisticLock() {
             return optimisticLock;
         }
 
         
+        @Override
         protected void prepareParams(T entity) {
         }
 
         
+        @Override
         protected String toSql() {
             return null;
         }
 
         
+        @Override
         protected void prepare(String methodName) {
         }
 
         
+        @Override
         protected void logSql() {
         }
 

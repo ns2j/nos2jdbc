@@ -18,8 +18,6 @@ package org.seasar.extension.jdbc.query;
 import java.sql.PreparedStatement;
 import java.util.List;
 
-import javax.persistence.OptimisticLockException;
-
 import org.seasar.extension.jdbc.BatchUpdate;
 import org.seasar.extension.jdbc.DbmsDialect;
 import org.seasar.extension.jdbc.EntityMeta;
@@ -30,6 +28,8 @@ import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.framework.exception.EmptyRuntimeException;
 import org.seasar.framework.util.PreparedStatementUtil;
 import org.seasar.framework.util.StatementUtil;
+
+import jakarta.persistence.OptimisticLockException;
 
 /**
  * バッチ更新の抽象クラスです。
@@ -80,12 +80,14 @@ public abstract class AbstractAutoBatchUpdate<T, S extends BatchUpdate<S>>
                 entities.get(0).getClass());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public S batchSize(final int batchSize) {
         this.batchSize = batchSize;
         return (S) this;
     }
 
+    @Override
     public int[] execute() {
         prepare("executeBatch");
         try {

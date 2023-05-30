@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jdbc.dto;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 
 /**

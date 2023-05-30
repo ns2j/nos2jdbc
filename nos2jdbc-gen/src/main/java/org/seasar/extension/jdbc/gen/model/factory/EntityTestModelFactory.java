@@ -22,14 +22,14 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.EntityTestModel;
 import org.seasar.extension.jdbc.gen.model.NamesModel;
 import org.seasar.framework.util.ClassUtil;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link EntityTestModelFactory}の実装クラスです。

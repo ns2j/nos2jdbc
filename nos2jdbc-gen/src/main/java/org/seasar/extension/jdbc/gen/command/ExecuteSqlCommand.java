@@ -19,19 +19,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.UserTransaction;
-
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.exception.RequiredPropertyEmptyRuntimeException;
 import org.seasar.extension.jdbc.gen.sql.SqlExecutionContext;
 import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
-import org.seasar.extension.jdbc.gen.sql.SqlFileExecutor;
-import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jdbc.gen.sql.SqlUnitExecutor;
 import org.seasar.extension.jta.UserTransactionImpl;
 //i import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.log.Logger;
 
+import jakarta.transaction.UserTransaction;
 import nos2jdbc.TransactionManagerRegistry;
 
 /**

@@ -15,8 +15,8 @@
  */
 package org.seasar.extension.jdbc.gen.meta;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 /**
  * @author taedium

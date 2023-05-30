@@ -15,8 +15,6 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.ConditionAssociationModel;
@@ -24,6 +22,8 @@ import org.seasar.extension.jdbc.gen.model.ConditionAttributeModel;
 import org.seasar.extension.jdbc.gen.model.ConditionModel;
 import org.seasar.extension.jdbc.where.ComplexWhere;
 import org.seasar.extension.jdbc.where.condition.AbstractEntityCondition;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link ConditionModelFactory}の実装クラスです。

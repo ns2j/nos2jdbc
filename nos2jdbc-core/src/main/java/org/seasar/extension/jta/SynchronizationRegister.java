@@ -15,7 +15,7 @@
  */
 package org.seasar.extension.jta;
 
-import javax.transaction.Synchronization;
+import jakarta.transaction.Synchronization;
 
 /**
  * 

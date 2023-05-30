@@ -15,15 +15,16 @@
  */
 package org.seasar.extension.jdbc.gen.dialect;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.sql.Types;
-import javax.persistence.TemporalType;
+
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
-import org.seasar.extension.jdbc.gen.dialect.OracleGenDialect;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect.ColumnType;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect.SqlBlockContext;
 import org.seasar.extension.jdbc.gen.provider.ValueTypeProvider;
@@ -32,7 +33,7 @@ import org.seasar.extension.jdbc.gen.sqltype.SqlType;
 import org.seasar.extension.jdbc.types.ValueTypes;
 import org.seasar.framework.util.ReflectionUtil;
 
-import static org.junit.jupiter.api.Assertions.*;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author taedium

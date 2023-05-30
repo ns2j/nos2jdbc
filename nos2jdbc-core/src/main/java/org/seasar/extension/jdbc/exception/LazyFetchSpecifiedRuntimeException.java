@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.exception;
 
-import javax.persistence.FetchType;
-
 import org.seasar.framework.exception.SRuntimeException;
+
+import jakarta.persistence.FetchType;
 
 /**
  * フェッチタイプに{@link FetchType#LAZY}が指定された場合の例外です。

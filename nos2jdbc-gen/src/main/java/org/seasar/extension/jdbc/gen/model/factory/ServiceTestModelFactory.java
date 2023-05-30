@@ -15,10 +15,10 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.gen.model.ServiceTestModel;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link ServiceTestModelFactory}の実装クラスです。

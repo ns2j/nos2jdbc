@@ -20,11 +20,6 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.regex.Pattern;
 
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
-
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
 import org.seasar.extension.jdbc.gen.dialect.GenDialect;
 import org.seasar.extension.jdbc.gen.exception.IdentityNotSupportedRuntimeException;
@@ -34,6 +29,11 @@ import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.extension.jdbc.gen.util.AnnotationUtil;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.util.ClassUtil;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Version;
 
 /**
  * {@link AttributeDescFactory}の実装クラスです。

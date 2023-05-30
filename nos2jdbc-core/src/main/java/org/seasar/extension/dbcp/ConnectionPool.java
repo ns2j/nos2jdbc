@@ -17,7 +17,7 @@ package org.seasar.extension.dbcp;
 
 import java.sql.SQLException;
 
-import javax.transaction.Transaction;
+import jakarta.transaction.Transaction;
 
 /**
  * コネクションプーリングのためのインターフェースです。

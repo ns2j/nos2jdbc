@@ -18,11 +18,11 @@ package org.seasar.extension.jdbc.gen.dialect;
 import java.math.BigDecimal;
 import java.sql.Types;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.gen.sqltype.BinaryType;
 import org.seasar.extension.jdbc.gen.sqltype.DecimalType;
 import org.seasar.extension.jdbc.gen.sqltype.Jdbc42TimestampWithTimezoneType;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * H2の方言を扱うクラスです。

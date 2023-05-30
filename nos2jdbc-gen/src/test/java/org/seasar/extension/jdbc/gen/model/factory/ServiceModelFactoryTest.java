@@ -21,16 +21,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Generated;
-import javax.annotation.Resource;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
@@ -43,6 +33,16 @@ import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.extension.jdbc.operation.Operations;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+
+import jakarta.annotation.Generated;
+import jakarta.annotation.Resource;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author taedium
@@ -93,8 +93,8 @@ class ServiceModelFactoryTest {
         assertFalse(serviceModel.isJdbcManagerSetterNecessary());
         assertEquals(3, serviceModel.getImportNameSet().size());
         Iterator<String> iterator = serviceModel.getImportNameSet().iterator();
-        assertEquals(List.class.getCanonicalName(), iterator.next());
         assertEquals(Generated.class.getCanonicalName(), iterator.next());
+        assertEquals(List.class.getCanonicalName(), iterator.next());
         assertEquals(Aaa.class.getCanonicalName(), iterator.next());
         assertEquals(2, serviceModel.getStaticImportNameSet().size());
         iterator = serviceModel.getStaticImportNameSet().iterator();
@@ -119,9 +119,9 @@ class ServiceModelFactoryTest {
         assertFalse(serviceModel.isJdbcManagerSetterNecessary());
         assertEquals(4, serviceModel.getImportNameSet().size());
         Iterator<String> iterator = serviceModel.getImportNameSet().iterator();
+        assertEquals(Generated.class.getCanonicalName(), iterator.next());
         assertEquals(Date.class.getCanonicalName(), iterator.next());
         assertEquals(List.class.getCanonicalName(), iterator.next());
-        assertEquals(Generated.class.getCanonicalName(), iterator.next());
         assertEquals(Bbb.class.getCanonicalName(), iterator.next());
         assertEquals(2, serviceModel.getStaticImportNameSet().size());
         iterator = serviceModel.getStaticImportNameSet().iterator();
@@ -146,12 +146,12 @@ class ServiceModelFactoryTest {
         assertTrue(serviceModel.isJdbcManagerSetterNecessary());
         assertEquals(8, serviceModel.getImportNameSet().size());
         Iterator<String> iterator = serviceModel.getImportNameSet().iterator();
-        assertEquals(Date.class.getCanonicalName(), iterator.next());
-        assertEquals(List.class.getCanonicalName(), iterator.next());
         assertEquals(Generated.class.getCanonicalName(), iterator.next());
         assertEquals(Resource.class.getCanonicalName(), iterator.next());
         assertEquals(TransactionAttribute.class.getCanonicalName(), iterator.next());
         assertEquals(TransactionAttributeType.class.getCanonicalName(), iterator.next());
+        assertEquals(Date.class.getCanonicalName(), iterator.next());
+        assertEquals(List.class.getCanonicalName(), iterator.next());
         assertEquals(JdbcManager.class.getCanonicalName(), iterator.next());
         assertEquals(Bbb.class.getCanonicalName(), iterator.next());
         assertEquals(2, serviceModel.getStaticImportNameSet().size());

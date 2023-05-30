@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.dialect;
 
-import javax.persistence.GenerationType;
-
 import org.seasar.extension.jdbc.SelectForUpdateType;
+
+import jakarta.persistence.GenerationType;
 
 /**
  * HSQLDB用の方言をあつかうクラスです。

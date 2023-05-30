@@ -15,13 +15,13 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
-import javax.persistence.JoinColumn;
-
 import org.seasar.extension.jdbc.gen.desc.AssociationDesc;
 import org.seasar.extension.jdbc.gen.desc.AssociationType;
 import org.seasar.extension.jdbc.gen.model.AssociationModel;
 import org.seasar.extension.jdbc.gen.model.JoinColumnModel;
 import org.seasar.extension.jdbc.gen.model.JoinColumnsModel;
+
+import jakarta.persistence.JoinColumn;
 
 /**
  * {@link AssociationModelFactory}の実装クラスです。

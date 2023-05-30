@@ -17,9 +17,6 @@ package org.seasar.extension.jdbc.gen.desc.factory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import javax.persistence.GenerationType;
-import javax.persistence.TemporalType;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.gen.desc.AttributeDesc;
@@ -29,6 +26,9 @@ import org.seasar.extension.jdbc.gen.meta.DbColumnMeta;
 import org.seasar.extension.jdbc.gen.meta.DbTableMeta;
 import org.seasar.framework.convention.PersistenceConvention;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.TemporalType;
 
 /**
  * @author taedium

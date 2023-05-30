@@ -15,15 +15,15 @@
  */
 package org.seasar.extension.jdbc.meta;
 
-import javax.persistence.Table;
-
-import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.TableMeta;
-import org.seasar.extension.jdbc.meta.TableMetaFactoryImpl;
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
+
+import jakarta.persistence.Table;
 
 /**
  * @author higa

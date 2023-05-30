@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
-import javax.annotation.Generated;
-
 import org.seasar.extension.jdbc.gen.model.NoS2AbstServiceModel;
+
+import jakarta.annotation.Generated;
 
 /**
  * {@link NoS2AbstServiceModelFactory}の実装クラスです。
