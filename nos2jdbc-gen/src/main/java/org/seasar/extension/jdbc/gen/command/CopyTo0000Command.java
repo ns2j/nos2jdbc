@@ -23,7 +23,7 @@ public class CopyTo0000Command extends AbstractCommand {
                 .toString(VersionUtil.getVersionNo(), "0000");
         logger.info("current version: " + versionName);
         Path destPath = Paths.get("db", "0000");
-        FileUtil.rmdir(destPath);
+        //FileUtil.rmdir(destPath);
         FileUtil.copyFolder(Paths.get("db", "migrate", versionName), destPath, StandardCopyOption.REPLACE_EXISTING);
     }
     
