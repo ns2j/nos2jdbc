@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2015 the Seasar Foundation and the Others.
+ * Copyright 20v04-2015 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,9 @@ package org.seasar.extension.jdbc.query;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.seasar.extension.jdbc.AutoBatchInsert;
@@ -212,6 +214,7 @@ public class AutoBatchInsertImpl<T> extends
 
     @Override
     protected void prepareParams(final T entity) {
+        Map<Class<?>, Object> timestampCache = new HashMap<>();
         for (final PropertyMeta propertyMeta : targetProperties) {
             Object value;
             if (propertyMeta.isId() && propertyMeta.hasIdGenerator()) {
@@ -230,9 +233,12 @@ public class AutoBatchInsertImpl<T> extends
                                         value));
                     }
                 }
-                if (propertyMeta.isCreateAt()) {
-                    logger.info("isCreateAt is true");
-                    value = TimestampUtil.getTimestamp(propertyMeta);
+                if (propertyMeta.isCreateAt() || propertyMeta.isUpdateAt()) {
+                    value = timestampCache.get(propertyMeta.getPropertyClass()); 
+                    if (value == null) {
+                        value = TimestampUtil.getTimestamp(propertyMeta);
+                        timestampCache.put(propertyMeta.getPropertyClass(), value);
+                    }
                     FieldUtil.set(propertyMeta.getField(), entity, value);
                 }
             }

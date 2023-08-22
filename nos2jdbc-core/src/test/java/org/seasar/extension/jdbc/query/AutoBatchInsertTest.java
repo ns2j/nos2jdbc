@@ -411,7 +411,7 @@ class AutoBatchInsertTest {
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (3, 'baz', null, null, 1, '" + DateTimeStr.REPLACE + "', null)",
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (3, 'baz', null, null, 1, '" + DateTimeStr.REPLACE + "', '" + DateTimeStr.REPLACE + "')",
                 actual);
 
         try {

@@ -19,7 +19,9 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.seasar.extension.jdbc.AutoInsert;
@@ -183,6 +185,7 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
      * バインド変数を準備します．
      */
     protected void prepareParams() {
+        Map<Class<?>, Object> timestampCache = new HashMap<>();
         for (final PropertyMeta propertyMeta : targetProperties) {
             Object value;
             if (propertyMeta.isId() && propertyMeta.hasIdGenerator()) {
@@ -200,8 +203,12 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
                                 NumberConversionUtil.convertNumber(fieldClass,
                                         value));
                     }
-                } else if (propertyMeta.isCreateAt()) {
-                    value = TimestampUtil.getTimestamp(propertyMeta);
+                } else if (propertyMeta.isCreateAt() || propertyMeta.isUpdateAt()) {
+                    value = timestampCache.get(propertyMeta.getPropertyClass()); 
+                    if (value == null) {
+                        value = TimestampUtil.getTimestamp(propertyMeta);
+                        timestampCache.put(propertyMeta.getPropertyClass(), value);
+                    }
                     FieldUtil.set(propertyMeta.getField(), entity, value);
                 }
             }

@@ -180,7 +180,7 @@ public class ColumnDescFactory {
         } else {
             definition = dataType;
         }
-        if (propertyMeta.isCreateAt())
+        if (propertyMeta.isCreateAt() || propertyMeta.isUpdateAt())
             definition = dataType + dialect.getDefaultTimestamp();
         columnDesc.setDefinition(definition);
     }
