@@ -189,8 +189,7 @@ public class StandardDialect implements DbmsDialect {
      *            クラス
      * @return 値タイプ
      */
-    protected ValueType getValueTypeInternal(@SuppressWarnings("unused")
-    Class<?> clazz) {
+    protected ValueType getValueTypeInternal(Class<?> clazz) {
         return null;
     }
 
