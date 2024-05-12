@@ -60,7 +60,7 @@ class DataTableResultSetHandlerTest {
         String sql = "select dept_no, d_name from dept3 where dept_no = ?";
         SelectHandler handler = new BasicSelectHandler(ds_, sql,
                 new DataTableResultSetHandler("dept3"));
-        DataTable ret = (DataTable) handler.execute(new Object[] { new Integer(
+        DataTable ret = (DataTable) handler.execute(new Object[] { Integer.valueOf(
                 20) });
         System.out.println(ret);
         assertNotNull(ret);
