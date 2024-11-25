@@ -24,6 +24,7 @@ import org.seasar.framework.util.GenericUtil;
  *            エンティティの型 
  */
 @Generated(value = {"NOS2JDBC-Gen test-0.0.1", "org.seasar.extension.jdbc.gen.model.factory.NoS2AbstServiceModelFactory"}, date = "2009/04/01 13:12:11")
+@Transactional
 public abstract class NoS2AbstractService<T> {
 
     /**

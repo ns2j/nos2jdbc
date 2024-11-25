@@ -26,9 +26,11 @@ import java.util.Map;
 
 <#if componentType == "cdi">
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 </#if>
 <#if componentType == "spring">
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 </#if>
 
 import org.seasar.extension.jdbc.AutoSelect;
@@ -50,6 +52,7 @@ import org.seasar.framework.util.GenericUtil;
  *            エンティティの型 
  */
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime?string["yyyy/MM/dd HH:mm:ss"]}")
+@Transactional
 public abstract class ${shortClassName}<T> {
 
     /**
