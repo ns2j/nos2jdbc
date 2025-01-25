@@ -203,7 +203,7 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
                                 NumberConversionUtil.convertNumber(fieldClass,
                                         value));
                     }
-                } else if (propertyMeta.isCreateAt() || propertyMeta.isUpdateAt()) {
+                } else if (propertyMeta.isCreatedAt() || propertyMeta.isUpdatedAt()) {
                     value = timestampCache.get(propertyMeta.getPropertyClass()); 
                     if (value == null) {
                         value = TimestampUtil.getTimestamp(propertyMeta);

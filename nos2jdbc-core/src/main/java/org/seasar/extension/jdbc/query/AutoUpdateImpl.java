@@ -188,7 +188,7 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
                     continue;
                 }
             }
-            if (propertyMeta.isCreateAt()) {
+            if (propertyMeta.isCreatedAt()) {
                 continue;
             }
             targetProperties.add(propertyMeta);
@@ -232,7 +232,7 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
      */
     protected void prepareParams() {
         for (final PropertyMeta propertyMeta : targetProperties) {
-            final Object value = propertyMeta.isUpdateAt() ?
+            final Object value = propertyMeta.isUpdatedAt() ?
                     TimestampUtil.getTimestamp(propertyMeta) :
                     FieldUtil.get(propertyMeta.getField(), entity);
             addParam(value, propertyMeta);

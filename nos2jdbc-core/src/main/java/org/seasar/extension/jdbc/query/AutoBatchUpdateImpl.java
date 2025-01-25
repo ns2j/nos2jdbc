@@ -132,7 +132,7 @@ public class AutoBatchUpdateImpl<T> extends
             if (excludesProperties.contains(propertyName)) {
                 continue;
             }
-            if (propertyMeta.isCreateAt()) {
+            if (propertyMeta.isCreatedAt()) {
                 continue;
             }
 //            if (propertyMeta.isUpdateAt()) {
@@ -181,7 +181,7 @@ public class AutoBatchUpdateImpl<T> extends
     @Override
     protected void prepareParams(final T entity) {
         for (final PropertyMeta propertyMeta : targetProperties) {
-            final Object value = propertyMeta.isUpdateAt() ?
+            final Object value = propertyMeta.isUpdatedAt() ?
                     TimestampUtil.getTimestamp(propertyMeta) :
                     FieldUtil.get(propertyMeta.getField(), entity);
             addParam(value, propertyMeta);

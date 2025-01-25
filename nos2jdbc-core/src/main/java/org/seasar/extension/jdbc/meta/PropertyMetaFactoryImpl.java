@@ -480,11 +480,11 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
 
     protected void doCreateAt(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setCreateAt(field.getAnnotation(CreatedAt.class) != null);
+        propertyMeta.setCreatedAt(field.getAnnotation(CreatedAt.class) != null);
     }
     protected void doUpdateAt(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setUpdateAt(field.getAnnotation(UpdatedAt.class) != null);
+        propertyMeta.setUpdatedAt(field.getAnnotation(UpdatedAt.class) != null);
     }
 
     /**

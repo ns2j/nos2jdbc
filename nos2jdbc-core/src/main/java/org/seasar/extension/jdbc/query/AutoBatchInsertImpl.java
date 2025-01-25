@@ -233,7 +233,7 @@ public class AutoBatchInsertImpl<T> extends
                                         value));
                     }
                 }
-                if (propertyMeta.isCreateAt() || propertyMeta.isUpdateAt()) {
+                if (propertyMeta.isCreatedAt() || propertyMeta.isUpdatedAt()) {
                     value = timestampCache.get(propertyMeta.getPropertyClass()); 
                     if (value == null) {
                         value = TimestampUtil.getTimestamp(propertyMeta);
