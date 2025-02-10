@@ -90,7 +90,7 @@ open class ${shortClassName} : ${shortSuperclassName}<${shortEntityClassName}>()
      *            バージョン番号
      * @return エンティティ
      */
-    fun findByIdVersion(<#list idPropertyMetaList as prop>${prop.propertyClass.simpleName} ${prop.name}, </#list>${versionPropertyMeta.propertyClass.simpleName} ${versionPropertyMeta.name}) : ${shortEntityClassName} {
+    fun findByIdVersion(<#list idPropertyMetaList as prop>${prop.name}: ${prop.propertyClass.simpleName}, </#list>${versionPropertyMeta.name}: ${versionPropertyMeta.propertyClass.simpleName}) : ${shortEntityClassName} {
         return select().id(<#list idPropertyMetaList as prop>${prop.name}<#if prop_has_next>, </#if></#list>).version(${versionPropertyMeta.name}).getSingleResult()
     }
 </#if>
