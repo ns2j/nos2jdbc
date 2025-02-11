@@ -33,8 +33,8 @@ import ${importName};
      * 
      * @return ${attr.name}のプロパティ名
      */
-    fun ${attr.name}() : PropertyName<${attr.attributeClass.simpleName}> {
-        return PropertyName<${attr.attributeClass.simpleName}>("${attr.name}")
+    fun ${attr.name}() : PropertyName<${getKotlinTypeName(attr.attributeClass.simpleName)}> {
+        return PropertyName<${getKotlinTypeName(attr.attributeClass.simpleName)}>("${attr.name}")
     }
 </#list>
 <#list namesAssociationModelList as asso>

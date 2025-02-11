@@ -205,4 +205,8 @@ public class ServiceModel extends ClassModel {
         this.versionPropertyMeta = versionPropertyMeta;
     }
 
+    public String getKotlinTypeName(String classSimpleName) {
+        return KotlinUtil.getTypeName(classSimpleName);
+    }
+
 }

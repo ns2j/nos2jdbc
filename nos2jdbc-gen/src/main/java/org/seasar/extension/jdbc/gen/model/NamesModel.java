@@ -136,4 +136,8 @@ public class NamesModel extends ClassModel {
             NamesAssociationModel namesAssociationModel) {
         namesAssociationModelList.add(namesAssociationModel);
     }
+    
+    public String getKotlinTypeName(String classSimpleName) {
+        return KotlinUtil.getTypeName(classSimpleName);
+    }
 }

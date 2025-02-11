@@ -90,8 +90,8 @@ open class ${shortClassName} : ${shortSuperclassName}<${shortEntityClassName}>()
      *            バージョン番号
      * @return エンティティ
      */
-    fun findByIdVersion(<#list idPropertyMetaList as prop>${prop.name}: ${prop.propertyClass.simpleName}, </#list>${versionPropertyMeta.name}: ${versionPropertyMeta.propertyClass.simpleName}) : ${shortEntityClassName} {
-        return select().id(<#list idPropertyMetaList as prop>${prop.name}<#if prop_has_next>, </#if></#list>).version(${versionPropertyMeta.name}).getSingleResult()
+    fun findByIdVersion(<#list idPropertyMetaList as prop>${prop.name}: ${getKotlinTypeName(prop.propertyClass.simpleName)}, </#list>${versionPropertyMeta.name}: ${getKotlinTypeName(versionPropertyMeta.propertyClass.simpleName)}) : ${shortEntityClassName} {
+        return select().id(<#list idPropertyMetaList as prop>${getKotlinTypeName(prop.name)}<#if prop_has_next>, </#if></#list>).version(${versionPropertyMeta.name}).getSingleResult()
     }
 </#if>
 <#if namesModel?? && idPropertyMetaList?size gt 0>
