@@ -14,4 +14,9 @@ Maven Central Repositoryにも登録しました。
 * エンティティに@NonAutoアノテーションを付けて下さい。
 * カラム名は重複しないようにして下さい。   
 * mappedByを指定していない側のリレーションは@NoFkアノテーションを付けて下さい。
-* rollupなど使いたかったので、idがnullの場合もエンティティのオブジェクトを作るようにしました。
+* rollupなど使いたかったので、idがnullの場合もエンティティのオブジェクトを作るようにしました。   
+### @Embeded @Embedable
+　JPAの@Embededと@Embedableをサポートしました。   
+* @Embededのテーブルに「@Embedableのクラス名」__「@Embedableのフィールド名」のカラムができます。
+### recordとBeanの生成・コピーユーティリティ
+　Beanからrecordを生成したり、recordをBeanにコピーしたりするユーティリティを追加しました。
