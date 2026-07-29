@@ -15,7 +15,6 @@
  */
 package org.seasar.extension.jdbc.query;
 
-import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Arrays;
@@ -36,7 +35,6 @@ import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.conversion.NumberConversionUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.CollectionsUtil;
-import org.seasar.framework.util.FieldUtil;
 
 /**
  * {@link AutoInsert}の実装クラスです。
@@ -80,9 +78,9 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
 
     /**
      * @param jdbcManager
-     *            内部的なJDBCマネージャ
+     *                    内部的なJDBCマネージャ
      * @param entity
-     *            エンティティ
+     *                    エンティティ
      */
     public AutoInsertImpl(final JdbcManagerImplementor jdbcManager,
             final T entity) {
@@ -124,8 +122,8 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
         for (final PropertyMeta propertyMeta : entityMeta
                 .getAllColumnPropertyMeta()) {
             final String propertyName = propertyMeta.getName();
-            final Field field = propertyMeta.getField();
-            final Object value = FieldUtil.get(field, entity);
+            final Object value = propertyMeta.getValue(entity);
+
             if (!propertyMeta.getColumnMeta().isInsertable()) {
                 continue;
             }
@@ -191,7 +189,7 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
             if (propertyMeta.isId() && propertyMeta.hasIdGenerator()) {
                 value = getIdValue(propertyMeta);
             } else {
-                value = FieldUtil.get(propertyMeta.getField(), entity);
+                value = propertyMeta.getValue(entity);
                 if (propertyMeta.isVersion()) {
                     if (value == null
                             || Number.class.cast(value).longValue() <= 0L) {
@@ -199,17 +197,17 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
                         final Class<?> fieldClass = ClassUtil
                                 .getWrapperClassIfPrimitive(propertyMeta
                                         .getPropertyClass());
-                        FieldUtil.set(propertyMeta.getField(), entity,
+                        propertyMeta.setValue(entity,
                                 NumberConversionUtil.convertNumber(fieldClass,
                                         value));
                     }
                 } else if (propertyMeta.isCreatedAt() || propertyMeta.isUpdatedAt()) {
-                    value = timestampCache.get(propertyMeta.getPropertyClass()); 
+                    value = timestampCache.get(propertyMeta.getPropertyClass());
                     if (value == null) {
                         value = TimestampUtil.getTimestamp(propertyMeta);
                         timestampCache.put(propertyMeta.getPropertyClass(), value);
                     }
-                    FieldUtil.set(propertyMeta.getField(), entity, value);
+                    propertyMeta.setValue(entity, value);
                 }
             }
             addParam(value, propertyMeta);
@@ -220,7 +218,7 @@ public class AutoInsertImpl<T> extends AbstractAutoUpdate<T, AutoInsert<T>>
      * バインドする識別子の値を返します。
      * 
      * @param propertyMeta
-     *            プロパティメタデータ
+     *                     プロパティメタデータ
      * @return 識別子の値
      */
     protected Object getIdValue(final PropertyMeta propertyMeta) {

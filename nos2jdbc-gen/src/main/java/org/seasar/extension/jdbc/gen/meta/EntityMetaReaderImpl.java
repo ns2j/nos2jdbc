@@ -159,7 +159,8 @@ public class EntityMetaReaderImpl implements EntityMetaReader {
                     String className = ClassUtil.concatName(packageName,
                             shortClassName);
                     Class<?> clazz = ClassUtil.forName(className);
-                    if (clazz.isAnnotationPresent(Entity.class) && !clazz.isAnnotationPresent(NonAuto.class)) {
+                    if ((clazz.isAnnotationPresent(Entity.class) || clazz.isAnnotationPresent(jakarta.persistence.Embeddable.class) || clazz.isAnnotationPresent(jakarta.persistence.MappedSuperclass.class)) 
+                            && !clazz.isAnnotationPresent(NonAuto.class)) {
                         EntityMeta entityMeta = entityMetaFactory
                                 .getEntityMeta(clazz);
                         entityMetaList.add(entityMeta);

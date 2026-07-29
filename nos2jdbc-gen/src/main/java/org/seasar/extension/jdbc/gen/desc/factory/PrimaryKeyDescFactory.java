@@ -75,7 +75,7 @@ public class PrimaryKeyDescFactory {
         Collections.reverse(classList);
         for (Class<?> clazz : classList) {
             for (PropertyMeta propertyMeta : entityMeta.getIdPropertyMetaList()) {
-                if (clazz == propertyMeta.getField().getDeclaringClass()) {
+                if (clazz == propertyMeta.getEntityDeclaringClass()) {
                     ColumnMeta columnMeta = propertyMeta.getColumnMeta();
                     primaryKeyDesc.addColumnName(columnMeta.getName());
                 }

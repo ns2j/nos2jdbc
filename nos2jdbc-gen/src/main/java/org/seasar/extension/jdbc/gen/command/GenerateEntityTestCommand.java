@@ -448,6 +448,9 @@ public class GenerateEntityTestCommand extends AbstractCommand {
 	if ("cdi".equals(componentType) || "ejb".equals(componentType))
 	    generateArchiveTestUtil();
         for (EntityMeta entityMeta : entityMetaReader.read()) {
+            if (entityMeta.getTableMeta() == null) {
+                continue;
+            }
             generateTest(entityMeta);
         }
     }

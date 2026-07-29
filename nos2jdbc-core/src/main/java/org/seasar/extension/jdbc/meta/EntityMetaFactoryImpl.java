@@ -27,6 +27,7 @@ import org.seasar.extension.jdbc.PropertyMetaFactory;
 import org.seasar.extension.jdbc.RelationshipType;
 import org.seasar.extension.jdbc.TableMeta;
 import org.seasar.extension.jdbc.TableMetaFactory;
+import org.seasar.extension.jdbc.exception.EmbedNotEmbeddableRuntimeException;
 import org.seasar.extension.jdbc.exception.FieldDuplicatedRuntimeException;
 import org.seasar.extension.jdbc.exception.JoinColumnAutoConfigurationRuntimeException;
 import org.seasar.extension.jdbc.exception.JoinColumnNotFoundRuntimeException;
@@ -48,6 +49,9 @@ import org.seasar.framework.util.DisposableUtil;
 import org.seasar.framework.util.ModifierUtil;
 import org.seasar.framework.util.StringUtil;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.MappedSuperclass;
 import nos2jdbc.annotation.NoFk;
@@ -134,13 +138,22 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
     protected EntityMeta createEntityMeta(Class<?> entityClass)
             throws NonEntityRuntimeException {
         Entity entity = entityClass.getAnnotation(Entity.class);
-        if (entity == null) {
+        Embeddable embeddable = entityClass.getAnnotation(Embeddable.class);
+        MappedSuperclass mappedSuperclass = entityClass.getAnnotation(MappedSuperclass.class);
+
+        if (entity == null && embeddable == null && mappedSuperclass == null) {
             throw new NonEntityRuntimeException(entityClass);
         }
         EntityMeta entityMeta = new EntityMeta();
         doEntityClass(entityMeta, entityClass);
-        doName(entityMeta, entityClass, entity);
-        doTableMeta(entityMeta, entityClass);
+        if (entity != null) {
+            doName(entityMeta, entityClass, entity);
+        } else {
+            entityMeta.setName(fromClassToEntityName(entityClass));
+        }
+        if (entity != null || mappedSuperclass != null) {
+            doTableMeta(entityMeta, entityClass);
+        }
         doPropertyMeta(entityMeta, entityClass);
         doCustomize(entityMeta, entityClass);
         return entityMeta;
@@ -162,7 +175,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * 名前を処理します。
      * 
      * @param entityMeta
-     *            エンティティメタデータ
+     *             エンティティメタデータ
      * @param entityClass
      *            エンティティクラス
      * @param entity
@@ -193,7 +206,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * テーブルメタデータを処理します。
      * 
      * @param entityMeta
-     *            エンティティメタデータ
+     *           エンティティメタデータ
      * @param entityClass
      *            エンティティクラス
      */
@@ -215,8 +228,20 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
         Field[] fields = getFields(entityClass);
         for (Field f : fields) {
             f.setAccessible(true);
-            entityMeta.addPropertyMeta(propertyMetaFactory.createPropertyMeta(
-                    f, entityMeta));
+            if (f.getAnnotation(Embedded.class) != null || f.getAnnotation(EmbeddedId.class) != null) {
+                Class<?> embedClass = f.getType();
+                if (embedClass.getAnnotation(Embeddable.class) == null) {
+                    throw new EmbedNotEmbeddableRuntimeException(entityMeta.getName(), f.getName(), embedClass);
+                }
+                Field[] efs = getEmbedClassFields(embedClass);
+                for (Field ef : efs) {
+                    entityMeta.addPropertyMeta(propertyMetaFactory.createPropertyMeta(
+                            ef, entityMeta, f));
+                }
+            } else {
+                entityMeta.addPropertyMeta(propertyMetaFactory.createPropertyMeta(
+                        f, entityMeta));
+            }
         }
     }
 
@@ -258,6 +283,17 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
         return (Field[]) fields.toArray(new Field[fields.size()]);
     }
 
+    protected Field[] getEmbedClassFields(Class<?> embedClass) {
+        ArrayMap<String, Field> fields = new ArrayMap<>();
+        for (Field f : ClassUtil.getDeclaredFields(embedClass)) {
+            if (!ModifierUtil.isInstanceField(f)) {
+                continue;
+            }
+            fields.put(f.getName(), f);
+        }
+        return (Field[]) fields.toArray(new Field[fields.size()]);
+    }
+
     /**
      * カスタマイズします。
      * 
@@ -288,7 +324,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
             }
             if (propertyMeta.getRelationshipType() == RelationshipType.MANY_TO_ONE
                     || propertyMeta.getRelationshipType() == RelationshipType.ONE_TO_ONE
-                    && propertyMeta.getMappedBy() == null) {
+                            && propertyMeta.getMappedBy() == null) {
                 resolveJoinColumn(entityMeta, propertyMeta);
             }
         }
@@ -313,15 +349,20 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
                     .getField();
             if (entityMeta.getEntityClass() != f.getType()) {
                 throw new MappedByNotIdenticalRuntimeException(entityMeta
-                        .getName(), propertyMeta.getName(), propertyMeta
-                        .getMappedBy(), entityMeta.getEntityClass(),
+                        .getName(), propertyMeta.getName(),
+                        propertyMeta
+                                .getMappedBy(),
+                        entityMeta.getEntityClass(),
                         propertyMeta.getRelationshipClass(), propertyMeta
-                                .getMappedBy(), f.getType());
+                                .getMappedBy(),
+                        f.getType());
             }
         } else {
             throw new MappedByPropertyNotFoundRuntimeException(entityMeta
-                    .getName(), propertyMeta.getName(), propertyMeta
-                    .getMappedBy(), propertyMeta.getRelationshipClass());
+                    .getName(), propertyMeta.getName(),
+                    propertyMeta
+                            .getMappedBy(),
+                    propertyMeta.getRelationshipClass());
         }
     }
 
@@ -339,46 +380,48 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
         EntityMeta inverseEntityMeta = getEntityMetaInternal(propertyMeta
                 .getRelationshipClass());
         if (jcmList.size() == 0) {
-            if (inverseEntityMeta.getIdPropertyMetaList().size() != 1) {
+            if (inverseEntityMeta.getIdPropertyMetaList().size() == 0) {
                 throw new JoinColumnNotFoundRuntimeException(entityMeta
                         .getName(), propertyMeta.getName());
             }
-            propertyMeta.addJoinColumnMeta(new JoinColumnMeta());
+            for (int i = 0; i < inverseEntityMeta.getIdPropertyMetaList().size(); i++) {
+                propertyMeta.addJoinColumnMeta(new JoinColumnMeta());
+            }
         }
-        if (jcmList.size() == 1) {
-            JoinColumnMeta joinColumnMeta = jcmList.get(0);
-            PropertyMeta inverseIdPropertyMeta = null;
-            if (inverseEntityMeta.getIdPropertyMetaList().size() == 1) {
-                inverseIdPropertyMeta = inverseEntityMeta
-                        .getIdPropertyMetaList().get(0);
-            }
-            if (joinColumnMeta.getName() == null) {
-                if (inverseIdPropertyMeta == null) {
-                    throw new JoinColumnAutoConfigurationRuntimeException(
-                            entityMeta.getName(), propertyMeta.getName(),
-                            inverseEntityMeta.getName());
+        if (jcmList.size() > 0) {
+            if (jcmList.size() == inverseEntityMeta.getIdPropertyMetaList().size()) {
+                for (int i = 0; i < jcmList.size(); i++) {
+                    JoinColumnMeta joinColumnMeta = jcmList.get(i);
+                    PropertyMeta inverseIdPropertyMeta = inverseEntityMeta.getIdPropertyMetaList().get(i);
+    
+                    if (joinColumnMeta.getName() == null) {
+                        joinColumnMeta
+                                .setName(persistenceConvention
+                                        .fromPropertyNameToColumnName(propertyMeta
+                                                .getName())
+                                        + "_"
+                                        + inverseIdPropertyMeta.getColumnMeta()
+                                                .getName());
+                    }
+                    if (joinColumnMeta.getReferencedColumnName() == null) {
+                        joinColumnMeta.setReferencedColumnName(inverseIdPropertyMeta
+                                .getColumnMeta().getName());
+                    }
                 }
-                joinColumnMeta
-                        .setName(persistenceConvention
-                                .fromPropertyNameToColumnName(propertyMeta
-                                        .getName())
-                                + "_"
-                                + inverseIdPropertyMeta.getColumnMeta()
-                                        .getName());
-            }
-            if (joinColumnMeta.getReferencedColumnName() == null) {
-                if (inverseIdPropertyMeta == null) {
-                    throw new JoinColumnAutoConfigurationRuntimeException(
-                            entityMeta.getName(), propertyMeta.getName(),
-                            inverseEntityMeta.getName());
+            } else {
+                for (int i = 0; i < jcmList.size(); i++) {
+                    JoinColumnMeta joinColumnMeta = jcmList.get(i);
+                    if (joinColumnMeta.getName() == null || joinColumnMeta.getReferencedColumnName() == null) {
+                        throw new JoinColumnAutoConfigurationRuntimeException(
+                                entityMeta.getName(), propertyMeta.getName(),
+                                inverseEntityMeta.getName());
+                    }
                 }
-                joinColumnMeta.setReferencedColumnName(inverseIdPropertyMeta
-                        .getColumnMeta().getName());
             }
         }
         for (JoinColumnMeta jcm : jcmList) {
-            if (!propertyMeta.getField().isAnnotationPresent(NoFk.class) 
-        	    && !entityMeta.hasColumnPropertyMeta(jcm.getName())) {
+            if (!propertyMeta.getField().isAnnotationPresent(NoFk.class)
+                    && !entityMeta.hasColumnPropertyMeta(jcm.getName())) {
                 if (propertyMeta.getRelationshipType() == RelationshipType.MANY_TO_ONE) {
                     throw new ManyToOneFKNotFoundRuntimeException(entityMeta
                             .getName(), propertyMeta.getName(), jcm.getName());
@@ -402,7 +445,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * @param tableMetaFactory
      *            テーブルメタデータファクトリ
      */
-//i    @Binding(bindingType = BindingType.MUST)
+    // i @Binding(bindingType = BindingType.MUST)
     public void setTableMetaFactory(TableMetaFactory tableMetaFactory) {
         this.tableMetaFactory = tableMetaFactory;
     }
@@ -413,7 +456,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * @param propertyMetaFactory
      *            プロパティメタデータファクトリ
      */
-//i    @Binding(bindingType = BindingType.MUST)
+    // i @Binding(bindingType = BindingType.MUST)
     public void setPropertyMetaFactory(PropertyMetaFactory propertyMetaFactory) {
         this.propertyMetaFactory = propertyMetaFactory;
     }
@@ -424,7 +467,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
      * @param persistenceConvention
      *            永続化層の規約
      */
-//i    @Binding(bindingType = BindingType.MUST)
+    // i @Binding(bindingType = BindingType.MUST)
     public void setPersistenceConvention(
             PersistenceConvention persistenceConvention) {
         this.persistenceConvention = persistenceConvention;
@@ -433,7 +476,7 @@ public class EntityMetaFactoryImpl implements EntityMetaFactory {
     /**
      * 初期化を行ないます。
      */
-//i    @InitMethod
+    // i @InitMethod
     public void initialize() {
         DisposableUtil.add(new Disposable() {
 

@@ -20,7 +20,6 @@ import org.seasar.extension.jdbc.ConditionType;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.WhereClause;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-import org.seasar.framework.util.FieldUtil;
 
 /**
  * {@link AutoDelete}の実装クラスです。
@@ -43,9 +42,9 @@ public class AutoDeleteImpl<T> extends AbstractAutoUpdate<T, AutoDelete<T>>
 
     /**
      * @param jdbcManager
-     *            内部的なJDBCマネージャ
+     *                    内部的なJDBCマネージャ
      * @param entity
-     *            エンティティ
+     *                    エンティティ
      */
     public AutoDeleteImpl(final JdbcManagerImplementor jdbcManager,
             final T entity) {
@@ -93,13 +92,13 @@ public class AutoDeleteImpl<T> extends AbstractAutoUpdate<T, AutoDelete<T>>
     protected void prepareParams() {
         for (final PropertyMeta propertyMeta : entityMeta
                 .getIdPropertyMetaList()) {
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
         if (!ignoreVersion && entityMeta.hasVersionPropertyMeta()) {
             final PropertyMeta propertyMeta = entityMeta
                     .getVersionPropertyMeta();
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
     }

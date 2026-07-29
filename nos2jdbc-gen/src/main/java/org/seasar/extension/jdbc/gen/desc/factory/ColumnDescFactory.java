@@ -260,8 +260,7 @@ public class ColumnDescFactory {
      * @return カラム
      */
     protected Column getColumn(PropertyMeta propertyMeta) {
-        Field field = propertyMeta.getField();
-        Column column = field.getAnnotation(Column.class);
+        Column column = propertyMeta.getAnnotation(Column.class);
         return column != null ? column : AnnotationUtil.getDefaultColumn();
     }
 

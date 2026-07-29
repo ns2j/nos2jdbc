@@ -34,5 +34,8 @@ public interface PropertyMetaFactory {
 	 *            エンティティメタデータ
 	 * @return プロパティメタデータ
 	 */
-	PropertyMeta createPropertyMeta(Field field, EntityMeta entityMeta);
+    PropertyMeta createPropertyMeta(Field field, EntityMeta entityMeta);
+
+    PropertyMeta createPropertyMeta(Field field, EntityMeta entityMeta, Field embedField);
+
 }

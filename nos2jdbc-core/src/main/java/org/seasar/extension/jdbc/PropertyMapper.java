@@ -15,6 +15,8 @@
  */
 package org.seasar.extension.jdbc;
 
+import java.lang.reflect.Field;
+
 /**
  * プロパティの値をマッピングするためのインターフェースです。
  * 
@@ -22,6 +24,7 @@ package org.seasar.extension.jdbc;
  * 
  */
 public interface PropertyMapper {
+	Field getField();
 
 	/**
 	 * プロパティの値をマッピングします。

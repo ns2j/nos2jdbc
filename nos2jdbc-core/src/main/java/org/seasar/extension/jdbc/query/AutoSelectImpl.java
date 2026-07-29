@@ -459,6 +459,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         String tableAlias = prepareTableAlias(null);
         EntityMeta entityMeta = prepareEntityMeta(baseClass, null);
         entityName = entityMeta.getName();
+        entityMetaMap.put(entityName, entityMeta);
         List<PropertyMapper> propertyMapperList = new ArrayList<PropertyMapper>(
                 50);
         List<Integer> idIndexList = new ArrayList<Integer>();
@@ -513,7 +514,7 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
                 }
                 selectClause.addSql(tableAlias, pm.getColumnMeta().getName());
                 valueTypeList.add(jdbcManager.getDialect().getValueType(pm));
-                propertyMapperList.add(new PropertyMapperImpl(pm.getField(),
+                propertyMapperList.add(new PropertyMapperImpl(pm,
                         selectListIndex));
                 if (pm.isId()) {
                     idIndexList.add(Integer.valueOf(selectListIndex));
@@ -624,6 +625,9 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
      * @return エンティティメタデータ
      */
     protected EntityMeta getEntityMeta(String join) {
+        if (join == null) {
+            return entityMetaMap.get(entityName);
+        }
         return entityMetaMap.get(join);
     }
 
@@ -1136,16 +1140,23 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
         String pname = conditionType.removeSuffix(name);
         String[] names = splitBaseAndProperty(pname);
         String tableAlias = getTableAlias(names[0]);
-        if (tableAlias == null) {
-            logger.log("ESSR0709", new Object[] { callerClass.getName(),
-                    callerMethodName });
-            logger.log("ESSR0716", new Object[] { name });
-            throw new BaseJoinNotFoundRuntimeException(entityName, pname,
-                    names[0]);
+        boolean isEmbed = names.length == 2 && tableAlias == null;
+        EntityMeta baseEntityMeta = null;
+        if (!isEmbed) {
+            if (tableAlias == null) {
+                logger.log("ESSR0709", new Object[] { callerClass.getName(),
+                        callerMethodName });
+                logger.log("ESSR0716", new Object[] { name });
+                throw new BaseJoinNotFoundRuntimeException(entityName, pname,
+                        names[0]);
+            }
+            baseEntityMeta = getBaseEntityMeta(pname, names[0]);
+        } else {
+            tableAlias = getTableAlias(null);
+            baseEntityMeta = getEntityMeta(entityName);
         }
-        EntityMeta baseEntityMeta = getBaseEntityMeta(pname, names[0]);
         PropertyMeta propertyMeta = getPropertyMeta(baseEntityMeta, pname,
-                names[1]);
+                isEmbed ? pname : names[1]);
         ColumnMeta columnMeta = propertyMeta.getColumnMeta();
         if (columnMeta == null) {
             logger.log("ESSR0709", new Object[] { callerClass.getName(),
@@ -1226,20 +1237,27 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
      */
     protected void prepareParams(final String name, final Object value) {
         final String[] names = splitBaseAndProperty(name);
-        final EntityMeta entityMeta = getEntityMeta(names[0]);
-        if (entityMeta == null) {
-            logger.log("ESSR0709", new Object[] { callerClass.getName(),
-                    callerMethodName });
-            logger.log("ESSR0716", new Object[] { name });
-            throw new BaseJoinNotFoundRuntimeException(entityName, name,
-                    names[0]);
+        EntityMeta entityMeta = getEntityMeta(names[0]);
+        boolean isEmbed = names.length == 2 && getTableAlias(names[0]) == null;
+        
+        if (!isEmbed) {
+            if (entityMeta == null) {
+                logger.log("ESSR0709", new Object[] { callerClass.getName(),
+                        callerMethodName });
+                logger.log("ESSR0716", new Object[] { name });
+                throw new BaseJoinNotFoundRuntimeException(entityName, name,
+                        names[0]);
+            }
+        } else {
+            entityMeta = getEntityMeta(entityName);
         }
-        if (!entityMeta.hasPropertyMeta(names[1])) {
+        String propertyName = isEmbed ? name : names[1];
+        if (!entityMeta.hasPropertyMeta(propertyName)) {
             logger.log("ESSR0709", new Object[] { callerClass.getName(),
                     callerMethodName });
             throw new PropertyNotFoundRuntimeException(entityName, name);
         }
-        final PropertyMeta pm = entityMeta.getPropertyMeta(names[1]);
+        final PropertyMeta pm = entityMeta.getPropertyMeta(propertyName);
         final ValueType valueType = jdbcManager.getDialect().getValueType(pm);
         addParam(value, value.getClass(), valueType);
     }
@@ -1350,13 +1368,23 @@ public class AutoSelectImpl<T> extends AbstractSelect<T, AutoSelect<T>>
             if (type == QueryTokenizer.TT_WORD) {
                 String[] names = splitBaseAndProperty(token);
                 String tableAlias = getTableAlias(names[0]);
-                EntityMeta entityMeta = getEntityMeta(names[0]);
-                if (entityMeta == null || !entityMeta.hasPropertyMeta(names[1])) {
+                EntityMeta entityMeta;
+                String propertyName = names[1];
+                if (tableAlias == null) {
+                    tableAlias = getTableAlias(null);
+                    entityMeta = getEntityMeta(null);
+                    if (names[0] != null && entityMeta != null && !entityMeta.hasPropertyMeta(propertyName) && entityMeta.hasPropertyMeta(token)) {
+                        propertyName = token;
+                    }
+                } else {
+                    entityMeta = getEntityMeta(names[0]);
+                }
+                if (entityMeta == null || !entityMeta.hasPropertyMeta(propertyName)) {
                     sb.append(token);
                 } else {
-                    PropertyMeta pm = entityMeta.getPropertyMeta(names[1]);
+                    PropertyMeta pm = entityMeta.getPropertyMeta(propertyName);
                     String itemName = tableAlias + "."
-                            + pm.getColumnMeta().getName();
+                                + pm.getColumnMeta().getName();
                     if (convertAlias) {
                         String alias = selectClause.getColumnAlias(itemName);
                         if (!StringUtil.isEmpty(alias)) {

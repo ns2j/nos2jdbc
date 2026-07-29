@@ -15,6 +15,10 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
+import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.ConditionAssociationModel;
@@ -88,11 +92,28 @@ public class ConditionModelFactory {
                 + conditionClassNameSuffix);
         conditionModel.setShortEntityClassName(entityMeta.getEntityClass()
                 .getSimpleName());
+        Set<Field> processedEmbedFields = new HashSet<Field>();
         for (int i = 0; i < entityMeta.getPropertyMetaSize(); i++) {
             PropertyMeta propertyMeta = entityMeta.getPropertyMeta(i);
             if (propertyMeta.isTransient()) {
                 continue;
             }
+            Field embedField = propertyMeta.getEmbedField();
+            if (embedField != null) {
+                if (!processedEmbedFields.contains(embedField)) {
+                    processedEmbedFields.add(embedField);
+                    ConditionAssociationModel methodModel = new ConditionAssociationModel();
+                    methodModel.setName(embedField.getName());
+                    Class<?> relationshipClass = embedField.getType();
+                    String shortReturnClassName = relationshipClass.getSimpleName()
+                            + conditionClassNameSuffix;
+                    methodModel.setShortConditionClassName(shortReturnClassName);
+                    conditionModel.addConditionAssociationModel(methodModel);
+                    classModelSupport.addImportName(conditionModel, relationshipClass.getName() + conditionClassNameSuffix);
+                }
+                continue;
+            }
+            
             if (propertyMeta.isRelationship()) {
                 doConditionMethodModel(conditionModel, propertyMeta);
             } else {

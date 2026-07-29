@@ -33,6 +33,7 @@ import org.seasar.extension.jdbc.dialect.HsqlDialect;
 import org.seasar.extension.jdbc.dialect.MssqlDialect;
 import org.seasar.extension.jdbc.dialect.OracleDialect;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
+import org.seasar.extension.jdbc.entity.Aaaa;
 import org.seasar.extension.jdbc.entity.Eee;
 import org.seasar.extension.jdbc.entity.Fff;
 import org.seasar.extension.jdbc.entity.Identity;
@@ -187,12 +188,12 @@ class AutoInsertTest {
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepareTargetProperties();
-        assertEquals(7, query.targetProperties.size());
+        assertEquals(8, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("name", query.targetProperties.get(1).getName());
         assertEquals("longText", query.targetProperties.get(2).getName());
         assertEquals("fffId", query.targetProperties.get(3).getName());
-        assertEquals("version", query.targetProperties.get(4).getName());
+        assertEquals("version", query.targetProperties.get(5).getName());
     }
 
     /**
@@ -343,11 +344,11 @@ class AutoInsertTest {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.excludes("name");
         query.prepareTargetProperties();
-        assertEquals(6, query.targetProperties.size());
+        assertEquals(7, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
-        assertEquals("version", query.targetProperties.get(3).getName());
+        assertEquals("version", query.targetProperties.get(4).getName());
     }
 
     /**
@@ -395,7 +396,7 @@ class AutoInsertTest {
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
-        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT)",
+        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, AAAA__BBBB, VERSION, CREATE_AT, UPDATE_AT)",
                 query.intoClause.toSql());
     }
 
@@ -482,7 +483,7 @@ class AutoInsertTest {
         eee.version = 1L;
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
-        assertEquals(" values (?, ?, ?, ?, ?, ?, ?)", query.valuesClause.toSql());
+        assertEquals(" values (?, ?, ?, ?, ?, ?, ?, ?)", query.valuesClause.toSql());
     }
 
     /**
@@ -567,13 +568,13 @@ class AutoInsertTest {
         eee.name = "hoge";
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
-        assertEquals(7, query.getParamSize());
+        assertEquals(8, query.getParamSize());
         assertEquals(Integer.valueOf(100), query.getParam(0).value);
         assertEquals("hoge", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1L), query.getParam(5).value);
         assertEquals(Long.valueOf(1), eee.version);
     }
 
@@ -690,7 +691,7 @@ class AutoInsertTest {
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee);
         query.prepare("execute");
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (?, ?, ?, ?, ?, ?, ?)",
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, AAAA__BBBB, VERSION, CREATE_AT, UPDATE_AT) values (?, ?, ?, ?, ?, ?, ?, ?)",
                 query.executedSql);
     }
 
@@ -795,6 +796,8 @@ class AutoInsertTest {
         eee.id = 100;
         eee.name = "hoge";
         eee.version = 1L;
+        eee.aaaa = new Aaaa();
+        eee.aaaa.bbbb = "cccc";
         AutoInsertImpl<Eee> query = new AutoInsertImpl<Eee>(manager, eee) {
 
             
@@ -818,7 +821,7 @@ class AutoInsertTest {
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (100, 'hoge', null, null, 1, '" + DateTimeStr.REPLACE + "', '" + DateTimeStr.REPLACE + "')",
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, AAAA__BBBB, VERSION, CREATE_AT, UPDATE_AT) values (100, 'hoge', null, null, 'cccc', 1, 'REPLACED', 'REPLACED')",
                 actual);
 
         try {

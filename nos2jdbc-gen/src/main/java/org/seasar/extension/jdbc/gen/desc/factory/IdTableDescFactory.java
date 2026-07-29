@@ -224,8 +224,7 @@ public class IdTableDescFactory {
      */
     protected TableGenerator getTableGenerator(EntityMeta entityMeta,
             PropertyMeta propertyMeta) {
-        Field field = propertyMeta.getField();
-        GeneratedValue generatedValue = field
+        GeneratedValue generatedValue = propertyMeta
                 .getAnnotation(GeneratedValue.class);
         if (generatedValue == null) {
             throw new IllegalStateException("@GeneratedValue not found.");
@@ -234,7 +233,7 @@ public class IdTableDescFactory {
         if (StringUtil.isEmpty(name)) {
             return AnnotationUtil.getDefaultTableGenerator();
         }
-        TableGenerator tableGenerator = field
+        TableGenerator tableGenerator = propertyMeta
                 .getAnnotation(TableGenerator.class);
         if (tableGenerator != null && name.equals(tableGenerator.name())) {
             return tableGenerator;
@@ -245,7 +244,6 @@ public class IdTableDescFactory {
             return tableGenerator;
         }
         throw new IllegalStateException("@TableGenerator not found.");
-
     }
 
 }

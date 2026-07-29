@@ -50,6 +50,7 @@ import org.seasar.extension.jdbc.dialect.PostgreDialect;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.dto.AaaDto;
 import org.seasar.extension.jdbc.entity.Aaa;
+import org.seasar.extension.jdbc.entity.Aaaa;
 import org.seasar.extension.jdbc.entity.Bbb;
 import org.seasar.extension.jdbc.entity.Ccc;
 import org.seasar.extension.jdbc.entity.Ddd;
@@ -88,6 +89,8 @@ import org.seasar.framework.mock.sql.MockDataSource;
 import org.seasar.framework.util.DisposableUtil;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -748,7 +751,7 @@ class AutoSelectImplTest {
         query.prepareEntity(entityMeta, null, tableAlias, propertyMapperList,
                 idIndexList);
         assertEquals(
-                "T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_",
+                "T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_",
                 query.selectClause.toSql());
     }
 
@@ -786,7 +789,7 @@ class AutoSelectImplTest {
         String tableAlias = query.prepareTableAlias(null);
         query.prepareEntity(entityMeta, null, tableAlias, propertyMapperList,
                 idIndexList);
-        assertEquals("T1_.ID as C1_, T1_.DTO as C2_", query.selectClause
+        assertEquals("T1_.ID as C1_, T1_.DTO as C2_, T1_.AAAA__BBBB as C3_", query.selectClause
                 .toSql());
     }
 
@@ -825,11 +828,12 @@ class AutoSelectImplTest {
         query.prepareEntity(entityMeta, null, tableAlias, propertyMapperList,
                 idIndexList);
         ValueType[] valueTypes = query.getValueTypes();
-        assertEquals(4, valueTypes.length);
+        assertEquals(5, valueTypes.length);
         assertEquals(ValueTypes.INTEGER, valueTypes[0]);
         assertEquals(ValueTypes.STRING, valueTypes[1]);
         assertEquals(ValueTypes.INTEGER, valueTypes[2]);
         assertEquals(ValueTypes.SERIALIZABLE_BLOB, valueTypes[3]);
+        assertEquals(ValueTypes.STRING, valueTypes[4]);
     }
 
     /**
@@ -849,7 +853,7 @@ class AutoSelectImplTest {
                 idIndexList);
         PropertyMapperImpl[] propertyMappers = query
                 .toPropertyMapperArray(propertyMapperList);
-        assertEquals(4, propertyMappers.length);
+        assertEquals(5, propertyMappers.length);
         assertEquals(0, propertyMappers[0].getPropertyIndex());
         assertEquals(Aaa.class.getDeclaredField("id"), propertyMappers[0]
                 .getField());
@@ -861,6 +865,9 @@ class AutoSelectImplTest {
                 .getField());
         assertEquals(3, propertyMappers[3].getPropertyIndex());
         assertEquals(Aaa.class.getDeclaredField("dto"), propertyMappers[3]
+                .getField());
+        assertEquals(4, propertyMappers[4].getPropertyIndex());
+        assertEquals(Aaaa.class.getDeclaredField("bbbb"), propertyMappers[4]
                 .getField());
     }
 
@@ -944,7 +951,7 @@ class AutoSelectImplTest {
         query.prepareEntity(entityMeta, joinMeta, tableAlias,
                 propertyMapperList, idIndexList);
         assertEquals(
-                "T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.LAZY_NAME as C5_",
+                "T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.LAZY_NAME as C5_, T1_.AAAA__BBBB as C6_",
                 query.selectClause.toSql());
     }
 
@@ -961,7 +968,7 @@ class AutoSelectImplTest {
         assertNotNull(entityMapper);
         PropertyMapperImpl[] propertyMappers = (PropertyMapperImpl[]) entityMapper
                 .getPropertyMappers();
-        assertEquals(4, propertyMappers.length);
+        assertEquals(5, propertyMappers.length);
         assertEquals(0, propertyMappers[0].getPropertyIndex());
         assertEquals(Aaa.class.getDeclaredField("id"), propertyMappers[0]
                 .getField());
@@ -973,6 +980,9 @@ class AutoSelectImplTest {
                 .getField());
         assertEquals(3, propertyMappers[3].getPropertyIndex());
         assertEquals(Aaa.class.getDeclaredField("dto"), propertyMappers[3]
+                .getField());
+        assertEquals(4, propertyMappers[4].getPropertyIndex());
+        assertEquals(Aaaa.class.getDeclaredField("bbbb"), propertyMappers[4]
                 .getField());
         int[] idIndices = entityMapper.getIdIndices();
         assertEquals(1, idIndices.length);
@@ -1349,7 +1359,7 @@ class AutoSelectImplTest {
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
         query.prepareJoin(new JoinMeta("bbb"));
-        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID";
+        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID";
         assertEquals(expected, query.toSql());
     }
 
@@ -1379,7 +1389,7 @@ class AutoSelectImplTest {
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
         query.prepareJoin(new JoinMeta("bbb"));
-        String expected = "select T1_.ID as C1_, T1_.DTO as C2_, T2_.ID as C3_, T2_.NAME as C4_, T2_.CCC_ID as C5_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID";
+        String expected = "select T1_.ID as C1_, T1_.DTO as C2_, T1_.AAAA__BBBB as C3_, T2_.ID as C4_, T2_.NAME as C5_, T2_.CCC_ID as C6_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID";
         assertEquals(expected, query.toSql());
     }
 
@@ -1393,7 +1403,7 @@ class AutoSelectImplTest {
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
         query.prepareJoin(new JoinMeta("aaa"));
-        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.CCC_ID as C3_, T2_.ID as C4_, T2_.NAME as C5_, T2_.BBB_ID as C6_, T2_.DTO as C7_ from BBB T1_ left outer join AAA T2_ on T2_.BBB_ID = T1_.ID";
+        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.CCC_ID as C3_, T2_.ID as C4_, T2_.NAME as C5_, T2_.BBB_ID as C6_, T2_.DTO as C7_, T2_.AAAA__BBBB as C8_ from BBB T1_ left outer join AAA T2_ on T2_.BBB_ID = T1_.ID";
         assertEquals(expected, query.toSql());
     }
 
@@ -1407,7 +1417,7 @@ class AutoSelectImplTest {
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
         query.prepareJoin(new JoinMeta("aaa"));
-        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T2_.ID as C3_, T2_.NAME as C4_, T2_.BBB_ID as C5_, T2_.DTO as C6_ from BBB T1_ left outer join AAA T2_ on T2_.BBB_ID = T1_.ID";
+        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T2_.ID as C3_, T2_.NAME as C4_, T2_.BBB_ID as C5_, T2_.DTO as C6_, T2_.AAAA__BBBB as C7_ from BBB T1_ left outer join AAA T2_ on T2_.BBB_ID = T1_.ID";
         assertEquals(expected, query.toSql());
     }
 
@@ -1436,7 +1446,7 @@ class AutoSelectImplTest {
         query.prepareTarget();
         query.prepareJoin(new JoinMeta("bbb"));
         query.prepareJoin(new JoinMeta("bbb.ccc"));
-        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_, T3_.ID as C8_, T3_.NAME as C9_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID left outer join CCC T3_ on T2_.CCC_ID = T3_.ID";
+        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_, T3_.ID as C9_, T3_.NAME as C10_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID left outer join CCC T3_ on T2_.CCC_ID = T3_.ID";
         assertEquals(expected, query.toSql());
     }
 
@@ -1518,7 +1528,7 @@ class AutoSelectImplTest {
         query.prepareJoin(new JoinMeta("aaa"));
         query.prepareJoin(new JoinMeta("aaa.bbb"));
         query.prepareJoin(new JoinMeta("aaa.bbb.ccc"));
-        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T2_.ID as C3_, T2_.NAME as C4_, T2_.BBB_ID as C5_, T2_.DTO as C6_, T3_.ID as C7_, T4_.ID as C8_, T4_.NAME as C9_ from BBB T1_ left outer join AAA T2_ on T2_.BBB_ID = T1_.ID left outer join BBB T3_ on T2_.BBB_ID = T3_.ID left outer join CCC T4_ on T3_.CCC_ID = T4_.ID";
+        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T2_.ID as C3_, T2_.NAME as C4_, T2_.BBB_ID as C5_, T2_.DTO as C6_, T2_.AAAA__BBBB as C7_, T3_.ID as C8_, T4_.ID as C9_, T4_.NAME as C10_ from BBB T1_ left outer join AAA T2_ on T2_.BBB_ID = T1_.ID left outer join BBB T3_ on T2_.BBB_ID = T3_.ID left outer join CCC T4_ on T3_.CCC_ID = T4_.ID";
         assertEquals(expected, query.toSql());
     }
 
@@ -1532,7 +1542,7 @@ class AutoSelectImplTest {
         query.prepareCallerClassAndMethodName("getResultList");
         query.prepareTarget();
         query.prepareJoin(new JoinMeta("bbb", "bbb.id = 100", new Object[0]));
-        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID and T2_.ID = 100";
+        String expected = "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID and T2_.ID = 100";
         assertEquals(expected, query.toSql());
     }
 
@@ -1650,8 +1660,7 @@ class AutoSelectImplTest {
         query.id(1);
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_ "
-                        + "from AAA T1_ " + "where T1_.ID = ?",
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_ from AAA T1_ where T1_.ID = ?",
                 query.executedSql);
     }
 
@@ -1716,9 +1725,7 @@ class AutoSelectImplTest {
         query.version(2);
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.CREATE_AT as C6_, T1_.UPDATE_AT as C7_, T1_.LAST_UPDATED as C8_ "
-                        + "from EEE T1_ "
-                        + "where T1_.ID = ? and T1_.VERSION = ?",
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.AAAA__BBBB as C5_, T1_.VERSION as C6_, T1_.CREATE_AT as C7_, T1_.UPDATE_AT as C8_, T1_.LAST_UPDATED as C9_ from EEE T1_ where T1_.ID = ? and T1_.VERSION = ?",
                 query.executedSql);
     }
 
@@ -1732,8 +1739,8 @@ class AutoSelectImplTest {
                 Parameter.date(new Date()));
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.CREATE_AT as C6_, T1_.UPDATE_AT as C7_, T1_.LAST_UPDATED as C8_ "
-                        + "from EEE T1_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.AAAA__BBBB as C5_, T1_.VERSION as C6_, T1_.CREATE_AT as C7_, T1_.UPDATE_AT as C8_, T1_.LAST_UPDATED as C9_ "
+                        + "from EEE T1_ " 
                         + "where T1_.ID = ? and T1_.VERSION = ? and (T1_.LAST_UPDATED = ?)",
                 query.executedSql);
         assertEquals(Integer.valueOf(1), query.paramList.get(0).value);
@@ -1751,7 +1758,7 @@ class AutoSelectImplTest {
                 .where("lastUpdated = ?", Parameter.date(new Date()));
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.VERSION as C5_, T1_.CREATE_AT as C6_, T1_.UPDATE_AT as C7_, T1_.LAST_UPDATED as C8_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.LONG_TEXT as C3_, T1_.FFF_ID as C4_, T1_.AAAA__BBBB as C5_, T1_.VERSION as C6_, T1_.CREATE_AT as C7_, T1_.UPDATE_AT as C8_, T1_.LAST_UPDATED as C9_ "
                         + "from EEE T1_ left outer join FFF T2_ on T1_.FFF_ID = T2_.ID and T2_.ID = 100 "
                         + "where T1_.ID = ? and T1_.VERSION = ? and (T1_.LAST_UPDATED = ?)",
                 query.executedSql);
@@ -2501,7 +2508,7 @@ class AutoSelectImplTest {
         AutoSelectImpl<Aaa> query = new AutoSelectImpl<Aaa>(manager, Aaa.class);
         query.leftOuterJoin("bbb").orderBy("name, bbb.id desc");
         query.prepare("getResultList");
-        assertEquals(" order by C2_, C5_ desc", query.orderByClause.toSql());
+        assertEquals(" order by C2_, C6_ desc", query.orderByClause.toSql());
     }
 
     /**
@@ -2514,7 +2521,7 @@ class AutoSelectImplTest {
                 new OrderByItem("bbb.id", OrderingSpec.DESC));
         assertEquals("name, bbb.id desc", query.orderBy);
         query.prepare("getResultList");
-        assertEquals(" order by C2_, C5_ desc", query.orderByClause.toSql());
+        assertEquals(" order by C2_, C6_ desc", query.orderByClause.toSql());
     }
 
     /**
@@ -2526,7 +2533,7 @@ class AutoSelectImplTest {
         query.leftOuterJoin("bbb").orderBy("bbb.id desc");
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID order by C5_ desc",
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID order by C6_ desc",
                 query.toSql());
     }
 
@@ -2539,7 +2546,7 @@ class AutoSelectImplTest {
         query.leftOuterJoin("bbb").where("bbb.id = ?", 1);
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID where (T2_.ID = ?)",
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_ from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID where (T2_.ID = ?)",
                 query.toSql());
     }
 
@@ -2985,10 +2992,10 @@ class AutoSelectImplTest {
         query.leftOuterJoin("bbb").orderBy("bbb.id desc").forUpdate();
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_ "
                         + "from AAA T1_ "
                         + "left outer join BBB T2_ on T1_.BBB_ID = T2_.ID "
-                        + "order by C5_ desc " + "for update",
+                        + "order by C6_ desc for update",
                 query.executedSql);
     }
 
@@ -3002,10 +3009,10 @@ class AutoSelectImplTest {
         query.leftOuterJoin("bbb").orderBy("bbb.id desc").forUpdate();
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_ "
                         + "from AAA T1_ with (updlock, rowlock) "
                         + "left outer join BBB T2_ with (updlock, rowlock) on T1_.BBB_ID = T2_.ID "
-                        + "order by C5_ desc", query.executedSql);
+                        + "order by C6_ desc", query.executedSql);
     }
 
     /**
@@ -3017,7 +3024,7 @@ class AutoSelectImplTest {
         query.eager("lazyName");
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.LAZY_NAME as C5_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.LAZY_NAME as C5_, T1_.AAAA__BBBB as C6_ "
                         + "from AAA T1_", query.executedSql);
     }
 
@@ -3030,8 +3037,8 @@ class AutoSelectImplTest {
         query.leftOuterJoin("bbb").eager("bbb.lazyName");
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, "
-                        + "T2_.ID as C5_, T2_.NAME as C6_, T2_.CCC_ID as C7_, T2_.LAZY_NAME as C8_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_, "
+                        + "T2_.ID as C6_, T2_.NAME as C7_, T2_.CCC_ID as C8_, T2_.LAZY_NAME as C9_ "
                         + "from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID",
                 query.executedSql);
     }
@@ -3046,7 +3053,7 @@ class AutoSelectImplTest {
         query.hint("index(Aaa index)");
         query.prepare("getResultList");
         assertEquals(
-                "select /*+ index(T1_ index) */ T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_ "
+                "select /*+ index(T1_ index) */ T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_ "
                         + "from AAA T1_", query.executedSql);
     }
 
@@ -3059,7 +3066,7 @@ class AutoSelectImplTest {
         query.hint("index(Aaa index)");
         query.prepare("getResultList");
         assertEquals(
-                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_ "
+                "select T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_ "
                         + "from AAA T1_", query.executedSql);
     }
 
@@ -3074,7 +3081,7 @@ class AutoSelectImplTest {
         query.hint("index(bbb index)");
         query.prepare("getResultList");
         assertEquals(
-                "select /*+ index(T2_ index) */ T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_ "
+                "select /*+ index(T2_ index) */ T1_.ID as C1_, T1_.NAME as C2_, T1_.BBB_ID as C3_, T1_.DTO as C4_, T1_.AAAA__BBBB as C5_ "
                         + "from AAA T1_ left outer join BBB T2_ on T1_.BBB_ID = T2_.ID",
                 query.executedSql);
     }
@@ -3144,6 +3151,18 @@ class AutoSelectImplTest {
         }
     }
 
+    @Test
+    void prepareEntity_Embed() throws Exception {
+        AutoSelectImpl<MyEee> query = new AutoSelectImpl<>(manager, MyEee.class);
+        query.prepareCallerClassAndMethodName("getResultList");
+        query.prepareTarget();
+        EntityMeta em = query.entityMetaMap.get(null);
+        for (int i = 0; i < em.getPropertyMetaSize(); i++) {
+            PropertyMeta pm = em.getPropertyMeta(i);
+            System.out.println(pm.getName() + ": " + pm.getColumnMeta().getName());
+        }
+    }
+    
     /**
     *
     */
@@ -3249,6 +3268,27 @@ class AutoSelectImplTest {
 
     @Entity
     private static class BadCcc {
+    }
+    
+    @Embeddable
+    private static class MyDdd {
+        public String ddd;
+        public String dddd;
+    }
+    private static class BadDdd {
+        public String ddd;
+        public String dddd;
+    }
+    
+    @Entity
+    private static class MyEee {
+        @Embedded
+        public MyDdd eee;
+    }
+    @Entity
+    private static class BadEee {
+        @Embedded
+        public BadDdd eee;
     }
 
 }

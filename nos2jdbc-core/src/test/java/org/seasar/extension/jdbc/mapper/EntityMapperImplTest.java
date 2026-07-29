@@ -15,15 +15,17 @@
  */
 package org.seasar.extension.jdbc.mapper;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.entity.Aaa;
+import org.seasar.extension.jdbc.entity.Aaaa;
 import org.seasar.extension.jdbc.entity.Bbb;
 import org.seasar.extension.jdbc.entity.Ddd;
 
@@ -40,37 +42,41 @@ class EntityMapperImplTest {
     @Test
     void testMap() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
+        Field field7 = Aaa.class.getDeclaredField("aaaa");
+        Aaaa aaaa = new Aaaa();
+        aaaa.bbbb = "AAAA";
+        PropertyMapperImpl propertyMapper7 = createPropertyMapper(field7, 2);
         EntityMapperImpl entityMapper = new EntityMapperImpl(Aaa.class,
-                new PropertyMapper[] { propertyMapper, propertyMapper2 },
+                new PropertyMapper[] { propertyMapper, propertyMapper2, propertyMapper7 },
                 new int[] { 0 });
 
         Field field3 = Bbb.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper3 = new PropertyMapperImpl(field3, 2);
+        PropertyMapperImpl propertyMapper3 = createPropertyMapper(field3, 3);
         Field field4 = Bbb.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper4 = new PropertyMapperImpl(field4, 3);
+        PropertyMapperImpl propertyMapper4 = createPropertyMapper(field4, 4);
         OneToOneEntityMapperImpl bbbEntityMapper = new OneToOneEntityMapperImpl(
                 Bbb.class, new PropertyMapper[] { propertyMapper3,
-                        propertyMapper4 }, new int[] { 2 }, Aaa.class
+                        propertyMapper4 }, new int[] { 1 }, Aaa.class
                         .getDeclaredField("bbb"), Bbb.class
                         .getDeclaredField("aaa"));
         entityMapper.addRelationshipEntityMapper(bbbEntityMapper);
 
         Field field5 = Ddd.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper5 = new PropertyMapperImpl(field5, 4);
+        PropertyMapperImpl propertyMapper5 = createPropertyMapper(field5, 5);
         Field field6 = Ddd.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper6 = new PropertyMapperImpl(field6, 5);
+        PropertyMapperImpl propertyMapper6 = createPropertyMapper(field6, 6);
         OneToManyEntityMapperImpl dddsEntityMapper = new OneToManyEntityMapperImpl(
                 Ddd.class, new PropertyMapper[] { propertyMapper5,
-                        propertyMapper6 }, new int[] { 4 }, Bbb.class
+                        propertyMapper6 }, new int[] { 5 }, Bbb.class
                         .getDeclaredField("ddds"), Ddd.class
                         .getDeclaredField("bbb"));
         bbbEntityMapper.addRelationshipEntityMapper(dddsEntityMapper);
 
         MappingContext mappingContext = new MappingContext(10);
-        Object[] values = new Object[] { 1, "AAA", 11, "BBB", 111, "DDD" };
+        Object[] values = new Object[] { 1, "AAA", aaaa, 11, "BBB", 111, "DDD" };
         Aaa aaa = (Aaa) entityMapper.map(values, mappingContext);
         assertNotNull(aaa);
         assertEquals(Integer.valueOf(1), aaa.id);
@@ -89,7 +95,7 @@ class EntityMapperImplTest {
         assertEquals("DDD", ddd.name);
         assertSame(bbb, ddd.bbb);
 
-        Object[] values2 = new Object[] { 1, "AAA", 11, "BBB", 222, "DDD2" };
+        Object[] values2 = new Object[] { 1, "AAA", aaaa, 11, "BBB", 222, "DDD2" };
         assertNull(entityMapper.map(values2, mappingContext));
         assertEquals(2, ddds.size());
         assertSame(ddd, ddds.get(0));
@@ -99,7 +105,7 @@ class EntityMapperImplTest {
         assertEquals("DDD2", ddd2.name);
         assertSame(bbb, ddd2.bbb);
 
-        Object[] values3 = new Object[] { 2, "AAA2", 22, "BBB2", 333, "DDD3" };
+        Object[] values3 = new Object[] { 2, "AAA2", aaaa, 22, "BBB2", 333, "DDD3" };
         Aaa aaa2 = (Aaa) entityMapper.map(values3, mappingContext);
         assertNotNull(aaa2);
         assertEquals(Integer.valueOf(2), aaa2.id);
@@ -118,7 +124,14 @@ class EntityMapperImplTest {
         assertEquals("DDD3", ddd3.name);
         assertSame(bbb2, ddd3.bbb);
 
-        Object[] values4 = new Object[] { 1, "AAA", 11, "BBB", 222, "DDD2" };
+        Object[] values4 = new Object[] { 1, "AAA", aaaa, 11, "BBB", 222, "DDD2" };
         assertNull(entityMapper.map(values4, mappingContext));
+    }
+
+    protected PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
     }
 }

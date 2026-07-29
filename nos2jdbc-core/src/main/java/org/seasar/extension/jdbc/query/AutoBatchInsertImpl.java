@@ -35,7 +35,6 @@ import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.conversion.NumberConversionUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.CollectionsUtil;
-import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.PreparedStatementUtil;
 
 import jakarta.persistence.GenerationType;
@@ -83,9 +82,9 @@ public class AutoBatchInsertImpl<T> extends
 
     /**
      * @param jdbcManager
-     *            内部的なJDBCマネージャ
+     *                    内部的なJDBCマネージャ
      * @param entities
-     *            エンティティのリスト
+     *                    エンティティのリスト
      */
     public AutoBatchInsertImpl(final JdbcManagerImplementor jdbcManager,
             final List<T> entities) {
@@ -220,7 +219,7 @@ public class AutoBatchInsertImpl<T> extends
             if (propertyMeta.isId() && propertyMeta.hasIdGenerator()) {
                 value = getIdValue(propertyMeta, entity);
             } else {
-                value = FieldUtil.get(propertyMeta.getField(), entity);
+                value = propertyMeta.getValue(entity);
                 if (propertyMeta.isVersion()) {
                     if (value == null
                             || Number.class.cast(value).longValue() <= 0L) {
@@ -228,18 +227,19 @@ public class AutoBatchInsertImpl<T> extends
                         final Class<?> fieldClass = ClassUtil
                                 .getWrapperClassIfPrimitive(propertyMeta
                                         .getPropertyClass());
-                        FieldUtil.set(propertyMeta.getField(), entity,
+                        propertyMeta.setValue(entity,
                                 NumberConversionUtil.convertNumber(fieldClass,
                                         value));
                     }
                 }
                 if (propertyMeta.isCreatedAt() || propertyMeta.isUpdatedAt()) {
-                    value = timestampCache.get(propertyMeta.getPropertyClass()); 
+                    value = timestampCache.get(propertyMeta.getPropertyClass());
                     if (value == null) {
                         value = TimestampUtil.getTimestamp(propertyMeta);
-                        timestampCache.put(propertyMeta.getPropertyClass(), value);
+                        timestampCache.put(propertyMeta.getPropertyClass(),
+                                value);
                     }
-                    FieldUtil.set(propertyMeta.getField(), entity, value);
+                    propertyMeta.setValue(entity, value);
                 }
             }
             addParam(value, propertyMeta);
@@ -250,9 +250,9 @@ public class AutoBatchInsertImpl<T> extends
      * バインドする識別子の値を返します。
      * 
      * @param propertyMeta
-     *            プロパティメタデータ
+     *                     プロパティメタデータ
      * @param entity
-     *            エンティティ
+     *                     エンティティ
      * @return 識別子の値
      */
     protected Object getIdValue(final PropertyMeta propertyMeta, final T entity) {
@@ -269,9 +269,9 @@ public class AutoBatchInsertImpl<T> extends
      * </p>
      * 
      * @param ps
-     *            INSERT文を実行した{@link Statement}
+     *               INSERT文を実行した{@link Statement}
      * @param entity
-     *            エンティティ
+     *               エンティティ
      */
     protected void postExecute(final PreparedStatement ps, final T entity) {
         for (final PropertyMeta propertyMeta : entityMeta

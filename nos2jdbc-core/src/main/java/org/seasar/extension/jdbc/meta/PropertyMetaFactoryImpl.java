@@ -61,6 +61,7 @@ import org.seasar.framework.util.ReflectionUtil;
 import org.seasar.framework.util.StringUtil;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -79,6 +80,7 @@ import jakarta.persistence.TableGenerator;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.Transient;
 import jakarta.persistence.Version;
+import nos2jdbc.NoS2JdbcConstants;
 import nos2jdbc.annotation.CreatedAt;
 import nos2jdbc.annotation.UpdatedAt;
 
@@ -147,10 +149,17 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      */
     protected PersistenceConvention persistenceConvention;
 
+    
     @Override
     public PropertyMeta createPropertyMeta(Field field, EntityMeta entityMeta) {
+        return createPropertyMeta(field, entityMeta, null);
+    }
+    
+    @Override
+    public PropertyMeta createPropertyMeta(Field field, EntityMeta entityMeta, Field embedField) {
         PropertyMeta propertyMeta = new PropertyMeta();
         doField(propertyMeta, field, entityMeta);
+        doEmbedField(propertyMeta, embedField);
         doName(propertyMeta, field, entityMeta);
         doTransient(propertyMeta, field, entityMeta);
         if (!propertyMeta.isTransient()) {
@@ -190,6 +199,10 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
         propertyMeta.setField(field);
     }
 
+    protected void doEmbedField(PropertyMeta propertyMeta, Field embedField) {
+        propertyMeta.setEmbedField(embedField);
+    }
+
     /**
      * 名前を処理します。
      * 
@@ -202,8 +215,13 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      */
     protected void doName(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setName(persistenceConvention
-                .fromFieldNameToPropertyName(field.getName()));
+        String name = persistenceConvention
+                .fromFieldNameToPropertyName(field.getName());
+        Field embedField = propertyMeta.getEmbedField();
+        if (embedField != null) {
+            name = embedField.getName() + NoS2JdbcConstants.EMBEDDED_PROPERTY_NAME_SEPARATOR + name;
+        }
+        propertyMeta.setName(name);
     }
 
     /**
@@ -234,9 +252,14 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      */
     protected void doId(PropertyMeta propertyMeta, Field field,
             EntityMeta entityMeta) {
-        propertyMeta.setId(field.getAnnotation(Id.class) != null);
+        Field embedField = propertyMeta.getEmbedField();
+        propertyMeta.setId(field.getAnnotation(Id.class) != null
+                || (embedField != null && (embedField.getAnnotation(Id.class) != null || embedField.getAnnotation(EmbeddedId.class) != null)));
         GeneratedValue generatedValue = field
                 .getAnnotation(GeneratedValue.class);
+        if (generatedValue == null && embedField != null) {
+            generatedValue = embedField.getAnnotation(GeneratedValue.class);
+        }
         if (generatedValue == null) {
             return;
         }
@@ -435,7 +458,8 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      */
     protected void doVersion(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        if (field.getAnnotation(Version.class) == null) {
+        Field embedField = propertyMeta.getEmbedField();
+        if (field.getAnnotation(Version.class) == null && (embedField == null || embedField.getAnnotation(Version.class) == null)) {
             return;
         }
         Class<?> clazz = ClassUtil.getWrapperClassIfPrimitive(field.getType());
@@ -459,7 +483,9 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      */
     protected void doTransient(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
+        Field embedField = propertyMeta.getEmbedField();
         propertyMeta.setTransient(field.getAnnotation(Transient.class) != null
+                || (embedField != null && embedField.getAnnotation(Transient.class) != null)
                 || ModifierUtil.isTransient(field));
     }
 
@@ -475,16 +501,19 @@ public class PropertyMetaFactoryImpl implements PropertyMetaFactory {
      */
     protected void doLob(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setLob(field.getAnnotation(Lob.class) != null);
+        Field embedField = propertyMeta.getEmbedField();
+        propertyMeta.setLob(field.getAnnotation(Lob.class) != null || (embedField != null && embedField.getAnnotation(Lob.class) != null));
     }
 
     protected void doCreateAt(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setCreatedAt(field.getAnnotation(CreatedAt.class) != null);
+        Field embedField = propertyMeta.getEmbedField();
+        propertyMeta.setCreatedAt(field.getAnnotation(CreatedAt.class) != null || (embedField != null && embedField.getAnnotation(CreatedAt.class) != null));
     }
     protected void doUpdateAt(PropertyMeta propertyMeta, Field field,
             @SuppressWarnings("unused") EntityMeta entityMeta) {
-        propertyMeta.setUpdatedAt(field.getAnnotation(UpdatedAt.class) != null);
+        Field embedField = propertyMeta.getEmbedField();
+        propertyMeta.setUpdatedAt(field.getAnnotation(UpdatedAt.class) != null || (embedField != null && embedField.getAnnotation(UpdatedAt.class) != null));
     }
 
     /**

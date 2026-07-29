@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.extension.jdbc.EntityMapper;
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.mapper.EntityMapperImpl;
@@ -50,9 +51,9 @@ class AbstBeanAutoResultSetHandlerTest {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         EntityMapperImpl entityMapper = new EntityMapperImpl(Aaa.class,
                 new PropertyMapper[] { propertyMapper, propertyMapper2 },
                 new int[] { 0 });
@@ -74,6 +75,13 @@ class AbstBeanAutoResultSetHandlerTest {
         Aaa aaa = (Aaa) handler.createEntity(rs, mappingContext);
         assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("SCOTT", aaa.name);
+    }
+
+    private PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
     }
 
     private static class MyHandler extends AbstractBeanAutoResultSetHandler {

@@ -107,8 +107,7 @@ public class SequenceDescFactory {
      */
     protected SequenceGenerator getSequenceGenerator(EntityMeta entityMeta,
             PropertyMeta propertyMeta) {
-        Field field = propertyMeta.getField();
-        GeneratedValue generatedValue = field
+        GeneratedValue generatedValue = propertyMeta
                 .getAnnotation(GeneratedValue.class);
         if (generatedValue == null) {
             throw new IllegalStateException("@GeneratedValue not found.");
@@ -117,7 +116,7 @@ public class SequenceDescFactory {
         if (StringUtil.isEmpty(name)) {
             return AnnotationUtil.getDefaultSequenceGenerator();
         }
-        SequenceGenerator sequenceGenerator = field
+        SequenceGenerator sequenceGenerator = propertyMeta
                 .getAnnotation(SequenceGenerator.class);
         if (sequenceGenerator != null && name.equals(sequenceGenerator.name())) {
             return sequenceGenerator;
@@ -174,8 +173,7 @@ public class SequenceDescFactory {
      * @return カラム
      */
     protected Column getColumn(PropertyMeta propertyMeta) {
-        Field field = propertyMeta.getField();
-        Column column = field.getAnnotation(Column.class);
+        Column column = propertyMeta.getAnnotation(Column.class);
         return column != null ? column : AnnotationUtil.getDefaultColumn();
     }
 

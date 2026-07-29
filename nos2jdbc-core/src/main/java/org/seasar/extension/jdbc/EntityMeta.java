@@ -24,6 +24,7 @@ import org.seasar.extension.jdbc.exception.PropertyDuplicatedRuntimeException;
 import org.seasar.extension.jdbc.exception.PropertyNotFoundRuntimeException;
 import org.seasar.framework.util.ArrayMap;
 import org.seasar.framework.util.CaseInsensitiveMap;
+import nos2jdbc.NoS2JdbcConstants;
 
 /**
  * エンティティのメタデータです。
@@ -170,6 +171,10 @@ public class EntityMeta {
             throws PropertyNotFoundRuntimeException {
         PropertyMeta meta = propertyMetaMap.get(propertyName);
         if (meta == null) {
+            String altName = propertyName.replace(".", NoS2JdbcConstants.EMBEDDED_PROPERTY_NAME_SEPARATOR);
+            meta = propertyMetaMap.get(altName);
+        }
+        if (meta == null) {
             throw new PropertyNotFoundRuntimeException(name, propertyName);
         }
         return meta;
@@ -203,7 +208,11 @@ public class EntityMeta {
      * @return プロパティメタデータがあるかどうか
      */
     public boolean hasPropertyMeta(String propertyName) {
-        return propertyMetaMap.containsKey(propertyName);
+        if (propertyMetaMap.containsKey(propertyName)) {
+            return true;
+        }
+        String altName = propertyName.replace(".", NoS2JdbcConstants.EMBEDDED_PROPERTY_NAME_SEPARATOR);
+        return propertyMetaMap.containsKey(altName);
     }
 
     /**

@@ -65,12 +65,11 @@ public abstract class AbstractIdGenerator implements IdGenerator {
      *            自動生成された識別子の値
      */
     protected void setId(final Object entity, final long id) {
-        final Field field = propertyMeta.getField();
-        final Class<?> fieldType = ClassUtil.getWrapperClassIfPrimitive(field
-                .getType());
+        final Class<?> fieldType = ClassUtil.getWrapperClassIfPrimitive(propertyMeta
+                .getPropertyClass());
         final Object value = NumberConversionUtil.convertNumber(fieldType, Long
                 .valueOf(id));
-        FieldUtil.set(field, entity, value);
+        propertyMeta.setValue(entity, value);
     }
 
     /**

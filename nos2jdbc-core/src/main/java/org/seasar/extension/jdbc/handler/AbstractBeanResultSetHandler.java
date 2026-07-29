@@ -35,6 +35,8 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.StringUtil;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -169,6 +171,14 @@ public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
             throws SQLException {
 
         Object row = ClassUtil.newInstance(beanClass);
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); i++) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            Field f = pd.getField();
+            if (f != null && (f.getAnnotation(Embedded.class) != null || f.getAnnotation(EmbeddedId.class) != null)) {
+                Object embedObj = ClassUtil.newInstance(f.getType());
+                pd.setValue(row, embedObj);
+            }
+        }
         for (int i = 0; i < propertyTypes.length; ++i) {
             PropertyType pt = propertyTypes[i];
             if (pt == null) {
@@ -177,7 +187,18 @@ public abstract class AbstractBeanResultSetHandler implements ResultSetHandler {
             ValueType valueType = pt.getValueType();
             Object value = valueType.getValue(rs, i + 1);
             PropertyDesc pd = pt.getPropertyDesc();
-            pd.setValue(row, value);
+            Object target = row;
+            if (pd.getBeanDesc().getBeanClass() != beanClass) {
+                for (int j = 0; j < beanDesc.getPropertyDescSize(); j++) {
+                    PropertyDesc rootPd = beanDesc.getPropertyDesc(j);
+                    Field f = rootPd.getField();
+                    if (f != null && f.getType() == pd.getBeanDesc().getBeanClass()) {
+                        target = rootPd.getValue(row);
+                        break;
+                    }
+                }
+            }
+            pd.setValue(target, value);
         }
         return row;
     }

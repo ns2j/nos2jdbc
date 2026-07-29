@@ -22,6 +22,8 @@ import java.util.List;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
 
+import nos2jdbc.NoS2JdbcConstants;
+
 /**
  * サービスモデルです。
  * 
@@ -207,6 +209,30 @@ public class ServiceModel extends ClassModel {
 
     public String getKotlinTypeName(String classSimpleName) {
         return KotlinUtil.getTypeName(classSimpleName);
+    }
+
+    /**
+     * Namesクラスの表現を返します。
+     * 
+     * @param propertyMeta
+     *            プロパティメタデータ
+     * @return Namesクラスの表現
+     */
+    public String getNamesExpression(PropertyMeta propertyMeta) {
+        String name = propertyMeta.getName();
+        String sep = NoS2JdbcConstants.EMBEDDED_PROPERTY_NAME_SEPARATOR;
+        if (!name.contains(sep)) {
+            return name + "()";
+        }
+        StringBuilder sb = new StringBuilder();
+        String[] parts = name.split(sep);
+        for (int i = 0; i < parts.length; i++) {
+            if (i > 0) {
+                sb.append(".");
+            }
+            sb.append(parts[i]).append("()");
+        }
+        return sb.toString();
     }
 
 }

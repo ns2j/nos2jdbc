@@ -90,6 +90,9 @@ public class DatabaseDescFactory {
         DatabaseDesc databaseDesc = new DatabaseDesc();
         databaseDesc.setFiltered(entityMetaReader.isFiltered());
         for (EntityMeta entityMeta : entityMetaReader.read()) {
+            if (entityMeta.getTableMeta() == null) {
+                continue;
+            }
             TableDesc tableDesc = tableDescFactory.getTableDesc(entityMeta);
             databaseDesc.addTableDesc(tableDesc);
             for (TableDesc idTableDesc : tableDesc.getIdTableDescList()) {

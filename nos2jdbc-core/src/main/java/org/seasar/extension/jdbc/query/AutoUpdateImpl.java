@@ -31,7 +31,6 @@ import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.conversion.IntegerConversionUtil;
 import org.seasar.framework.conversion.LongConversionUtil;
 import org.seasar.framework.util.CollectionsUtil;
-import org.seasar.framework.util.FieldUtil;
 
 /**
  * {@link AutoUpdate}の実装クラスです。
@@ -75,9 +74,9 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
 
     /**
      * @param jdbcManager
-     *            内部的なJDBCマネージャ
+     *                    内部的なJDBCマネージャ
      * @param entity
-     *            エンティティ
+     *                    エンティティ
      */
     public AutoUpdateImpl(final JdbcManagerImplementor jdbcManager,
             final T entity) {
@@ -114,8 +113,7 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
                 .getPropertyMetaSize());
         for (final PropertyMeta propertyMeta : entityMeta.getAllPropertyMeta()) {
             final String propertyName = propertyMeta.getName();
-            final Object value = FieldUtil.get(propertyMeta.getField(),
-                    beforeEntity);
+            final Object value = propertyMeta.getValue(beforeEntity);
             this.beforeStates.put(propertyName, value);
         }
         return this;
@@ -160,8 +158,7 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
         for (final PropertyMeta propertyMeta : entityMeta
                 .getAllColumnPropertyMeta()) {
             final String propertyName = propertyMeta.getName();
-            final Field field = propertyMeta.getField();
-            final Object value = FieldUtil.get(field, entity);
+            final Object value = propertyMeta.getValue(entity);
             if (propertyMeta.isId()
                     || !propertyMeta.getColumnMeta().isUpdatable()) {
                 continue;
@@ -232,20 +229,19 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
      */
     protected void prepareParams() {
         for (final PropertyMeta propertyMeta : targetProperties) {
-            final Object value = propertyMeta.isUpdatedAt() ?
-                    TimestampUtil.getTimestamp(propertyMeta) :
-                    FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.isUpdatedAt() ? TimestampUtil.getTimestamp(propertyMeta)
+                    : propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
         for (final PropertyMeta propertyMeta : entityMeta
                 .getIdPropertyMetaList()) {
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
         if (!includeVersion && entityMeta.hasVersionPropertyMeta()) {
             final PropertyMeta propertyMeta = entityMeta
                     .getVersionPropertyMeta();
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
     }
@@ -275,16 +271,17 @@ public class AutoUpdateImpl<T> extends AbstractAutoUpdate<T, AutoUpdate<T>>
         if (includeVersion) {
             return;
         }
-        final Field field = entityMeta.getVersionPropertyMeta().getField();
+        final PropertyMeta propertyMeta = entityMeta.getVersionPropertyMeta();
+        final Field field = propertyMeta.getField();
         if (field.getType() == int.class || field.getType() == Integer.class) {
-            final int version = IntegerConversionUtil.toPrimitiveInt(FieldUtil
-                    .get(field, entity)) + 1;
-            FieldUtil.set(field, entity, Integer.valueOf(version));
+            final int version = IntegerConversionUtil.toPrimitiveInt(propertyMeta
+                    .getValue(entity)) + 1;
+            propertyMeta.setValue(entity, Integer.valueOf(version));
         } else if (field.getType() == long.class
                 || field.getType() == Long.class) {
-            final long version = LongConversionUtil.toPrimitiveLong(FieldUtil
-                    .get(field, entity)) + 1;
-            FieldUtil.set(field, entity, Long.valueOf(version));
+            final long version = LongConversionUtil.toPrimitiveLong(propertyMeta
+                    .getValue(entity)) + 1;
+            propertyMeta.setValue(entity, Long.valueOf(version));
         }
     }
 

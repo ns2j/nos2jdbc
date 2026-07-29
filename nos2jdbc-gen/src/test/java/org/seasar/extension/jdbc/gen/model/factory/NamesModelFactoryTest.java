@@ -16,8 +16,7 @@
 package org.seasar.extension.jdbc.gen.model.factory;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Iterator;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,17 +89,23 @@ class NamesModelFactoryTest {
         attributeModel = namesModel.getNamesAttributeModelList().get(2);
         assertEquals("bbbId", attributeModel.getName());
         assertEquals(Integer.class, attributeModel.getAttributeClass());
-        assertEquals(1, namesModel.getNamesAssociationModelList().size());
+        assertEquals(2, namesModel.getNamesAssociationModelList().size());
         NamesAssociationModel associationModel = namesModel.getNamesAssociationModelList().get(0);
         assertEquals("bbb", associationModel.getName());
         assertEquals("_BbbNames", associationModel.getShortClassName());
         assertEquals("aaa.bbb.BbbNames._BbbNames", associationModel.getClassName());
-        assertEquals(4, namesModel.getImportNameSet().size());
-        Iterator<String> iterator = namesModel.getImportNameSet().iterator();
-        assertEquals("aaa.bbb.BbbNames._BbbNames", iterator.next());
-        assertEquals(Generated.class.getCanonicalName(), iterator.next());
-        assertEquals(Aaa.class.getCanonicalName(), iterator.next());
-        assertEquals(PropertyName.class.getCanonicalName(), iterator.next());
+        
+        NamesAssociationModel embedAssociationModel = namesModel.getNamesAssociationModelList().get(1);
+        assertEquals("ccc", embedAssociationModel.getName());
+        assertEquals("_CccNames", embedAssociationModel.getShortClassName());
+        assertEquals("aaa.bbb.CccNames._CccNames", embedAssociationModel.getClassName());
+        
+        Set<String> set = namesModel.getImportNameSet();
+        assertTrue(set.contains("aaa.bbb.CccNames._CccNames"));
+        assertTrue(set.contains("aaa.bbb.BbbNames._BbbNames"));
+        assertTrue(set.contains(Generated.class.getCanonicalName()));
+        assertTrue(set.contains(Aaa.class.getCanonicalName()));
+        assertTrue(set.contains(PropertyName.class.getCanonicalName()));
     }
 
     /** */
@@ -120,6 +125,10 @@ class NamesModelFactoryTest {
         /** */
         @ManyToOne
         public Bbb bbb;
+
+        /** */
+        @jakarta.persistence.Embedded
+        public Ccc ccc;
     }
 
     /** */
@@ -129,5 +138,11 @@ class NamesModelFactoryTest {
         /** */
         @Id
         public int id;
+    }
+
+    /** */
+    @jakarta.persistence.Embeddable
+    public static class Ccc {
+        public String city;
     }
 }

@@ -22,6 +22,8 @@ import java.util.List;
 import org.seasar.extension.jdbc.exception.IdentityGeneratorNotSupportedRuntimeException;
 import org.seasar.extension.jdbc.exception.SequenceGeneratorNotSupportedRuntimeException;
 import org.seasar.framework.util.ArrayMap;
+import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.FieldUtil;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
@@ -118,7 +120,7 @@ public class PropertyMeta {
 
     protected boolean createdAt;
     protected boolean updatedAt;
-    
+
     /**
      * 結合カラムメタデータのリストです。
      */
@@ -143,6 +145,8 @@ public class PropertyMeta {
      * 追加情報のマップです。
      */
     protected ArrayMap<String, Object> additionalInfoMap = new ArrayMap<>();
+
+    protected Field embedField;
 
     /**
      * 名前を返します。
@@ -189,6 +193,53 @@ public class PropertyMeta {
     public void setField(Field field) {
         this.field = field;
         propertyClass = field.getType();
+    }
+
+    public Field getEmbedField() {
+        return embedField;
+    }
+
+    public void setEmbedField(Field embedField) {
+        this.embedField = embedField;
+    }
+
+    /**
+     * アノテーションを返します。
+     * 
+     * @param <T>
+     *                        アノテーションの型
+     * @param annotationClass
+     *                        アノテーションクラス
+     * @return アノテーション
+     */
+    public <T extends java.lang.annotation.Annotation> T getAnnotation(
+            Class<T> annotationClass) {
+        T annotation = field.getAnnotation(annotationClass);
+        if (annotation == null && embedField != null) {
+            annotation = embedField.getAnnotation(annotationClass);
+        }
+        return annotation;
+    }
+
+    /**
+     * 宣言クラスを返します。
+     * 
+     * @return 宣言クラス
+     */
+    public Class<?> getDeclaringClass() {
+        return field.getDeclaringClass();
+    }
+
+    /**
+     * エンティティレベルの宣言クラスを返します。
+     * 
+     * @return エンティティレベルの宣言クラス
+     */
+    public Class<?> getEntityDeclaringClass() {
+        if (embedField != null) {
+            return embedField.getDeclaringClass();
+        }
+        return field.getDeclaringClass();
     }
 
     /**
@@ -288,24 +339,24 @@ public class PropertyMeta {
     public IdGenerator getIdGenerator(EntityMeta entityMeta, DbmsDialect dialect) {
         switch (generationType == GenerationType.AUTO ? dialect
                 .getDefaultGenerationType() : generationType) {
-        case IDENTITY:
-            if (!dialect.supportsIdentity()) {
-                throw new IdentityGeneratorNotSupportedRuntimeException(
-                        entityMeta.getName(), getName(), dialect.getName());
-            }
-            return identityIdGenerator;
-        case SEQUENCE:
-            if (!dialect.supportsSequence()) {
-                throw new SequenceGeneratorNotSupportedRuntimeException(
-                        entityMeta.getName(), getName(), dialect.getName());
-            }
-            return sequenceIdGenerator;
-        case TABLE:
-            return tableIdGenerator;
-        case AUTO:
-            break;
-        default:
-            break;
+            case IDENTITY:
+                if (!dialect.supportsIdentity()) {
+                    throw new IdentityGeneratorNotSupportedRuntimeException(
+                            entityMeta.getName(), getName(), dialect.getName());
+                }
+                return identityIdGenerator;
+            case SEQUENCE:
+                if (!dialect.supportsSequence()) {
+                    throw new SequenceGeneratorNotSupportedRuntimeException(
+                            entityMeta.getName(), getName(), dialect.getName());
+                }
+                return sequenceIdGenerator;
+            case TABLE:
+                return tableIdGenerator;
+            case AUTO:
+                break;
+            default:
+                break;
         }
         return null; // unreachable
     }
@@ -471,16 +522,19 @@ public class PropertyMeta {
     public void setLob(boolean lob) {
         this.lob = lob;
     }
-    
+
     public boolean isCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(boolean createdAt) {
         this.createdAt = createdAt;
     }
+
     public boolean isUpdatedAt() {
         return updatedAt;
     }
+
     public void setUpdatedAt(boolean updatedAt) {
         this.updatedAt = updatedAt;
     }
@@ -613,4 +667,41 @@ public class PropertyMeta {
     public void addAdditionalInfo(String name, Object additionalInfo) {
         additionalInfoMap.put(name, additionalInfo);
     }
+
+    public Object getValue(Object entity) {
+        final Field field = getField();
+        final Field ef = getEmbedField();
+        if (ef == null || entity.getClass() == field.getDeclaringClass()) {
+            return FieldUtil.get(field, entity);
+        } else {
+            final Object embedObj = FieldUtil.get(ef, entity);
+            if (embedObj != null)
+                return FieldUtil.get(field, embedObj);
+        }
+        return null;
+    }
+
+    /**
+     * プロパティの値を設定します。
+     * 
+     * @param entity
+     *               エンティティ
+     * @param value
+     *               値
+     */
+    public void setValue(Object entity, Object value) {
+        final Field field = getField();
+        final Field ef = getEmbedField();
+        if (ef == null || entity.getClass() == field.getDeclaringClass()) {
+            FieldUtil.set(field, entity, value);
+        } else {
+            Object embedObj = FieldUtil.get(ef, entity);
+            if (embedObj == null) {
+                embedObj = ClassUtil.newInstance(ef.getType());
+                FieldUtil.set(ef, entity, embedObj);
+            }
+            FieldUtil.set(field, embedObj, value);
+        }
+    }
+
 }

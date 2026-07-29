@@ -218,7 +218,7 @@ class AutoBatchUpdateTest {
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
                 entities);
         query.prepareTargetProperties();
-        assertEquals(4, query.targetProperties.size());
+        assertEquals(5, query.targetProperties.size());
         assertEquals("name", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
@@ -234,11 +234,11 @@ class AutoBatchUpdateTest {
                 entities);
         query.includesVersion();
         query.prepareTargetProperties();
-        assertEquals(5, query.targetProperties.size());
+        assertEquals(6, query.targetProperties.size());
         assertEquals("name", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
-        assertEquals("version", query.targetProperties.get(3).getName());
+        assertEquals("version", query.targetProperties.get(4).getName());
     }
 
     /**
@@ -265,7 +265,7 @@ class AutoBatchUpdateTest {
                 entities);
         query.excludes("name");
         query.prepareTargetProperties();
-        assertEquals(3, query.targetProperties.size());
+        assertEquals(4, query.targetProperties.size());
         assertEquals("longText", query.targetProperties.get(0).getName());
         assertEquals("fffId", query.targetProperties.get(1).getName());
     }
@@ -293,7 +293,7 @@ class AutoBatchUpdateTest {
         AutoBatchUpdateImpl<Eee> query = new AutoBatchUpdateImpl<Eee>(manager,
                 entities);
         query.prepare("execute");
-        assertEquals(" set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, UPDATE_AT = ?, VERSION = VERSION + 1",
+        assertEquals(" set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, UPDATE_AT = ?, VERSION = VERSION + 1",
                 query.setClause.toSql());
     }
 
@@ -307,7 +307,7 @@ class AutoBatchUpdateTest {
                 entities);
         query.includesVersion();
         query.prepare("execute");
-        assertEquals(" set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, VERSION = ?, UPDATE_AT = ?",
+        assertEquals(" set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, VERSION = ?, UPDATE_AT = ?",
                 query.setClause.toSql());
     }
 
@@ -346,7 +346,7 @@ class AutoBatchUpdateTest {
                 entities);
         query.prepare("execute");
         assertEquals(
-                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, UPDATE_AT = ?, VERSION = VERSION + 1 where ID = ? and VERSION = ?",
+                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, UPDATE_AT = ?, VERSION = VERSION + 1 where ID = ? and VERSION = ?",
                 query.executedSql);
     }
 
@@ -361,7 +361,7 @@ class AutoBatchUpdateTest {
         query.includesVersion();
         query.prepare("execute");
         assertEquals(
-                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, VERSION = ?, UPDATE_AT = ? where ID = ?",
+                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, VERSION = ?, UPDATE_AT = ? where ID = ?",
                 query.executedSql);
     }
 
@@ -376,33 +376,33 @@ class AutoBatchUpdateTest {
         query.prepare("execute");
 
         query.prepareParams(entities.get(0));
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("foo", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(Integer.valueOf(1), query.getParam(4).value);
-        assertEquals(Long.valueOf(0L), query.getParam(5).value);
+        assertEquals(Integer.valueOf(1), query.getParam(5).value);
+        assertEquals(Long.valueOf(0L), query.getParam(6).value);
         query.resetParams();
 
         query.prepareParams(entities.get(1));
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("bar", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(Integer.valueOf(2), query.getParam(4).value);
-        assertEquals(Long.valueOf(0L), query.getParam(5).value);
+        assertEquals(Integer.valueOf(2), query.getParam(5).value);
+        assertEquals(Long.valueOf(0L), query.getParam(6).value);
         query.resetParams();
 
         query.prepareParams(entities.get(2));
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("baz", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(Integer.valueOf(3), query.getParam(4).value);
-        assertEquals(Long.valueOf(0L), query.getParam(5).value);
+        assertEquals(Integer.valueOf(3), query.getParam(5).value);
+        assertEquals(Long.valueOf(0L), query.getParam(6).value);
     }
 
     /**
@@ -417,33 +417,33 @@ class AutoBatchUpdateTest {
         query.prepare("execute");
 
         query.prepareParams(entities.get(0));
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("foo", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(Long.valueOf(0L), query.getParam(3).value);
-        assertEquals(Integer.valueOf(1), query.getParam(5).value);
+        assertEquals(Long.valueOf(0L), query.getParam(4).value);
+        assertEquals(Integer.valueOf(1), query.getParam(6).value);
         query.resetParams();
 
         query.prepareParams(entities.get(1));
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("bar", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(Long.valueOf(0L), query.getParam(3).value);
-        assertEquals(Integer.valueOf(2), query.getParam(5).value);
+        assertEquals(Long.valueOf(0L), query.getParam(4).value);
+        assertEquals(Integer.valueOf(2), query.getParam(6).value);
         query.resetParams();
 
         query.prepareParams(entities.get(2));
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("baz", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(Long.valueOf(0L), query.getParam(3).value);
-        assertEquals(Integer.valueOf(3), query.getParam(5).value);
+        assertEquals(Long.valueOf(0L), query.getParam(4).value);
+        assertEquals(Integer.valueOf(3), query.getParam(6).value);
     }
 
     /**
@@ -476,7 +476,7 @@ class AutoBatchUpdateTest {
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "update EEE set NAME = 'baz', LONG_TEXT = null, FFF_ID = null, UPDATE_AT = '" + DateTimeStr.REPLACE + "', VERSION = VERSION + 1 where ID = 3 and VERSION = 0",
+                "update EEE set NAME = 'baz', LONG_TEXT = null, FFF_ID = null, AAAA__BBBB = null, UPDATE_AT = 'REPLACED', VERSION = VERSION + 1 where ID = 3 and VERSION = 0",
                 actual);
 
         try {
@@ -517,7 +517,7 @@ class AutoBatchUpdateTest {
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "update EEE set NAME = 'baz', LONG_TEXT = null, FFF_ID = null, VERSION = 0, UPDATE_AT = '" + DateTimeStr.REPLACE + "' where ID = 3",
+                "update EEE set NAME = 'baz', LONG_TEXT = null, FFF_ID = null, AAAA__BBBB = null, VERSION = 0, UPDATE_AT = 'REPLACED' where ID = 3",
                 actual);
     }
 

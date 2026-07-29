@@ -30,7 +30,6 @@ import org.seasar.extension.jdbc.util.TimestampUtil;
 import org.seasar.framework.conversion.IntegerConversionUtil;
 import org.seasar.framework.conversion.LongConversionUtil;
 import org.seasar.framework.util.CollectionsUtil;
-import org.seasar.framework.util.FieldUtil;
 
 /**
  * {@link AutoBatchUpdate}の実装クラスです。
@@ -69,9 +68,9 @@ public class AutoBatchUpdateImpl<T> extends
 
     /**
      * @param jdbcManager
-     *            内部的なJDBCマネージャ
+     *                    内部的なJDBCマネージャ
      * @param entities
-     *            エンティティのリスト
+     *                    エンティティのリスト
      */
     public AutoBatchUpdateImpl(final JdbcManagerImplementor jdbcManager,
             final List<T> entities) {
@@ -135,12 +134,6 @@ public class AutoBatchUpdateImpl<T> extends
             if (propertyMeta.isCreatedAt()) {
                 continue;
             }
-//            if (propertyMeta.isUpdateAt()) {
-//                continue;
-//                for (final T entity : entities) {
-  //                  FieldUtil.set(propertyMeta.getField(), entity, TimestampUtil.getTimestamp(propertyMeta));
-     //           }
-//            }
 
             targetProperties.add(propertyMeta);
         }
@@ -181,20 +174,19 @@ public class AutoBatchUpdateImpl<T> extends
     @Override
     protected void prepareParams(final T entity) {
         for (final PropertyMeta propertyMeta : targetProperties) {
-            final Object value = propertyMeta.isUpdatedAt() ?
-                    TimestampUtil.getTimestamp(propertyMeta) :
-                    FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.isUpdatedAt() ? TimestampUtil.getTimestamp(propertyMeta)
+                    : propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
         for (final PropertyMeta propertyMeta : entityMeta
                 .getIdPropertyMetaList()) {
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
         if (!includeVersion && entityMeta.hasVersionPropertyMeta()) {
             final PropertyMeta propertyMeta = entityMeta
                     .getVersionPropertyMeta();
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
     }
@@ -224,18 +216,19 @@ public class AutoBatchUpdateImpl<T> extends
         if (includeVersion) {
             return;
         }
-        final Field field = entityMeta.getVersionPropertyMeta().getField();
+        final PropertyMeta propertyMeta = entityMeta.getVersionPropertyMeta();
+        final Field field = propertyMeta.getField();
         for (final T entity : entities) {
             if (field.getType() == int.class
                     || field.getType() == Integer.class) {
                 final int version = IntegerConversionUtil
-                        .toPrimitiveInt(FieldUtil.get(field, entity)) + 1;
-                FieldUtil.set(field, entity, Integer.valueOf(version));
+                        .toPrimitiveInt(propertyMeta.getValue(entity)) + 1;
+                propertyMeta.setValue(entity, Integer.valueOf(version));
             } else if (field.getType() == long.class
                     || field.getType() == Long.class) {
                 final long version = LongConversionUtil
-                        .toPrimitiveLong(FieldUtil.get(field, entity)) + 1;
-                FieldUtil.set(field, entity, Long.valueOf(version));
+                        .toPrimitiveLong(propertyMeta.getValue(entity)) + 1;
+                propertyMeta.setValue(entity, Long.valueOf(version));
             }
         }
     }

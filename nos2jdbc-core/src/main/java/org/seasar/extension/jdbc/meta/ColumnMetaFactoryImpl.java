@@ -39,8 +39,7 @@ public class ColumnMetaFactoryImpl implements ColumnMetaFactory {
     private PersistenceConvention persistenceConvention;
 
     @Override
-    public ColumnMeta createColumnMeta(Field field, EntityMeta entityMeta,
-            PropertyMeta propertyMeta) {
+    public ColumnMeta createColumnMeta(Field field, EntityMeta entityMeta, PropertyMeta propertyMeta) {
         ColumnMeta columnMeta = new ColumnMeta();
         String defaultName = persistenceConvention
                 .fromPropertyNameToColumnName(propertyMeta.getName());
@@ -74,10 +73,9 @@ public class ColumnMetaFactoryImpl implements ColumnMetaFactory {
      * @param persistenceConvention
      *            永続化用の規約
      */
-//i    @Binding(bindingType = BindingType.MUST)
+    // i @Binding(bindingType = BindingType.MUST)
     public void setPersistenceConvention(
             PersistenceConvention persistenceConvention) {
         this.persistenceConvention = persistenceConvention;
     }
-
 }

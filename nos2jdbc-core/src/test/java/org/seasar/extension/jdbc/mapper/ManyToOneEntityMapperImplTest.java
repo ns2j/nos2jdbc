@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.entity.Bbb;
 import org.seasar.extension.jdbc.entity.Ddd;
 
@@ -39,9 +40,9 @@ class ManyToOneEntityMapperImplTest {
     @Test
     void testMap() throws Exception {
         Field field = Bbb.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field, 0);
         Field field2 = Bbb.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         Field field3 = Ddd.class.getDeclaredField("bbb");
         Field field4 = Bbb.class.getDeclaredField("ddds");
 
@@ -76,4 +77,10 @@ class ManyToOneEntityMapperImplTest {
         assertSame(ddd3, bbb.ddds.get(0));
     }
 
+    protected PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
+    }
 }

@@ -34,6 +34,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.TableGenerator;
 import jakarta.persistence.Version;
+import nos2jdbc.NoS2JdbcConstants;
 
 /**
  * {@link AttributeDescFactory}の実装クラスです。
