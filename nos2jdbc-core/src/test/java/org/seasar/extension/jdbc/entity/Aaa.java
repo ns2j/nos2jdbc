@@ -16,6 +16,7 @@
 package org.seasar.extension.jdbc.entity;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -63,5 +64,8 @@ public class Aaa {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     public String lazyName;
+
+    @Embedded
+    public Aaaa aaaa;
 
 }

@@ -684,6 +684,7 @@ public class PreparedStatementWrapper implements PreparedStatement {
     /**
      * @deprecated
      */
+    @Deprecated
     public void setUnicodeStream(final int parameterIndex, final InputStream x,
             final int length) throws SQLException {
         try {

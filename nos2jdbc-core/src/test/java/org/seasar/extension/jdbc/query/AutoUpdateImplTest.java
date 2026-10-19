@@ -30,6 +30,7 @@ import org.seasar.extension.jdbc.SqlLogRegistry;
 import org.seasar.extension.jdbc.SqlLogRegistryLocator;
 import org.seasar.extension.jdbc.dialect.StandardDialect;
 import org.seasar.extension.jdbc.entity.Aaa;
+import org.seasar.extension.jdbc.entity.Aaaa;
 import org.seasar.extension.jdbc.entity.Eee;
 import org.seasar.extension.jdbc.exception.QueryTwiceExecutionRuntimeException;
 import org.seasar.extension.jdbc.manager.JdbcManagerImpl;
@@ -206,7 +207,7 @@ class AutoUpdateImplTest {
         before.version = 1L;
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, new Eee());
         assertSame(query, query.changedFrom(before));
-        assertEquals(9, query.beforeStates.size());
+        assertEquals(10, query.beforeStates.size());
         assertEquals(100, query.beforeStates.get("id"));
         assertEquals("hoge", query.beforeStates.get("name"));
         assertNull(query.beforeStates.get("longText"));
@@ -226,7 +227,7 @@ class AutoUpdateImplTest {
         before.version = 1L;
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, before);
         assertSame(query, query.changedFrom(before));
-        assertEquals(9, query.beforeStates.size());
+        assertEquals(10, query.beforeStates.size());
         assertEquals(100, query.beforeStates.get("id"));
         assertEquals("hoge", query.beforeStates.get("name"));
         assertNull(query.beforeStates.get("longText"));
@@ -281,7 +282,7 @@ class AutoUpdateImplTest {
         eee.version = 1L;
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.prepareTargetProperties();
-        assertEquals(4, query.targetProperties.size());
+        assertEquals(5, query.targetProperties.size());
         assertEquals("name", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
@@ -298,11 +299,11 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.includesVersion();
         query.prepareTargetProperties();
-        assertEquals(5, query.targetProperties.size());
+        assertEquals(6, query.targetProperties.size());
         assertEquals("name", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
-        assertEquals("version", query.targetProperties.get(3).getName());
+        assertEquals("version", query.targetProperties.get(4).getName());
     }
 
     /**
@@ -346,7 +347,7 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.excludes("name");
         query.prepareTargetProperties();
-        assertEquals(3, query.targetProperties.size());
+        assertEquals(4, query.targetProperties.size());
         assertEquals("longText", query.targetProperties.get(0).getName());
         assertEquals("fffId", query.targetProperties.get(1).getName());
     }
@@ -429,7 +430,7 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.prepare("execute");
         assertEquals(
-                " set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, UPDATE_AT = ?, VERSION = VERSION + 1",
+                " set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, UPDATE_AT = ?, VERSION = VERSION + 1",
                 query.setClause.toSql());
     }
 
@@ -444,7 +445,7 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.includesVersion();
         query.prepare("execute");
-        assertEquals(" set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, VERSION = ?, UPDATE_AT = ?",
+        assertEquals(" set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, VERSION = ?, UPDATE_AT = ?",
                 query.setClause.toSql());
     }
 
@@ -485,13 +486,13 @@ class AutoUpdateImplTest {
         eee.version = 1L;
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.prepare("execute");
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("hoge", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(100, query.getParam(4).value);
-        assertEquals(1L, query.getParam(5).value);
+        assertEquals(100, query.getParam(5).value);
+        assertEquals(1L, query.getParam(6).value);
     }
 
     /**
@@ -505,13 +506,13 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.includesVersion();
         query.prepare("execute");
-        assertEquals(6, query.getParamSize());
+        assertEquals(7, query.getParamSize());
         assertEquals("hoge", query.getParam(0).value);
         assertNull(query.getParam(1).value);
         assertTrue(query.getParam(1).valueType instanceof StringClobType);
         assertNull(query.getParam(2).value);
-        assertEquals(1L, query.getParam(3).value);
-        assertEquals(100, query.getParam(5).value);
+        assertEquals(1L, query.getParam(4).value);
+        assertEquals(100, query.getParam(6).value);
     }
 
     /**
@@ -542,7 +543,7 @@ class AutoUpdateImplTest {
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee);
         query.prepare("execute");
         assertEquals(
-                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, UPDATE_AT = ?, VERSION = VERSION + 1 where ID = ? and VERSION = ?",
+                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, UPDATE_AT = ?, VERSION = VERSION + 1 where ID = ? and VERSION = ?",
                 query.executedSql);
     }
 
@@ -558,7 +559,7 @@ class AutoUpdateImplTest {
         query.includesVersion();
         query.prepare("execute");
         assertEquals(
-                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, VERSION = ?, UPDATE_AT = ? where ID = ?",
+                "update EEE set NAME = ?, LONG_TEXT = ?, FFF_ID = ?, AAAA__BBBB = ?, VERSION = ?, UPDATE_AT = ? where ID = ?",
                 query.executedSql);
     }
 
@@ -586,6 +587,8 @@ class AutoUpdateImplTest {
         eee.id = 100;
         eee.name = "hoge";
         eee.version = 1L;
+        eee.aaaa = new Aaaa();
+        eee.aaaa.bbbb = "cccc";
         AutoUpdateImpl<Eee> query = new AutoUpdateImpl<Eee>(manager, eee) {
 
             
@@ -608,7 +611,7 @@ class AutoUpdateImplTest {
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "update EEE set NAME = 'hoge', LONG_TEXT = null, FFF_ID = null, UPDATE_AT = '" + DateTimeStr.REPLACE + "', VERSION = VERSION + 1 where ID = 100 and VERSION = 1",
+                "update EEE set NAME = 'hoge', LONG_TEXT = null, FFF_ID = null, AAAA__BBBB = 'cccc', UPDATE_AT = 'REPLACED', VERSION = VERSION + 1 where ID = 100 and VERSION = 1",
                 actual);
 
         try {
@@ -649,7 +652,7 @@ class AutoUpdateImplTest {
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "update EEE set NAME = 'hoge', LONG_TEXT = null, FFF_ID = null, VERSION = 1, UPDATE_AT = '" + DateTimeStr.REPLACE + "' where ID = 100",
+                "update EEE set NAME = 'hoge', LONG_TEXT = null, FFF_ID = null, AAAA__BBBB = null, VERSION = 1, UPDATE_AT = 'REPLACED' where ID = 100",
                 actual);
     }
 

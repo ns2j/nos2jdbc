@@ -18,6 +18,7 @@ package org.seasar.extension.jdbc.meta;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,6 +71,23 @@ class ColumnMetaFactoryImplTest {
         assertEquals("BBB", columnMeta.getName());
         assertTrue(columnMeta.isInsertable());
         assertTrue(columnMeta.isUpdatable());
+    }
+
+    /**
+     * @throws Exception
+     */
+    @Test
+    void testCreateColumnMeta_embedded() throws Exception {
+        Field field = MyEmbed.class.getDeclaredField("value");
+        PropertyMeta propertyMeta = new PropertyMeta();
+        propertyMeta.setName("lunchFee__value");
+        ColumnMeta columnMeta = factory.createColumnMeta(field, null,
+                propertyMeta);
+        assertEquals("LUNCH_FEE__VALUE", columnMeta.getName());
+    }
+
+    private static class MyEmbed {
+        public BigDecimal value;
     }
 
     private static class MyEntity {

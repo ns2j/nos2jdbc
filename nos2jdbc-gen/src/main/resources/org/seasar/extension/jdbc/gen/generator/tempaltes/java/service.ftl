@@ -104,7 +104,7 @@ public class ${shortClassName} extends ${shortSuperclassName}<${shortEntityClass
      * @return エンティティのリスト
      */
     public List<${shortEntityClassName}> findAllOrderById() {
-        return select().orderBy(<#list idPropertyMetaList as prop>asc(${prop.name}())<#if prop_has_next>, </#if></#list>).getResultList();
+        return select().orderBy(<#list idPropertyMetaList as prop>asc(${getNamesExpression(prop)})<#if prop_has_next>, </#if></#list>).getResultList();
     }
 </#if>
 }

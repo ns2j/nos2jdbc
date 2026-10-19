@@ -530,6 +530,9 @@ public class GenerateServiceCommand extends AbstractCommand {
         if ("cdi".equals(componentType))
             generateServiceBaseQualifier();
         for (EntityMeta entityMeta : entityMetaReader.read()) {
+            if (entityMeta.getTableMeta() == null) {
+                continue;
+            }
             generateService(entityMeta);
         }
     }

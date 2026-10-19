@@ -15,13 +15,14 @@
  */
 package org.seasar.extension.jdbc.mapper;
 
-import java.lang.reflect.Field;
-
-import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Field;
+
+import org.junit.jupiter.api.Test;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.entity.Aaa;
-import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
+import org.seasar.extension.jdbc.entity.Aaaa;
 
 /**
  * @author higa
@@ -35,9 +36,26 @@ class PropertyMapperImplTest {
 	@Test
     void testMap() throws Exception {
 		Field field = Aaa.class.getDeclaredField("id");
-		PropertyMapperImpl mapper = new PropertyMapperImpl(field, 0);
+		PropertyMapperImpl mapper = createPropertyMapper(field, 0);
 		Aaa aaa = new Aaa();
 		mapper.map(aaa, new Object[] { Integer.valueOf(1) });
 		assertEquals(Integer.valueOf(1), aaa.id);
 	}
+    @Test
+    void map_Embed() throws Exception{
+        Field field = Aaa.class.getDeclaredField("aaaa");
+        PropertyMapperImpl mapper = createPropertyMapper(field, 0);
+        Aaa aaa = new Aaa();
+        Aaaa aaaa = new Aaaa();
+        aaaa.bbbb = "test";
+        mapper.map(aaa, new Object[] { aaaa });
+        assertEquals("test", aaaa.bbbb);
+    }
+
+    protected PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
+    }
 }

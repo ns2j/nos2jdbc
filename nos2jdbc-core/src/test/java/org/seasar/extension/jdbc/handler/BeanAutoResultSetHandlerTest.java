@@ -15,15 +15,17 @@
  */
 package org.seasar.extension.jdbc.handler;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.seasar.extension.jdbc.PropertyMapper;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.entity.Aaa;
+import org.seasar.extension.jdbc.entity.Aaaa;
 import org.seasar.extension.jdbc.exception.SNonUniqueResultException;
 import org.seasar.extension.jdbc.mapper.EntityMapperImpl;
 import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
@@ -46,13 +48,16 @@ class BeanAutoResultSetHandlerTest {
     @Test
     void testHandle() throws Exception {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
-                ValueTypes.STRING };
+                ValueTypes.STRING, ValueTypes.STRING };
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
+        Field field3 = Aaaa.class.getDeclaredField("bbbb");
+        Field embedField3 = Aaa.class.getDeclaredField("aaaa");
+        PropertyMapperImpl propertyMapper3 = createPropertyMapper(field3, 2, embedField3);
         EntityMapperImpl entityMapper = new EntityMapperImpl(Aaa.class,
-                new PropertyMapper[] { propertyMapper, propertyMapper2 },
+                new PropertyMapper[] { propertyMapper, propertyMapper2, propertyMapper3 },
                 new int[] { 0 });
 
         BeanAutoResultSetHandler handler = new BeanAutoResultSetHandler(
@@ -64,14 +69,19 @@ class BeanAutoResultSetHandlerTest {
         columnMeta = new MockColumnMetaData();
         columnMeta.setColumnLabel("NAME");
         rsMeta.addColumnMetaData(columnMeta);
+        columnMeta = new MockColumnMetaData();
+        columnMeta.setColumnLabel("AAAA__BBBB");
+        rsMeta.addColumnMetaData(columnMeta);
         MockResultSet rs = new MockResultSet(rsMeta);
         ArrayMap data = new ArrayMap();
         data.put("ID", Integer.valueOf(1));
         data.put("NAME", "SCOTT");
+        data.put("AAAA__BBBB", "aaaa");
         rs.addRowData(data);
         Aaa aaa = (Aaa) handler.handle(rs);
         assertEquals(Integer.valueOf(1), aaa.id);
         assertEquals("SCOTT", aaa.name);
+        assertEquals("aaaa", aaa.aaaa.bbbb);
     }
 
     /**
@@ -83,9 +93,9 @@ class BeanAutoResultSetHandlerTest {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         EntityMapperImpl entityMapper = new EntityMapperImpl(Aaa.class,
                 new PropertyMapper[] { propertyMapper, propertyMapper2 },
                 new int[] { 0 });
@@ -123,9 +133,9 @@ class BeanAutoResultSetHandlerTest {
         ValueType[] valueTypes = new ValueType[] { ValueTypes.INTEGER,
                 ValueTypes.STRING };
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         EntityMapperImpl entityMapper = new EntityMapperImpl(Aaa.class,
                 new PropertyMapper[] { propertyMapper, propertyMapper2 },
                 new int[] { 0 });
@@ -156,6 +166,18 @@ class BeanAutoResultSetHandlerTest {
             System.out.println(e);
             assertEquals("select * from aaa", e.getSql());
         }
+    }
+
+    private PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        return createPropertyMapper(field, index, null);
+    }
+
+    private PropertyMapperImpl createPropertyMapper(Field field, int index, Field embedField) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setEmbedField(embedField);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
     }
 
 }

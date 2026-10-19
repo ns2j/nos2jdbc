@@ -17,6 +17,7 @@ package org.seasar.extension.jdbc.meta;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +33,6 @@ import org.seasar.extension.jdbc.entity.Jjj;
 import org.seasar.extension.jdbc.entity.Kkk;
 import org.seasar.extension.jdbc.exception.FieldDuplicatedRuntimeException;
 import org.seasar.extension.jdbc.exception.JoinColumnAutoConfigurationRuntimeException;
-import org.seasar.extension.jdbc.exception.JoinColumnNotFoundRuntimeException;
 import org.seasar.extension.jdbc.exception.ManyToOneFKNotFoundRuntimeException;
 import org.seasar.extension.jdbc.exception.MappedByNotIdenticalRuntimeException;
 import org.seasar.extension.jdbc.exception.MappedByPropertyNotFoundRuntimeException;
@@ -43,6 +43,8 @@ import org.seasar.extension.jdbc.exception.UnsupportedInheritanceRuntimeExceptio
 import org.seasar.framework.convention.impl.PersistenceConventionImpl;
 import org.seasar.framework.util.DisposableUtil;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -58,7 +60,6 @@ class EntityMetaFactoryImplTest {
 
     private EntityMetaFactoryImpl factory;
 
-    
     @BeforeEach
     void setUp() {
         PersistenceConventionImpl convention = new PersistenceConventionImpl();
@@ -77,7 +78,6 @@ class EntityMetaFactoryImplTest {
         factory.initialize();
     }
 
-    
     @AfterEach
     void tearDown() throws Exception {
         DisposableUtil.dispose();
@@ -306,7 +306,7 @@ class EntityMetaFactoryImplTest {
         try {
             factory.getEntityMeta(Hoge.class);
             fail();
-        } catch (JoinColumnNotFoundRuntimeException e) {
+        } catch (OneToOneFKNotFoundRuntimeException e) {
             System.out.println(e);
             assertEquals("Hoge2", e.getEntityName());
             assertEquals("foo", e.getPropertyName());
@@ -386,6 +386,87 @@ class EntityMetaFactoryImplTest {
     void testColumnMeta_relationship() throws Exception {
         EntityMeta entityMeta = factory.getEntityMeta(Aaa.class);
         assertFalse(entityMeta.hasColumnPropertyMeta("bbb"));
+    }
+
+    /**
+     * @throws Exception
+     */
+    @Test
+    void testGetEntityMeta_multipleEmbedded() throws Exception {
+        EntityMeta entityMeta = factory.getEntityMeta(MyEntityMultipleEmbedded.class);
+        assertNotNull(entityMeta);
+        assertTrue(entityMeta.hasPropertyMeta("id__value"));
+        assertTrue(entityMeta.hasPropertyMeta("lunchFee__value"));
+        assertEquals("ID__VALUE", entityMeta.getPropertyMeta("id__value").getColumnMeta().getName());
+        assertEquals("LUNCH_FEE__VALUE", entityMeta.getPropertyMeta("lunchFee__value").getColumnMeta().getName());
+    }
+
+    @Test
+    void testGetEntityMeta_embeddedId() throws Exception {
+        EntityMeta entityMeta = factory.getEntityMeta(MyEntityWithEmbeddedId.class);
+        assertNotNull(entityMeta);
+        assertTrue(entityMeta.hasPropertyMeta("id__main"));
+        assertTrue(entityMeta.hasPropertyMeta("id__sub"));
+
+        // Verify they are recognized as IDs
+        assertTrue(entityMeta.getPropertyMeta("id__main").isId());
+        assertTrue(entityMeta.getPropertyMeta("id__sub").isId());
+
+        List<PropertyMeta> idList = entityMeta.getIdPropertyMetaList();
+        assertEquals(2, idList.size());
+    }
+
+    @Test
+    void testGetEntityMeta_embedded() throws Exception {
+        EntityMeta entityMeta = factory.getEntityMeta(MyEntityWithEmbedded.class);
+        assertNotNull(entityMeta);
+        assertTrue(entityMeta.hasPropertyMeta("info__main"));
+        assertTrue(entityMeta.hasPropertyMeta("info__sub"));
+
+        // Verify they are NOT recognized as IDs
+        assertFalse(entityMeta.getPropertyMeta("info__main").isId());
+        assertFalse(entityMeta.getPropertyMeta("info__sub").isId());
+    }
+
+    @Entity
+    private static class MyEntityMultipleEmbedded {
+        @Id
+        @Embedded
+        public MyEmbed1 id;
+
+        @Embedded
+        public MyEmbed2 lunchFee;
+    }
+
+    @Embeddable
+    private static class MyEmbed1 {
+        public Long value;
+    }
+
+    @Embeddable
+    private static class MyEmbed2 {
+        public BigDecimal value;
+    }
+
+    @Entity
+    private static class MyEntityWithEmbeddedId {
+        @jakarta.persistence.EmbeddedId
+        public MyEmbedCode id;
+    }
+
+    @Entity
+    private static class MyEntityWithEmbedded {
+        @Id
+        public Integer id;
+
+        @Embedded
+        public MyEmbedCode info;
+    }
+
+    @Embeddable
+    private static class MyEmbedCode {
+        public String main;
+        public String sub;
     }
 
     @Entity(name = "Hoge2")

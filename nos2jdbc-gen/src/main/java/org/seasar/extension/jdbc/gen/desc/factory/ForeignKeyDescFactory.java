@@ -70,7 +70,7 @@ public class ForeignKeyDescFactory {
                 || propertyMeta.getMappedBy() != null) {
             return null;
         }
-        ReferentialConstraint referentialConstraint = propertyMeta.getField()
+        ReferentialConstraint referentialConstraint = propertyMeta
                 .getAnnotation(ReferentialConstraint.class);
         if (referentialConstraint == null) {
             if (!regardRelationshipAsFk) {
@@ -159,7 +159,7 @@ public class ForeignKeyDescFactory {
      */
     protected ReferentialConstraint getReferentialConstraint(
             PropertyMeta propertyMeta) {
-        ReferentialConstraint referentialConstraint = propertyMeta.getField()
+        ReferentialConstraint referentialConstraint = propertyMeta
                 .getAnnotation(ReferentialConstraint.class);
         return referentialConstraint != null ? referentialConstraint
                 : AnnotationUtil.getDefaultReferentialConstraint();

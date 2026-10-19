@@ -194,12 +194,12 @@ class AutoBatchInsertTest {
         AutoBatchInsertImpl<Eee> query = new AutoBatchInsertImpl<Eee>(manager,
                 entities);
         query.prepareTargetProperties();
-        assertEquals(7, query.targetProperties.size());
+        assertEquals(8, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("name", query.targetProperties.get(1).getName());
         assertEquals("longText", query.targetProperties.get(2).getName());
         assertEquals("fffId", query.targetProperties.get(3).getName());
-        assertEquals("version", query.targetProperties.get(4).getName());
+        assertEquals("version", query.targetProperties.get(5).getName());
     }
 
     /**
@@ -263,11 +263,11 @@ class AutoBatchInsertTest {
                 entities);
         query.excludes("name");
         query.prepareTargetProperties();
-        assertEquals(6, query.targetProperties.size());
+        assertEquals(7, query.targetProperties.size());
         assertEquals("id", query.targetProperties.get(0).getName());
         assertEquals("longText", query.targetProperties.get(1).getName());
         assertEquals("fffId", query.targetProperties.get(2).getName());
-        assertEquals("version", query.targetProperties.get(3).getName());
+        assertEquals("version", query.targetProperties.get(4).getName());
     }
 
     /**
@@ -296,7 +296,7 @@ class AutoBatchInsertTest {
         AutoBatchInsertImpl<Eee> query = new AutoBatchInsertImpl<Eee>(manager,
                 entities);
         query.prepare("execute");
-        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT)",
+        assertEquals(" (ID, NAME, LONG_TEXT, FFF_ID, AAAA__BBBB, VERSION, CREATE_AT, UPDATE_AT)",
                 query.intoClause.toSql());
     }
 
@@ -310,7 +310,7 @@ class AutoBatchInsertTest {
         AutoBatchInsertImpl<Eee> query = new AutoBatchInsertImpl<Eee>(manager,
                 entities);
         query.prepare("execute");
-        assertEquals(" values (?, ?, ?, ?, ?, ?, ?)", query.valuesClause.toSql());
+        assertEquals(" values (?, ?, ?, ?, ?, ?, ?, ?)", query.valuesClause.toSql());
     }
 
     /**
@@ -324,7 +324,7 @@ class AutoBatchInsertTest {
                 entities);
         query.prepare("execute");
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (?, ?, ?, ?, ?, ?, ?)",
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, AAAA__BBBB, VERSION, CREATE_AT, UPDATE_AT) values (?, ?, ?, ?, ?, ?, ?, ?)",
                 query.executedSql);
     }
 
@@ -340,35 +340,35 @@ class AutoBatchInsertTest {
         query.prepare("execute");
 
         query.prepareParams(entities.get(0));
-        assertEquals(7, query.getParamSize());
+        assertEquals(8, query.getParamSize());
         assertEquals(Integer.valueOf(1), query.getParam(0).value);
         assertEquals("foo", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1L), query.getParam(5).value);
         assertEquals(Long.valueOf(1L), entities.get(0).version);
         query.resetParams();
 
         query.prepareParams(entities.get(1));
-        assertEquals(7, query.getParamSize());
+        assertEquals(8, query.getParamSize());
         assertEquals(Integer.valueOf(2), query.getParam(0).value);
         assertEquals("bar", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1L), query.getParam(5).value);
         assertEquals(Long.valueOf(1L), entities.get(1).version);
         query.resetParams();
 
         query.prepareParams(entities.get(2));
-        assertEquals(7, query.getParamSize());
+        assertEquals(8, query.getParamSize());
         assertEquals(Integer.valueOf(3), query.getParam(0).value);
         assertEquals("baz", query.getParam(1).value);
         assertNull(query.getParam(2).value);
         assertTrue(query.getParam(2).valueType instanceof StringClobType);
         assertNull(query.getParam(3).value);
-        assertEquals(Long.valueOf(1L), query.getParam(4).value);
+        assertEquals(Long.valueOf(1L), query.getParam(5).value);
         assertEquals(Long.valueOf(1L), entities.get(1).version);
     }
 
@@ -411,7 +411,7 @@ class AutoBatchInsertTest {
         SqlLog sqlLog = SqlLogRegistryLocator.getInstance().getLast();
         String actual = DateTimeStr.replace(sqlLog.getCompleteSql());
         assertEquals(
-                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, VERSION, CREATE_AT, UPDATE_AT) values (3, 'baz', null, null, 1, '" + DateTimeStr.REPLACE + "', '" + DateTimeStr.REPLACE + "')",
+                "insert into EEE (ID, NAME, LONG_TEXT, FFF_ID, AAAA__BBBB, VERSION, CREATE_AT, UPDATE_AT) values (3, 'baz', null, null, null, 1, 'REPLACED', 'REPLACED')",
                 actual);
 
         try {

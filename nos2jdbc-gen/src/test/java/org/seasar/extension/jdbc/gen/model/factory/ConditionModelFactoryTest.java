@@ -90,18 +90,18 @@ class ConditionModelFactoryTest {
         assertEquals("aaa.bbb", model.getPackageName());
         assertEquals("ConditionModelFactoryTest$AaaCondition", model.getShortClassName());
         assertEquals(6, model.getConditionAttributeModelList().size());
-        assertEquals(1, model.getConditionAssociationModelList().size());
+        assertEquals(2, model.getConditionAssociationModelList().size());
         Set<String> set = model.getImportNameSet();
-        assertEquals(8, set.size());
-        Iterator<String> iterator = set.iterator();
-        assertEquals(Generated.class.getCanonicalName(), iterator.next());
-        assertEquals(Date.class.getCanonicalName(), iterator.next());
-        assertEquals(ComplexWhere.class.getCanonicalName(), iterator.next());
-        assertEquals(AbstractEntityCondition.class.getCanonicalName(), iterator.next());
-        assertEquals(NotNullableCondition.class.getCanonicalName(), iterator.next());
-        assertEquals(NotNullableStringCondition.class.getCanonicalName(), iterator.next());
-        assertEquals(NullableCondition.class.getCanonicalName(), iterator.next());
-        assertEquals(NullableStringCondition.class.getCanonicalName(), iterator.next());
+        assertEquals(9, set.size());
+        assertTrue(set.contains(Generated.class.getCanonicalName()));
+        assertTrue(set.contains(Date.class.getCanonicalName()));
+        assertTrue(set.contains(ComplexWhere.class.getCanonicalName()));
+        assertTrue(set.contains(AbstractEntityCondition.class.getCanonicalName()));
+        assertTrue(set.contains(NotNullableCondition.class.getCanonicalName()));
+        assertTrue(set.contains(NotNullableStringCondition.class.getCanonicalName()));
+        assertTrue(set.contains(NullableCondition.class.getCanonicalName()));
+        assertTrue(set.contains(NullableStringCondition.class.getCanonicalName()));
+        assertTrue(set.contains(Ccc.class.getName() + "Condition"));
     }
 
     /** */
@@ -137,6 +137,10 @@ class ConditionModelFactoryTest {
         /** */
         @ManyToOne
         protected Bbb bbb;
+
+        /** */
+        @jakarta.persistence.Embedded
+        public Ccc ccc;
     }
 
     /** */
@@ -147,5 +151,11 @@ class ConditionModelFactoryTest {
         @Id
         @Column(nullable = false)
         protected Integer id;
+    }
+
+    /** */
+    @jakarta.persistence.Embeddable
+    public static class Ccc {
+        public String city;
     }
 }

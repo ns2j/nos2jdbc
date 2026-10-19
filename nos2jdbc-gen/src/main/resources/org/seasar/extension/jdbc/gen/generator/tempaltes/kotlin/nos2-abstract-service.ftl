@@ -31,12 +31,16 @@ import org.springframework.beans.factory.annotation.Autowired
 </#if>
 
 import org.seasar.extension.jdbc.AutoSelect
+import org.seasar.extension.jdbc.EntityMeta
+import org.seasar.extension.jdbc.PropertyMeta
 import org.seasar.extension.jdbc.JdbcManager
 import org.seasar.extension.jdbc.SqlFileSelect
 import org.seasar.extension.jdbc.SqlFileUpdate
+import org.seasar.extension.jdbc.manager.JdbcManagerImplementor
 import org.seasar.extension.jdbc.parameter.Parameter
 import org.seasar.framework.beans.util.BeanMap
 import org.seasar.framework.util.StringUtil
+import org.seasar.framework.util.FieldUtil
 import org.seasar.framework.util.GenericUtil
 
 /**
@@ -170,6 +174,27 @@ open class ${shortClassName}<T>() {
      */
     fun update(entity: T) : Int{
         return jdbcManager.update(entity).execute();
+    }
+
+   /**
+     * エンティティをidがnullの場合は挿入し、null以外の場合は更新します。
+     * 
+     * @param entity
+     *            エンティティ
+     * @return 更新した行数
+     */
+    fun upsert(entity: T) : Int {
+        val jmi: JdbcManagerImplementor = jdbcManager as JdbcManagerImplementor
+        val entityMeta: EntityMeta  = jmi.getEntityMetaFactory().getEntityMeta(entity!!::class.java)
+        for (propertyMeta: PropertyMeta in entityMeta.getAllColumnPropertyMeta()) {
+            val value: Any? = FieldUtil.get(propertyMeta.getField(), entity)
+            if (propertyMeta.isId()) {
+                if (value != null) {
+                    return update(entity)
+                }
+            }
+        }
+       return insert(entity)
     }
 
     /**

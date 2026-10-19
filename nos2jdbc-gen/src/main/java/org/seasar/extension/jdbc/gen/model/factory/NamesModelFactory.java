@@ -15,6 +15,10 @@
  */
 package org.seasar.extension.jdbc.gen.model.factory;
 
+import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.gen.model.NamesAssociationModel;
@@ -73,8 +77,33 @@ public class NamesModelFactory {
         namesModel.setEntityClassName(entityMeta.getEntityClass().getName());
         namesModel.setShortEntityClassName(entityMeta.getEntityClass()
                 .getSimpleName());
+        Set<Field> processedEmbedFields = new HashSet<Field>();
         for (PropertyMeta propertyMeta : entityMeta.getAllPropertyMeta()) {
             if (propertyMeta.isTransient()) {
+                continue;
+            }
+            Field embedField = propertyMeta.getEmbedField();
+            if (embedField != null) {
+                if (!processedEmbedFields.contains(embedField)) {
+                    processedEmbedFields.add(embedField);
+                    NamesAssociationModel namesAssociationModel = new NamesAssociationModel();
+                    namesAssociationModel.setName(embedField.getName());
+                    String targetShortClassName = INNER_CLASS_NAME_PREFIX
+                            + embedField.getType().getSimpleName()
+                            + namesClassNameSuffix;
+                    namesAssociationModel.setShortClassName(targetShortClassName);
+                    StringBuilder buf = new StringBuilder();
+                    if (packageName != null) {
+                        buf.append(packageName);
+                        buf.append(".");
+                    }
+                    buf.append(embedField.getType().getSimpleName());
+                    buf.append(namesClassNameSuffix);
+                    buf.append(".");
+                    buf.append(targetShortClassName);
+                    namesAssociationModel.setClassName(buf.toString());
+                    namesModel.adddNamesAssociationModel(namesAssociationModel);
+                }
                 continue;
             }
             if (propertyMeta.isRelationship()) {
@@ -123,8 +152,10 @@ public class NamesModelFactory {
                 + namesClassNameSuffix;
         namesAssociationModel.setShortClassName(shortClassName);
         StringBuilder buf = new StringBuilder();
-        buf.append(packageName);
-        buf.append(".");
+        if (packageName != null) {
+            buf.append(packageName);
+            buf.append(".");
+        }
         buf.append(propertyMeta.getRelationshipClass().getSimpleName());
         buf.append(namesClassNameSuffix);
         buf.append(".");

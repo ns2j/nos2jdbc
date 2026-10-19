@@ -38,15 +38,15 @@ public class ArgumentTypeRegistry {
     protected static Map<Class<?>, Constructor<? extends ArgumentType<?>>> argTypeMap = new ConcurrentHashMap<Class<?>, Constructor<? extends ArgumentType<?>>>();
     static {
         argTypeMap.put(Boolean.class, ReflectionUtil.getConstructor(
-                BooleanType.class, null));
+                BooleanType.class));
         argTypeMap.put(Character.class, ReflectionUtil.getConstructor(
-                CharacterType.class, null));
+                CharacterType.class));
         argTypeMap.put(String.class, ReflectionUtil.getConstructor(
-                StringType.class, null));
+                StringType.class));
         argTypeMap.put(File.class, ReflectionUtil.getConstructor(
-                FileType.class, null));
+                FileType.class));
         argTypeMap.put(Class.class, ReflectionUtil.getConstructor(
-                ClassType.class, null));
+                ClassType.class));
     }
 
     /** コレクション型のクラスをキー、 コレクション型の{@link ArgumentType}のコンストラクタを値とするマップ */
@@ -95,8 +95,7 @@ public class ArgumentTypeRegistry {
         if (argTypeMap.containsKey(clazz)) {
             Constructor<? extends ArgumentType<?>> constructor = argTypeMap
                     .get(clazz);
-            return (ArgumentType<T>) ReflectionUtil.newInstance(constructor,
-                    null);
+            return (ArgumentType<T>) ReflectionUtil.newInstance(constructor);
         }
         if (Number.class.isAssignableFrom(clazz)) {
             return new NumberType(clazz);
@@ -148,7 +147,7 @@ public class ArgumentTypeRegistry {
             throw new NullPointerException("argumentTypeClass");
         }
         Constructor<? extends ArgumentType<?>> constructor = ReflectionUtil
-                .getConstructor(argumentTypeClass, null);
+                .getConstructor(argumentTypeClass);
         argTypeMap.put(clazz, constructor);
     }
 

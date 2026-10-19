@@ -38,7 +38,7 @@ class SqlTableWriterTest {
         table.addColumn("ename");
         table.addColumn("dname");
         DataRow row = table.addRow();
-        row.setValue("empno", new Integer(9900));
+        row.setValue("empno", Integer.valueOf(9900));
         row.setValue("ename", "hoge");
         row.setValue("dname", "aaa");
         SqlTableWriter writer = new SqlTableWriter(ds_);

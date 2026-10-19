@@ -129,7 +129,7 @@ class DataTableImplTest {
     void testCopyFromList() {
         DataTable table = new DataTableImpl("hoge");
         table.setupColumns(MyBean.class);
-        List list = new ArrayList();
+        List<MyBean> list = new ArrayList<>();
         MyBean bean = new MyBean();
         bean.setMyInt(1);
         bean.setMyString("a");

@@ -22,11 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.entity.Bbb;
 import org.seasar.extension.jdbc.entity.Ccc;
-import org.seasar.extension.jdbc.mapper.OneToOneEntityMapperImpl;
-import org.seasar.extension.jdbc.mapper.PropertyMapperImpl;
 
 /**
  * @author higa
@@ -41,9 +40,9 @@ class OneToOneEntityMapperImplTest {
 	@Test
     void testMap() throws Exception {
 		Field field = Bbb.class.getDeclaredField("id");
-		PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
+		PropertyMapperImpl propertyMapper = createPropertyMapper(field, 0);
 		Field field2 = Bbb.class.getDeclaredField("name");
-		PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+		PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
 		Field field3 = Aaa.class.getDeclaredField("bbb");
 		Field field4 = Bbb.class.getDeclaredField("aaa");
 
@@ -76,9 +75,9 @@ class OneToOneEntityMapperImplTest {
 	@Test
     void testMap_noInverse() throws Exception {
 		Field field = Ccc.class.getDeclaredField("id");
-		PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
+		PropertyMapperImpl propertyMapper = createPropertyMapper(field, 0);
 		Field field2 = Ccc.class.getDeclaredField("name");
-		PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+		PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
 		Field field3 = Bbb.class.getDeclaredField("ccc");
 
 		OneToOneEntityMapperImpl entityMapper = new OneToOneEntityMapperImpl(
@@ -102,9 +101,9 @@ class OneToOneEntityMapperImplTest {
 	@Test
     void testMap_entityNull() throws Exception {
 		Field field = Bbb.class.getDeclaredField("id");
-		PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field, 0);
+		PropertyMapperImpl propertyMapper = createPropertyMapper(field, 0);
 		Field field2 = Bbb.class.getDeclaredField("name");
-		PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+		PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
 		Field field3 = Aaa.class.getDeclaredField("bbb");
 		Field field4 = Bbb.class.getDeclaredField("aaa");
 
@@ -120,4 +119,11 @@ class OneToOneEntityMapperImplTest {
 		entityMapper.map(aaa, values, mappingContext);
 		assertNull(aaa.bbb);
 	}
+
+    protected PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
+    }
 }

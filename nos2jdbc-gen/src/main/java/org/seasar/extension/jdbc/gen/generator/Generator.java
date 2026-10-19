@@ -38,6 +38,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.Version;
 
 /**
  * {@link Generator}の実装クラスです。
@@ -84,8 +85,9 @@ public class Generator {
         if (templateFileEncoding == null) {
             throw new NullPointerException("templateFileEncoding");
         }
-        this.configuration = new Configuration(Configuration.getVersion());
-        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.getVersion()));
+        Version v = new Version(Configuration.getVersion().toString());
+        this.configuration = new Configuration(v);
+        configuration.setObjectWrapper(new DefaultObjectWrapper(v));
         configuration.setSharedVariable("include", new IncludeDirective());
         configuration.setSharedVariable("currentDate", new OnDemandDateModel());
         configuration.setEncoding(Locale.getDefault(), templateFileEncoding);

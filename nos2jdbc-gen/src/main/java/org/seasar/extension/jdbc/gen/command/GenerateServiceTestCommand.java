@@ -411,6 +411,9 @@ public class GenerateServiceTestCommand extends AbstractCommand {
     @Override
     protected void doExecute() {
         for (EntityMeta entityMeta : entityMetaReader.read()) {
+            if (entityMeta.getTableMeta() == null) {
+                continue;
+            }
             generateTest(entityMeta);
         }
     }

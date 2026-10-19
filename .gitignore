@@ -2,5 +2,6 @@
 .classpath
 .settings
 target
+settings.xml
 pom.xml.versionsBackup
 *~

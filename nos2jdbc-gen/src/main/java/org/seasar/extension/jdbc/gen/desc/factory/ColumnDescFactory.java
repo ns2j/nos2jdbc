@@ -180,7 +180,9 @@ public class ColumnDescFactory {
         } else {
             definition = dataType;
         }
-        if (propertyMeta.isCreateAt() || propertyMeta.isUpdateAt())
+        if (propertyMeta.isVersion())
+            definition = dataType + " default 1";
+        if (propertyMeta.isCreatedAt() || propertyMeta.isUpdatedAt())
             definition = dataType + dialect.getDefaultTimestamp();
         columnDesc.setDefinition(definition);
     }
@@ -258,8 +260,7 @@ public class ColumnDescFactory {
      * @return カラム
      */
     protected Column getColumn(PropertyMeta propertyMeta) {
-        Field field = propertyMeta.getField();
-        Column column = field.getAnnotation(Column.class);
+        Column column = propertyMeta.getAnnotation(Column.class);
         return column != null ? column : AnnotationUtil.getDefaultColumn();
     }
 

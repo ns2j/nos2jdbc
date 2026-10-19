@@ -283,7 +283,7 @@ public class ValueTypes {
         registerValueType(LocalDateTime.class, LOCALDATETIME);
         registerValueType(OffsetDateTime.class, TIMESTAMP_WITH_TIMEZONE);
         try {
-            isEnumMethod = Class.class.getMethod("isEnum", null);
+            isEnumMethod = Class.class.getMethod("isEnum");
             setEnumDefaultValueType(Class
                     .forName("org.seasar.extension.jdbc.types.EnumOrdinalType"));
             setEnumOrdinalValueType(Class

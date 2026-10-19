@@ -23,7 +23,6 @@ import org.seasar.extension.jdbc.ConditionType;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.WhereClause;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-import org.seasar.framework.util.FieldUtil;
 
 /**
  * {@link AutoBatchUpdate}の実装クラスです。
@@ -47,9 +46,9 @@ public class AutoBatchDeleteImpl<T> extends
 
     /**
      * @param jdbcManager
-     *            内部的なJDBCマネージャ
+     *                    内部的なJDBCマネージャ
      * @param entities
-     *            エンティティのリスト
+     *                    エンティティのリスト
      */
     public AutoBatchDeleteImpl(final JdbcManagerImplementor jdbcManager,
             final List<T> entities) {
@@ -94,13 +93,13 @@ public class AutoBatchDeleteImpl<T> extends
     protected void prepareParams(final T entity) {
         for (final PropertyMeta propertyMeta : entityMeta
                 .getIdPropertyMetaList()) {
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
         if (!ignoreVersion && entityMeta.hasVersionPropertyMeta()) {
             final PropertyMeta propertyMeta = entityMeta
                     .getVersionPropertyMeta();
-            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            final Object value = propertyMeta.getValue(entity);
             addParam(value, propertyMeta);
         }
     }

@@ -15,13 +15,20 @@
  */
 package org.seasar.extension.jdbc.mapper;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
 import org.seasar.extension.jdbc.RelationshipEntityMapper;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.FieldUtil;
+
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 
 /**
  * エンティティマッパーや関連マッパーのための抽象クラスです。
@@ -50,8 +57,9 @@ public abstract class AbstractEntityMapper {
      * 関連エンティティマッパーのリストです。
      */
     protected List<RelationshipEntityMapper> relationshipEntityMapperList = new ArrayList<RelationshipEntityMapper>();
-//i
+    // i
     protected boolean shouldCreateNullEntity;
+
     /**
      * {@link AbstractEntityMapper}を作成します。
      * 
@@ -131,9 +139,25 @@ public abstract class AbstractEntityMapper {
     protected Object createEntity(Object[] values,
             MappingContext mappingContext, Object key) {
         Object entity = ClassUtil.newInstance(entityClass);
-        for (PropertyMapper propertyMapper : propertyMappers) {
-            propertyMapper.map(entity, values);
+        Map<Field, Object> fieldEmbedObjMap = new HashMap<>();
+        for (Field f : entityClass.getDeclaredFields()) {
+            if (f.getAnnotation(Embedded.class) != null || f.getAnnotation(EmbeddedId.class) != null) {
+                Object embedObj = ClassUtil.newInstance(f.getType());
+                FieldUtil.set(f, entity, embedObj);
+                for (Field ef : f.getType().getDeclaredFields()) {
+                    fieldEmbedObjMap.put(ef, embedObj);
+                }
+            }
         }
+
+        for (PropertyMapper propertyMapper : propertyMappers) {
+            Object embedObj = fieldEmbedObjMap.get(propertyMapper.getField());
+            if (embedObj == null)
+                propertyMapper.map(entity, values);
+            else
+                propertyMapper.map(embedObj, values);
+        }
+
         if (key != null) {
             mappingContext.setCache(entityClass, key, entity);
         }

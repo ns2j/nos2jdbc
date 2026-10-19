@@ -26,18 +26,24 @@ import java.util.Map;
 
 <#if componentType == "cdi">
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 </#if>
 <#if componentType == "spring">
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 </#if>
 
 import org.seasar.extension.jdbc.AutoSelect;
+import org.seasar.extension.jdbc.EntityMeta;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.SqlFileSelect;
 import org.seasar.extension.jdbc.SqlFileUpdate;
+import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.parameter.Parameter;
 import org.seasar.framework.beans.util.BeanMap;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.GenericUtil;
 
 /**
@@ -50,6 +56,7 @@ import org.seasar.framework.util.GenericUtil;
  *            エンティティの型 
  */
 @Generated(value = {<#list generatedInfoList as info>"${info}"<#if info_has_next>, </#if></#list>}, date = "${currentDate?datetime?string["yyyy/MM/dd HH:mm:ss"]}")
+@Transactional
 public abstract class ${shortClassName}<T> {
 
     /**
@@ -174,6 +181,27 @@ public abstract class ${shortClassName}<T> {
      */
     public int update(T entity) {
         return jdbcManager.update(entity).execute();
+    }
+
+    /**
+     * エンティティをidがnullの場合は挿入し、null以外の場合は更新します。
+     * 
+     * @param entity
+     *            エンティティ
+     * @return 更新した行数
+     */
+    public int upsert(T entity) {
+        final JdbcManagerImplementor jmi = (JdbcManagerImplementor)jdbcManager;
+        final EntityMeta entityMeta = jmi.getEntityMetaFactory().getEntityMeta(entity.getClass());
+        for (final PropertyMeta propertyMeta : entityMeta.getAllColumnPropertyMeta()) {
+            final Object value = FieldUtil.get(propertyMeta.getField(), entity);
+            if (propertyMeta.isId()) {
+                if (value != null) {
+                    return update(entity);
+                }
+            }
+        }
+        return insert(entity);
     }
 
     /**

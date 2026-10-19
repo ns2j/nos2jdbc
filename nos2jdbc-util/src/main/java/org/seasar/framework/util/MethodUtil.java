@@ -254,7 +254,7 @@ public class MethodUtil {
 
     private static Method getMethod(final String name) {
         try {
-            return Method.class.getMethod(name, null);
+            return Method.class.getMethod(name);
         } catch (final NoSuchMethodException e) {
             return null;
         }

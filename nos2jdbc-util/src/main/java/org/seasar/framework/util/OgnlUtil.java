@@ -19,6 +19,7 @@ import java.util.Map;
 
 import ognl.ClassResolver;
 import ognl.Ognl;
+import ognl.OgnlContext;
 import ognl.OgnlException;
 //i import org.seasar.framework.container.S2Container;
 import org.seasar.framework.exception.OgnlRuntimeException;
@@ -73,7 +74,7 @@ public class OgnlUtil {
      * @return 値
      * @see #getValue(Object, Map, Object, String, int)
      */
-    public static Object getValue(Object exp, @SuppressWarnings("rawtypes") Map ctx, Object root) {
+    public static Object getValue(Object exp, OgnlContext ctx, Object root) {
         return getValue(exp, ctx, root, null, 0);
     }
 
@@ -89,11 +90,10 @@ public class OgnlUtil {
      * @throws OgnlRuntimeException
      *             OgnlExceptionが発生した場合
      */
-    public static Object getValue(Object exp, @SuppressWarnings("rawtypes") Map ctx, Object root,
+    public static Object getValue(Object exp, OgnlContext ctx, Object root,
             String path, int lineNumber) throws OgnlRuntimeException {
         try {
-            @SuppressWarnings("rawtypes")
-            Map newCtx = addClassResolverIfNecessary(ctx, root);
+            OgnlContext newCtx = addClassResolverIfNecessary(ctx, root);
             if (newCtx != null) {
                 if (exp instanceof String)
                     return Ognl.getValue((String)exp, newCtx, root);
@@ -140,8 +140,7 @@ public class OgnlUtil {
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    static Map addClassResolverIfNecessary(Map ctx, Object root) {
+    static OgnlContext addClassResolverIfNecessary(OgnlContext ctx, Object root) {
 //i        if (root instanceof S2Container) {
 //i            S2Container container = (S2Container) root;
 //i            ClassLoader classLoader = container.getClassLoader();
@@ -182,7 +181,7 @@ public class OgnlUtil {
         }
 
         @Override
-        public Class<?> classForName(String className, @SuppressWarnings("rawtypes") Map ctx)
+        public Class<?> classForName(String className, OgnlContext ctx)
                 throws ClassNotFoundException {
             try {
                 return classLoader.loadClass(className);

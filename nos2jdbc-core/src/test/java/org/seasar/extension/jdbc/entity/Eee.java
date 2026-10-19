@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
@@ -61,6 +62,10 @@ public class Eee {
     @OneToOne
     public Fff fff;
 
+    @Embedded
+    public Aaaa aaaa;
+    
+    
     /**
      * 
      */

@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.PropertyMapper;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.ValueType;
 import org.seasar.extension.jdbc.entity.Aaa;
 import org.seasar.extension.jdbc.mapper.EntityMapperImpl;
@@ -202,13 +203,20 @@ class BeanIterationAutoResultSetHandlerTest {
 
     private EntityMapperImpl createEntityMapper() throws NoSuchFieldException {
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         EntityMapperImpl entityMapper = new EntityMapperImpl(Aaa.class,
                 new PropertyMapper[] { propertyMapper, propertyMapper2 },
                 new int[] { 0 });
         return entityMapper;
+    }
+
+    private PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
     }
 
     private MockResultSet createResultSet() {

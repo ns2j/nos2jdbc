@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.seasar.extension.jdbc.MappingContext;
 import org.seasar.extension.jdbc.PropertyMapper;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.extension.jdbc.RelationshipEntityMapper;
 import org.seasar.extension.jdbc.entity.Aaa;
 
@@ -80,9 +81,9 @@ class AbstEntityMapperTest {
     @Test
     void testGetEntity() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         MyMapper mapper = new MyMapper(Aaa.class, new PropertyMapper[] {
                 propertyMapper, propertyMapper2 }, new int[] { 0 });
         Object[] values = new Object[] { 11, "SCOTT" };
@@ -102,9 +103,9 @@ class AbstEntityMapperTest {
     @Test
     void testGetEntity_idIndicesGtZero_nullkey() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         MyMapper mapper = new MyMapper(Aaa.class, new PropertyMapper[] {
                 propertyMapper, propertyMapper2 }, new int[] { 0 });
         Object[] values = new Object[] { null, null };
@@ -121,9 +122,9 @@ class AbstEntityMapperTest {
     @Test
     void testGetEntity_idIndicesZero() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         MyMapper mapper = new MyMapper(Aaa.class, new PropertyMapper[] {
                 propertyMapper, propertyMapper2 }, new int[0]);
         Object[] values = new Object[] { 11, "SCOTT" };
@@ -143,9 +144,9 @@ class AbstEntityMapperTest {
     @Test
     void testCreateEntity() throws Exception {
         Field field1 = Aaa.class.getDeclaredField("id");
-        PropertyMapperImpl propertyMapper = new PropertyMapperImpl(field1, 0);
+        PropertyMapperImpl propertyMapper = createPropertyMapper(field1, 0);
         Field field2 = Aaa.class.getDeclaredField("name");
-        PropertyMapperImpl propertyMapper2 = new PropertyMapperImpl(field2, 1);
+        PropertyMapperImpl propertyMapper2 = createPropertyMapper(field2, 1);
         MyMapper mapper = new MyMapper(Aaa.class, new PropertyMapper[] {
                 propertyMapper, propertyMapper2 }, new int[] { 0 });
         Object[] values = new Object[] { 11, "SCOTT" };
@@ -175,6 +176,13 @@ class AbstEntityMapperTest {
         mapper.addRelationshipEntityMapper(new MyRelationshipMapper());
         mapper.mapRelationships(null, null, null);
         assertFalse(called);
+    }
+
+    protected PropertyMapperImpl createPropertyMapper(Field field, int index) {
+        PropertyMeta pm = new PropertyMeta();
+        pm.setField(field);
+        pm.setName(field.getName());
+        return new PropertyMapperImpl(pm, index);
     }
 
     private static class MyMapper extends AbstractEntityMapper {

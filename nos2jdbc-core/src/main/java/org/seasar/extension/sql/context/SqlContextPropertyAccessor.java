@@ -18,6 +18,7 @@ package org.seasar.extension.sql.context;
 import java.util.Map;
 
 import ognl.ObjectPropertyAccessor;
+import ognl.OgnlContext;
 import ognl.OgnlException;
 
 import org.seasar.extension.sql.SqlArgWrapper;
@@ -34,7 +35,7 @@ public class SqlContextPropertyAccessor extends ObjectPropertyAccessor {
     private static final String HAS_PREFIX = "has_";
 
     @Override
-    public Object getProperty(@SuppressWarnings("rawtypes") Map cx, Object target, Object name)
+    public Object getProperty(OgnlContext cx, Object target, Object name)
             throws OgnlException {
 
         SqlContext ctx = (SqlContext) target;

@@ -15,13 +15,13 @@
  */
 package org.seasar.extension.sql.node;
 
+import nos2jdbc.NoS2JdbcConstants;
 import org.seasar.extension.sql.Node;
 import org.seasar.extension.sql.SemicolonNotAllowedRuntimeException;
 import org.seasar.extension.sql.SqlContext;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.util.StringUtil;
 
 /**
  * 値を埋め込む用の{@link Node}です。
@@ -44,10 +44,12 @@ public class EmbeddedValueNode extends AbstractNode {
      */
     public EmbeddedValueNode(String expression) {
         this.expression = expression;
-        String[] array = StringUtil.split(expression, ".");
-        this.baseName = array[0];
-        if (array.length > 1) {
-            this.propertyName = array[1];
+        int index = expression.indexOf('.');
+        if (index > 0) {
+            this.baseName = expression.substring(0, index);
+            this.propertyName = expression.substring(index + 1);
+        } else {
+            this.baseName = expression;
         }
     }
 
@@ -65,10 +67,16 @@ public class EmbeddedValueNode extends AbstractNode {
         Object value = ctx.getArg(baseName);
         Class<?> clazz = ctx.getArgType(baseName);
         if (propertyName != null) {
-            BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
-            PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            value = pd.getValue(value);
-            clazz = pd.getPropertyType();
+            String[] props = propertyName.split("\\." + "|" + NoS2JdbcConstants.EMBEDDED_PROPERTY_NAME_SEPARATOR);
+            for (String prop : props) {
+                if (value == null) {
+                    break;
+                }
+                BeanDesc beanDesc = BeanDescFactory.getBeanDesc(clazz);
+                PropertyDesc pd = beanDesc.getPropertyDesc(prop);
+                value = pd.getValue(value);
+                clazz = pd.getPropertyType();
+            }
         }
         if (value != null) {
             String sql = value.toString();

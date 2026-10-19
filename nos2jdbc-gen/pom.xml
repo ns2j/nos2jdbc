@@ -4,11 +4,11 @@
    <parent>
         <groupId>com.github.ns2j</groupId>
         <artifactId>nos2jdbc</artifactId>
-        <version>1.9.3</version>
+        <version>2.0.0</version>
     </parent>
 
   <modelVersion>4.0.0</modelVersion>
-
+  <name>nos2jdbc-gen</name>
   <artifactId>nos2jdbc-gen</artifactId>
 
   <build>
@@ -18,12 +18,12 @@
     <dependency>
       <groupId>com.github.ns2j</groupId>
       <artifactId>nos2jdbc-core</artifactId>
-      <version>1.9.3</version>
+      <version>2.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.30</version>
+      <version>2.0.13</version>
     </dependency>
     <dependency>
       <groupId>jakarta.transaction</groupId>
@@ -39,7 +39,7 @@
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
-      <version>2.3.31</version>
+      <version>2.3.35</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
@@ -63,7 +63,7 @@
         <dependency>
           <groupId>jakarta.annotation</groupId>
           <artifactId>jakarta.annotation-api</artifactId>
-          <version>2.1.1</version>
+          <version>3.0.0</version>
         </dependency>
 
       </dependencies>

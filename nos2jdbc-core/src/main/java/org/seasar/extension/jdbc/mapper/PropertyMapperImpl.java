@@ -18,7 +18,7 @@ package org.seasar.extension.jdbc.mapper;
 import java.lang.reflect.Field;
 
 import org.seasar.extension.jdbc.PropertyMapper;
-import org.seasar.framework.util.FieldUtil;
+import org.seasar.extension.jdbc.PropertyMeta;
 
 /**
  * {@link PropertyMapper}の実装クラスです。
@@ -29,9 +29,9 @@ import org.seasar.framework.util.FieldUtil;
 public class PropertyMapperImpl implements PropertyMapper {
 
 	/**
-	 * フィールドです。
+	 * プロパティメタデータです。
 	 */
-	protected Field field;
+	protected PropertyMeta propertyMeta;
 
 	/**
 	 * プロパティのインデックスです。
@@ -41,17 +41,17 @@ public class PropertyMapperImpl implements PropertyMapper {
 	/**
 	 * {@link PropertyMapperImpl}を作成します。
 	 * 
-	 * @param field
-	 *            フィールド
+	 * @param propertyMeta
+	 *            プロパティメタデータ
 	 * @param propertyIndex
 	 *            プロパティインデックス
 	 */
-	public PropertyMapperImpl(Field field, int propertyIndex) {
-		field.setAccessible(true);
-		this.field = field;
+	public PropertyMapperImpl(PropertyMeta propertyMeta, int propertyIndex) {
+		this.propertyMeta = propertyMeta;
 		this.propertyIndex = propertyIndex;
 	}
-
+	
+	@Override
 	public void map(Object entity, Object[] values) {
 		setFieldValue(entity, values[propertyIndex]);
 	}
@@ -68,7 +68,7 @@ public class PropertyMapperImpl implements PropertyMapper {
 		if (value == null) {
 			return;
 		}
-		FieldUtil.set(field, entity, value);
+		propertyMeta.setValue(entity, value);
 	}
 
 	/**
@@ -76,8 +76,9 @@ public class PropertyMapperImpl implements PropertyMapper {
 	 * 
 	 * @return フィールド
 	 */
+	@Override
 	public Field getField() {
-		return field;
+		return propertyMeta.getField();
 	}
 
 	/**
