@@ -11,7 +11,7 @@ nos2jdbc は、S2JDBC から Seasar2 Container への依存を取り除き、Spr
 S2JDBC の API や SQL 自動生成機能を引き継ぎ、現代の Java 環境で利用できるようにしています。また、独自の機能拡張も行っています。
 
 - **S2JDBC 由来の ORM 機能** — Entity を使った CRUD、条件指定、JOIN、SQL 自動生成
-- **JOIN による N+1 問題への対策** — S2JDBC 由来の `innerJoin()` や `leftOuterJoin()` をクエリー作成時に指定し、関連 Entity を JOIN でまとめて取得
+- **JOIN による N+1 問題への対策** — `innerJoin()` や `leftOuterJoin()` で関連 Entity を JOIN 取得
 - **コンテナ非依存** — Seasar2 Container に依存せず、利用環境に応じて構成可能
 - **SQL を活用した柔軟なマッピング** — 任意の SQL の実行結果を Entity にマッピング
 - **JPA 系アノテーションの拡張** — `@Embedded`、`@Embeddable`、`@EmbeddedId` に対応
@@ -74,9 +74,13 @@ jdbcManager.from(Employee.class)
            .getResultList();
 ```
 
-S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定することで、関連 Entity を JOIN でまとめて取得できます。これにより、関連 Entity を個別に取得するための追加クエリーを減らし、N+1 問題への対策ができます。
+S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定することで、関連 Entity を JOIN でまとめて取得できます。
 
-### 2. SQL の実行結果を Entity にマッピング
+関連 Entity を個別に取得するための追加クエリーを減らせるため、N+1 問題への対策として利用できます。実際の効果は、クエリーの構成や関連の取得方法によって異なります。
+
+### 2. nos2jdbc で追加・拡張した機能
+
+#### 2.1. SQL の実行結果を Entity にマッピング
 
 任意の SQL を実行し、その結果を Entity にマッピングできます。
 
@@ -85,8 +89,9 @@ S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時�
 この機能では、次のアノテーションを利用します。
 
 - `@NonAuto` — 自動マッピングに依存しない Entity の定義
+- `@NoFk` — 関連のマッピングで、外部キーに基づく関連の自動解決を行わないための指定
 
-- `@NoFk` — 外部キーに基づく関連の自動解決を行わないための指定
+例えば、部署ごとの集計結果と、その部署に所属する従業員をまとめて扱う場合、次のような Entity を定義できます。
 
 ```java
 @Entity
@@ -102,17 +107,22 @@ public class DepartmentSummary {
     public List<Employee> employees;
 }
 ```
+
+`@OneToMany` は `employees` が従業員のコレクションであることを表します。ここで `@NoFk` を指定することで、通常の外部キーに基づく関連の自動解決を行わず、SQL の実行結果を使って関連をマッピングする用途に対応できます。
+
+SQL の実行には `selectBySql()` を利用します。
+
 ```java
 List<DepartmentSummary> results = jdbcManager
     .selectBySql(DepartmentSummary.class, sql)
     .getResultList();
 ```
 
-カラム名が重複しないように SQL の SELECT 句を定義してください。
+SQL の SELECT 句では、マッピング対象のプロパティに対応するカラム名を指定してください。複数のテーブルから同名のカラムを取得する場合は、適切に別名を付け、カラム名の重複を避けてください。
 
 また、集計結果などで ID が `null` の場合でも Entity オブジェクトを生成できるため、通常のテーブル検索以外の用途にも対応できます。
 
-### 3. `@Embedded` / `@Embeddable` / `@EmbeddedId`
+#### 2.2. `@Embedded` / `@Embeddable` / `@EmbeddedId`
 
 JPA の埋め込み型に対応し、Entity 内に値オブジェクトをまとめて定義できます。
 
@@ -139,11 +149,11 @@ public class Address {
 
 複合主キーを値オブジェクトとして表現する `@EmbeddedId` にも対応しています。
 
-### 4. JSON シリアライズ時の循環参照対策
+#### 2.3. JSON シリアライズ時の循環参照対策
 
 双方向の関連を持つ Entity を JSON に変換すると、親から子、子から親へと参照が循環することがあります。
 
-この問題に対応するため、逆参照を構築せずに結果を取得する API を追加しています。
+この問題に対応するため、逆参照を構築せずに結果を取得する API を用意しています。
 
 ```java
 getSingleResultWithoutInverseField()
@@ -152,7 +162,7 @@ getResultListWithoutInverseField()
 
 JSON API などで Entity を返す際に、関連オブジェクトの循環を避けたい場合に利用できます。
 
-### 5. Java Record と Bean の相互変換
+#### 2.4. Java Record と Bean の相互変換
 
 Java Record と従来の JavaBean を相互変換するユーティリティを追加しています。
 
@@ -166,7 +176,7 @@ Records.copyToBean(record, bean);
 
 例えば、可変な Entity や JavaBean から、API のレスポンスに適した不変データモデルである Record を生成できます。
 
-### 6. コード生成
+#### 2.5. コード生成
 
 `nos2jdbc-gen` は、S2JDBC のコード生成機能をベースにした開発支援モジュールです。
 
