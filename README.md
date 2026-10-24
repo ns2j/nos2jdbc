@@ -113,7 +113,7 @@ jdbcManager.from(Employee.class)
 
 `selectBySql()` や `selectBySqlFile()` を使うと、任意の SQL の結果を Entity にマッピングできます。単純な列のマッピングだけでなく、`@NonAuto` を指定した Entity と関連定義を組み合わせ、SQL の結果を階層的なオブジェクト構造として扱うこともできます。
 
-チュートリアルの Spring Boot サンプルでは、昼食代のデータを集計する `sum.sql` を `selectBySqlFile()` で実行し、年月ごとの結果を `Ym` とその `itemList` にマッピングしています。
+チュートリアルの Spring Boot サンプルでは、昼食代の明細と会員情報を JOIN する `sum.sql` を `selectBySqlFile()` で実行し、結果を `Ym` とその `itemList` に階層的にマッピングしています。SQL 自体は集計しておらず、`GROUP BY` や集計関数もありません。`y` と `m` を ID とする `Ym` に明細をまとめるのは、結果マッピング側の役割です。
 
 `Ym` は集計結果をまとめる側の Entity です。
 
@@ -131,7 +131,7 @@ public class Ym {
 }
 ```
 
-明細側の `YmItem` では、SQL の結果に含まれる項目と、親の `Ym` への関連を定義します。
+明細側の `YmItem` では、SQL の結果に含まれる項目と、親の `Ym` への逆参照を定義します。SQL に `count` 列はないため、ここでは `count` フィールドを省略しています。
 
 ```java
 @Entity
@@ -145,7 +145,6 @@ public class YmItem {
 
     public LocalDate payOn;
     public BigDecimal amount;
-    public int count;
 
     @Transient
     @ManyToOne
@@ -166,6 +165,23 @@ from lunch_fee as lf
   join member as mem on lf.member_id = mem.id;
 ```
 
+会員情報を受け持つ `YmItemMember` は、`member_id` と `member_name` を受け取り、`ymItem` で明細側と双方向の関連を定義します。
+
+```java
+@Entity
+@NonAuto
+public class YmItemMember {
+    public Long memberId;
+    public String memberName;
+
+    @OneToOne
+    @NoFk
+    public YmItem ymItem;
+}
+```
+
+`@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。`@NoFk` は、関連先を結ぶ列が Entity の通常のカラムプロパティとして存在しないこの SQL マッピングで、外部キー列の検証を抑制するために使われています。
+
 この SQL ファイルをサービスから指定して結果を取得しています。
 
 ```java
@@ -185,9 +201,9 @@ for (Ym ym : lfService.getYm()) {
 }
 ```
 
-この例は、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) にある実装をもとにしています。SQL ファイルの列名、Entity の ID、関連定義を対応させることが重要です。
+この例は、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) にある実装をもとにしています。`y` と `m` は `Ym` の複合 ID として、`lunch_fee_id` は `YmItem` の ID として各行から親・明細を識別するのに使われます。親子関係は `Ym.itemList` の `@OneToMany(mappedBy = "ym")` と `YmItem.ym` の `@ManyToOne` の対応で表現されます。したがって、`y` と `m` がそのまま子 Entity の外部キー列になる、という説明ではありません。
 
-`@NoFk` は、このサンプルでは `@ManyToOne` や `@OneToOne` の関連フィールドに指定されています。JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制するためのもので、外部キー制約を作成・削除する指定ではありません。`@Transient` を併用した関連など、実際のマッピング方法はチュートリアルの Entity 定義と SQL を参照してください。
+`@NoFk` は、このサンプルでは `@ManyToOne` や `@OneToOne` の関連フィールドに指定されています。JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制するためのもので、外部キー制約を作成・削除する指定ではありません。`YmItem.ym` の `@Transient` は、親 `Ym` への参照を通常の永続化カラムとして扱わないことを示します。一方で `@ManyToOne` と `@NoFk` を付けることで、SQL 結果を階層的に組み立てる際の逆参照として関連を定義しています。これは通常のテーブル列としての外部キーを表すものではありません。実際の関連定義はチュートリアルの Entity と SQL を併せて参照してください。
 
 #### 2.2. `@Embedded` / `@Embeddable` / `@EmbeddedId`
 
