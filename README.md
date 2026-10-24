@@ -111,60 +111,71 @@ jdbcManager.from(Employee.class)
 
 #### 2.1. SQL の実行結果を Entity にマッピング
 
-任意の SQL を実行し、その結果を Entity にマッピングできます。集計 SQL や複雑な JOIN など、ORM の自動生成 SQL だけでは扱いにくい問い合わせにも利用できます。
+`selectBySql()` や `selectBySqlFile()` を使うと、任意の SQL の結果を Entity にマッピングできます。単純な列のマッピングだけでなく、`@NonAuto` を指定した Entity と関連定義を組み合わせ、SQL の結果を階層的なオブジェクト構造として扱うこともできます。
 
-例えば、部署ごとの従業員数を集計する場合、次のような Entity を定義できます。
+チュートリアルの Spring Boot サンプルでは、昼食代のデータを集計する `sum.sql` を `selectBySqlFile()` で実行し、年月ごとの結果を `Ym` とその `itemList` にマッピングしています。
+
+`Ym` は集計結果をまとめる側の Entity です。
 
 ```java
 @Entity
 @NonAuto
-public class DepartmentSummary {
+public class Ym {
     @Id
-    public Integer departmentId;
-    public String departmentName;
-    public Long employeeCount;
+    public Integer y;
+    @Id
+    public Integer m;
+
+    @OneToMany(mappedBy = "ym")
+    public List<YmItem> itemList;
 }
 ```
 
-SQL の SELECT 句で、マッピング先のプロパティ名に対応する別名を付けます。
-
-```sql
-SELECT
-    d.id AS departmentId,
-    d.name AS departmentName,
-    COUNT(e.id) AS employeeCount
-FROM department d
-LEFT JOIN employee e ON e.department_id = d.id
-GROUP BY d.id, d.name
-```
-
-この SQL の実行結果は、次のように取得できます。
-
-```java
-List<DepartmentSummary> results = jdbcManager
-    .selectBySql(DepartmentSummary.class, sql)
-    .getResultList();
-```
-
-ここで `sql` は上記の SQL 文を格納した文字列です。SELECT 句の別名は、マッピング対象のプロパティ名に合わせてください。同名の列を複数取得する場合も、別名を付けて区別します。集計結果などで ID が `null` となる場合にも Entity オブジェクトを生成できるため、通常のテーブル検索以外の用途にも対応できます。
-
-#### 関連定義での `@NoFk`
-
-`@NoFk` は、関連の JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制したい場合に、関連フィールドに指定します。例えば、部署から従業員への関連を次のように定義できます。
+明細側の `YmItem` では、SQL の結果に含まれる項目と、親の `Ym` への関連を定義します。
 
 ```java
 @Entity
-public class Department {
+@NonAuto
+public class YmItem {
     @Id
-    public Integer id;
+    public Long lunchFeeId;
 
-    @OneToMany
+    @OneToOne(mappedBy = "ymItem")
+    public YmItemMember member;
+
+    public LocalDate payOn;
+    public BigDecimal amount;
+    public int count;
+
+    @Transient
+    @ManyToOne
     @NoFk
-    public List<Employee> employees;
+    public Ym ym;
 }
 ```
 
-この例は関連定義の例です。必要な import や `Employee` 側のマッピングは実際のテーブル構造に合わせてください。`@NoFk` は外部キー制約を作成・削除するものではなく、`selectBySql()` の結果から `employees` コレクションを自動構築する指定でもありません。SQL の実行結果を Entity にマッピングする場合は、SELECT 句の列とマッピング先プロパティを別途対応させてください。
+チュートリアルの SQL は、年月、明細 ID、支払日、金額、会員 ID・氏名などを取得します。サービスでは SQL ファイルを指定して結果を取得しています。
+
+```java
+public List<Ym> getYm() {
+    sqlFilePathPrefix = "sql/";
+    return selectBySqlFile(Ym.class, "sum.sql").getResultList();
+}
+```
+
+取得した結果は、次のように親から明細、明細から会員情報へたどれます。
+
+```java
+for (Ym ym : lfService.getYm()) {
+    for (YmItem item : ym.itemList) {
+        System.out.println(item.member.memberName);
+    }
+}
+```
+
+この例は、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) にある実装をもとにしています。SQL ファイルの列名、Entity の ID、関連定義を対応させることが重要です。
+
+`@NoFk` は、このサンプルでは `@ManyToOne` や `@OneToOne` の関連フィールドに指定されています。JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制するためのもので、外部キー制約を作成・削除する指定ではありません。`@Transient` を併用した関連など、実際のマッピング方法はチュートリアルの Entity 定義と SQL を参照してください。
 
 #### 2.2. `@Embedded` / `@Embeddable` / `@EmbeddedId`
 
