@@ -11,7 +11,7 @@ nos2jdbc は、S2JDBC から Seasar2 Container への依存を取り除き、Spr
 S2JDBC の API や SQL 自動生成機能を引き継ぎ、現代の Java 環境で利用できるようにしています。また、独自の機能拡張も行っています。
 
 - **S2JDBC 由来の ORM 機能** — Entity を使った CRUD、条件指定、JOIN、SQL 自動生成
-- **JOIN による N+1 問題への対策** — Entityの定義時でなくクエリー作成時に、`innerJoin()` や `leftOuterJoin()` で関連 Entity を JOIN 取得
+- **JOIN による N+1 問題への対策** — Entityの定義時でなく、クエリー作成時に`innerJoin()` や `leftOuterJoin()` で関連 Entity を JOIN 取得
 - **コード生成** — `nos2jdbc-gen` による Entity、Service、検索条件関連クラス、DDL などの生成
 - **型安全なテーブル・カラム参照** — `gen-names` で `Names` クラスを生成し、テーブル名やカラム名を型安全に扱える
 - **コンテナ非依存** — Seasar2 Container に依存せず、利用環境に応じて構成可能
