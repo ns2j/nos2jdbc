@@ -131,7 +131,7 @@ public class Ym {
 }
 ```
 
-明細側の `YmItem` では、SQL の結果に含まれる項目と、親子関係を表すフィールドを定義します。SQL に `count` 列はないため、ここでは `count` フィールドを省略しています。
+明細側の `YmItem` では、SQL の結果に含まれる項目と、親子関係を表すフィールドを定義します。
 
 ```java
 @Entity
@@ -151,7 +151,7 @@ public class YmItem {
 }
 ```
 
-`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`mappedBy = "ym"` はこのフィールドを参照し、結果マッパーが親 `Ym` を設定します。この用途では `@Transient` だけで足りるため、`@ManyToOne` と `@NoFk` は付けていません。
+`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`mappedBy = "ym"` はこのフィールドを参照し、結果マッパーが親 `Ym` を設定します。この用途では `@Transient` だけで足ります。
 
 ```java
 @Entity
