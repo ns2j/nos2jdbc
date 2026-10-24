@@ -180,7 +180,7 @@ public class YmItemMember {
 
 `@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。
 
-`@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。
+`@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。
 
 `YmItem.ym` と違い、`YmItemMember.ymItem` は `@Transient` が付いていないため、`@OneToOne` で独立した関連として扱われます。これは `YmItem.member` の `mappedBy = "ymItem"` が参照するフィールドです。
 
@@ -204,8 +204,6 @@ for (Ym ym : lfService.getYm()) {
 ```
 
 `y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。親 `Ym` と明細 `YmItem` は、`Ym.itemList` の `@OneToMany(mappedBy = "ym")` によって対応付けられます。
-
-このチュートリアルは HSQLDB を使用しており、SQL の `YEAR()` と `MONTH()` はその環境で使われている関数です。他のデータベースで試す場合は、日付から年・月を取り出す関数や構文を適宜読み替えてください。
 
 実際のマッピングは、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) の Entity 定義と SQL を併せて参照してください。
 
