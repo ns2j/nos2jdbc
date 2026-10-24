@@ -4,10 +4,10 @@
 
 nos2jdbc は、S2JDBC から Seasar2 Container への依存を取り除き、Spring Boot や Jakarta EE などの環境で利用できるようにした JDBC ベースの ORM ライブラリです。
 
-S2JDBC の使いやすい API や SQL 自動生成機能を引き継ぎながら、独自機能の追加や現代の Java 環境への対応を進めています。
+S2JDBC の API や SQL 自動生成機能を引き継ぎ、現代の Java 環境で利用できるようにしています。また、独自の機能拡張も行っています。
 
-- **S2JDBC ベースの ORM** — Entity を使った CRUD、条件指定、JOIN、SQL 自動生成
-- **JOIN による N+1 問題への対策** — クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定し、関連 Entity を JOIN でまとめて取得
+- **S2JDBC 由来の ORM 機能** — Entity を使った CRUD、条件指定、JOIN、SQL 自動生成
+- **JOIN による N+1 問題への対策** — S2JDBC 由来の `innerJoin()` や `leftOuterJoin()` をクエリー作成時に指定し、関連 Entity を JOIN でまとめて取得
 - **コンテナ非依存** — Seasar2 Container に依存せず、利用環境に応じて構成可能
 - **SQL を活用した柔軟なマッピング** — 任意の SQL の実行結果を Entity にマッピング
 - **JPA 系アノテーションの拡張** — `@Embedded`、`@Embeddable`、`@EmbeddedId` に対応
@@ -61,7 +61,7 @@ nos2jdbc は Maven Central Repository で公開しています。
 
 ## Features
 
-### 1. S2JDBC の API
+### 1. S2JDBC から継承した ORM 機能
 
 Entity を起点とした検索、登録、更新、削除、SQL 文字列や SQL ファイルによる問い合わせなど、S2JDBC の API をベースとした機能を利用できます。
 
@@ -70,9 +70,7 @@ jdbcManager.from(Employee.class)
            .getResultList();
 ```
 
-JOIN や検索条件を組み合わせた SQL 自動生成にも対応しています。
-
-クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定することで、関連 Entity を JOIN でまとめて取得できます。関連 Entity を個別に取得するための追加クエリーを繰り返す必要を減らし、**N+1 問題への対策**として利用できます。
+S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定することで、関連 Entity を JOIN でまとめて取得できます。これにより、関連 Entity を個別に取得するための追加クエリーを減らし、N+1 問題への対策ができます。
 
 ### 2. SQL の実行結果を Entity にマッピング
 
