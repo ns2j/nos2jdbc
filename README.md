@@ -165,8 +165,11 @@ public class YmItemMember {
     public YmItem ymItem;
 }
 ```
+
 `@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。
+
 `@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。
+
 `YmItem.ym` と違い、`YmItemMember.ymItem` は `@Transient` が付いていないため、`@OneToOne` で独立した関連として扱われます。これは `YmItem.member` の `mappedBy = "ymItem"` が参照するフィールドです。
 
 
