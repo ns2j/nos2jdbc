@@ -93,6 +93,7 @@ S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時�
 
 ```java
 import static com.example.entity.EmployeeNames.*;
+import static org.seasar.extension.jdbc.operation.Operations.*;
 
 jdbcManager.from(Employee.class)
     .where(eq(salary(), 1000))
