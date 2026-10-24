@@ -180,7 +180,7 @@ public class YmItemMember {
 
 `@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。
 
-`@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。`YmItem.ym` にはテーブル列がないため `@Transient` を付けています。一方、`YmItemMember.ymItem` はこのサンプルでは `@Transient` を付けず、`@OneToOne` と `@NoFk` で関連を定義しています。両者のアノテーションは実装どおりに異なります。
+`@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。`YmItem.ym` はテーブル列に対応せず、通常の結果列のマッピング対象ではないため `@Transient` を付けています。一方、`YmItemMember.ymItem` は `mappedBy = "ymItem"` の対応先となる関連フィールドとして、サンプル実装どおり `@OneToOne` と `@NoFk` を指定しています。
 
 この SQL ファイルをサービスから指定して結果を取得しています。
 
