@@ -153,18 +153,6 @@ public class YmItem {
 
 `YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`mappedBy = "ym"` はこのフィールドを参照し、結果マッパーが親 `Ym` を設定します。この用途では `@Transient` だけで足りるため、`@ManyToOne` と `@NoFk` は付けていません。
 
-`nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
-
-```sql
-select year(lf.pay_on) as y, month(lf.pay_on) as m,
-  lf.id as lunch_fee_id, lf.member_id, lf.pay_on, lf.amount,
-  mem.name as member_name
-from lunch_fee as lf
-  join member as mem on lf.member_id = mem.id;
-```
-
-会員情報を受け持つ `YmItemMember` は、`member_id` と `member_name` を受け取ります。このサンプルでは `memberId` は通常のプロパティで、`@Id` は付けていません。
-
 ```java
 @Entity
 @NonAuto
@@ -177,12 +165,20 @@ public class YmItemMember {
     public YmItem ymItem;
 }
 ```
-
 `@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。
-
 `@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。
-
 `YmItem.ym` と違い、`YmItemMember.ymItem` は `@Transient` が付いていないため、`@OneToOne` で独立した関連として扱われます。これは `YmItem.member` の `mappedBy = "ymItem"` が参照するフィールドです。
+
+
+`nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
+
+```sql
+select year(lf.pay_on) as y, month(lf.pay_on) as m,
+  lf.id as lunch_fee_id, lf.member_id, lf.pay_on, lf.amount,
+  mem.name as member_name
+from lunch_fee as lf
+  join member as mem on lf.member_id = mem.id;
+```
 
 この SQL ファイルをサービスから指定して結果を取得しています。
 
