@@ -1,5 +1,9 @@
 # nos2jdbc
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ns2j/nos2jdbc-core.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.github.ns2j/nos2jdbc-core)
+![Java 17+](https://img.shields.io/badge/Java-17%2B-blue.svg)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 ## No Seasar2 Container's S2JDBC
 
 nos2jdbc は、S2JDBC から Seasar2 Container への依存を取り除き、Spring Boot や Jakarta EE などの環境で利用できるようにした JDBC ベースの ORM ライブラリです。
