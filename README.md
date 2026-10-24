@@ -85,6 +85,18 @@ S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時�
 
 `gen-names` タスクでは、テーブル名やカラム名などを扱う `Names` クラスを生成できます。テーブル名やカラム名を文字列で直接記述する箇所を減らし、コンパイル時のチェックを活用したコードを記述できます。
 
+例えば、`gen-names` で生成した `Names` クラスを static import すると、次のようにカラムをメソッドとして参照して検索条件を記述できます。
+
+```java
+import static com.example.entity.EmployeeNames.*;
+
+jdbcManager.from(Employee.class)
+    .where(eq(salary(), 1000))
+    .getResultList();
+```
+
+このように、カラム名を文字列で直接指定せず、`salary()` などのメソッドを使って条件を記述できます。
+
 そのほか、Entity、Entity のテストクラス、Service、Service のテストクラス、検索条件関連のクラス、SQL ファイル用の定数クラス、DDL などの生成にも対応しています。
 
 詳細な実行方法や設定については、[nos2jdbc-tutorial](https://github.com/ns2j/nos2jdbc-tutorial) を参照してください。
