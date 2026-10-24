@@ -148,7 +148,23 @@ List<DepartmentSummary> results = jdbcManager
 
 ここで `sql` は上記の SQL 文を格納した文字列です。SELECT 句の別名は、マッピング対象のプロパティ名に合わせてください。同名の列を複数取得する場合も、別名を付けて区別します。集計結果などで ID が `null` となる場合にも Entity オブジェクトを生成できるため、通常のテーブル検索以外の用途にも対応できます。
 
-`@NoFk` は、`@ManyToOne` または `@OneToOne` の関連フィールドに指定し、関連先への JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制するためのアノテーションです。外部キー制約や SQL の実行結果を自動的に処理する指定ではありません。利用する関連定義とテーブル構造を確認したうえで指定してください。
+#### 関連定義での `@NoFk`
+
+`@NoFk` は、関連の JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制したい場合に、関連フィールドに指定します。例えば、部署から従業員への関連を次のように定義できます。
+
+```java
+@Entity
+public class Department {
+    @Id
+    public Integer id;
+
+    @OneToMany
+    @NoFk
+    public List<Employee> employees;
+}
+```
+
+この例は関連定義の例です。必要な import や `Employee` 側のマッピングは実際のテーブル構造に合わせてください。`@NoFk` は外部キー制約を作成・削除するものではなく、`selectBySql()` の結果から `employees` コレクションを自動構築する指定でもありません。SQL の実行結果を Entity にマッピングする場合は、SELECT 句の列とマッピング先プロパティを別途対応させてください。
 
 #### 2.2. `@Embedded` / `@Embeddable` / `@EmbeddedId`
 
