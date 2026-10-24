@@ -182,7 +182,7 @@ public class YmItemMember {
 
 `@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。
 
-`YmItemMember.ymItem` は、`YmItem.member` の `mappedBy = "ymItem"` が参照する関連フィールドです。こちらは `@Transient` が付いていないため、`@OneToOne` による関連メタデータが登録されます。
+`YmItem.ym` と違い、`YmItemMember.ymItem` は `@Transient` が付いていないため、`@OneToOne` で独立した関連として扱われます。これは `YmItem.member` の `mappedBy = "ymItem"` が参照するフィールドです。
 
 この SQL ファイルをサービスから指定して結果を取得しています。
 
@@ -203,7 +203,7 @@ for (Ym ym : lfService.getYm()) {
 }
 ```
 
-`y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。親子関係は `Ym.itemList` の `@OneToMany(mappedBy = "ym")` によってマッピングされます。結果マッパーは `mappedBy` で指定された `YmItem.ym` フィールドに親 `Ym` を設定します。`YmItem.ym` は `@Transient` のため、それ自体が独立した関連としてマッピングされるわけではありません。
+`y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。
 
 このチュートリアルは HSQLDB を使用しており、SQL の `YEAR()` と `MONTH()` はその環境で使われている関数です。他のデータベースで試す場合は、日付から年・月を取り出す関数や構文を適宜読み替えてください。
 
