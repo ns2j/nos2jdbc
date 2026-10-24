@@ -151,7 +151,7 @@ public class YmItem {
 }
 ```
 
-`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`mappedBy = "ym"` はこのフィールドを参照し、結果マッパーが親 `Ym` を設定します。この用途では `@Transient` だけで足りるため、`@ManyToOne` と `@NoFk` は付けていません。
+`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`mappedBy = "ym"` はこのフィールドを参照し、結果マッパーが親 `Ym` を設定します。この用途では `@Transient` だけで足りるため、`@ManyToOne` と `@NoFk` は付けていません（`@NoFk` の意味は後述します）。
 
 `nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
 
@@ -203,7 +203,7 @@ for (Ym ym : lfService.getYm()) {
 }
 ```
 
-`y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。
+`y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。親 `Ym` と明細 `YmItem` は、`Ym.itemList` の `@OneToMany(mappedBy = "ym")` によって対応付けられます。
 
 このチュートリアルは HSQLDB を使用しており、SQL の `YEAR()` と `MONTH()` はその環境で使われている関数です。他のデータベースで試す場合は、日付から年・月を取り出す関数や構文を適宜読み替えてください。
 
