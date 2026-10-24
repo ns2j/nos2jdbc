@@ -115,7 +115,7 @@ jdbcManager.from(Employee.class)
 
 チュートリアルの Spring Boot サンプルでは、昼食代の明細と会員情報を JOIN する `sum.sql` を `selectBySqlFile()` で実行し、結果を `Ym` とその `itemList` に階層的にマッピングしています。SQL 自体は集計しておらず、`GROUP BY` や集計関数もありません。`y` と `m` を ID とする `Ym` に明細をまとめるのは、結果マッピング側の役割です。
 
-`Ym` は集計結果をまとめる側の Entity です。
+`Ym` は年月ごとに明細をまとめる側の Entity です。
 
 ```java
 @Entity
@@ -153,8 +153,6 @@ public class YmItem {
 }
 ```
 
-チュートリアルで使用している `sum.sql` は、昼食代の明細と会員情報を JOIN し、年月や明細 ID などを取得します。
-
 `nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
 
 ```sql
@@ -165,7 +163,7 @@ from lunch_fee as lf
   join member as mem on lf.member_id = mem.id;
 ```
 
-会員情報を受け持つ `YmItemMember` は、`member_id` と `member_name` を受け取り、`ymItem` で明細側と双方向の関連を定義します。
+会員情報を受け持つ `YmItemMember` は、`member_id` と `member_name` を受け取ります。このサンプルでは `memberId` は通常のプロパティで、`@Id` は付けていません。
 
 ```java
 @Entity
@@ -180,7 +178,7 @@ public class YmItemMember {
 }
 ```
 
-`@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。`@NoFk` は、関連先を結ぶ列が Entity の通常のカラムプロパティとして存在しないこの SQL マッピングで、外部キー列の検証を抑制するために使われています。
+`@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。
 
 この SQL ファイルをサービスから指定して結果を取得しています。
 
@@ -201,9 +199,13 @@ for (Ym ym : lfService.getYm()) {
 }
 ```
 
-この例は、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) にある実装をもとにしています。`y` と `m` は `Ym` の複合 ID として、`lunch_fee_id` は `YmItem` の ID として各行から親・明細を識別するのに使われます。親子関係は `Ym.itemList` の `@OneToMany(mappedBy = "ym")` と `YmItem.ym` の `@ManyToOne` の対応で表現されます。したがって、`y` と `m` がそのまま子 Entity の外部キー列になる、という説明ではありません。
+`y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。親子関係は `Ym.itemList` の `@OneToMany(mappedBy = "ym")` と `YmItem.ym` の `@ManyToOne` の対応で表現されます。
 
-`@NoFk` は、このサンプルでは `@ManyToOne` や `@OneToOne` の関連フィールドに指定されています。JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制するためのもので、外部キー制約を作成・削除する指定ではありません。`YmItem.ym` の `@Transient` は、親 `Ym` への参照を通常の永続化カラムとして扱わないことを示します。一方で `@ManyToOne` と `@NoFk` を付けることで、SQL 結果を階層的に組み立てる際の逆参照として関連を定義しています。これは通常のテーブル列としての外部キーを表すものではありません。実際の関連定義はチュートリアルの Entity と SQL を併せて参照してください。
+このチュートリアルは HSQLDB を使用しており、SQL の `YEAR()` と `MONTH()` はその環境で使われている関数です。他のデータベースで試す場合は、日付から年・月を取り出す関数や構文を適宜読み替えてください。
+
+`@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。
+
+このサンプルの `YmItem.ym` は、親 `Ym` を参照するためのフィールドで、テーブルの列には対応しません。そのため `@Transient` を付け、オブジェクト間の関連を `@ManyToOne` と `@NoFk` で定義しています。実際のマッピングは、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) の Entity 定義と SQL を併せて参照してください。
 
 #### 2.2. `@Embedded` / `@Embeddable` / `@EmbeddedId`
 
