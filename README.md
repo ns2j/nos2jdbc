@@ -153,7 +153,7 @@ public class YmItem {
 }
 ```
 
-`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に逆参照を設定するためのフィールドです。`@Transient` を付けることで、このフィールド自体は関連メタデータとして登録せず、`Ym.itemList` 側の `@OneToMany(mappedBy = "ym")` によって逆参照を設定する構成にしています。`@NoFk` は、関連先を結ぶ列が Entity の通常のカラムプロパティとして定義されていない場合の列チェックに関係する指定です。
+`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`@Transient` が付いていてもフィールド自体はプロパティメタデータに保持されるため、`mappedBy = "ym"` の参照先として利用できます。一方、`@Transient` によってこのフィールドの関連メタデータは登録されないため、ここでは `@ManyToOne` は関連の定義として処理されません。`@NoFk` の役割については、会員関連の定義の後で説明します。
 
 `nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
 
@@ -184,7 +184,7 @@ public class YmItemMember {
 
 `@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。
 
-`YmItemMember.ymItem` は、`YmItem.member` の `mappedBy = "ymItem"` が参照する関連フィールドであり、`@OneToOne` と `@NoFk` を指定しています。`YmItem.ym` とは異なり `@Transient` は付けておらず、関連フィールドとしてメタデータに登録されます。結果マッパーは関連定義をたどってマッピング対象を組み立てますが、このサンプルだけから、両者の `@Transient` の有無を `mappedBy` との対応関係だけで説明できるとは断定できないため、ここでは実装上の違いとして示します。
+`YmItemMember.ymItem` は、`YmItem.member` の `mappedBy = "ymItem"` が参照する関連フィールドです。こちらは `@Transient` が付いていないため、`@OneToOne` による関連メタデータが登録されます。
 
 この SQL ファイルをサービスから指定して結果を取得しています。
 
@@ -205,7 +205,7 @@ for (Ym ym : lfService.getYm()) {
 }
 ```
 
-`y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。親子関係は `Ym.itemList` の `@OneToMany(mappedBy = "ym")` と `YmItem.ym` の `@ManyToOne` の対応で表現されます。
+`y` と `m` は `Ym` の複合 ID、`lunch_fee_id` は `YmItem` の ID です。親子関係は `Ym.itemList` の `@OneToMany(mappedBy = "ym")` によってマッピングされます。結果マッパーは `mappedBy` で指定された `YmItem.ym` フィールドに親 `Ym` を設定します。`YmItem.ym` は `@Transient` のため、それ自体が独立した関連としてマッピングされるわけではありません。
 
 このチュートリアルは HSQLDB を使用しており、SQL の `YEAR()` と `MONTH()` はその環境で使われている関数です。他のデータベースで試す場合は、日付から年・月を取り出す関数や構文を適宜読み替えてください。
 
