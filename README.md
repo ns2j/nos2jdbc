@@ -153,7 +153,7 @@ public class YmItem {
 }
 ```
 
-この `ym` フィールドに付けた `@Transient`、`@ManyToOne`、`@NoFk` の意味は、関連先の定義と併せて後述します。
+`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に逆参照を設定するためのフィールドです。`@Transient` を付けることで、このフィールド自体は関連メタデータとして登録せず、`Ym.itemList` 側の `@OneToMany(mappedBy = "ym")` によって逆参照を設定する構成にしています。`@NoFk` は、関連先を結ぶ列が Entity の通常のカラムプロパティとして定義されていない場合の列チェックに関係する指定です。
 
 `nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
 
@@ -184,7 +184,7 @@ public class YmItemMember {
 
 `@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。
 
-このサンプルでは `YmItem.ym` に `@Transient` が付いている一方、`YmItemMember.ymItem` には付いていません。いずれも関連を表すフィールドですが、チュートリアルのコードはこのように異なるアノテーション構成になっています。コアの結果マッパーは関連定義をたどってマッピング対象を組み立てますが、このサンプルだけから、`@Transient` の有無を `mappedBy` との対応関係だけで説明できるとは断定できないため、ここでは実装上の違いとして示します。
+`YmItemMember.ymItem` は、`YmItem.member` の `mappedBy = "ymItem"` が参照する関連フィールドであり、`@OneToOne` と `@NoFk` を指定しています。`YmItem.ym` とは異なり `@Transient` は付けておらず、関連フィールドとしてメタデータに登録されます。結果マッパーは関連定義をたどってマッピング対象を組み立てますが、このサンプルだけから、両者の `@Transient` の有無を `mappedBy` との対応関係だけで説明できるとは断定できないため、ここでは実装上の違いとして示します。
 
 この SQL ファイルをサービスから指定して結果を取得しています。
 
