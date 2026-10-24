@@ -154,7 +154,19 @@ public class YmItem {
 }
 ```
 
-チュートリアルの SQL は、年月、明細 ID、支払日、金額、会員 ID・氏名などを取得します。サービスでは SQL ファイルを指定して結果を取得しています。
+チュートリアルで使用している `sum.sql` は、昼食代の明細と会員情報を JOIN し、年月や明細 ID などを取得します。
+
+`nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
+
+```sql
+select year(lf.pay_on) as y, month(lf.pay_on) as m,
+  lf.id as lunch_fee_id, lf.member_id, lf.pay_on, lf.amount,
+  mem.name as member_name
+from lunch_fee as lf
+  join member as mem on lf.member_id = mem.id;
+```
+
+この SQL ファイルをサービスから指定して結果を取得しています。
 
 ```java
 public List<Ym> getYm() {
