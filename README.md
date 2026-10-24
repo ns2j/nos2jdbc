@@ -16,7 +16,8 @@ S2JDBC の API や SQL 自動生成機能を引き継ぎ、現代の Java 環境
 - **SQL を活用した柔軟なマッピング** — 任意の SQL の実行結果を Entity にマッピング
 - **JPA 系アノテーションの拡張** — `@Embedded`、`@Embeddable`、`@EmbeddedId` に対応
 - **Java Record 対応** — Bean と Record の相互変換ユーティリティ
-- **コード生成** — `nos2jdbc-gen` による開発支援
+- **型安全なテーブル・カラム参照** — `nos2jdbc-gen` の `gen-names` で `Names` クラスを生成し、テーブル名やカラム名を型安全に扱える
+- **コード生成** — `nos2jdbc-gen` による Entity、Service、検索条件関連クラス、DDL などの生成
 
 ## Requirements
 
@@ -179,6 +180,10 @@ Records.copyToBean(record, bean);
 #### 2.5. コード生成
 
 `nos2jdbc-gen` は、S2JDBC のコード生成機能をベースにした開発支援モジュールです。
+
+`gen-names` タスクでは、テーブル名やカラム名などを扱う `Names` クラスを生成できます。テーブル名やカラム名を文字列で直接記述する箇所を減らし、コンパイル時のチェックを活用したコードを記述できます。
+
+そのほか、Entity、Entity のテストクラス、Service、Service のテストクラス、検索条件関連のクラス、SQL ファイル用の定数クラス、DDL などの生成にも対応しています。
 
 詳細な実行方法や設定については、[nos2jdbc-tutorial](https://github.com/ns2j/nos2jdbc-tutorial) を参照してください。
 
