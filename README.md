@@ -113,9 +113,9 @@ jdbcManager.from(Employee.class)
 
 `selectBySql()` や `selectBySqlFile()` を使うと、任意の SQL の結果を Entity にマッピングできます。単純な列のマッピングだけでなく、`@NonAuto` を指定した Entity と関連定義を組み合わせ、SQL の結果を階層的なオブジェクト構造として扱うこともできます。
 
-チュートリアルの Spring Boot サンプルでは、昼食代の明細と会員情報を JOIN する `sum.sql` を `selectBySqlFile()` で実行し、結果を `Ym` とその `itemList` に階層的にマッピングしています。SQL 自体は集計しておらず、`GROUP BY` や集計関数もありません。`y` と `m` を ID とする `Ym` に明細をまとめるのは、結果マッピング側の役割です。
+チュートリアルの Spring Boot サンプルでは、昼食代の明細と会員情報を JOIN する `sum.sql` を `selectBySqlFile()` で実行し、結果を `Ym` とその `itemList` に階層的にマッピングしています。SQL 自体は集計しておらず、`GROUP BY` や集計関数もありません。結果マッピングでは、同じ `y` と `m` を持つ行が、複合 ID を持つ同じ `Ym` に束ねられます。
 
-`Ym` は年月ごとに明細をまとめる側の Entity です。
+`Ym` は年月を表し、対応する明細を `itemList` に持つ Entity です。
 
 ```java
 @Entity
@@ -131,7 +131,7 @@ public class Ym {
 }
 ```
 
-明細側の `YmItem` では、SQL の結果に含まれる項目と、親の `Ym` への逆参照を定義します。SQL に `count` 列はないため、ここでは `count` フィールドを省略しています。
+明細側の `YmItem` では、SQL の結果に含まれる項目と、親子関係を表すフィールドを定義します。SQL に `count` 列はないため、ここでは `count` フィールドを省略しています。
 
 ```java
 @Entity
@@ -180,6 +180,8 @@ public class YmItemMember {
 
 `@OneToOne(mappedBy = "ymItem")` とこの `ymItem` が対応するため、明細から `item.member.memberName` とたどれます。
 
+`@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。`YmItem.ym` にはテーブル列がないため `@Transient` を付けています。一方、`YmItemMember.ymItem` はこのサンプルでは `@Transient` を付けず、`@OneToOne` と `@NoFk` で関連を定義しています。両者のアノテーションは実装どおりに異なります。
+
 この SQL ファイルをサービスから指定して結果を取得しています。
 
 ```java
@@ -203,9 +205,7 @@ for (Ym ym : lfService.getYm()) {
 
 このチュートリアルは HSQLDB を使用しており、SQL の `YEAR()` と `MONTH()` はその環境で使われている関数です。他のデータベースで試す場合は、日付から年・月を取り出す関数や構文を適宜読み替えてください。
 
-`@NoFk` は、関連先を結ぶ外部キー列が Entity の通常のカラムプロパティとして存在しない場合に、その列の存在チェックを抑制する指定です。データベースの外部キー制約を作成・削除する指定ではありません。
-
-このサンプルの `YmItem.ym` は、親 `Ym` を参照するためのフィールドで、テーブルの列には対応しません。そのため `@Transient` を付け、オブジェクト間の関連を `@ManyToOne` と `@NoFk` で定義しています。実際のマッピングは、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) の Entity 定義と SQL を併せて参照してください。
+実際のマッピングは、[nos2jdbc-tutorial の Spring Boot サンプル](https://github.com/ns2j/nos2jdbc-tutorial/tree/master/nos2jdbc-tutorial-spring) の Entity 定義と SQL を併せて参照してください。
 
 #### 2.2. `@Embedded` / `@Embeddable` / `@EmbeddedId`
 
