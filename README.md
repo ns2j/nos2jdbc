@@ -12,12 +12,12 @@ S2JDBC の API や SQL 自動生成機能を引き継ぎ、現代の Java 環境
 
 - **S2JDBC 由来の ORM 機能** — Entity を使った CRUD、条件指定、JOIN、SQL 自動生成
 - **JOIN による N+1 問題への対策** — `innerJoin()` や `leftOuterJoin()` で関連 Entity を JOIN 取得
+- **コード生成** — `nos2jdbc-gen` による Entity、Service、検索条件関連クラス、DDL などの生成
+- **型安全なテーブル・カラム参照** — `gen-names` で `Names` クラスを生成し、テーブル名やカラム名を型安全に扱える
 - **コンテナ非依存** — Seasar2 Container に依存せず、利用環境に応じて構成可能
 - **SQL を活用した柔軟なマッピング** — 任意の SQL の実行結果を Entity にマッピング
 - **JPA 系アノテーションの拡張** — `@Embedded`、`@Embeddable`、`@EmbeddedId` に対応
 - **Java Record 対応** — Bean と Record の相互変換ユーティリティ
-- **型安全なテーブル・カラム参照** — `nos2jdbc-gen` の `gen-names` で `Names` クラスを生成し、テーブル名やカラム名を型安全に扱える
-- **コード生成** — `nos2jdbc-gen` による Entity、Service、検索条件関連クラス、DDL などの生成
 
 ## Requirements
 
@@ -66,7 +66,7 @@ nos2jdbc は Maven Central Repository で公開しています。
 
 ## Features
 
-### 1. S2JDBC から継承した ORM 機能
+### 1. S2JDBC から継承した機能
 
 Entity を起点とした検索、登録、更新、削除、SQL 文字列や SQL ファイルによる問い合わせなど、S2JDBC の API をベースとした機能を利用できます。
 
@@ -78,6 +78,16 @@ jdbcManager.from(Employee.class)
 S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定することで、関連 Entity を JOIN でまとめて取得できます。
 
 関連 Entity を個別に取得するための追加クエリーを減らせるため、N+1 問題への対策として利用できます。実際の効果は、クエリーの構成や関連の取得方法によって異なります。
+
+#### コード生成
+
+`nos2jdbc-gen` は、S2JDBC-Gen をベースにした開発支援モジュールです。
+
+`gen-names` タスクでは、テーブル名やカラム名などを扱う `Names` クラスを生成できます。テーブル名やカラム名を文字列で直接記述する箇所を減らし、コンパイル時のチェックを活用したコードを記述できます。
+
+そのほか、Entity、Entity のテストクラス、Service、Service のテストクラス、検索条件関連のクラス、SQL ファイル用の定数クラス、DDL などの生成にも対応しています。
+
+詳細な実行方法や設定については、[nos2jdbc-tutorial](https://github.com/ns2j/nos2jdbc-tutorial) を参照してください。
 
 ### 2. nos2jdbc で追加・拡張した機能
 
@@ -176,16 +186,6 @@ Records.copyToBean(record, bean);
 ネストしたオブジェクトやリストの変換にも対応しています。
 
 例えば、可変な Entity や JavaBean から、API のレスポンスに適した不変データモデルである Record を生成できます。
-
-#### 2.5. コード生成
-
-`nos2jdbc-gen` は、S2JDBC のコード生成機能をベースにした開発支援モジュールです。
-
-`gen-names` タスクでは、テーブル名やカラム名などを扱う `Names` クラスを生成できます。テーブル名やカラム名を文字列で直接記述する箇所を減らし、コンパイル時のチェックを活用したコードを記述できます。
-
-そのほか、Entity、Entity のテストクラス、Service、Service のテストクラス、検索条件関連のクラス、SQL ファイル用の定数クラス、DDL などの生成にも対応しています。
-
-詳細な実行方法や設定については、[nos2jdbc-tutorial](https://github.com/ns2j/nos2jdbc-tutorial) を参照してください。
 
 ## Integration Tests
 
