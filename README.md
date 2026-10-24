@@ -46,7 +46,7 @@ S2JDBC の API や SQL 自動生成機能を引き継ぎ、現代の Java 環境
 - Kotlin + Spring Boot
 - WildFly
 
-チュートリアルでは、アプリケーションの実行だけでなく、DDL 生成やマイグレーションなどの開発手順も紹介しています。
+チュートリアルでは、アプリケーションの実行だけでなく、DDL 生成やマイグレーションなどの開発手順も紹介しています。データソースやトランザクション管理を含む `jdbcManager` の構成・取得方法も、利用する環境に応じてチュートリアルの例を参照してください。
 
 ### Maven
 
@@ -70,6 +70,7 @@ nos2jdbc は Maven Central Repository で公開しています。
 
 Entity を起点とした検索、登録、更新、削除、SQL 文字列や SQL ファイルによる問い合わせなど、S2JDBC の API をベースとした機能を利用できます。
 
+生成された `Names` クラスを static import して、関連プロパティを指定した JOIN 検索を記述できます。
 
 ```java
 import static com.example.entity.EmployeeNames.*;
@@ -79,9 +80,9 @@ jdbcManager.from(Employee.class)
            .getResultList();
 ```
 
-S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定することで、関連 Entity を JOIN でまとめて取得できます。
+`department()` は、例として `Employee` の関連プロパティに対応する `Names` のメソッドを示しています。実際のクラス名やメソッド名は、生成された `Names` クラスに合わせてください。
 
-関連 Entity を個別に取得するための追加クエリーを減らせるため、N+1 問題への対策として利用できます。実際の効果は、クエリーの構成や関連の取得方法によって異なります。
+S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時に `innerJoin()` や `leftOuterJoin()` を指定することで、関連 Entity を JOIN でまとめて取得できます。関連 Entity を個別に取得するための追加クエリーを減らせるため、N+1 問題への対策として利用できます。実際の効果は、クエリーの構成や関連の取得方法によって異なります。
 
 #### コード生成
 
@@ -110,16 +111,9 @@ jdbcManager.from(Employee.class)
 
 #### 2.1. SQL の実行結果を Entity にマッピング
 
-任意の SQL を実行し、その結果を Entity にマッピングできます。
+任意の SQL を実行し、その結果を Entity にマッピングできます。集計 SQL や複雑な JOIN など、ORM の自動生成 SQL だけでは扱いにくい問い合わせにも利用できます。
 
-集計 SQL や複雑な JOIN など、ORM の自動生成 SQL だけでは扱いにくい問い合わせにも利用できます。
-
-この機能では、次のアノテーションを利用します。
-
-- `@NonAuto` — 自動マッピングに依存しない Entity の定義
-- `@NoFk` — 関連のマッピングで、外部キーに基づく関連の自動解決を行わないための指定
-
-例えば、部署ごとの集計結果と、その部署に所属する従業員をまとめて扱う場合、次のような Entity を定義できます。
+例えば、部署ごとの従業員数を集計する場合、次のような Entity を定義できます。
 
 ```java
 @Entity
@@ -129,16 +123,22 @@ public class DepartmentSummary {
     public Integer departmentId;
     public String departmentName;
     public Long employeeCount;
-
-    @OneToMany
-    @NoFk
-    public List<Employee> employees;
 }
 ```
 
-`@OneToMany` は `employees` が従業員のコレクションであることを表します。ここで `@NoFk` を指定することで、通常の外部キーに基づく関連の自動解決を行わず、SQL の実行結果を使って関連をマッピングする用途に対応できます。
+SQL の SELECT 句で、マッピング先のプロパティ名に対応する別名を付けます。
 
-SQL の実行には `selectBySql()` を利用します。
+```sql
+SELECT
+    d.id AS departmentId,
+    d.name AS departmentName,
+    COUNT(e.id) AS employeeCount
+FROM department d
+LEFT JOIN employee e ON e.department_id = d.id
+GROUP BY d.id, d.name
+```
+
+この SQL の実行結果は、次のように取得できます。
 
 ```java
 List<DepartmentSummary> results = jdbcManager
@@ -146,9 +146,9 @@ List<DepartmentSummary> results = jdbcManager
     .getResultList();
 ```
 
-SQL の SELECT 句では、マッピング対象のプロパティに対応するカラム名を指定してください。複数のテーブルから同名のカラムを取得する場合は、適切に別名を付け、カラム名の重複を避けてください。
+ここで `sql` は上記の SQL 文を格納した文字列です。SELECT 句の別名は、マッピング対象のプロパティ名に合わせてください。同名の列を複数取得する場合も、別名を付けて区別します。集計結果などで ID が `null` となる場合にも Entity オブジェクトを生成できるため、通常のテーブル検索以外の用途にも対応できます。
 
-また、集計結果などで ID が `null` の場合でも Entity オブジェクトを生成できるため、通常のテーブル検索以外の用途にも対応できます。
+`@NoFk` は、`@ManyToOne` または `@OneToOne` の関連フィールドに指定し、関連先への JOIN 列に対応するカラムが Entity 側に存在するかどうかの検証を抑制するためのアノテーションです。外部キー制約や SQL の実行結果を自動的に処理する指定ではありません。利用する関連定義とテーブル構造を確認したうえで指定してください。
 
 #### 2.2. `@Embedded` / `@Embeddable` / `@EmbeddedId`
 
@@ -163,9 +163,7 @@ public class Employee {
     @Embedded
     public Address address;
 }
-```
 
-```java
 @Embeddable
 public class Address {
     public String city;
@@ -173,15 +171,31 @@ public class Address {
 }
 ```
 
-埋め込みプロパティは、内部的には `__` を区切り文字として平坦化して扱います。例えば `address.city` は `address__city` に対応します。
+埋め込みプロパティは、埋め込み先のフィールド名を接頭辞として、`__` を区切り文字に平坦化して扱います。例えば、`Employee` の `address.city` は `address__city` に対応します。
 
-複合主キーを値オブジェクトとして表現する `@EmbeddedId` にも対応しています。
+複合主キーを値オブジェクトとして表現する `@EmbeddedId` も利用できます。
+
+```java
+@Embeddable
+public class EmployeeId {
+    public Integer companyId;
+    public Integer employeeNo;
+}
+
+@Entity
+public class Employee {
+    @EmbeddedId
+    public EmployeeId id;
+
+    public String name;
+}
+```
+
+この例では、埋め込み ID のプロパティは `id__companyId`、`id__employeeNo` のように扱われます。
 
 #### 2.3. JSON シリアライズ時の循環参照対策
 
-双方向の関連を持つ Entity を JSON に変換すると、親から子、子から親へと参照が循環することがあります。
-
-この問題に対応するため、逆参照を構築せずに結果を取得する API を用意しています。
+双方向の関連を持つ Entity を JSON に変換すると、親から子、子から親へと参照が循環することがあります。この問題に対応するため、逆参照を構築せずに結果を取得する API を用意しています。
 
 ```java
 getSingleResultWithoutInverseField()
@@ -192,17 +206,17 @@ JSON API などで Entity を返す際に、関連オブジェクトの循環を
 
 #### 2.4. Java Record と Bean の相互変換
 
-Java Record と従来の JavaBean を相互変換するユーティリティを追加しています。
+Java Record と従来の JavaBean を相互変換するユーティリティを追加しています。ユーティリティのクラス名は `org.seasar.framework.beans.util.Records` です。
 
 ```java
-Records.createRecord(MyRecord.class, bean);
-Records.createRecordList(MyRecord.class, beans);
+import org.seasar.framework.beans.util.Records;
+
+MyRecord record = Records.createRecord(MyRecord.class, bean);
+List<MyRecord> records = Records.createRecordList(MyRecord.class, beans);
 Records.copyToBean(record, bean);
 ```
 
-ネストしたオブジェクトやリストの変換にも対応しています。
-
-例えば、可変な Entity や JavaBean から、API のレスポンスに適した不変データモデルである Record を生成できます。
+ネストしたオブジェクトやリストの変換にも対応しています。例えば、可変な Entity や JavaBean から、API のレスポンスに適した不変データモデルである Record を生成できます。
 
 ## Integration Tests
 
