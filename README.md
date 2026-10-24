@@ -85,7 +85,28 @@ S2JDBC 由来の JOIN 機能にも対応しています。クエリー作成時�
 この機能では、次のアノテーションを利用します。
 
 - `@NonAuto` — 自動マッピングに依存しない Entity の定義
+
 - `@NoFk` — 外部キーに基づく関連の自動解決を行わないための指定
+
+```java
+@Entity
+@NonAuto
+public class DepartmentSummary {
+    @Id
+    public Integer departmentId;
+    public String departmentName;
+    public Long employeeCount;
+
+    @OneToMany
+    @NoFk
+    public List<Employee> employees;
+}
+```
+```java
+List<DepartmentSummary> results = jdbcManager
+    .selectBySql(DepartmentSummary.class, sql)
+    .getResultList();
+```
 
 カラム名が重複しないように SQL の SELECT 句を定義してください。
 
