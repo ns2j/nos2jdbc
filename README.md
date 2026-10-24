@@ -147,13 +147,11 @@ public class YmItem {
     public BigDecimal amount;
 
     @Transient
-    @ManyToOne
-    @NoFk
     public Ym ym;
 }
 ```
 
-`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`@Transient` が付いていてもフィールド自体はプロパティメタデータに保持されるため、`mappedBy = "ym"` の参照先として利用できます。一方、`@Transient` によってこのフィールドの関連メタデータは登録されないため、ここでは `@ManyToOne` は関連の定義として処理されません。`@NoFk` の役割については、会員関連の定義の後で説明します。
+`YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`mappedBy = "ym"` はこのフィールドを参照し、結果マッパーが親 `Ym` を設定します。この用途では `@Transient` だけで足りるため、`@ManyToOne` と `@NoFk` は付けていません。
 
 `nos2jdbc-tutorial-spring/src/main/resources/sql/sum.sql`:
 
