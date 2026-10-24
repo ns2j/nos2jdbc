@@ -70,8 +70,12 @@ nos2jdbc は Maven Central Repository で公開しています。
 
 Entity を起点とした検索、登録、更新、削除、SQL 文字列や SQL ファイルによる問い合わせなど、S2JDBC の API をベースとした機能を利用できます。
 
+
 ```java
+import static com.example.entity.EmployeeNames.*;
+
 jdbcManager.from(Employee.class)
+           .innerJoin(department())
            .getResultList();
 ```
 
