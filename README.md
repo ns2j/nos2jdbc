@@ -36,7 +36,7 @@ S2JDBC の API や SQL 自動生成機能を引き継ぎ、現代の Java 環境
 
 ## Getting Started
 
-プロジェクトの概要は、Qiita の紹介記事「[はじめのはじめ](https://qiita.com/igariy/items/ff0e4e1a82dd65cf078c)」もご覧ください。
+プロジェクトの概要は、Qiita の紹介記事「[s2jdbcを他のフレームワークで使えるようにしたnos2jdbc](https://qiita.com/igariy/items/ff0e4e1a82dd65cf078c)」もご覧ください。
 
 実際の設定方法や実行可能なサンプルは、チュートリアルリポジトリを参照してください。
 
