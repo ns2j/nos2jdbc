@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,28 +48,26 @@ import nos2jdbc.TransactionManagerRegistry;
 
 public class NoS2JdbcManager {
     private JdbcManager jdbcManager; 
-
+    private NoS2JdbcDataSource ownedDataSource;
+    
     final static String PROPS_NAME_PREFIX = "nos2jdbc-datasource";
     final static String PROPS_NAME_SUFFIX = ".properties";  
 
     private NoS2JdbcManager(String propertiesFilename, DataSource ds) {
-        if (propertiesFilename == null) {
-            String database = System.getProperty("database");
-            if (database != null && !database.isBlank())
-                propertiesFilename = PROPS_NAME_PREFIX + "-" + database + PROPS_NAME_SUFFIX;
-            else
-                propertiesFilename = PROPS_NAME_PREFIX + PROPS_NAME_SUFFIX;
-        }
-        InputStream is = NoS2JdbcManager.class.getClassLoader().getResourceAsStream(propertiesFilename);
-        if (is == null)
-            throw new RuntimeException(new FileNotFoundException(propertiesFilename));
+        propertiesFilename = resolvePropertiesFilename(propertiesFilename);
+
         Properties ps = new Properties();
-        try {
+
+        try (InputStream is = NoS2JdbcManager.class
+                .getClassLoader()
+                .getResourceAsStream(propertiesFilename)) {
+            if (is == null) {
+                throw new RuntimeException(new FileNotFoundException(propertiesFilename));
+            }
             ps.load(is);
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }
-
         DataSource dataSource = ds;
 
         TransactionManager tm = TransactionManagerRegistry.get();
@@ -83,8 +83,12 @@ public class NoS2JdbcManager {
                 String url = resolveEnvVars(ps.getProperty("URL"));
                 String user = resolveEnvVars(ps.getProperty("user"));
                 String password = resolveEnvVars(ps.getProperty("password", ""));
-                int poolSize = Integer.valueOf(resolveEnvVars(ps.getProperty("poolSize", "900")));
-                dataSource = new NoS2JdbcDataSource(tm, driverName, url, user, password, poolSize);
+                int poolSize = Integer.valueOf(
+                        resolveEnvVars(ps.getProperty("poolSize", "900")));
+
+                ownedDataSource = new NoS2JdbcDataSource(
+                        tm, driverName, url, user, password, poolSize);
+                dataSource = ownedDataSource;
             }
             String dialectName = ltrim(rtrim(resolveEnvVars(ps.getProperty("dialect"))));
             dialect = getDialect(dialectName);
@@ -103,7 +107,7 @@ public class NoS2JdbcManager {
             return null;
 
         // match ${ENV_VAR_NAME}, ${ENV_VAR_NAME:default_value} or $ENV_VAR_NAME
-         Pattern p = Pattern.compile("\\$\\{(\\w+)(:(.*))?\\}|\\$(\\w+)");
+        Pattern p = Pattern.compile("\\$\\{(\\w+)(:(.*))?\\}|\\$(\\w+)");
         Matcher m = p.matcher(input); // get a matcher object
         StringBuffer sb = new StringBuffer();
         while(m.find()){
@@ -157,20 +161,124 @@ public class NoS2JdbcManager {
         }
     }
 
-    static public synchronized JdbcManager getJdbcManager() {
-        return new NoS2JdbcManager(null, null).jdbcManager;
+    private static final ConcurrentMap<ManagerKey, NoS2JdbcManager> MANAGER_CACHE =
+            new ConcurrentHashMap<>();
+
+    private static JdbcManager getOrCreateJdbcManager(
+            String propertiesFilename,
+            DataSource dataSource) {
+
+        String resolvedFilename = resolvePropertiesFilename(propertiesFilename);
+        ManagerKey key = new ManagerKey(resolvedFilename, dataSource);
+
+        NoS2JdbcManager manager = MANAGER_CACHE.computeIfAbsent(
+                key,
+                k -> new NoS2JdbcManager(k.propertiesFilename, k.dataSource));
+
+        return manager.jdbcManager;
     }
 
-    static public synchronized JdbcManager getJdbcManager(String propertiesFilename, DataSource ds) {
-        return new NoS2JdbcManager(propertiesFilename, ds).jdbcManager;
+    private synchronized void closeOwnedDataSource() {
+        if (ownedDataSource != null) {
+            ownedDataSource.close();
+            ownedDataSource = null;
+        }
     }
 
-    static public synchronized JdbcManager getJdbcManager(String propertiesFilename) {
-        return new NoS2JdbcManager(propertiesFilename, null).jdbcManager;
+    /**
+     * アプリケーション終了時、またはテスト終了時に呼び出す。
+     * 呼び出す前に、リクエストやトランザクションの利用を止めておくこと。
+     */
+    public static synchronized void closeAll() {
+        for (ManagerKey key : MANAGER_CACHE.keySet()) {
+            NoS2JdbcManager manager = MANAGER_CACHE.remove(key);
+            if (manager != null) {
+                manager.closeOwnedDataSource();
+            }
+        }
+    }
+    
+    /**
+     * 設定ファイル名が省略された場合、既存実装と同じ規則で名前を決める。
+     */
+    private static String resolvePropertiesFilename(String propertiesFilename) {
+        if (propertiesFilename != null) {
+            return propertiesFilename;
+        }
+
+        String database = System.getProperty("database");
+        if (database != null && !database.isBlank()) {
+            return PROPS_NAME_PREFIX + "-" + database + PROPS_NAME_SUFFIX;
+        }
+
+        return PROPS_NAME_PREFIX + PROPS_NAME_SUFFIX;
     }
 
-    static public synchronized JdbcManager getJdbcManager(DataSource ds) {
-        return new NoS2JdbcManager(null, ds).jdbcManager;
+    /**
+     * 設定ファイル名とDataSourceインスタンスをキーにする。
+     *
+     * DataSourceはequals()ではなく同一インスタンスかどうかで比較する。
+     */
+    private static final class ManagerKey {
+        private final String propertiesFilename;
+        private final DataSource dataSource;
+        private final int hashCode;
+
+        private ManagerKey(String propertiesFilename, DataSource dataSource) {
+            this.propertiesFilename = propertiesFilename;
+            this.dataSource = dataSource;
+            this.hashCode =
+                    31 * propertiesFilename.hashCode()
+                    + System.identityHashCode(dataSource);
+        }
+
+        @Override
+        public int hashCode() {
+            return hashCode;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ManagerKey)) {
+                return false;
+            }
+
+            ManagerKey other = (ManagerKey) obj;
+            return propertiesFilename.equals(other.propertiesFilename)
+                    && dataSource == other.dataSource;
+        }
     }
 
+    /**
+     * デフォルトの設定ファイルを使う。
+     */
+    public static JdbcManager getJdbcManager() {
+        return getOrCreateJdbcManager(null, null);
+    }
+
+    /**
+     * 指定した設定ファイルとDataSourceを使う。
+     */
+    public static JdbcManager getJdbcManager(
+            String propertiesFilename,
+            DataSource dataSource) {
+        return getOrCreateJdbcManager(propertiesFilename, dataSource);
+    }
+
+    /**
+     * 指定した設定ファイルを使う。
+     */
+    public static JdbcManager getJdbcManager(String propertiesFilename) {
+        return getOrCreateJdbcManager(propertiesFilename, null);
+    }
+
+    /**
+     * 指定したDataSourceを使う。
+     */
+    public static JdbcManager getJdbcManager(DataSource dataSource) {
+        return getOrCreateJdbcManager(null, dataSource);
+    }
 }
