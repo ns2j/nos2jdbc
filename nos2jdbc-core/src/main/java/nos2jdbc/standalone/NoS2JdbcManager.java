@@ -178,8 +178,11 @@ public class NoS2JdbcManager {
 
     private synchronized void closeOwnedDataSource() {
         if (ownedDataSource != null) {
-            ownedDataSource.close();
-            ownedDataSource = null;
+            try {
+                ownedDataSource.close();
+            } finally {
+                ownedDataSource = null;
+            }
         }
     }
 
@@ -188,11 +191,23 @@ public class NoS2JdbcManager {
      * 呼び出す前に、リクエストやトランザクションの利用を止めておくこと。
      */
     public static synchronized void closeAll() {
+        RuntimeException firstException = null;
         for (ManagerKey key : MANAGER_CACHE.keySet()) {
             NoS2JdbcManager manager = MANAGER_CACHE.remove(key);
             if (manager != null) {
-                manager.closeOwnedDataSource();
+                try {
+                    manager.closeOwnedDataSource();
+                } catch (RuntimeException e) {
+                    if (firstException == null) {
+                        firstException = e;
+                    } else {
+                        firstException.addSuppressed(e);
+                    }
+                }
             }
+        }
+        if (firstException != null) {
+            throw firstException;
         }
     }
     
