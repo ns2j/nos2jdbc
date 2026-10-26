@@ -85,6 +85,20 @@ class RecordsTest {
         assertEquals("000", actual.iii().get(1).aaa);
 
     }
+
+    /**
+     * 生のList、List&lt;?&gt;のコンポーネントは、要素を変換せずそのまま渡す。
+     */
+    @Test
+    void createRecordRawList() throws Exception {
+        MyClass8 src = new MyClass8();
+        src.raw = new ArrayList<>(List.of("a"));
+        src.wildcard = new ArrayList<>(List.of("b"));
+
+        MyRecord7 actual = Records.createRecord(MyRecord7.class, src);
+        assertSame(src.raw, actual.raw());
+        assertSame(src.wildcard, actual.wildcard());
+    }
     
     @Test
     void createRecordList() throws Exception {
@@ -131,6 +145,84 @@ class RecordsTest {
         MyClass2 c2 = new MyClass2();
         Records.copyToBean(r, c2);
         assertEquals(0, c2.eee);
+    }
+
+    /**
+     * 引数2つのcopyToBeanは、nullも含めてコピーする。
+     */
+    @Test
+    void copyToBeanNull() {
+        MyClass c = new MyClass();
+        c.setBbb("old");
+        Records.copyToBean(new MyRecord("000", null, "222", 3, null), c);
+        assertEquals("000", c.getAaa());
+        assertNull(c.getBbb());
+    }
+
+    /**
+     * skipNullがtrueのとき、nullのコンポーネントはBean側の既存の値を残す。
+     */
+    @Test
+    void copyToBeanSkipNull() {
+        MyRecord r = new MyRecord("000", null, "222", 3, null);
+        MyClass c = new MyClass();
+        c.setBbb("old");
+        Records.copyToBean(r, c, true);
+        assertEquals("000", c.getAaa());
+        assertEquals("old", c.getBbb());
+
+        MyClass2 c2 = new MyClass2();
+        c2.eee = 5;
+        Records.copyToBean(r, c2, true);
+        assertEquals(5, c2.eee);
+    }
+
+    /**
+     * アクセサをオーバーライドして補完しているrecordは、補完後の値がコピーされる。
+     */
+    @Test
+    void copyToBeanAccessor() {
+        MyClass c = new MyClass();
+        Records.copyToBean(new MyRecord6("000", null), c);
+        assertEquals("000", c.getAaa());
+        assertEquals("DEFAULT", c.getBbb());
+    }
+
+    @Test
+    void copyToBeanNestedRecord() {
+        MyRecord5 r = new MyRecord5("444", new MyRecord4("555", 6), null, null);
+        MyClass7 c = new MyClass7();
+        Records.copyToBean(r, c);
+        assertEquals("444", c.fff);
+        assertInstanceOf(MyClass6.class, c.ggg);
+        assertEquals("555", c.ggg.aaa);
+        assertEquals(6, c.ggg.ddd);
+    }
+
+    /**
+     * List&lt;record&gt;は、BeanのプロパティがList&lt;Bean&gt;なら要素をBeanに変換する。
+     */
+    @Test
+    void copyToBeanRecordList() {
+        List<MyRecord4> items = List.of(new MyRecord4("111", 1), new MyRecord4("222", 2));
+        MyClass7 c = new MyClass7();
+        Records.copyToBean(new MyRecord5("444", null, items, null), c);
+        assertEquals(2, c.items.size());
+        assertInstanceOf(MyClass6.class, (Object) c.items.get(0));
+        assertEquals("111", c.items.get(0).aaa);
+        assertEquals(2, c.items.get(1).ddd);
+    }
+
+    /**
+     * BeanのプロパティがList&lt;Object&gt;のとき、要素の型が決まらないのでListをそのまま渡す。
+     */
+    @Test
+    void copyToBeanRecordListAsIs() {
+        List<Object> objects = new ArrayList<>();
+        objects.add(new MyRecord4("111", 1));
+        MyClass7 c = new MyClass7();
+        Records.copyToBean(new MyRecord5("444", null, null, objects), c);
+        assertSame(objects, c.objects);
     }
 
 
@@ -222,5 +314,50 @@ class RecordsTest {
     class MyClass5 {
         public List<MyClass3> hhh;
         public List<MyClass3> iii;
+    }
+
+    // ---- 以下は copyToBean(skipNull)、アクセサ経由の読み出し、List変換のテスト用 ----
+    // copyToBeanがBeanを生成する(ClassUtil.newInstance)ので、生成されるBeanはstaticにする。
+
+    record MyRecord4(
+            String aaa,
+            int ddd
+            ) {}
+    public static class MyClass6 {
+        public String aaa;
+        public int ddd;
+    }
+
+    record MyRecord5(
+            String fff,
+            MyRecord4 ggg,
+            List<MyRecord4> items,
+            List<Object> objects
+            ) {}
+    public static class MyClass7 {
+        public String fff;
+        public MyClass6 ggg;
+        public List<MyClass6> items;
+        public List<Object> objects;
+    }
+
+    /** bbb()をオーバーライドして、nullのとき補完する */
+    record MyRecord6(
+            String aaa,
+            String bbb
+            ) {
+        public String bbb() {
+            return bbb == null ? "DEFAULT" : bbb;
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    record MyRecord7(
+            List raw,
+            List<?> wildcard
+            ) {}
+    public static class MyClass8 {
+        public List<Object> raw;
+        public List<Object> wildcard;
     }
 }
