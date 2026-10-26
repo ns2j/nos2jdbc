@@ -72,7 +72,7 @@ public class NoS2JdbcManager {
         TransactionSynchronizationRegistry syncRegistry = new TransactionSynchronizationRegistryImpl(tm);
 
         DbmsDialect dialect = new OracleDialect();
-        String mock = rtrim(ltrim(ps.getProperty("mock")));  //for no2sjdbc-gen test
+        String mock = rtrim(ltrim(ps.getProperty("mock")));  //for nos2jdbc-gen test
         if (isNotBlank(mock)) {
             dataSource = getMockDataSource(mock);
         } else {
@@ -82,7 +82,7 @@ public class NoS2JdbcManager {
                 String user = resolveEnvVars(ps.getProperty("user"));
                 String password = resolveEnvVars(ps.getProperty("password", ""));
                 int poolSize = Integer.valueOf(
-                        resolveEnvVars(ps.getProperty("poolSize", "900")));
+                        resolveEnvVars(ps.getProperty("poolSize", "10")));
 
                 ownedDataSource = new NoS2JdbcDataSource(
                         tm, driverName, url, user, password, poolSize);
