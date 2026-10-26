@@ -17,7 +17,6 @@ package nos2jdbc.standalone;
 
 import static org.seasar.framework.util.StringUtil.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -40,6 +39,7 @@ import org.seasar.framework.exception.IllegalAccessRuntimeException;
 import org.seasar.framework.exception.InstantiationRuntimeException;
 import org.seasar.framework.exception.InvocationTargetRuntimeException;
 import org.seasar.framework.exception.NoSuchMethodRuntimeException;
+import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 
 import jakarta.transaction.TransactionManager;
 import jakarta.transaction.TransactionSynchronizationRegistry;
@@ -54,15 +54,13 @@ public class NoS2JdbcManager {
     final static String PROPS_NAME_SUFFIX = ".properties";  
 
     private NoS2JdbcManager(String propertiesFilename, DataSource ds) {
-        propertiesFilename = resolvePropertiesFilename(propertiesFilename);
-
         Properties ps = new Properties();
 
         try (InputStream is = NoS2JdbcManager.class
                 .getClassLoader()
                 .getResourceAsStream(propertiesFilename)) {
             if (is == null) {
-                throw new RuntimeException(new FileNotFoundException(propertiesFilename));
+                throw new ResourceNotFoundRuntimeException(propertiesFilename);
             }
             ps.load(is);
         } catch (IOException e) {
@@ -73,7 +71,7 @@ public class NoS2JdbcManager {
         TransactionManager tm = TransactionManagerRegistry.get();
         TransactionSynchronizationRegistry syncRegistry = new TransactionSynchronizationRegistryImpl(tm);
 
-        DbmsDialect dialect = new OracleDialect();;
+        DbmsDialect dialect = new OracleDialect();
         String mock = rtrim(ltrim(ps.getProperty("mock")));  //for no2sjdbc-gen test
         if (isNotBlank(mock)) {
             dataSource = getMockDataSource(mock);
@@ -114,7 +112,7 @@ public class NoS2JdbcManager {
             String envVarName = null == m.group(1) ? m.group(4) : m.group(1);
             String defaultValue = null == m.group(3) ? "" : m.group(3);
             String envVarValue = System.getenv(envVarName);
-            m.appendReplacement(sb, null == envVarValue ? defaultValue : envVarValue);
+            m.appendReplacement(sb, Matcher.quoteReplacement(null == envVarValue ? defaultValue : envVarValue));
         }
         m.appendTail(sb);
         return sb.toString();
@@ -261,6 +259,10 @@ public class NoS2JdbcManager {
 
     /**
      * 指定した設定ファイルとDataSourceを使う。
+     * <p>
+     * {@code DataSource}インスタンスをキーの一部としてキャッシュするため、
+     * 呼び出しのたびに新しいインスタンスを生成せず、同一の{@code DataSource}インスタンスを使い回すこと。
+     * </p>
      */
     public static JdbcManager getJdbcManager(
             String propertiesFilename,
@@ -277,6 +279,10 @@ public class NoS2JdbcManager {
 
     /**
      * 指定したDataSourceを使う。
+     * <p>
+     * {@code DataSource}インスタンスをキーの一部としてキャッシュするため、
+     * 呼び出しのたびに新しいインスタンスを生成せず、同一の{@code DataSource}インスタンスを使い回すこと。
+     * </p>
      */
     public static JdbcManager getJdbcManager(DataSource dataSource) {
         return getOrCreateJdbcManager(null, dataSource);
