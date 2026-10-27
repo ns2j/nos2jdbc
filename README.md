@@ -155,6 +155,8 @@ public class YmItem {
 
 `YmItem.ym` は、`Ym.itemList` から明細をマッピングする際に親への逆参照を設定するためのフィールドです。`mappedBy = "ym"` はこのフィールドを参照し、結果マッパーが親 `Ym` を設定します。この用途では `@Transient` だけで足ります。
 
+同じ `sum.sql` は、年月単位で束ねる `Ym` だけでなく、会員単位で束ねる `MemberKey` にも利用しています。後者では `MemberKey.ymList` に会員ごとの年月、さらに `MemberYm.itemList` に明細をマッピングします。`MemberYm` の複合 ID は `ymMemberId`・`y`・`m` です。SQL では `lf.member_id` を `member_id` と `ym_member_id` の別名で取得し、会員自身の ID と、会員・年月ごとの明細グループを区別します。
+
 ```java
 @Entity
 @NonAuto
@@ -179,7 +181,8 @@ public class YmItemMember {
 
 ```sql
 select year(lf.pay_on) as y, month(lf.pay_on) as m,
-  lf.id as lunch_fee_id, lf.member_id, lf.pay_on, lf.amount,
+  lf.id as lunch_fee_id, lf.member_id, lf.member_id as ym_member_id,
+  lf.pay_on, lf.amount,
   mem.name as member_name
 from lunch_fee as lf
   join member as mem on lf.member_id = mem.id;
