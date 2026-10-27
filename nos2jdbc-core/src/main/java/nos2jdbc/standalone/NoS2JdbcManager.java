@@ -77,7 +77,7 @@ public class NoS2JdbcManager {
             dataSource = getMockDataSource(mock);
         } else {
             if (ds == null) {
-                String driverName = ps.getProperty("driverClassName");
+                String driverName = resolveEnvVars(ps.getProperty("driverClassName"));
                 String url = resolveEnvVars(ps.getProperty("URL"));
                 String user = resolveEnvVars(ps.getProperty("user"));
                 String password = resolveEnvVars(ps.getProperty("password", ""));
